@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Hadiwa IOC — Release Notes v1.0 – v5.3</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080b14;--surface:#0e1220;--border:rgba(255,255,255,.07);
+  --text:#e2e8f0;--muted:rgba(255,255,255,.38);
+  --purple:#7c3aed;--cyan:#06b6d4;--green:#10b981;--orange:#f97316;
+  --red:#ef4444;--yellow:#f59e0b;--blue:#3b82f6;--pink:#f472b6;
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.6;padding:0 0 80px}
+a{color:var(--cyan);text-decoration:none}
+
+/* Hero */
+.hero{background:radial-gradient(ellipse at 60% 0%,rgba(124,58,237,.18) 0%,transparent 60%),var(--surface);
+  border-bottom:1px solid var(--border);padding:48px 40px 36px;position:sticky;top:0;z-index:100;
+  display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.hero-logo{width:48px;height:48px;border-radius:14px;background:linear-gradient(135deg,#7c3aed,#06b6d4);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hero h1{font-size:22px;font-weight:900;background:linear-gradient(90deg,#c4b5fd,#67e8f9);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:13px;color:var(--muted);margin-top:2px}
+.hero-meta{margin-left:auto;text-align:right;font-size:12px;color:var(--muted)}
+.hero-meta strong{color:var(--cyan);display:block;font-size:18px;font-weight:800}
+
+/* Layout */
+.layout{display:flex;max-width:1200px;margin:0 auto;padding:32px 24px;gap:32px}
+.sidebar{width:200px;flex-shrink:0;position:sticky;top:140px;height:fit-content}
+.sidebar-group{margin-bottom:20px}
+.sidebar-title{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.sidebar-link{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);padding:4px 8px;border-radius:6px;transition:.15s;font-family:'JetBrains Mono',monospace;font-weight:700}
+.sidebar-link:hover{background:rgba(255,255,255,.06);color:var(--text)}
+.sidebar-link .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.content{flex:1;min-width:0}
+
+/* Version block */
+.version-block{margin-bottom:40px;scroll-margin-top:160px}
+.version-header{display:flex;align-items:center;gap:14px;padding:16px 20px;
+  border-radius:14px 14px 0 0;border:1px solid var(--border);border-bottom:none;flex-wrap:wrap;gap:10px}
+.version-badge{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:900;
+  padding:4px 14px;border-radius:8px;flex-shrink:0}
+.version-title{font-size:14px;font-weight:700;flex:1}
+.version-date{font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace}
+.version-tag{font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;text-transform:uppercase;letter-spacing:.06em}
+.version-body{background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:0 0 14px 14px;padding:18px 20px}
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:12px}
+.feature-card{background:rgba(255,255,255,.025);border:1px solid var(--border);border-radius:10px;padding:12px 14px}
+.feature-card-title{font-size:11px;font-weight:700;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.feature-card-body{font-size:11px;color:var(--muted);line-height:1.6}
+ul.feat-list{list-style:none;padding:0}
+ul.feat-list li{padding:3px 0;font-size:12px;color:rgba(255,255,255,.65);display:flex;align-items:flex-start;gap:7px}
+ul.feat-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0;margin-top:7px}
+.section-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);margin:12px 0 6px}
+table.thresh{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}
+table.thresh th{padding:5px 10px;text-align:left;color:var(--muted);font-weight:700;font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--border)}
+table.thresh td{padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.04);font-family:'JetBrains Mono',monospace}
+.chip{display:inline-block;padding:1px 8px;border-radius:20px;font-size:10px;font-weight:700;margin:1px}
+
+/* Majors */
+.major .version-header{background:linear-gradient(90deg,rgba(124,58,237,.12),rgba(6,182,212,.06))}
+.minor .version-header{background:rgba(255,255,255,.02)}
+
+/* TOC stats bar */
+.stats-bar{display:flex;gap:24px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:12px;padding:14px 20px;margin-bottom:28px;flex-wrap:wrap}
+.stat{text-align:center}
+.stat-val{font-size:20px;font-weight:900}
+.stat-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:1px}
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-logo">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+  </div>
+  <div>
+    <h1>Hadiwa IOC — Release Notes</h1>
+    <p>Hệ thống Điều hành Thông tin Phòng chống Thiên tai · Chi cục TT-PCTT Hà Nội</p>
+  </div>
+  <div class="hero-meta">
+    <strong>v5.3</strong>Latest · 13/03/2026
+  </div>
+</div>
+
+<div class="layout">
+
+<!-- Sidebar TOC -->
+<div class="sidebar">
+  <div class="sidebar-group">
+    <div class="sidebar-title">Major Releases</div>
+    <a class="sidebar-link" href="#v5"><span class="dot" style="background:#7c3aed"></span>v5.x</a>
+    <a class="sidebar-link" href="#v4"><span class="dot" style="background:#f97316"></span>v4.x</a>
+    <a class="sidebar-link" href="#v3"><span class="dot" style="background:#06b6d4"></span>v3.x</a>
+    <a class="sidebar-link" href="#v2"><span class="dot" style="background:#10b981"></span>v2.x</a>
+    <a class="sidebar-link" href="#v1"><span class="dot" style="background:#f59e0b"></span>v1.x</a>
+  </div>
+  <div class="sidebar-group">
+    <div class="sidebar-title">Nhanh đến</div>
+    <a class="sidebar-link" href="#v5.3">v5.3</a>
+    <a class="sidebar-link" href="#v5.2">v5.2</a>
+    <a class="sidebar-link" href="#v5.1">v5.1</a>
+    <a class="sidebar-link" href="#v5.0">v5.0</a>
+    <a class="sidebar-link" href="#v4.4">v4.4</a>
+    <a class="sidebar-link" href="#v4.3">v4.3</a>
+    <a class="sidebar-link" href="#v4.2">v4.2</a>
+    <a class="sidebar-link" href="#v3.1">v3.1</a>
+    <a class="sidebar-link" href="#v2.2">v2.2</a>
+    <a class="sidebar-link" href="#v1.0">v1.0</a>
+  </div>
+</div>
+
+<!-- Main content -->
+<div class="content">
+
+<!-- Stats bar -->
+<div class="stats-bar">
+  <div class="stat"><div class="stat-val" style="color:#7c3aed">23</div><div class="stat-lbl">Phiên bản</div></div>
+  <div class="stat"><div class="stat-val" style="color:#06b6d4">12</div><div class="stat-lbl">Phân hệ (Hub)</div></div>
+  <div class="stat"><div class="stat-val" style="color:#10b981">40+</div><div class="stat-lbl">Trang chức năng</div></div>
+  <div class="stat"><div class="stat-val" style="color:#f59e0b">13/3/2026</div><div class="stat-lbl">Ngày phát hành</div></div>
+  <div class="stat"><div class="stat-val" style="color:#f97316">PCTT HN</div><div class="stat-lbl">Đơn vị triển khai</div></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ v5.x -->
+<h2 id="v5" style="font-size:13px;font-weight:800;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)">Series v5.x — AI & Hub Expansion</h2>
+
+<!-- v5.3 -->
+<div class="version-block minor" id="v5.3">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(6,182,212,.15);color:#67e8f9">v5.3</span>
+    <span class="version-title">Reservoir Monitoring — Giám sát Hồ chứa Thủy lợi</span>
+    <span class="version-tag" style="background:rgba(6,182,212,.15);color:#67e8f9">NEW PAGE</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#67e8f9">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>5 Hồ chứa
+        </div>
+        <div class="feature-card-body">Tuy Lai · Đồng Mô · Suối Hai · Quan Sơn · Vai Người. Tổng dung tích 82.2 tr.m³</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#10b981">Capacity Bars</div>
+        <div class="feature-card-body">Thanh dung tích màu cảnh báo: OK/Warning/Danger/Critical. Hiển thị cao trình, m³/s vào-ra</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#f59e0b">Gate Control</div>
+        <div class="feature-card-body">Số cổng van đang mở, lưu lượng xả (m³/s). Nút điều tiết cửa van per hồ</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#f97316">Nhật ký điều tiết</div>
+        <div class="feature-card-body">5 sự kiện mở/đóng van với lý do, lưu lượng, tên KTV vận hành</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- v5.2 -->
+<div class="version-block minor" id="v5.2">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(6,182,212,.15);color:#67e8f9">v5.2</span>
+    <span class="version-title">Document Management — Quản lý Văn bản & Tài liệu PCTT</span>
+    <span class="version-tag" style="background:rgba(6,182,212,.15);color:#67e8f9">NEW PAGE</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li style="color:#67e8f9">12 văn bản PCTT mẫu: Quyết định, Công văn, Thông báo, Phương án, Biên bản, Báo cáo, Kế hoạch</li>
+      <li>Filter chip 7 loại + full-text search theo mã số/trích yếu — re-render realtime</li>
+      <li>Workflow ký duyệt: Nháp → Trình ký → Đã ký ban hành (3 trạng thái với màu khác nhau)</li>
+      <li>Đánh dấu "KHẨN" với badge đỏ cho văn bản cấp bách</li>
+      <li>Cột version history (v0.1–v2.1), đếm lượt tải về</li>
+    </ul>
+  </div>
+</div>
+
+<!-- v5.1 -->
+<div class="version-block minor" id="v5.1">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(167,139,250,.15);color:#c4b5fd">v5.1</span>
+    <span class="version-title">AI Data Engine — Trợ lý AI nhận biết dữ liệu thực</span>
+    <span class="version-tag" style="background:rgba(167,139,250,.15);color:#c4b5fd">AI</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#c4b5fd">7 PCTT Q&A Pairs</div>
+        <div class="feature-card-body">Sự cố đang mở · Mực nước cao nhất · Trạm offline · Điều phối · Tóm tắt · Chưa phân công · Lịch sử</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#34d399">aiGetLiveContext()</div>
+        <div class="feature-card-body">Đọc DATA.incidents + DATA.stations realtime, chuẩn hóa tiếng Việt (NFD accent normalization)</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#f59e0b">Query Chips</div>
+        <div class="feature-card-body">6 nút câu hỏi nhanh inject vào chatbot page. Trả lời có context: số lượng, tên trạm, địa điểm</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#f97316">Dispatch Recommend</div>
+        <div class="feature-card-body">Widget gợi ý điều phối: sort by severity, hiển thị critical incidents chưa được phân công</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- v5.0 -->
+<div class="version-block major" id="v5.0">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(124,58,237,.2);color:#c4b5fd">v5.0</span>
+    <span class="version-title">Hub Restructure — 12 Phân hệ + Operations Command Center</span>
+    <span class="version-tag" style="background:rgba(124,58,237,.2);color:#c4b5fd">MAJOR</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <div class="section-label">Hub Launcher — 12 Phân hệ</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">
+      <span class="chip" style="background:rgba(124,58,237,.15);color:#c4b5fd;border:1px solid rgba(124,58,237,.3)">Điều hành Tập trung</span>
+      <span class="chip" style="background:rgba(8,145,178,.15);color:#67e8f9;border:1px solid rgba(8,145,178,.3)">Thủy lợi & Đê điều</span>
+      <span class="chip" style="background:rgba(220,38,38,.15);color:#fca5a5;border:1px solid rgba(220,38,38,.3)">Chỉ đạo PCTT</span>
+      <span class="chip" style="background:rgba(5,150,105,.15);color:#6ee7b7;border:1px solid rgba(5,150,105,.3)">IoT & Cảnh báo</span>
+      <span class="chip" style="background:rgba(2,132,199,.15);color:#7dd3fc;border:1px solid rgba(2,132,199,.3)">Bản đồ GIS</span>
+      <span class="chip" style="background:rgba(217,119,6,.15);color:#fcd34d;border:1px solid rgba(217,119,6,.3)">Báo cáo & Truyền thông</span>
+      <span class="chip" style="background:rgba(244,114,182,.15);color:#fbcfe8;border:1px solid rgba(244,114,182,.3)">Phản ánh Cộng đồng</span>
+      <span class="chip" style="background:rgba(167,139,250,.15);color:#ddd6fe;border:1px solid rgba(167,139,250,.3)">Trung tâm AI</span>
+      <span class="chip" style="background:rgba(52,211,153,.15);color:#a7f3d0;border:1px solid rgba(52,211,153,.3)">Nhân sự & Tổ chức</span>
+      <span class="chip" style="background:rgba(249,115,22,.15);color:#fed7aa;border:1px solid rgba(249,115,22,.3)">Sự cố & Điều phối ✦ MỚI</span>
+      <span class="chip" style="background:rgba(6,182,212,.15);color:#a5f3fc;border:1px solid rgba(6,182,212,.3)">Quy trình & Tác nghiệp ✦ MỚI</span>
+      <span class="chip" style="background:rgba(100,116,139,.15);color:#cbd5e1;border:1px solid rgba(100,116,139,.3)">Quản trị Hệ thống</span>
+    </div>
+    <div class="section-label">Operations Command Center (pcttOperations.js)</div>
+    <ul class="feat-list">
+      <li>Alert status bar với cấp độ thiên tai realtime + pulse animation</li>
+      <li>6 KPI tiles: cấp độ / đơn vị triển khai / diện ngập / dân sơ tán / máy bơm / thương vong</li>
+      <li>6 Quick-action buttons: Điều động / Sơ tán / Phát thông báo / Cấp vật tư / Lệnh công tác / Báo cáo nhanh</li>
+      <li>Tab Lực lượng & Phương tiện: bảng 7 đơn vị (đội ứng phó / máy bơm / trực thăng / quân đội)</li>
+      <li>Tab Liên lạc: nhật ký CẢNH BÁO/CHỈ ĐẠO/YÊU CẦU/PHÁT SÓNG/BÁO CÁO</li>
+      <li>Tab Giao ban: auto-generate bản giao ban 5 mục + nút In/PDF</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ v4.x -->
+<h2 id="v4" style="font-size:13px;font-weight:800;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin:32px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border)">Series v4.x — Core PCTT Modules</h2>
+
+<!-- v4.4 -->
+<div class="version-block minor" id="v4.4">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(249,115,22,.15);color:#fed7aa">v4.4</span>
+    <span class="version-title">Weather Intelligence — 7-day Forecast + Flood Risk Matrix</span>
+    <span class="version-tag" style="background:rgba(249,115,22,.15);color:#fed7aa">SUPPLEMENT</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#fed7aa">7-day Forecast Grid</div>
+        <div class="feature-card-body">SVG weather icons (sunny/partly/cloudy/rain/storm), nhiệt độ cao/thấp, mưa (mm), gió (km/h)</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#38bdf8">24h Rainfall Chart</div>
+        <div class="feature-card-body">Biểu đồ cột theo giờ với 3 màu ngưỡng: thấp &lt;10mm · trung bình &lt;30mm · cao ≥30mm</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#ef4444">Flood Risk Matrix</div>
+        <div class="feature-card-body">8 quận/huyện: lượng mưa · mực nước sông · diện tích ngập · chỉ số 0–100%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- v4.3 -->
+<div class="version-block minor" id="v4.3">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(249,115,22,.15);color:#fed7aa">v4.3</span>
+    <span class="version-title">Dike Management — Quản lý Đê điều 4-tab</span>
+    <span class="version-tag" style="background:rgba(249,115,22,.15);color:#fed7aa">NEW PAGE</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li><strong style="color:#fff">Tab Danh mục:</strong> 6 tuyến đê (cấp I–III), sông, chiều dài, cao trình, tình trạng (critical/warning/ok), số điểm xung yếu</li>
+      <li><strong style="color:#fff">Tab Nhật ký tuần tra:</strong> log hàng ngày, highlight vàng khi phát hiện bất thường</li>
+      <li><strong style="color:#fff">Tab Điểm xung yếu:</strong> 5 điểm với severity chip Emergency/Critical/Warning/Info, trạng thái xử lý</li>
+      <li><strong style="color:#fff">Tab Vi phạm hành lang:</strong> biên bản vi phạm, hình thức xử lý, trạng thái giải quyết</li>
+    </ul>
+  </div>
+</div>
+
+<!-- v4.2 -->
+<div class="version-block minor" id="v4.2">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(249,115,22,.15);color:#fed7aa">v4.2</span>
+    <span class="version-title">Incident Management — 7-step Workflow + SLA Tracking</span>
+    <span class="version-tag" style="background:rgba(249,115,22,.15);color:#fed7aa">SUPPLEMENT</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <div class="section-label">SLA Thresholds by Severity</div>
+    <table class="thresh">
+      <thead><tr><th>Mức độ</th><th>Thời gian xử lý</th><th>Badge màu</th></tr></thead>
+      <tbody>
+        <tr><td>🔴 Critical</td><td>60 phút (1 giờ)</td><td style="color:#ef4444">Đỏ — nhấp nháy khi quá hạn</td></tr>
+        <tr><td>🟠 High</td><td>240 phút (4 giờ)</td><td style="color:#f97316">Cam</td></tr>
+        <tr><td>🟡 Medium</td><td>1440 phút (24 giờ)</td><td style="color:#f59e0b">Vàng</td></tr>
+        <tr><td>🟢 Low</td><td>4320 phút (3 ngày)</td><td style="color:#10b981">Xanh</td></tr>
+      </tbody>
+    </table>
+    <div class="section-label" style="margin-top:14px">7-Bước Workflow</div>
+    <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:4px">
+      <span class="chip" style="background:rgba(99,102,241,.15);color:#a5b4fc;border:1px solid rgba(99,102,241,.25)">1 Tiếp nhận</span>
+      <span class="chip" style="background:rgba(6,182,212,.15);color:#67e8f9;border:1px solid rgba(6,182,212,.25)">2 Xác minh</span>
+      <span class="chip" style="background:rgba(139,92,246,.15);color:#ddd6fe;border:1px solid rgba(139,92,246,.25)">3 Phân loại</span>
+      <span class="chip" style="background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid rgba(245,158,11,.25)">4 Giao xử lý</span>
+      <span class="chip" style="background:rgba(249,115,22,.15);color:#fed7aa;border:1px solid rgba(249,115,22,.25)">5 Cập nhật</span>
+      <span class="chip" style="background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid rgba(16,185,129,.25)">6 Nghiệm thu</span>
+      <span class="chip" style="background:rgba(59,130,246,.15);color:#93c5fd;border:1px solid rgba(59,130,246,.25)">7 Báo cáo</span>
+    </div>
+    <ul class="feat-list" style="margin-top:10px">
+      <li>SLA progress bar màu theo % thời gian đã dùng (xanh→vàng→đỏ)</li>
+      <li>Check-in/check-out hiện trường với timestamp GPS</li>
+      <li>Xuất biên bản điều tra điện tử (.txt) ký tên, ngày giờ</li>
+    </ul>
+  </div>
+</div>
+
+<!-- v4.1 -->
+<div class="version-block minor" id="v4.1">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(249,115,22,.15);color:#fed7aa">v4.1</span>
+    <span class="version-title">Decision Support Hub — Cảnh báo sớm &amp; Hỗ trợ quyết định</span>
+    <span class="version-tag" style="background:rgba(249,115,22,.15);color:#fed7aa">UPGRADED</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li>Tab Live Alerts: danh sách alert realtime với step-by-step AI response guide</li>
+      <li>Tab Rule Engine: bộ luật cảnh báo tự động (condition triggers → actions)</li>
+      <li>Tab Risk Matrix Heatmap: 8 huyện × 4 loại rủi ro (đê điều/lũ lụt/ngập úng/sạt lở)</li>
+      <li>Tab Alert Channels Config: Zalo/Email/SMS/PA/Push với enable/disable toggle</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ v3.x -->
+<h2 id="v3" style="font-size:13px;font-weight:800;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin:32px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border)">Series v3.x — AI Analytics & Hub UI</h2>
+
+<div class="version-block major" id="v3.1">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(6,182,212,.15);color:#67e8f9">v3.1</span>
+    <span class="version-title">Post-login Module Hub — Orbital Launcher với TTS</span>
+    <span class="version-tag" style="background:rgba(6,182,212,.15);color:#67e8f9">MAJOR</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li>Animated starfield background + orbital ring icon layout</li>
+      <li>TTS pronounce module name khi hover (vi-VN, tốc độ/pitch/volume configurable)</li>
+      <li>Role-based filtering: SuperAdmin thấy tất cả, role thường thấy hub được phân quyền</li>
+      <li>HUB_CONFIG: borderWidth, borderOpacity, hoverScale, sound settings</li>
+      <li>Smooth orbit animation, glow effects per hub color</li>
+    </ul>
+  </div>
+</div>
+
+<div class="version-block minor" id="v3.0">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(6,182,212,.15);color:#67e8f9">v3.0</span>
+    <span class="version-title">AI Analytics across 3 pages (Dashboard / IoT / Community Reports)</span>
+    <span class="version-tag" style="background:rgba(167,139,250,.15);color:#c4b5fd">AI</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li>Dashboard: AI trend analysis, pattern detection từ lịch sử mưa 7 ngày</li>
+      <li>IoT Monitor: anomaly detection tab, threshold breach prediction</li>
+      <li>Community Reports: AI phân tích tab — heatmap, category breakdown, response time stats</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ v2.x -->
+<h2 id="v2" style="font-size:13px;font-weight:800;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin:32px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border)">Series v2.x — Communication & Core Modules</h2>
+
+<div class="version-block minor" id="v2.9">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(16,185,129,.15);color:#6ee7b7">v2.9</span>
+    <span class="version-title">CommsDevices — Bộ đàm, Điện thoại IP, Màn hình LED</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li>Tab Bộ đàm: danh sách thiết bị radio, kênh, trạng thái pin, tín hiệu</li>
+      <li>Tab Điện thoại IP: sip extension, danh bạ nội bộ, call log</li>
+      <li>Tab Màn hình LED: quản lý nội dung hiển thị trên màn hình công cộng</li>
+    </ul>
+  </div>
+</div>
+
+<div class="version-block minor" id="v2.8">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(16,185,129,.15);color:#6ee7b7">v2.8</span>
+    <span class="version-title">TTS Studio — Studio phát thông báo loa địa phương</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li>Template thông báo thiên tai (lũ lụt, sơ tán, ngập úng, bão)</li>
+      <li>Text-to-Speech Web Speech API (vi-VN), preview trực tiếp</li>
+      <li>Quản lý lịch phát, tần suất, vùng phát thanh</li>
+    </ul>
+  </div>
+</div>
+
+<div class="version-block minor" id="v2.7">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(16,185,129,.15);color:#6ee7b7">v2.7</span>
+    <span class="version-title">Hệ thống Liên lạc & Loa — Communication Devices Hub</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li>Trang mới: commsDevices.js — trung tâm quản lý tất cả thiết bị liên lạc</li>
+      <li>Device status board: online/offline/warning per thiết bị</li>
+      <li>Lịch sử phát thông báo, log kênh liên lạc</li>
+    </ul>
+  </div>
+</div>
+
+<div class="version-block minor" id="v2.5">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(16,185,129,.15);color:#6ee7b7">v2.5</span>
+    <span class="version-title">Community Reports — Image Gallery + Layout Fix</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li>Lightbox gallery modal khi click ảnh báo cáo (navigate prev/next)</li>
+      <li>Status pipeline: Chờ xử lý → Đang xử lý → Đã giải quyết → Từ chối</li>
+      <li>Phân loại: Đê điều / Ngập lụt / Sạt lở / Cống tắc / Vi phạm / Cây đổ / Hạ tầng</li>
+      <li>AI Analytics tab: heatmap + category chart + AI response recommendations</li>
+    </ul>
+  </div>
+</div>
+
+<div class="version-block minor" id="v2.3">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(16,185,129,.15);color:#6ee7b7">v2.3</span>
+    <span class="version-title">Phản ánh Cộng đồng — Community Reports từ Citizen App</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li>Module mới communityReports.js (740 dòng)</li>
+      <li>Nhận báo cáo từ ứng dụng công dân: ảnh, mô tả, toạ độ GPS, số điện thoại</li>
+      <li>Giao việc cho nhân viên, ghi chú xử lý, theo dõi tiến độ realtime</li>
+    </ul>
+  </div>
+</div>
+
+<div class="version-block minor" id="v2.2">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(16,185,129,.15);color:#6ee7b7">v2.2</span>
+    <span class="version-title">Notification System — Đa kênh + Loa PA</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li>5 kênh thông báo: Zalo OA · SMS · Email · Push App · Loa phát thanh PA</li>
+      <li>Template thông báo theo loại thiên tai, target theo địa bàn/đơn vị</li>
+      <li>Log lịch sử gửi, xác nhận đã đọc, thống kê tiếp cận</li>
+    </ul>
+  </div>
+</div>
+
+<div class="version-block minor" id="v2.1">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(16,185,129,.15);color:#6ee7b7">v2.1</span>
+    <span class="version-title">Weather Bulletin Enhancement + AI/RAG Data Hub</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li>Weather Bulletin: soạn thảo bản tin thủy văn theo template PCTT</li>
+      <li>AI/RAG tabs chuyển sang DataHub: trích xuất KPI từ văn bản, phân tích dữ liệu</li>
+      <li>Bulletins lịch sử với trạng thái (draft/published/archived)</li>
+    </ul>
+  </div>
+</div>
+
+<div class="version-block major" id="v2.0">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(16,185,129,.2);color:#6ee7b7">v2.0</span>
+    <span class="version-title">Toàn hệ thống — PCTT Domain Data Migration hoàn chỉnh</span>
+    <span class="version-tag" style="background:rgba(16,185,129,.2);color:#6ee7b7">MAJOR</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li>Migrate toàn bộ data từ Quawaco nước sạch → PCTT thiên tai</li>
+      <li>DATA object: stations (trạm đo), incidents (sự cố), alerts, fourOnSite</li>
+      <li>Dashboard: mưa 12h, đê điều, mực nước sông Hồng, bản đồ ngập</li>
+      <li>Config preset system: production / minimal / reporting / emergency</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ v1.x -->
+<h2 id="v1" style="font-size:13px;font-weight:800;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.1em;margin:32px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border)">Series v1.x — Nền tảng IOC</h2>
+
+<div class="version-block minor" id="v1.2">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(245,158,11,.15);color:#fcd34d">v1.2</span>
+    <span class="version-title">Config System — Module/Tab Visibility + Preset Support</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li>Config-driven ẩn/hiện từng module, tab theo preset (emergency/reporting/minimal)</li>
+      <li>Settings UI: toggle từng trang/tab, save to localStorage</li>
+      <li>SuperAdmin bypass: luôn thấy tất cả dù preset nào</li>
+    </ul>
+  </div>
+</div>
+
+<div class="version-block minor" id="v1.1">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(245,158,11,.15);color:#fcd34d">v1.1</span>
+    <span class="version-title">PCTT Domain Data — Tất cả trang cập nhật dữ liệu PCTT</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <ul class="feat-list">
+      <li>Thay toàn bộ unicode/emoji bằng SVG premium icons (lần 1)</li>
+      <li>Cập nhật PCTT: quận/huyện HN, sông Hồng/Đáy/Tích, trạm đo lũ</li>
+      <li>Nhân sự: cơ cấu tổ chức Chi cục TT-PCTT Hà Nội</li>
+    </ul>
+  </div>
+</div>
+
+<div class="version-block major" id="v1.0">
+  <div class="version-header">
+    <span class="version-badge" style="background:rgba(245,158,11,.2);color:#fcd34d">v1.0</span>
+    <span class="version-title">Hadiwa IOC — Full Release với các Module cốt lõi</span>
+    <span class="version-tag" style="background:rgba(245,158,11,.2);color:#fcd34d">INITIAL</span>
+    <span class="version-date">13/03/2026</span>
+  </div>
+  <div class="version-body">
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#fcd34d">Dashboard PCTT</div>
+        <div class="feature-card-body">6 KPI tiles, biểu đồ lượng mưa realtime, danh sách cảnh báo, bảng tuyến đê, sparkline charts</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#67e8f9">IoT Monitoring</div>
+        <div class="feature-card-body">15+ trạm đo tự động (sóng siêu âm/radar), mực nước sông, cảnh báo BD1/BD2</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#6ee7b7">GIS Map</div>
+        <div class="feature-card-body">Bản đồ số nền Leaflet, layer tuyến đê, trạm đo, vùng ngập, sự cố</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#fca5a5">Incidents</div>
+        <div class="feature-card-body">Quản lý sự cố: Kanban + Table + Timeline. Phân loại, giao đội, theo dõi trạng thái</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#c4b5fd">AI Agent</div>
+        <div class="feature-card-body">5 tabs: lập lịch tác vụ, giám sát bất thường, cảnh báo thông minh, AI chuyên biệt, thống kê</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#a7f3d0">HRM</div>
+        <div class="feature-card-body">Nhân sự PCTT: sơ đồ tổ chức, danh sách cán bộ, phân công trực, thông báo nội bộ</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#fed7aa">Workflow Builder</div>
+        <div class="feature-card-body">Trình dựng quy trình kéo-thả, 20+ mẫu quy trình sẵn có, chạy thử trực tiếp</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title" style="color:#7dd3fc">PCTT Command</div>
+        <div class="feature-card-body">Chỉ đạo PCTT: văn bản, nguồn lực 4 tại chỗ, quỹ phòng chống thiên tai</div>
+      </div>
+    </div>
+    <div class="section-label" style="margin-top:14px">IoT Alert Thresholds (Mực nước — mặc định)</div>
+    <table class="thresh">
+      <thead><tr><th>Sông</th><th>Báo động 1 (BD1)</th><th>Báo động 2 (BD2)</th><th>Báo động 3 (BD3)</th></tr></thead>
+      <tbody>
+        <tr><td>Sông Hồng (Hà Nội)</td><td style="color:#f59e0b">9.50 m</td><td style="color:#f97316">11.50 m</td><td style="color:#ef4444">13.40 m</td></tr>
+        <tr><td>Sông Đáy (Quốc Oai)</td><td style="color:#f59e0b">4.50 m</td><td style="color:#f97316">5.00 m</td><td style="color:#ef4444">5.50 m</td></tr>
+        <tr><td>Sông Tích (Sơn Tây)</td><td style="color:#f59e0b">5.00 m</td><td style="color:#f97316">6.00 m</td><td style="color:#ef4444">7.00 m</td></tr>
+        <tr><td>Sông Bùi (Xuân Mai)</td><td style="color:#f59e0b">3.50 m</td><td style="color:#f97316">4.50 m</td><td style="color:#ef4444">5.50 m</td></tr>
+      </tbody>
+    </table>
+    <div class="section-label" style="margin-top:12px">Rainfall Alert Thresholds</div>
+    <table class="thresh">
+      <thead><tr><th>Ngưỡng</th><th>6 giờ (mm)</th><th>12 giờ (mm)</th><th>24 giờ (mm)</th></tr></thead>
+      <tbody>
+        <tr><td style="color:#f59e0b">Cảnh báo (BD1)</td><td>50</td><td>80</td><td>100</td></tr>
+        <tr><td style="color:#f97316">Nguy hiểm (BD2)</td><td>80</td><td>120</td><td>200</td></tr>
+        <tr><td style="color:#ef4444">Rất nguy hiểm (BD3)</td><td>120</td><td>180</td><td>300</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="margin-top:40px;padding:20px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:12px;text-align:center;font-size:12px;color:var(--muted)">
+  <strong style="color:var(--text)">Hadiwa IOC v5.3</strong> — Chi cục Thủy lợi & Phòng chống Thiên tai Hà Nội<br>
+  Tài liệu tự động từ hệ thống · Cập nhật: 13/03/2026 · Lưu hành nội bộ
+</div>
+
+</div><!-- .content -->
+</div><!-- .layout -->
+
+<script>
+// Smooth scroll + active highlight for sidebar
+document.querySelectorAll('.sidebar-link').forEach(link => {
+  link.addEventListener('click', e => {
+    const href = link.getAttribute('href');
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const el = document.getElementById(href.slice(1));
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+</body>
+</html>

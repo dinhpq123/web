@@ -1,0 +1,34 @@
+III. DANH SÁCH TÍNH NĂNG PHẦN MỀM (FEATURE LIST)
+1. Phân hệ GIS & Bản đồ số Thủy lợi, Đê điều
+•	Hiển thị bản đồ nền đa lớp: Vệ tinh, địa hình, giao thông, thủy văn.
+•	Hiển thị trực quan Bản đồ ngập lụt theo thời gian thực (tích hợp chuẩn VNDMS).
+•	Trực quan hóa tọa độ, hải đồ hệ thống đê điều, công trình thủy lợi (cống, trạm bơm, cống xả).
+•	Tra cứu, tìm kiếm, lọc nhanh công trình đê điều và thông tin cao trình mặt cắt ngay trên bản đồ.
+2. Phân hệ Quản lý CSDL Thủy lợi & Đê điều
+•	Quản lý hồ sơ công trình thủy lợi (kho lưu trữ số).
+•	Quản lý hồ sơ hệ thống Đê điều (Đồng bộ bảng dữ liệu độ dài, cao trình thiết kế vs cao trình hiện tại từ file Excel vào CSDL).
+•	Quản lý cấp phép các hoạt động liên quan đến đê điều và công trình thủy lợi.
+•	Quản lý cảnh báo và xử lý vi phạm hành lang bảo vệ đê điều.
+3. Phân hệ Quản lý & Chỉ đạo Phòng chống thiên tai (PCTT)
+•	Cập nhật và lưu trữ văn bản, quyết định, phương án PCTT từ cấp Thành phố đến cấp Xã.
+•	Quản lý '4 tại chỗ': Quản lý Chỉ huy, Lực lượng, Vật tư - phương tiện, Hậu cần trên toàn thành phố.
+•	Quản lý các kịch bản chỉ đạo điều hành trực tuyến (kết nối Thành phố & cơ sở).
+•	Quản lý đối tượng thu/nộp ngộp, sử dụng Quỹ PCTT.
+•	Tích hợp tài liệu truyền thông về PCTT.
+4. Phân hệ Thu thập Dữ liệu & Cảnh báo Sớm (IoT Integration)
+•	Connect API tích hợp dữ liệu từ thiết bị đo trạm bơm, đo lượng mưa, đo mực nước tự động.
+•	Giám sát biểu đồ mực nước, lượng mưa thời gian thực.
+•	Thiết lập ngưỡng báo động (Báo động 1, 2, 3) và Tự động gửi cảnh báo (SMS, Email, Notis app) khi số liệu vượt ngưỡng thiết kế đê.
+•	Biên soạn và tự động hóa phát hành Bản tin dự báo/Cảnh báo thiên tai.
+5. Phân hệ Báo cáo & Thống kê Tự động
+•	Báo cáo số liệu thu nộp quỹ PCTT.
+•	Báo cáo thống kê thiệt hại và ảnh hưởng định kỳ.
+•	Báo cáo đánh giá năng lực an toàn chống lũ của hệ thống mặt cắt đê.
+•	Xuất PDF, Excel theo form mẫu chuẩn.
+6. Phân hệ Tương tác thông minh & Truyền thông
+•	Truyền thông kiến thức PCTT qua cổng thông tin.
+•	AI Chatbot: Tích hợp trợ lý ảo hỏi - đáp, cung cấp kiến thức, luật.
+7. Phân hệ Quản trị & Tích hợp (Hệ thống)
+•	Quản lý người dùng, phân quyền chi tiết.
+•	Quản lý danh mục dùng chung thiết lập hệ thống.
+•	Cổng API Gateway: Kết nối LGSP, kết nối CSDL Quốc gia và Bộ NN&PTNT.

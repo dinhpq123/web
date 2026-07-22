@@ -1,0 +1,670 @@
+#!/usr/bin/env python3
+# gen_doc.py — generates docs/system-guide.html for HADIWA IOC
+
+import os, re
+
+BASE = '/Users/huanpv/Desktop/Wip/Projects/Chi cục TT-PCTT/Hadiwa IOC'
+OUT  = os.path.join(BASE, 'docs', 'system-guide.html')
+
+# ── Helper to read a file snippet ─────────────────────────────────
+def read_lines(path, start=1, end=None):
+    try:
+        with open(os.path.join(BASE, path), encoding='utf-8') as f:
+            lines = f.readlines()
+        if end: return ''.join(lines[start-1:end])
+        return ''.join(lines[start-1:])
+    except: return ''
+
+# ── HTML template ─────────────────────────────────────────────────
+HTML = r"""<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HADIWA IOC — Tài liệu Hệ thống v3.1</title>
+<style>
+:root{--bg:#0d1117;--bg2:#161b22;--border:#30363d;--text:#e6edf3;--muted:#8b949e;
+  --cyan:#00c8ff;--red:#f85149;--yellow:#e3b341;--green:#3fb950;--purple:#a371f7;
+  --blue:#58a6ff;--orange:#f0883e;}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;font-size:14px}
+a{color:var(--cyan);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ── Layout ── */
+.layout{display:grid;grid-template-columns:260px 1fr;min-height:100vh}
+.toc{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--bg2);
+  border-right:1px solid var(--border);padding:20px 0}
+.toc h2{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);
+  padding:0 16px 8px;border-bottom:1px solid var(--border);margin-bottom:8px}
+.toc a{display:block;padding:5px 16px;font-size:12px;color:var(--muted);border-left:2px solid transparent}
+.toc a:hover,.toc a.active{color:var(--cyan);border-left-color:var(--cyan);background:rgba(0,200,255,.05)}
+.toc .toc-group{font-size:10px;color:var(--muted);padding:12px 16px 2px;text-transform:uppercase;letter-spacing:.08em}
+main{padding:40px 48px;max-width:960px}
+
+/* ── Typography ── */
+h1{font-size:28px;font-weight:800;color:var(--text);margin-bottom:8px}
+h2{font-size:20px;font-weight:700;color:var(--cyan);margin:40px 0 16px;
+  padding-bottom:8px;border-bottom:1px solid var(--border)}
+h3{font-size:15px;font-weight:700;color:var(--blue);margin:24px 0 10px}
+h4{font-size:13px;font-weight:700;color:var(--yellow);margin:18px 0 8px}
+p{margin-bottom:12px;color:var(--muted)}
+strong{color:var(--text)}
+code{font-family:'Roboto Mono',monospace;font-size:12px;background:rgba(255,255,255,.06);
+  padding:1px 6px;border-radius:4px;color:var(--cyan)}
+pre{background:var(--bg2);border:1px solid var(--border);border-radius:8px;
+  padding:16px;overflow-x:auto;margin:12px 0;font-size:12px;color:var(--green)}
+pre code{background:none;padding:0;color:inherit}
+
+/* ── Components ── */
+.hero{background:linear-gradient(135deg,rgba(0,200,255,.08),rgba(124,58,237,.08));
+  border:1px solid rgba(0,200,255,.2);border-radius:12px;padding:24px 28px;margin-bottom:32px}
+.hero h1{background:linear-gradient(135deg,#fff 30%,var(--cyan));-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--muted);margin:0}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
+.badge-red{background:rgba(248,81,73,.15);color:var(--red)}
+.badge-yellow{background:rgba(227,179,65,.15);color:var(--yellow)}
+.badge-green{background:rgba(63,185,80,.15);color:var(--green)}
+.badge-blue{background:rgba(88,166,255,.15);color:var(--blue)}
+.badge-purple{background:rgba(163,113,247,.15);color:var(--purple)}
+.badge-gray{background:rgba(139,148,158,.15);color:var(--muted)}
+.badge-orange{background:rgba(240,136,62,.15);color:var(--orange)}
+.badge-cyan{background:rgba(0,200,255,.15);color:var(--cyan)}
+
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
+th{background:rgba(255,255,255,.04);color:var(--muted);font-weight:600;font-size:11px;
+  text-transform:uppercase;letter-spacing:.05em;padding:8px 12px;border:1px solid var(--border);text-align:left}
+td{padding:8px 12px;border:1px solid var(--border);vertical-align:top}
+tr:hover td{background:rgba(255,255,255,.02)}
+
+.callout{border-radius:8px;padding:14px 16px;margin:14px 0;font-size:13px;border-left:3px solid}
+.callout.warning{background:rgba(227,179,65,.07);border-color:var(--yellow);color:var(--yellow)}
+.callout.info   {background:rgba(0,200,255,.07); border-color:var(--cyan);  color:var(--cyan)}
+.callout.danger {background:rgba(248,81,73,.07); border-color:var(--red);   color:var(--red)}
+.callout.tip    {background:rgba(63,185,80,.07); border-color:var(--green); color:var(--green)}
+.callout strong{color:inherit}
+.callout p{color:inherit;margin:0}
+
+.source-ref{display:inline-flex;align-items:center;gap:5px;font-size:11px;
+  background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;
+  padding:3px 10px;color:var(--muted);margin:4px 2px}
+.source-ref::before{content:'📄';font-size:10px}
+
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:16px}
+.card h4{margin-top:0}
+.threshold-row{display:flex;align-items:center;gap:10px;padding:6px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);font-size:12px}
+.threshold-row:last-child{border:none}
+.threshold-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+
+/* ── TOC active tracking ── */
+.section{scroll-margin-top:20px}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<!-- ── TOC ── -->
+<nav class="toc">
+  <h2>Nội dung</h2>
+  <div class="toc-group">Tổng quan</div>
+  <a href="#overview">Giới thiệu hệ thống</a>
+  <a href="#architecture">Kiến trúc & Công nghệ</a>
+  <a href="#versions">Lịch sử phiên bản</a>
+  <div class="toc-group">Phân quyền</div>
+  <a href="#roles">Các Role & Quyền truy cập</a>
+  <a href="#presets">Preset cấu hình</a>
+  <a href="#feature-flags">Feature Flags</a>
+  <div class="toc-group">Phân hệ</div>
+  <a href="#hub">Hub Module Launcher</a>
+  <a href="#dashboard">Dashboard</a>
+  <a href="#dieuhanh">Điều hành Tập trung</a>
+  <a href="#gis">Bản đồ GIS</a>
+  <a href="#hydraulic">Thủy lợi & Đê điều</a>
+  <a href="#pctt">Chỉ đạo PCTT</a>
+  <a href="#iot">IoT & Cảnh báo sớm</a>
+  <a href="#community">Phản ánh Cộng đồng</a>
+  <a href="#media">Truyền thông & TTS</a>
+  <a href="#comms">Hệ thống Liên lạc</a>
+  <a href="#ai">Trung tâm AI</a>
+  <a href="#hrm">Nhân sự & Tổ chức</a>
+  <a href="#datahub">Data Hub</a>
+  <a href="#settings">Quản trị Hệ thống</a>
+  <div class="toc-group">Ngưỡng quan trọng</div>
+  <a href="#water-thresholds">Ngưỡng Mực nước</a>
+  <a href="#rain-thresholds">Ngưỡng Lượng mưa</a>
+  <a href="#risk-matrix">Ma trận Rủi ro</a>
+  <a href="#ai-thresholds">Ngưỡng AI</a>
+  <div class="toc-group">Chỉnh sửa</div>
+  <a href="#where-to-edit">Hướng dẫn sửa ngưỡng</a>
+  <a href="#config-ref">Bảng tham chiếu file</a>
+</nav>
+
+<!-- ── Main ── -->
+<main>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>HADIWA IOC — Tài liệu Kỹ thuật Hệ thống</h1>
+  <p>Phiên bản <strong>v3.1</strong> · Ngày cập nhật <strong>13/03/2026</strong> · Chi cục TT-PCTT TP. Hà Nội</p>
+</div>
+
+<!-- ══ TỔNG QUAN ══════════════════════════════════════════════════ -->
+<section class="section" id="overview">
+<h2>🌐 Giới thiệu Hệ thống</h2>
+<p><strong>HADIWA IOC</strong> (Intelligent Operations Center) là nền tảng quản lý, giám sát và điều hành tích hợp dành cho Chi cục Thủy lợi – Phòng chống Thiên tai TP. Hà Nội. Hệ thống cung cấp giao diện web đơn trang (SPA) với 25+ phân hệ nghiệp vụ.</p>
+
+<div class="grid-3">
+  <div class="card">
+    <h4>📂 Cấu trúc thư mục</h4>
+    <code>js/app.js</code> — Shell chính<br>
+    <code>js/hub.js</code> — Hub launcher<br>
+    <code>js/config.js</code> — Config & roles<br>
+    <code>js/data.js</code> — Mock data<br>
+    <code>js/pages/*.js</code> — Các trang<br>
+    <code>app.html</code> — Entry point<br>
+    <code>login.html</code> — Đăng nhập
+  </div>
+  <div class="card">
+    <h4>🔢 Số lượng</h4>
+    25+ trang nghiệp vụ<br>
+    7 Role người dùng<br>
+    3 Preset cấu hình<br>
+    16 Trạm IoT đang theo dõi<br>
+    80+ cảm biến<br>
+    10 Phân hệ Hub
+  </div>
+  <div class="card">
+    <h4>⚙️ Công nghệ</h4>
+    Vanilla HTML/CSS/JS<br>
+    Không framework ngoài<br>
+    Leaflet.js (GIS maps)<br>
+    CSS Variables (theme)<br>
+    localStorage (state)<br>
+    WebSocket (alerts)
+  </div>
+</div>
+</section>
+
+<!-- ══ KIẾN TRÚC ══════════════════════════════════════════════════ -->
+<section class="section" id="architecture">
+<h2>🏗 Kiến trúc & Luồng khởi động</h2>
+<pre><code>login.html
+  └─ doLogin() → sessionStorage.set(qwc_user) → location.href = app.html
+
+app.html  (loads scripts in order)
+  ├─ js/data.js         — Mock data (stations, employees, reports...)
+  ├─ js/config.js       — Feature flags, RBAC, presets, tab lists
+  ├─ js/hub.js          — Orbital hub overlay
+  ├─ js/pages/*.js      — Page render functions
+  └─ js/app.js          — MENU defs, navigate(), buildSidebar(), DOMContentLoaded
+
+DOMContentLoaded sequence:
+  1. initRbac()         — Load user from sessionStorage, set permissions
+  2. initTheme()        — Apply dark/light theme
+  3. applyPreset()      — Apply feature/tab config for current preset
+  4. buildSidebar()     — Filter menu by feature flags + RBAC
+  5. showModuleHub()    — Show hub overlay if no savedPage (first login)
+  6. navigate(page)     — Render first page
+  7. updateClock()      — Clock ticker every 1s</code></pre>
+
+<div class="callout info">
+  <strong>Hub Trigger:</strong> Hub chỉ hiện khi <code>localStorage.qwc_last_page</code> chưa có giá trị (lần đầu đăng nhập). Để test hub, xóa key này trong DevTools → Application → LocalStorage.
+</div>
+</section>
+
+<!-- ══ PHIÊN BẢN ══════════════════════════════════════════════════ -->
+<section class="section" id="versions">
+<h2>📋 Lịch sử Phiên bản</h2>
+<table>
+<tr><th>Version</th><th>Nội dung</th></tr>
+<tr><td><span class="badge badge-cyan">v3.1</span></td><td>Post-login Orbital Module Hub (js/hub.js) — 10 phân hệ xếp vòng tròn, role-filtered, hover glow</td></tr>
+<tr><td><span class="badge badge-green">v3.0</span></td><td>5 tính năng AI Analytics: severity ranking, trend forecast, hotspot, AI suggestions, risk matrix</td></tr>
+<tr><td><span class="badge badge-green">v2.9</span></td><td>CommsDevices tabs enhanced: editRadio modal, phone call log, display content scheduler/playlist</td></tr>
+<tr><td><span class="badge badge-blue">v2.8</span></td><td>TTS Studio tab trong Truyền thông PCTT: voice library, clone wizard, SSML, audio history</td></tr>
+<tr><td><span class="badge badge-blue">v2.7</span></td><td>Trang mới "Hệ thống Liên lạc & Loa": 4 tabs — Cụm Loa, Bộ đàm, Điện thoại IP, Màn hình LED</td></tr>
+<tr><td><span class="badge badge-purple">v2.6</span></td><td>HRM: thay toàn bộ emoji/unicode → premium SVG icons</td></tr>
+</table>
+</section>
+
+<!-- ══ PHÂN QUYỀN ═════════════════════════════════════════════════ -->
+<section class="section" id="roles">
+<h2>👤 Các Role & Quyền truy cập</h2>
+<p>Được định nghĩa trong <span class="source-ref">js/config.js L1-50</span></p>
+
+<table>
+<tr><th>Role</th><th>Tên hiển thị</th><th>Màu</th><th>Phạm vi truy cập</th></tr>
+<tr><td><code>SYSADMIN</code></td><td>Quản trị hệ thống</td><td><span class="badge badge-red">Đỏ</span></td><td>Toàn bộ hệ thống, cài đặt, phân quyền</td></tr>
+<tr><td><code>DIRECTOR</code></td><td>Lãnh đạo</td><td><span class="badge badge-purple">Tím</span></td><td>Dashboard, báo cáo, chỉ đạo, phê duyệt — Không có Admin</td></tr>
+<tr><td><code>DISPATCHER</code></td><td>Điều phối viên</td><td><span class="badge badge-yellow">Vàng</span></td><td>Điều hành, cảnh báo, phân công nhiệm vụ</td></tr>
+<tr><td><code>TECHNICIAN</code></td><td>Kỹ thuật viên</td><td><span class="badge badge-blue">Xanh</span></td><td>IoT, GIS, công trình thủy lợi, báo cáo kỹ thuật</td></tr>
+<tr><td><code>HR</code></td><td>Nhân sự</td><td><span class="badge badge-green">Xanh lá</span></td><td>HRM, thông báo nội bộ, lịch trực</td></tr>
+<tr><td><code>BUSINESS</code></td><td>Nghiệp vụ</td><td><span class="badge badge-cyan">Cyan</span></td><td>Báo cáo, truyền thông, phản ánh cộng đồng</td></tr>
+<tr><td><code>VIEWER</code></td><td>Xem</td><td><span class="badge badge-gray">Xám</span></td><td>Chỉ xem dashboard, cảnh báo, báo cáo tổng hợp</td></tr>
+</table>
+
+<div class="callout warning">
+  <strong>Sửa Role:</strong> Để thêm/sửa role, chỉnh trong <code>js/config.js</code> mục <code>ROLE_LABELS</code> và <code>RBAC_MATRIX</code>. Đồng thời cập nhật <code>login.html</code> nếu có user list hardcode.
+</div>
+</section>
+
+<!-- ══ PRESETS ════════════════════════════════════════════════════ -->
+<section class="section" id="presets">
+<h2>🎛 Preset Cấu hình</h2>
+<p>Được định nghĩa trong <span class="source-ref">js/config.js L206-300</span> · Chọn preset bằng <code>CONFIG.activePreset</code></p>
+
+<table>
+<tr><th>Preset</th><th>Mô tả</th><th>Đặc điểm</th></tr>
+<tr>
+  <td><code>pctt_hanoi</code></td>
+  <td>Chi cục PCTT TP. Hà Nội — Full Package</td>
+  <td>Bật toàn bộ tính năng: dashboard, GIS, IoT, HRM, AI, TTS, Liên lạc. Tabs pcttMedia: library + social + <strong>tts</strong></td>
+</tr>
+<tr>
+  <td><code>pctt_basic</code></td>
+  <td>Gói Quan trắc & Cảnh báo sớm</td>
+  <td>Chỉ IoT + dashboard + GIS + camera + chatbot. Tắt: HRM, AI agent, Data Hub, media</td>
+</tr>
+<tr>
+  <td><code>pctt_command</code></td>
+  <td>Gói Chỉ đạo PCTT</td>
+  <td>Tập trung điều hành, chỉ đạo, kịch bản. Có media library + social + tts. Tắt Data Hub, HRM</td>
+</tr>
+<tr>
+  <td><code>custom</code></td>
+  <td>Cấu hình thủ công</td>
+  <td>Dùng trực tiếp mảng features/tabs trong CONFIG, không ghi đè bởi preset nào</td>
+</tr>
+</table>
+
+<div class="callout tip">
+  <strong>Thay preset:</strong> Sửa <code>CONFIG.activePreset = 'pctt_hanoi'</code> trong <code>js/config.js</code> dòng ~20. Sau khi đổi, làm mới trình duyệt là có hiệu lực ngay.
+</div>
+</section>
+
+<!-- ══ FEATURE FLAGS ══════════════════════════════════════════════ -->
+<section class="section" id="feature-flags">
+<h2>🚦 Feature Flags</h2>
+<p>Mỗi trang có 1 flag boolean quyết định hiển thị trong sidebar và cho phép navigate. <span class="source-ref">js/config.js L160-200</span></p>
+
+<div class="grid-2">
+<table>
+<tr><th>Flag</th><th>Trang</th></tr>
+<tr><td><code>dashboard</code></td><td>Dashboard tổng hợp</td></tr>
+<tr><td><code>dieuhanh</code></td><td>Điều hành tập trung</td></tr>
+<tr><td><code>videowall</code></td><td>Video Wall</td></tr>
+<tr><td><code>camera</code></td><td>Camera CCTV</td></tr>
+<tr><td><code>gis</code></td><td>Bản đồ GIS</td></tr>
+<tr><td><code>irrigationAssets</code></td><td>Công trình thủy lợi</td></tr>
+<tr><td><code>dikeManagement</code></td><td>Quản lý đê điều</td></tr>
+<tr><td><code>dikePermit</code></td><td>Cấp phép hành lang đê</td></tr>
+<tr><td><code>pcttDocuments</code></td><td>Văn bản PCTT</td></tr>
+<tr><td><code>fourOnSite</code></td><td>4 tại chỗ</td></tr>
+<tr><td><code>pcttCommand</code></td><td>Chỉ đạo PCTT</td></tr>
+<tr><td><code>pcttFund</code></td><td>Quỹ PCTT</td></tr>
+</table>
+<table>
+<tr><th>Flag</th><th>Trang</th></tr>
+<tr><td><code>communityReports</code></td><td>Phản ánh cộng đồng</td></tr>
+<tr><td><code>iotMonitor</code></td><td>IoT & Cảnh báo sớm</td></tr>
+<tr><td><code>earlyWarning</code></td><td>Cảnh báo sớm</td></tr>
+<tr><td><code>weatherBulletin</code></td><td>Bản tin thời tiết</td></tr>
+<tr><td><code>scheduler</code></td><td>Lịch điều phối</td></tr>
+<tr><td><code>commsDevices</code></td><td>Hệ thống Liên lạc & Loa</td></tr>
+<tr><td><code>reports</code></td><td>Báo cáo tổng hợp</td></tr>
+<tr><td><code>pcttMedia</code></td><td>Truyền thông PCTT</td></tr>
+<tr><td><code>aiagent</code></td><td>AI Agent</td></tr>
+<tr><td><code>chatbot</code></td><td>Trợ lý AI</td></tr>
+<tr><td><code>datahub</code></td><td>Data Hub</td></tr>
+<tr><td><code>hrm</code></td><td>Nhân sự & Tổ chức</td></tr>
+<tr><td><code>log</code></td><td>Nhật ký hệ thống</td></tr>
+<tr><td><code>settings</code></td><td>Cài đặt</td></tr>
+</table>
+</div>
+</section>
+
+<!-- ══ HUB LAUNCHER ═══════════════════════════════════════════════ -->
+<section class="section" id="hub">
+<h2>🚀 Hub Module Launcher</h2>
+<p><span class="source-ref">js/hub.js</span> · <span class="source-ref">js/app.js L1342-1352</span></p>
+<div class="grid-2">
+<div class="card">
+  <h4>Cách hoạt động</h4>
+  Hiện khi <code>localStorage.qwc_last_page</code> rỗng (lần đầu).<br><br>
+  10 phân hệ xếp vòng tròn, lọc theo feature flag.<br><br>
+  Click phân hệ → <code>dismiss + navigate(page)</code><br><br>
+  Click logo sidebar → mở lại bất cứ lúc nào.
+</div>
+<div class="card">
+  <h4>Thêm/sửa nhóm phân hệ</h4>
+  Sửa mảng <code>HUB_GROUPS</code> trong <code>js/hub.js</code>.<br><br>
+  Mỗi group cần: <code>id, label, page, features[], color, glow, icon</code>.<br><br>
+  <code>features[]</code> dùng để check <code>isFeatureEnabled()</code> — nếu tất cả tắt, nhóm bị ẩn.
+</div>
+</div>
+</section>
+
+<!-- ══ IOT & THRESHOLDS ═══════════════════════════════════════════ -->
+<section class="section" id="iot">
+<h2>📡 IoT & Cảnh báo sớm</h2>
+<p><span class="source-ref">js/pages/iotMonitor.js</span> · Data: <span class="source-ref">js/data.js L75-100</span></p>
+<p>16 trạm đo đang được giám sát, cập nhật mô phỏng mỗi <strong>5 phút</strong>. Gồm 3 loại: <code>hydro</code> (thủy văn), <code>rain</code> (đo mưa), <code>reservoir</code> (hồ chứa).</p>
+
+<h3 id="water-thresholds">🌊 Ngưỡng Mực nước Báo động</h3>
+<div class="callout info">
+  <strong>File định nghĩa:</strong> <code>js/data.js</code> — thuộc tính <code>alertLevel1</code>, <code>alertLevel2</code>, <code>alertLevel3</code> của mỗi trạm trong mảng <code>IOT_STATIONS</code> (L75-95)
+</div>
+
+<table>
+<tr><th>Trạm</th><th>Sông/Hồ</th><th>BĐ1 (m)</th><th>BĐ2 (m)</th><th>BĐ3 (m)</th><th>Ghi chú</th></tr>
+<tr><td>Hà Nội (TV01)</td><td>Sông Hồng</td><td>9.5</td><td>11.5</td><td>13.3</td><td>Trạm tham chiếu chính TP. HN</td></tr>
+<tr><td>Ba Thá (TV04)</td><td>Sông Đáy</td><td>4.5</td><td>5.5</td><td>7.0</td><td>Điểm kiểm soát thoát lũ Đáy</td></tr>
+<tr><td>Liên Mạc (TV05)</td><td>Sông Hồng</td><td>9.5</td><td>11.5</td><td>13.3</td><td>Cùng ngưỡng trạm Hà Nội</td></tr>
+<tr><td>Phủ Lỗ (TV06)</td><td>Sông Cầu</td><td>5.0</td><td>6.5</td><td>8.0</td><td></td></tr>
+<tr><td>Hồ Tuy Lai (TV07)</td><td>Hồ chứa</td><td>18.5</td><td>19.5</td><td>20.5</td><td>⚠️ Đang ở 19.2m — tiệm cận BĐ2</td></tr>
+<tr><td>Nhuệ Giang (TV08)</td><td>Đo mưa</td><td>50mm</td><td>100mm</td><td>150mm</td><td>Ngưỡng mưa 24h (offline)</td></tr>
+<tr><td>Chương Mỹ (TV09)</td><td>Sông Đáy</td><td>4.0</td><td>5.2</td><td>6.5</td><td>Khu vực nguy cơ ngập cao</td></tr>
+<tr><td>Ba Vì (TV10)</td><td>Sông Đà</td><td>18.0</td><td>21.0</td><td>24.0</td><td>Lưu lượng lớn nhất: 1240 m³/s</td></tr>
+<tr><td>Quan Sơn (TV11)</td><td>Hồ chứa</td><td>10.0</td><td>10.5</td><td>10.8</td><td>⚠️ Đang ở 8.9m — đang tăng</td></tr>
+<tr><td>Cầu Đuống (TV13)</td><td>Sông Đuống</td><td>7.5</td><td>9.0</td><td>11.0</td><td></td></tr>
+<tr><td>Đa Phúc (TV15)</td><td>Sông Cà Lồ</td><td>4.0</td><td>5.5</td><td>7.0</td><td></td></tr>
+<tr><td>Đan Phượng (TV16)</td><td>Sông Đáy</td><td>4.2</td><td>5.5</td><td>7.0</td><td></td></tr>
+</table>
+
+<h3 id="rain-thresholds">🌧 Ngưỡng Lượng mưa</h3>
+<table>
+<tr><th>Mức</th><th>Ngưỡng (mm/24h)</th><th>Hành động</th><th>Nguồn</th></tr>
+<tr><td><span class="badge badge-yellow">Chú ý</span></td><td>≥ 50mm</td><td>Highlight vàng trong bảng trạm, card IoT</td><td><code>iotMonitor.js L136</code></td></tr>
+<tr><td><span class="badge badge-orange">Cảnh báo</span></td><td>≥ 80mm</td><td>Ngưỡng BĐ2 cho trạm đo mưa</td><td><code>data.js</code> alertLevel2</td></tr>
+<tr><td><span class="badge badge-red">Khẩn cấp</span></td><td>≥ 120–150mm</td><td>Ngưỡng BĐ3 — kích hoạt kịch bản lũ</td><td><code>data.js</code> alertLevel3</td></tr>
+<tr><td><span class="badge badge-red">Kịch bản Lũ</span></td><td>≥ 150mm/24h</td><td>Trigger kịch bản SC-01: Lũ lớn Sông Hồng</td><td><code>data.js L274</code></td></tr>
+</table>
+
+<div class="callout warning">
+  <strong>Để sửa ngưỡng cảnh báo trạm:</strong> Mở <code>js/data.js</code> tìm trạm bằng ID (TV01..TV16), sửa <code>alertLevel1/2/3</code>. Thay đổi có hiệu lực ngay sau F5.
+</div>
+</section>
+
+<!-- ══ CHỈ ĐẠO PCTT ═══════════════════════════════════════════════ -->
+<section class="section" id="pctt">
+<h2>⚡ Chỉ đạo PCTT</h2>
+<p><span class="source-ref">js/pages/pcttCommand.js</span></p>
+
+<h3>Kịch bản ứng phó (CMD_SCENARIOS)</h3>
+<table>
+<tr><th>ID</th><th>Kịch bản</th><th>Điều kiện kích hoạt</th><th>Giai đoạn</th></tr>
+<tr><td>SC-01</td><td>Lũ lớn Sông Hồng cấp độ III</td><td>MN Hà Nội &gt; 11.5m (BĐ3)</td><td>Ứng phó khẩn cấp</td></tr>
+<tr><td>SC-02</td><td>Ngập úng đô thị diệt rộng</td><td>Mưa &gt; 80mm/h tại nhiều quận</td><td>Chuẩn bị + Ứng phó</td></tr>
+<tr><td>SC-03</td><td>Sạt lở đất huyện Ba Vì &amp; Sóc Sơn</td><td>Mưa &gt; 150mm + cảnh báo KTTV</td><td>Khẩn cấp</td></tr>
+<tr><td>SC-04</td><td>Vỡ đê cục bộ Sông Đáy</td><td>Sự cố đột xuất</td><td>Tình trạng đặc biệt</td></tr>
+<tr><td>SC-05</td><td>Hạn hán nghiêm trọng</td><td>Không mưa &gt; 30 ngày + thiếu nước</td><td>Cảnh báo</td></tr>
+</table>
+
+<h3 id="ai-thresholds">🤖 Ngưỡng AI Scenarios</h3>
+<table>
+<tr><th>Kịch bản</th><th>Độ tin cậy AI</th><th>Mức rủi ro</th><th>Nguồn</th></tr>
+<tr><td>SC-01 (Lũ Sông Hồng)</td><td>92%</td><td>Cao</td><td><code>pcttCommand.js: CMD_AI_SUGGESTIONS.SC-01</code></td></tr>
+<tr><td>SC-02 (Ngập úng)</td><td>76%</td><td>Trung bình</td><td><code>pcttCommand.js: CMD_AI_SUGGESTIONS.SC-02</code></td></tr>
+<tr><td>SC-03 (Sạt lở)</td><td>88%</td><td>Cao</td><td><code>pcttCommand.js: CMD_AI_SUGGESTIONS.SC-03</code></td></tr>
+</table>
+</section>
+
+<!-- ══ THỦY LỢI ═══════════════════════════════════════════════════ -->
+<section class="section" id="hydraulic">
+<h2>🏗 Thủy lợi & Đê điều</h2>
+<p><span class="source-ref">js/pages/irrigationAssets.js</span></p>
+
+<h3 id="risk-matrix">📊 Ma trận Rủi ro (P×I)</h3>
+<p>Dùng thang điểm 5×5 (Xác suất × Tác động). <span class="source-ref">irrigationAssets.js L287-305</span></p>
+<table>
+<tr><th>Mức điểm (P×I)</th><th>Phân loại</th><th>Màu</th><th>Hành động</th></tr>
+<tr><td>≥ 16</td><td>Rất cao</td><td><span class="badge badge-red">Đỏ #dc2626</span></td><td>Khẩn cấp — xử lý ngay</td></tr>
+<tr><td>12–15</td><td>Cao</td><td><span class="badge badge-orange">Cam #ea580c</span></td><td>Ưu tiên cao — lên kế hoạch trong tuần</td></tr>
+<tr><td>6–11</td><td>Trung bình</td><td><span class="badge badge-yellow">Vàng #ca8a04</span></td><td>Theo dõi — kiểm tra định kỳ</td></tr>
+<tr><td>1–5</td><td>Thấp</td><td><span class="badge badge-green">Xanh #16a34a</span></td><td>Bình thường</td></tr>
+</table>
+
+<div class="callout tip">
+  <strong>Để cập nhật rủi ro công trình:</strong> Sửa mảng <code>RISK_MATRIX_DATA</code> trong <code>js/pages/irrigationAssets.js</code> (dòng ~288). Mỗi mục gồm: <code>area, type, prob (1-5), impact (1-5), issues[], lastInsp</code>.
+</div>
+</section>
+
+<!-- ══ PHẢN ÁNH CỘNG ĐỒNG ════════════════════════════════════════ -->
+<section class="section" id="community">
+<h2>📣 Phản ánh Cộng đồng</h2>
+<p><span class="source-ref">js/pages/communityReports.js</span></p>
+
+<h3>Tab "Phân tích AI" — Các ngưỡng tính điểm</h3>
+<table>
+<tr><th>Chỉ số</th><th>Cách tính</th><th>Nguồn</th></tr>
+<tr><td>Điểm nghiêm trọng/huyện</td><td>Khẩn×4 + Cao×3 + TB×2 + Thấp×1</td><td><code>communityReports.js: renderCrAnalytics()</code></td></tr>
+<tr><td>Điểm nóng lặp lại</td><td>Huyện có ≥ 2 phản ánh trong kỳ</td><td><code>communityReports.js: hotspots filter</code></td></tr>
+</table>
+
+<h3>Loại phản ánh & màu hiển thị</h3>
+<table>
+<tr><th>Loại (type)</th><th>Màu badge</th><th>Mô tả</th></tr>
+<tr><td>dike_risk</td><td><span class="badge badge-red">Đỏ</span></td><td>Đê có dấu hiệu nguy hiểm</td></tr>
+<tr><td>flooding</td><td><span class="badge badge-blue">Xanh</span></td><td>Ngập úng, ngập lụt</td></tr>
+<tr><td>landslide</td><td><span class="badge badge-orange">Cam</span></td><td>Sạt lở đất</td></tr>
+<tr><td>drain_blocked</td><td><span class="badge badge-yellow">Vàng</span></td><td>Tắc nghẽn cống/rãnh</td></tr>
+<tr><td>vi_pham_hanh_lang</td><td><span class="badge badge-purple">Tím</span></td><td>Vi phạm hành lang đê</td></tr>
+<tr><td>infra_damage</td><td><span class="badge badge-gray">Xám</span></td><td>Hư hỏng hạ tầng</td></tr>
+<tr><td>tree_fall</td><td><span class="badge badge-green">Xanh</span></td><td>Cây đổ</td></tr>
+</table>
+</section>
+
+<!-- ══ TRUYỀN THÔNG & TTS ════════════════════════════════════════ -->
+<section class="section" id="media">
+<h2>📻 Truyền thông PCTT & TTS Studio</h2>
+<p><span class="source-ref">js/pages/pcttMedia.js</span></p>
+
+<h3>Tabs trong trang Truyền thông</h3>
+<table>
+<tr><th>Tab ID</th><th>Tên</th><th>Điều kiện hiển thị</th></tr>
+<tr><td>library</td><td>Kho tài liệu</td><td>Luôn hiển thị khi pcttMedia = true</td></tr>
+<tr><td>social</td><td>Mạng xã hội</td><td>Whitelist trong config.js</td></tr>
+<tr><td><strong>tts</strong></td><td>Phát thanh TTS</td><td>Phải có trong whitelist <code>pcttMedia</code> của preset/default</td></tr>
+</table>
+
+<div class="callout warning">
+  <strong>Tab TTS bị ẩn?</strong> Kiểm tra <code>js/config.js</code> → tìm preset đang dùng → xem <code>pcttMedia: [...]</code> có chứa <code>'tts'</code> chưa. Nếu thiếu thêm vào là hiển thị ngay.
+</div>
+
+<h3>Thư viện giọng đọc (TTS_VOICES)</h3>
+<p>Định nghĩa tại <code>js/pages/pcttMedia.js</code> mảng <code>TTS_VOICES</code>. Mỗi giọng có: <code>id, name, gender, region, style, sampleText</code>. Để thêm giọng: push thêm object vào mảng.</p>
+</section>
+
+<!-- ══ HỆ THỐNG LIÊN LẠC ════════════════════════════════════════ -->
+<section class="section" id="comms">
+<h2>📡 Hệ thống Liên lạc & Loa</h2>
+<p><span class="source-ref">js/pages/commsDevices.js</span></p>
+
+<div class="grid-2">
+<div class="card">
+  <h4>Cụm Loa (Tab 1)</h4>
+  Mock data: <code>SPEAKER_CLUSTERS[]</code><br>
+  Mỗi cụm: id, name, zone, status, channels<br>
+  Actions: phát thử, phát TTS, phát file mp3<br>
+  <code>openBroadcastModal()</code> — modal phát thông báo
+</div>
+<div class="card">
+  <h4>Bộ đàm (Tab 2)</h4>
+  Mock data: <code>COMMS_RADIOS[]</code><br>
+  editRadio() — modal sửa đầy đủ<br>
+  Battery slider, channel select<br>
+  Delete với confirm dialog
+</div>
+<div class="card">
+  <h4>Điện thoại IP (Tab 3)</h4>
+  Mock data: <code>COMMS_PHONES[]</code><br>
+  <code>openPhoneCallLog()</code> — lịch sử cuộc gọi<br>
+  <code>openPhoneSettings()</code> — cài đặt máy lẻ<br>
+  Đồng bộ từ IP PBX
+</div>
+<div class="card">
+  <h4>Màn hình & LED (Tab 4)</h4>
+  Mock data: <code>COMMS_DISPLAYS[]</code><br>
+  <code>DISPLAY_PLAYLISTS{}</code> — playlist theo màn hình<br>
+  <code>openDisplayContent()</code> — quản lý playlist<br>
+  Độ sáng, lịch tắt/bật 22:00→07:00
+</div>
+</div>
+</section>
+
+<!-- ══ HỆ THỐNG AI ════════════════════════════════════════════════ -->
+<section class="section" id="ai">
+<h2>🤖 Trung tâm AI</h2>
+
+<h3>AI Agent</h3>
+<p><span class="source-ref">js/pages/aiagent.js</span> — Danh sách agent số: phân tích GIS, phân tích IoT, soạn văn bản, phân tích ảnh drone. Mỗi agent có: task queue, status, last run.</p>
+
+<h3>Chatbot Trợ lý</h3>
+<p><span class="source-ref">js/pages/chatbot.js</span> — RAG chatbot với ngữ cảnh PCTT. Danh mục câu hỏi có sẵn, gợi ý theo context. Model chọn được trong Data Hub → tab AI & Mô hình.</p>
+</section>
+
+<!-- ══ NHÂN SỰ ════════════════════════════════════════════════════ -->
+<section class="section" id="hrm">
+<h2>👥 Nhân sự & Tổ chức</h2>
+<p><span class="source-ref">js/pages/hrm.js</span></p>
+
+<p>Tabs: <strong>Sơ đồ Tổ chức</strong> · <strong>Danh sách Nhân viên</strong> · <strong>Lịch Trực</strong> · <strong>Phân quyền</strong> · <strong>Chuyên môn</strong> · <strong>Hợp đồng</strong> · <strong>Đào tạo</strong> · <strong>Trang thiết bị</strong>.</p>
+
+<div class="callout info">
+  <strong>Data nhân viên:</strong> <code>js/data.js</code> mảng <code>DATA.employees[]</code>. Mỗi nhân viên có: id, name, dept, title, phone, email, role, skills[].
+</div>
+</section>
+
+<!-- ══ WHERE TO EDIT ══════════════════════════════════════════════ -->
+<section class="section" id="where-to-edit">
+<h2>✏️ Hướng dẫn sửa các thông số quan trọng</h2>
+
+<table>
+<tr><th>Muốn sửa gì?</th><th>File</th><th>Dòng / Key</th><th>Cách sửa</th></tr>
+<tr>
+  <td>Ngưỡng BĐ1/BĐ2/BĐ3 một trạm</td>
+  <td><code>js/data.js</code></td>
+  <td>L80-95, <code>alertLevel1/2/3</code></td>
+  <td>Tìm trạm bằng ID (TV01..TV16), sửa số, F5</td>
+</tr>
+<tr>
+  <td>Ngưỡng highlight mưa vàng</td>
+  <td><code>js/pages/iotMonitor.js</code></td>
+  <td>L136: <code>&gt;=50</code></td>
+  <td>Đổi 50 thành giá trị mong muốn (mm)</td>
+</tr>
+<tr>
+  <td>Bật/tắt một tính năng (feature flag)</td>
+  <td><code>js/config.js</code></td>
+  <td>L160-200 hoặc mục preset</td>
+  <td>Đổi <code>true/false</code> trong <code>features:{}</code></td>
+</tr>
+<tr>
+  <td>Ẩn/hiện tab trong một trang</td>
+  <td><code>js/config.js</code></td>
+  <td>L191-200 (default) hoặc L221-227 (pctt_hanoi)</td>
+  <td>Thêm/xóa tab ID khỏi mảng <code>pcttMedia/reports/...</code></td>
+</tr>
+<tr>
+  <td>Thêm kịch bản ứng phó PCTT</td>
+  <td><code>js/pages/pcttCommand.js</code></td>
+  <td>Mảng <code>CMD_SCENARIOS[]</code> L~10</td>
+  <td>Push object mới: <code>{id, name, trigger, level, tasks[]}</code></td>
+</tr>
+<tr>
+  <td>Thêm giọng TTS</td>
+  <td><code>js/pages/pcttMedia.js</code></td>
+  <td>Mảng <code>TTS_VOICES[]</code> L~634</td>
+  <td>Push: <code>{id, name, gender, region, style, sampleText}</code></td>
+</tr>
+<tr>
+  <td>Màu & ngưỡng risk matrix</td>
+  <td><code>js/pages/irrigationAssets.js</code></td>
+  <td>Hàm <code>riskLabel(s)</code> L~299</td>
+  <td>Sửa ngưỡng: if(s&gt;=16)→Rất cao, 12→Cao, 6→TB</td>
+</tr>
+<tr>
+  <td>Thêm/sửa nhóm Hub Module</td>
+  <td><code>js/hub.js</code></td>
+  <td>Mảng <code>HUB_GROUPS[]</code> L1</td>
+  <td>Push object: <code>{id, label, page, features[], color, glow, icon}</code></td>
+</tr>
+<tr>
+  <td>Điều kiện kích hoạt kịch bản bơm</td>
+  <td><code>js/data.js</code></td>
+  <td>Mảng <code>PUMP_PROFILES[]</code> L274</td>
+  <td>Sửa <code>conditions</code> — chỉ là text mô tả (chưa logic thực)</td>
+</tr>
+<tr>
+  <td>Thêm/sửa nhân viên</td>
+  <td><code>js/data.js</code></td>
+  <td>Mảng <code>DATA.employees[]</code></td>
+  <td>Push/sửa object nhân viên</td>
+</tr>
+<tr>
+  <td>Chuyển sang preset khác</td>
+  <td><code>js/config.js</code></td>
+  <td>L~20: <code>CONFIG.activePreset</code></td>
+  <td>Đổi thành <code>'pctt_hanoi'</code> / <code>'pctt_basic'</code> / <code>'pctt_command'</code></td>
+</tr>
+<tr>
+  <td>Interval cập nhật IoT</td>
+  <td><code>js/app.js</code></td>
+  <td>Tìm <code>setInterval.*updateClock</code> L~1352</td>
+  <td>Đổi 1000ms; IoT mock update chưa có real interval</td>
+</tr>
+</table>
+</section>
+
+<!-- ══ CONFIG REF ═════════════════════════════════════════════════ -->
+<section class="section" id="config-ref">
+<h2>📁 Bảng tham chiếu File</h2>
+<table>
+<tr><th>File</th><th>Vai trò</th><th>Điểm quan trọng</th></tr>
+<tr><td><code>js/config.js</code></td><td>Toàn bộ cấu hình hệ thống</td><td>Feature flags, presets, RBAC matrix, tab whitelists, alert thresholds UI</td></tr>
+<tr><td><code>js/data.js</code></td><td>Mock data toàn hệ thống</td><td>IOT_STATIONS (alertLevel1/2/3), employees, ALERTS, SCADA_OBJECTS</td></tr>
+<tr><td><code>js/app.js</code></td><td>Shell: routing, sidebar, DOMContentLoaded</td><td>MENUS[], navigate(), buildSidebar(), PAGE_RENDERS{}</td></tr>
+<tr><td><code>js/hub.js</code></td><td>Post-login module launcher</td><td>HUB_GROUPS[], CSS animations, showModuleHub()</td></tr>
+<tr><td><code>js/pages/iotMonitor.js</code></td><td>Giám sát IoT thời gian thực</td><td>5-tab viewer, chart bars, station cards, 50mm threshold highlight</td></tr>
+<tr><td><code>js/pages/pcttCommand.js</code></td><td>Chỉ đạo PCTT</td><td>CMD_SCENARIOS[], CMD_AI_SUGGESTIONS{}, renderAiScenarioPanel()</td></tr>
+<tr><td><code>js/pages/communityReports.js</code></td><td>Phản ánh cộng đồng</td><td>CR_REPORTS[], CR_TYPES{}, renderCrAnalytics() — severity/hotspot/trend/AI</td></tr>
+<tr><td><code>js/pages/irrigationAssets.js</code></td><td>Công trình thủy lợi</td><td>RISK_MATRIX_DATA[], riskLabel() thresholds, renderRiskMatrix()</td></tr>
+<tr><td><code>js/pages/pcttMedia.js</code></td><td>Truyền thông & TTS Studio</td><td>TTS_VOICES[], clone wizard, SSML editor, audio history</td></tr>
+<tr><td><code>js/pages/commsDevices.js</code></td><td>Liên lạc & Loa</td><td>SPEAKER_CLUSTERS, COMMS_RADIOS, COMMS_PHONES, COMMS_DISPLAYS, DISPLAY_PLAYLISTS</td></tr>
+<tr><td><code>js/pages/hrm.js</code></td><td>Nhân sự & Tổ chức</td><td>8 tabs, org chart, schedule, SVG icons</td></tr>
+<tr><td><code>login.html</code></td><td>Trang đăng nhập</td><td>Demo accounts: admin/admin, director/director, v.v.</td></tr>
+<tr><td><code>app.html</code></td><td>App shell HTML</td><td>Thứ tự load script — quan trọng! hub.js phải trước app.js</td></tr>
+</table>
+</section>
+
+</main>
+</div>
+
+<script>
+// Scroll-spy TOC
+const sections = document.querySelectorAll('.section');
+const links = document.querySelectorAll('.toc a');
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const a = document.querySelector(`.toc a[href="#${e.target.id}"]`);
+      if(a) a.classList.add('active');
+    }
+  });
+},{threshold:0.2});
+sections.forEach(s=>io.observe(s));
+</script>
+</body>
+</html>
+"""
+
+os.makedirs(os.path.join(BASE, 'docs'), exist_ok=True)
+with open(OUT, 'w', encoding='utf-8') as f:
+    f.write(HTML)
+
+print(f"Written: {OUT} ({len(HTML):,} chars)")

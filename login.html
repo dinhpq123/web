@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hadiwa IOC — Đăng Nhập</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --bg: #030e1c;
+      --surface: #071629;
+      --cyan: #00c8ff;
+      --blue: #0050cc;
+      --green: #00e676;
+      --yellow: #ffca28;
+      --red: #ff1744;
+      --text: #e3f2fd;
+      --muted: #546e7a;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: var(--text);
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      opacity: .35;
+    }
+
+    .grid {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      background-image: linear-gradient(rgba(0, 200, 255, .03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 200, 255, .03) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .12;
+      z-index: 1;
+      animation: of 8s ease-in-out infinite;
+    }
+
+    .o1 {
+      width: 500px;
+      height: 500px;
+      background: #0050cc;
+      top: -150px;
+      left: -100px
+    }
+
+    .o2 {
+      width: 350px;
+      height: 350px;
+      background: #00c8ff;
+      bottom: -100px;
+      right: -50px;
+      animation-delay: -4s
+    }
+
+    @keyframes of {
+
+      0%,
+      100% {
+        transform: translate(0, 0)
+      }
+
+      50% {
+        transform: translate(15px, -20px)
+      }
+    }
+
+    .wrap {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 440px;
+      padding: 20px;
+    }
+
+    .card {
+      background: rgba(7, 22, 41, .88);
+      border: 1px solid rgba(0, 200, 255, .18);
+      border-radius: 20px;
+      padding: 44px 38px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 40px rgba(0, 200, 255, .07), 0 25px 60px rgba(0, 0, 0, .6);
+      animation: ca .6s ease-out;
+    }
+
+    @keyframes ca {
+      from {
+        opacity: 0;
+        transform: translateY(24px)
+      }
+
+      to {
+        opacity: 1;
+        transform: none
+      }
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      justify-content: center;
+      margin-bottom: 6px
+    }
+
+    .logo-icon {
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, #0050cc, #00c8ff);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 22px rgba(0, 200, 255, .4);
+      animation: lp 3s ease-in-out infinite;
+    }
+
+    @keyframes lp {
+
+      0%,
+      100% {
+        box-shadow: 0 0 22px rgba(0, 200, 255, .4)
+      }
+
+      50% {
+        box-shadow: 0 0 38px rgba(0, 200, 255, .65)
+      }
+    }
+
+    .logo-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: #fff
+    }
+
+    .logo-text h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, #e3f2fd, #00c8ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-text span {
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--cyan);
+      text-transform: uppercase;
+      font-family: 'Roboto Mono', monospace;
+    }
+
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      margin: 18px 0 26px;
+      opacity: .35
+    }
+
+    .subtitle {
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 32px
+    }
+
+    label.lbl {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--cyan);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 7px
+    }
+
+    .inp-wrap {
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .inp-icon {
+      position: absolute;
+      left: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      width: 17px;
+      height: 17px;
+      pointer-events: none;
+    }
+
+    input.inp {
+      width: 100%;
+      padding: 13px 13px 13px 42px;
+      background: rgba(0, 200, 255, .04);
+      border: 1px solid rgba(0, 200, 255, .14);
+      border-radius: 9px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: all .3s;
+      margin: 0;
+    }
+
+    input.inp:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(0, 200, 255, .1);
+      background: rgba(0, 200, 255, .07);
+    }
+
+    input.inp::placeholder {
+      color: #233044
+    }
+
+    .extras {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 26px;
+      font-size: 13px
+    }
+
+    .rem {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+      cursor: pointer
+    }
+
+    .rem input {
+      accent-color: var(--cyan)
+    }
+
+    .forgot {
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 12px
+    }
+
+    .btn-main {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #0050cc, #00c8ff);
+      border: none;
+      border-radius: 9px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .3s;
+      box-shadow: 0 4px 20px rgba(0, 200, 255, .28);
+    }
+
+    .btn-main:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(0, 200, 255, .5)
+    }
+
+    .btn-ghost {
+      width: 100%;
+      padding: 11px;
+      background: none;
+      border: 1px solid rgba(0, 200, 255, .2);
+      border-radius: 9px;
+      color: var(--muted);
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all .3s;
+      margin-top: 10px;
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(0, 200, 255, .4);
+      color: var(--cyan)
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 24px;
+      font-size: 12px;
+      font-family: 'Roboto Mono', monospace;
+      color: var(--muted)
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: bk 2s ease-in-out infinite
+    }
+
+    @keyframes bk {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .3
+      }
+    }
+
+    .foot {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 28px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(0, 200, 255, .1);
+      font-size: 11px;
+      color: var(--muted);
+      font-family: 'Roboto Mono', monospace
+    }
+
+    .err {
+      background: rgba(255, 23, 68, .1);
+      border: 1px solid rgba(255, 23, 68, .3);
+      border-radius: 8px;
+      padding: 9px 13px;
+      font-size: 13px;
+      color: #ff6b6b;
+      margin-bottom: 14px;
+      display: none
+    }
+
+    .info-box {
+      background: rgba(0, 200, 255, .07);
+      border: 1px solid rgba(0, 200, 255, .2);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-size: 13px;
+      color: var(--cyan);
+      margin-bottom: 16px
+    }
+
+    /* 2FA */
+    #step2 {
+      display: none
+    }
+
+    .tfa-ic {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #0050cc, #00c8ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 14px;
+      box-shadow: 0 0 20px rgba(0, 200, 255, .35)
+    }
+
+    .tfa-methods {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px
+    }
+
+    .tfa-m {
+      padding: 14px 10px;
+      border: 1px solid rgba(0, 200, 255, .14);
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: center;
+      transition: all .2s;
+      background: rgba(0, 200, 255, .03)
+    }
+
+    .tfa-m:hover,
+    .tfa-m.sel {
+      border-color: var(--cyan);
+      background: rgba(0, 200, 255, .09);
+      outline: 2px solid rgba(0, 200, 255, .15);
+      outline-offset: -1px
+    }
+
+    .tfa-m svg {
+      width: 22px;
+      height: 22px;
+      margin-bottom: 7px;
+      color: var(--cyan)
+    }
+
+    .tfa-m .mn {
+      font-size: 12px;
+      font-weight: 600
+    }
+
+    .tfa-m .md {
+      font-size: 10px;
+      color: var(--muted);
+      margin-top: 2px
+    }
+
+    .otp-row {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin: 18px 0
+    }
+
+    .otp-d {
+      width: 46px;
+      height: 54px;
+      background: rgba(0, 200, 255, .04);
+      border: 1.5px solid rgba(0, 200, 255, .2);
+      border-radius: 10px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      font-family: 'Roboto Mono', monospace;
+      color: var(--cyan);
+      outline: none;
+      transition: all .2s
+    }
+
+    .otp-d:focus {
+      border-color: var(--cyan);
+      background: rgba(0, 200, 255, .08);
+      box-shadow: 0 0 0 3px rgba(0, 200, 255, .12)
+    }
+
+    .otp-timer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      font-family: 'Roboto Mono', monospace;
+      margin-bottom: 14px
+    }
+
+    .otp-timer b {
+      color: var(--yellow)
+    }
+
+    .back-ln {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    .back-ln a {
+      color: var(--cyan);
+      cursor: pointer
+    }
+
+    .qr-box {
+      width: 130px;
+      height: 130px;
+      background: #fff;
+      border-radius: 10px;
+      margin: 10px auto;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+  </style>
+</head>
+
+<body>
+  <canvas id="c"></canvas>
+  <div class="grid"></div>
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="wrap">
+    <div class="card">
+      <div class="logo">
+        <div class="logo-icon" style="background:none;padding:0;overflow:hidden;box-shadow:none;animation:none">
+          <img src="assets/hadiwa_logo.svg?v=20260326" alt="Hadiwa"
+            style="width:100%;height:100%;object-fit:contain;border-radius:10px">
+        </div>
+        <div class="logo-text">
+          <h1>HADIWA</h1><span>IOC Thủy lợi & PCTT</span>
+        </div>
+      </div>
+      <div class="divider"></div>
+
+      <!-- Step 1: Credentials -->
+      <div id="step1">
+        <p class="subtitle">Hệ thống IOC Thủy lợi &amp; Phòng chống Thiên tai<br>Chi cục Thủy lợi &amp; PCTT TP. Hà Nội
+        </p>
+
+        <!-- Demo: Quick-select user -->
+        <div style="margin-bottom:18px">
+          <div
+            style="font-size:10px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;font-family:'Roboto Mono',monospace;margin-bottom:8px">
+            🎭 Demo — Chọn tài khoản nhanh</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px" id="quickUsers"></div>
+        </div>
+
+        <div class="err" id="err">Tài khoản hoặc mật khẩu không đúng.</div>
+        <form id="f">
+          <label class="lbl">Tài khoản</label>
+          <div class="inp-wrap">
+            <svg class="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+              <circle cx="12" cy="7" r="4" />
+            </svg>
+            <input class="inp" type="text" id="u" placeholder="admin@hadiwa.vn" autocomplete="username">
+          </div>
+          <label class="lbl">Mật khẩu</label>
+          <div class="inp-wrap">
+            <svg class="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" />
+              <path d="M7 11V7a5 5 0 0110 0v4" />
+            </svg>
+            <input class="inp" type="password" id="p" placeholder="••••••••" autocomplete="current-password">
+          </div>
+          <div class="extras">
+            <label class="rem"><input type="checkbox" checked> Ghi nhớ đăng nhập</label>
+            <a class="forgot" href="#" onclick="showForgot();return false">Quên mật khẩu?</a>
+          </div>
+          <button type="submit" class="btn-main" id="btn">ĐĂNG NHẬP</button>
+        </form>
+      </div>
+
+      <!-- Step 2: 2FA -->
+      <div id="step2">
+        <div style="text-align:center;margin-bottom:20px">
+          <div class="tfa-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white"
+              stroke-width="2">
+              <rect x="5" y="11" width="14" height="10" rx="2" />
+              <path d="M8 11V7a4 4 0 018 0v4" />
+              <circle cx="12" cy="16" r="1.5" fill="white" />
+            </svg></div>
+          <h2 style="font-size:18px;font-weight:700;margin-bottom:5px">Xác thực 2 lớp</h2>
+          <p id="tfaDesc" style="font-size:13px;color:var(--muted)">Chọn phương thức xác thực</p>
+        </div>
+
+        <!-- Method selection -->
+        <div id="mStep">
+          <div class="tfa-methods">
+            <div class="tfa-m sel" onclick="selMethod('totp',this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="5" y="2" width="14" height="20" rx="2" />
+                <line x1="12" y1="18" x2="12.01" y2="18" />
+              </svg>
+              <div class="mn">Authenticator App</div>
+              <div class="md">Google / Microsoft / Authy</div>
+            </div>
+            <div class="tfa-m" onclick="selMethod('sms',this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+              </svg>
+              <div class="mn">SMS OTP</div>
+              <div class="md">Nhắn tin SĐT đăng ký</div>
+            </div>
+            <div class="tfa-m" onclick="selMethod('email',this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              <div class="mn">Email OTP</div>
+              <div class="md">Gửi mã tới email công ty</div>
+            </div>
+            <div class="tfa-m" onclick="selMethod('zalo',this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+                <line x1="9" y1="9" x2="9.01" y2="9" />
+                <line x1="15" y1="9" x2="15.01" y2="9" />
+              </svg>
+              <div class="mn">Zalo OTP</div>
+              <div class="md">Nhận mã qua Zalo ZNS</div>
+            </div>
+          </div>
+          <button class="btn-main" onclick="goOtp()">TIẾP TỤC →</button>
+          <div class="back-ln"><a onclick="backLogin()">← Quay lại đăng nhập</a></div>
+        </div>
+
+        <!-- OTP input -->
+        <div id="oStep" style="display:none">
+          <div id="infoBox" class="info-box"></div>
+          <div id="qrArea" style="display:none;text-align:center">
+            <div class="qr-box"><svg viewBox="0 0 21 21" width="110" height="110">
+                <rect width="21" height="21" fill="white" />
+                <rect x="1" y="1" width="7" height="7" fill="#030e1c" />
+                <rect x="2" y="2" width="5" height="5" fill="white" />
+                <rect x="3" y="3" width="3" height="3" fill="#030e1c" />
+                <rect x="13" y="1" width="7" height="7" fill="#030e1c" />
+                <rect x="14" y="2" width="5" height="5" fill="white" />
+                <rect x="15" y="3" width="3" height="3" fill="#030e1c" />
+                <rect x="1" y="13" width="7" height="7" fill="#030e1c" />
+                <rect x="2" y="14" width="5" height="5" fill="white" />
+                <rect x="3" y="15" width="3" height="3" fill="#030e1c" />
+                <rect x="9" y="1" width="1" height="2" fill="#030e1c" />
+                <rect x="11" y="2" width="2" height="1" fill="#030e1c" />
+                <rect x="9" y="4" width="2" height="2" fill="#030e1c" />
+                <rect x="11" y="6" width="2" height="3" fill="#030e1c" />
+                <rect x="9" y="8" width="3" height="1" fill="#030e1c" />
+                <rect x="13" y="9" width="2" height="1" fill="#030e1c" />
+                <rect x="9" y="10" width="1" height="3" fill="#030e1c" />
+                <rect x="11" y="11" width="4" height="1" fill="#030e1c" />
+                <rect x="11" y="13" width="2" height="2" fill="#030e1c" />
+                <rect x="14" y="13" width="3" height="1" fill="#030e1c" />
+                <rect x="16" y="14" width="2" height="3" fill="#030e1c" />
+                <rect x="13" y="16" width="2" height="1" fill="#030e1c" />
+                <rect x="19" y="11" width="1" height="3" fill="#030e1c" />
+                <rect x="17" y="14" width="2" height="1" fill="#030e1c" />
+              </svg></div>
+            <div style="font-size:10px;color:var(--muted)">Quét bằng Google Authenticator</div>
+            <div style="font-size:10px;font-family:'Roboto Mono',monospace;color:rgba(0,200,255,.5);margin-top:3px">
+              JBSWY3DPEHPK3PXP</div>
+          </div>
+          <div class="otp-row">
+            <input class="otp-d" maxlength="1" inputmode="numeric"><input class="otp-d" maxlength="1"
+              inputmode="numeric">
+            <input class="otp-d" maxlength="1" inputmode="numeric"><input class="otp-d" maxlength="1"
+              inputmode="numeric">
+            <input class="otp-d" maxlength="1" inputmode="numeric"><input class="otp-d" maxlength="1"
+              inputmode="numeric">
+          </div>
+          <div class="otp-timer">Mã hết hạn sau <b id="otpT">4:59</b></div>
+          <div class="err" id="otpErr">Mã OTP không đúng. Vui lòng thử lại.</div>
+          <button class="btn-main" id="vBtn" onclick="verifyOtp()">XÁC THỰC & ĐĂNG NHẬP</button>
+          <button class="btn-ghost" onclick="resend()">Gửi lại mã OTP</button>
+          <div class="back-ln"><a onclick="backMethod()">← Chọn phương thức khác</a></div>
+        </div>
+      </div>
+
+      <!-- Step 3: Forgot Password -->
+      <div id="stepForgot" style="display:none">
+        <!-- fp-1: Enter Email -->
+        <div id="fp1">
+          <div style="text-align:center;margin-bottom:20px">
+            <div class="tfa-ic">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 8v4" />
+                <circle cx="12" cy="16" r="1" fill="white" />
+              </svg>
+            </div>
+            <h2 style="font-size:18px;font-weight:700;margin-bottom:5px">Quên mật khẩu?</h2>
+            <p style="font-size:13px;color:var(--muted)">Nhập email để nhận mã đặt lại mật khẩu</p>
+          </div>
+          <div id="fpErr1" class="err">Email không tồn tại trong hệ thống.</div>
+          <label class="lbl">Email tài khoản</label>
+          <div class="inp-wrap">
+            <svg class="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            <input class="inp" type="email" id="fpEmail" placeholder="admin@hadiwa.vn" autocomplete="email"
+              oninput="fpCheckEmail(this.value)">
+          </div>
+          <div id="fpEmailHint" style="font-size:11px;margin:-12px 0 14px;display:none"></div>
+          <button class="btn-main" id="fpSendBtn" onclick="fpSendOtp()" style="opacity:.5;pointer-events:none">GỬI MÃ
+            ĐẶT LạI →</button>
+          <div class="back-ln" style="margin-top:14px"><a onclick="hideForgot()">&#8592; Quay lại đăng nhập</a></div>
+        </div>
+
+        <!-- fp-2: OTP verify -->
+        <div id="fp2" style="display:none">
+          <div style="text-align:center;margin-bottom:18px">
+            <div class="tfa-ic" style="background:linear-gradient(135deg,#00796b,#00c8ff)">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+            </div>
+            <h2 style="font-size:17px;font-weight:700;margin-bottom:4px">Kiểm tra Email</h2>
+            <p id="fp2Desc" style="font-size:13px;color:var(--muted)">Mã OTP đã gửi tới email của bạn</p>
+          </div>
+          <div class="info-box" style="display:flex;align-items:flex-start;gap:10px;margin-bottom:18px">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              style="flex-shrink:0;margin-top:1px">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+              <polyline points="22,6 12,13 2,6" />
+            </svg>
+            <div>
+              <div style="font-weight:600;margin-bottom:2px">Mã xác nhận đã gửi</div>
+              <div style="font-size:11px;opacity:.75">Vui lòng kiểm tra hộp thư <b id="fpEmailShow"></b></div>
+            </div>
+          </div>
+          <div class="otp-row">
+            <input class="otp-d" maxlength="1" inputmode="numeric">
+            <input class="otp-d" maxlength="1" inputmode="numeric">
+            <input class="otp-d" maxlength="1" inputmode="numeric">
+            <input class="otp-d" maxlength="1" inputmode="numeric">
+            <input class="otp-d" maxlength="1" inputmode="numeric">
+            <input class="otp-d" maxlength="1" inputmode="numeric">
+          </div>
+          <div class="otp-timer">Mã hết hạn sau <b id="fpOtpT">4:59</b></div>
+          <div class="err" id="fpErr2">Mã OTP không đúng. Vui lòng thử lại.</div>
+          <button class="btn-main" id="fpVerifyBtn" onclick="fpVerifyOtp()">ĐỌI MẬT KHẨU →</button>
+          <div class="back-ln" style="margin-top:10px">
+            <a onclick="fpResend()">GỬi lại mã</a>
+            &nbsp;·&nbsp;
+            <a onclick="showForgot()">Sửa email</a>
+          </div>
+        </div>
+
+        <!-- fp-3: New Password -->
+        <div id="fp3" style="display:none">
+          <div style="text-align:center;margin-bottom:18px">
+            <div class="tfa-ic" style="background:linear-gradient(135deg,#1565c0,#00c8ff)">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <rect x="3" y="11" width="18" height="11" rx="2" />
+                <path d="M7 11V7a5 5 0 0110 0v4" />
+                <circle cx="12" cy="16" r="1.5" fill="white" />
+              </svg>
+            </div>
+            <h2 style="font-size:17px;font-weight:700;margin-bottom:4px">Thiết lập mật khẩu mới</h2>
+            <p style="font-size:13px;color:var(--muted)">Nhập mật khẩu mới cho tài khoản</p>
+          </div>
+          <div class="err" id="fpErr3">Vui lòng kiểm tra lại mật khẩu.</div>
+          <label class="lbl">Mật khẩu mới</label>
+          <div class="inp-wrap">
+            <svg class="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" />
+              <path d="M7 11V7a5 5 0 0110 0v4" />
+            </svg>
+            <input class="inp" type="password" id="fpPw1" placeholder="Tối thiểu 8 ký tự"
+              oninput="fpStrength(this.value)">
+          </div>
+          <div id="fpStrengthBar"
+            style="height:4px;border-radius:2px;background:rgba(255,255,255,.08);margin-bottom:14px;overflow:hidden">
+            <div id="fpStrengthFill" style="height:100%;width:0;border-radius:2px;transition:all .3s"></div>
+          </div>
+          <div id="fpStrengthLabel" style="font-size:11px;color:var(--muted);margin-bottom:14px;text-align:right"></div>
+          <label class="lbl">Xác nhận mật khẩu</label>
+          <div class="inp-wrap">
+            <svg class="inp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" />
+              <path d="M7 11V7a5 5 0 0110 0v4" />
+            </svg>
+            <input class="inp" type="password" id="fpPw2" placeholder="Nhập lại mật khẩu">
+          </div>
+          <button class="btn-main" onclick="fpResetPassword()">ĐẶT LạI MẪN KHẨU</button>
+          <div class="back-ln" style="margin-top:10px"><a onclick="hideForgot()">&#8592; Quay lại đăng nhập</a></div>
+        </div>
+
+        <!-- fp-4: Success -->
+        <div id="fp4" style="display:none;text-align:center">
+          <div
+            style="width:64px;height:64px;background:linear-gradient(135deg,#00796b,#00e676);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 0 24px rgba(0,230,118,.4)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </div>
+          <h2 style="font-size:18px;font-weight:700;margin-bottom:8px">Đặt lại mật khẩu thành công!</h2>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:24px">Mật khẩu của bạn đã được cập nhật.<br>Hãy đăng
+            nhập với mật khẩu mới.</p>
+          <button class="btn-main" onclick="hideForgot()">VỀ TRANG ĐĂNG NHẬP</button>
+        </div>
+      </div>
+
+      <div class="status">
+        <div class="dot"></div><span>Kết nối bảo mật TLS 1.3</span><span style="margin:0 10px;opacity:.3">|</span><span
+          id="t"></span>
+      </div>
+      <div class="foot"><span>Hadiwa IOC v1.0.0</span><span>© 2026 Chi cục TT-PCTT TP. Hà Nội</span></div>
+    </div>
+  </div>
+  <script src="js/rbac.js"></script>
+  <script>
+    setInterval(() => document.getElementById('t').textContent = new Date().toLocaleTimeString('vi-VN'), 1000);
+    document.getElementById('t').textContent = new Date().toLocaleTimeString('vi-VN');
+
+    // Build quick-select user cards
+    let selectedUser = MOCK_USERS[0];
+    (function buildQuickUsers() {
+      const badgeColors = { SUPERADMIN: '#ff1744', SYSADMIN: '#ff1744', CHI_CUC_TRUONG: '#7c3aed', DIEU_HANH: '#f59e0b', KY_THUAT: '#0066cc', QUAN_LY_DE: '#00b4d8', HR: '#00a86b', VIEWER: '#718096' };
+      const html = MOCK_USERS.map(u => `
+        <div id="qu-${u.id}" onclick="selectUser(${u.id})" style="cursor:pointer;padding:6px 10px;border-radius:8px;border:1px solid rgba(0,200,255,.15);background:rgba(0,200,255,.04);font-size:11px;transition:all .2s">
+          <span style="margin-right:4px">${u.avatar}</span>
+          <span style="color:var(--text)">${u.name.split(' ').pop()}</span>
+          <span style="margin-left:4px;background:${badgeColors[u.role]};color:#fff;border-radius:4px;padding:1px 5px;font-size:9px">${ROLE_LABELS[u.role]}</span>
+        </div>`).join('');
+      document.getElementById('quickUsers').innerHTML = html;
+      selectUser(0); // default: admin
+    })();
+
+    function selectUser(id) {
+      selectedUser = MOCK_USERS.find(u => u.id === id) || MOCK_USERS[0];
+      document.querySelectorAll('[id^="qu-"]').forEach(el => el.style.borderColor = 'rgba(0,200,255,.15)');
+      const el = document.getElementById('qu-' + id);
+      if (el) el.style.borderColor = 'var(--cyan)';
+      document.getElementById('u').value = selectedUser.email;
+      document.getElementById('p').value = selectedUser.password;
+    }
+    const cv = document.getElementById('c'), cx = cv.getContext('2d');
+    function rs() { cv.width = innerWidth; cv.height = innerHeight } rs(); window.addEventListener('resize', rs);
+    const pts = Array.from({ length: 55 }, () => ({ x: Math.random() * cv.width, y: Math.random() * cv.height, vx: (Math.random() - .5) * .5, vy: (Math.random() - .5) * .5, r: Math.random() * 1.8 + .5, o: Math.random() * .5 + .2 }));
+    function draw() { cx.clearRect(0, 0, cv.width, cv.height); pts.forEach(p => { p.x += p.vx; p.y += p.vy; if (p.x < 0) p.x = cv.width; if (p.x > cv.width) p.x = 0; if (p.y < 0) p.y = cv.height; if (p.y > cv.height) p.y = 0; cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, Math.PI * 2); cx.fillStyle = `rgba(0,200,255,${p.o})`; cx.fill(); }); pts.forEach((p, i) => pts.slice(i + 1).forEach(q => { const d = Math.hypot(p.x - q.x, p.y - q.y); if (d < 110) { cx.beginPath(); cx.moveTo(p.x, p.y); cx.lineTo(q.x, q.y); cx.strokeStyle = `rgba(0,200,255,${.07 * (1 - d / 110)})`; cx.lineWidth = .5; cx.stroke(); } })); requestAnimationFrame(draw); }
+    draw();
+    let selM = 'totp', timerI;
+    document.getElementById('f').addEventListener('submit', e => {
+      e.preventDefault();
+      const err = document.getElementById('err'), btn = document.getElementById('btn');
+      const email = document.getElementById('u').value.trim();
+      const pass = document.getElementById('p').value;
+      if (!email || !pass) { err.style.display = 'block'; err.textContent = 'Vui lòng nhập đầy đủ thông tin.'; return; }
+      const matched = MOCK_USERS.find(u => u.email === email && u.password === pass);
+      if (!matched) { err.style.display = 'block'; err.textContent = 'Tài khoản hoặc mật khẩu không đúng.'; return; }
+      selectedUser = matched;
+      err.style.display = 'none'; btn.textContent = 'ĐANG XỬ LÝ...'; btn.style.opacity = '.7';
+      setTimeout(() => { btn.textContent = 'ĐĂNG NHẬP'; btn.style.opacity = '1'; document.getElementById('step1').style.display = 'none'; document.getElementById('step2').style.display = 'block'; }, 900);
+    });
+    function selMethod(m, el) { selM = m; document.querySelectorAll('.tfa-m').forEach(x => x.classList.remove('sel')); el.classList.add('sel'); }
+    function goOtp() {
+      document.getElementById('mStep').style.display = 'none'; document.getElementById('oStep').style.display = 'block';
+      document.getElementById('tfaDesc').textContent = 'Nhập mã xác thực 6 chữ số';
+      const svgShield = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;vertical-align:middle"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`;
+      const svgPhone = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;vertical-align:middle"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>`;
+      const svgMail = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;vertical-align:middle"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`;
+      const svgChat = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;vertical-align:middle"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>`;
+      const mkMsg = (icon, title, detail) =>
+        `<div style="display:flex;align-items:flex-start;gap:10px">${icon}<div><div style="font-weight:600;margin-bottom:2px">${title}</div><div style="font-size:11px;opacity:.75">${detail}</div></div></div>`;
+      const msgs = {
+        totp: mkMsg(svgShield, 'Nhập mã 6 chữ số từ Authenticator App', 'Google Authenticator · Microsoft Authenticator · Authy'),
+        sms: mkMsg(svgPhone, 'Mã OTP đã gửi qua SMS', 'Số điện thoại: <b>0912 xxx 678</b>'),
+        email: mkMsg(svgMail, 'Mã OTP đã gửi qua Email', '<b>admin@hadiwa.vn</b>'),
+        zalo: mkMsg(svgChat, 'Mã OTP đã gửi qua Zalo ZNS', 'Tài khoản Zalo đã đăng ký'),
+      };
+      document.getElementById('infoBox').innerHTML = msgs[selM] || '';
+      document.getElementById('qrArea').style.display = selM === 'totp' ? 'block' : 'none';
+      startTimer(); setupOtp();
+    }
+    function setupOtp() { const ds = document.querySelectorAll('.otp-d'); ds.forEach((d, i) => { d.value = ''; d.oninput = () => { if (d.value.length === 1 && i < ds.length - 1) ds[i + 1].focus(); }; d.onkeydown = e => { if (e.key === 'Backspace' && !d.value && i > 0) ds[i - 1].focus(); }; }); ds[0].focus(); }
+    function startTimer() { clearInterval(timerI); let s = 299; const el = document.getElementById('otpT'); timerI = setInterval(() => { if (s <= 0) { clearInterval(timerI); el.textContent = 'Hết hạn'; el.style.color = 'var(--red)'; return; } s--; el.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; el.style.color = s < 30 ? 'var(--red)' : 'var(--yellow)'; }, 1000); }
+    function verifyOtp() { const code = Array.from(document.querySelectorAll('.otp-d')).map(d => d.value).join(''); const btn = document.getElementById('vBtn'); if (code.length < 6) { document.getElementById('otpErr').style.display = 'block'; return; } document.getElementById('otpErr').style.display = 'none'; btn.textContent = 'ĐANG XÁC THỰC...'; btn.style.opacity = '.7'; setTimeout(() => { clearInterval(timerI); setCurrentUser(selectedUser); sessionStorage.setItem('qwc_fresh_login','1'); location.href = 'app.html'; }, 1000); }
+    function resend() { document.querySelectorAll('.otp-d').forEach(d => d.value = ''); startTimer(); document.getElementById('otpErr').style.display = 'none'; document.getElementById('infoBox').style.color = 'var(--green)'; document.getElementById('infoBox').textContent = '✅ Mã OTP mới đã gửi thành công!'; setTimeout(() => goOtp(), 1500); }
+    function backMethod() { document.getElementById('oStep').style.display = 'none'; document.getElementById('mStep').style.display = 'block'; clearInterval(timerI); document.getElementById('tfaDesc').textContent = 'Chọn phương thức xác thực'; }
+    function backLogin() { document.getElementById('step2').style.display = 'none'; document.getElementById('step1').style.display = 'block'; document.getElementById('mStep').style.display = 'block'; document.getElementById('oStep').style.display = 'none'; clearInterval(timerI); }
+
+    // ── FORGOT PASSWORD FLOW ─────────────────────────────────────────
+    let _fpTimer;
+    function _fpShowOnly(id) {
+      ['fp1', 'fp2', 'fp3', 'fp4'].forEach(x => document.getElementById(x).style.display = x === id ? 'block' : 'none');
+    }
+    function showForgot() {
+      document.getElementById('step1').style.display = 'none';
+      document.getElementById('step2').style.display = 'none';
+      document.getElementById('stepForgot').style.display = 'block';
+      _fpShowOnly('fp1');
+      document.getElementById('fpEmail').value = '';
+      document.getElementById('fpEmailHint').style.display = 'none';
+      document.getElementById('fpErr1').style.display = 'none';
+      const btn = document.getElementById('fpSendBtn');
+      btn.style.opacity = '.5'; btn.style.pointerEvents = 'none';
+    }
+    function hideForgot() {
+      document.getElementById('stepForgot').style.display = 'none';
+      document.getElementById('step1').style.display = 'block';
+      clearInterval(_fpTimer);
+    }
+    function fpCheckEmail(val) {
+      const hint = document.getElementById('fpEmailHint');
+      const btn = document.getElementById('fpSendBtn');
+      const found = MOCK_USERS.find(u => u.email === val.trim());
+      if (!val) { hint.style.display = 'none'; btn.style.opacity = '.5'; btn.style.pointerEvents = 'none'; return; }
+      if (found) {
+        hint.style.display = 'block';
+        hint.style.color = 'var(--green)';
+        hint.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg> Tài khoản được tìm thấy: <b>${found.name}</b>`;
+        btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
+      } else if (val.includes('@')) {
+        hint.style.display = 'block';
+        hint.style.color = 'var(--red)';
+        hint.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;margin-right:4px"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Không tìm thấy tài khoản này`;
+        btn.style.opacity = '.5'; btn.style.pointerEvents = 'none';
+      } else {
+        hint.style.display = 'none';
+        btn.style.opacity = '.5'; btn.style.pointerEvents = 'none';
+      }
+    }
+    function fpSendOtp() {
+      const email = document.getElementById('fpEmail').value.trim();
+      document.getElementById('fpEmailShow').textContent = email;
+      document.getElementById('fp2Desc').textContent = 'Mã OTP đã gửi tới ' + email;
+      _fpShowOnly('fp2');
+      // reuse existing otp-d inputs (second set)
+      const ds = document.getElementById('fp2').querySelectorAll('.otp-d');
+      ds.forEach((d, i) => { d.value = ''; d.oninput = () => { if (d.value.length === 1 && i < ds.length - 1) ds[i + 1].focus(); }; d.onkeydown = e => { if (e.key === 'Backspace' && !d.value && i > 0) ds[i - 1].focus(); }; });
+      if (ds[0]) ds[0].focus();
+      // countdown
+      clearInterval(_fpTimer);
+      let s = 299; const el = document.getElementById('fpOtpT');
+      el.textContent = '4:59'; el.style.color = 'var(--yellow)';
+      _fpTimer = setInterval(() => {
+        if (s <= 0) { clearInterval(_fpTimer); el.textContent = 'Hết hạn'; el.style.color = 'var(--red)'; return; }
+        s--; el.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+        el.style.color = s < 30 ? 'var(--red)' : 'var(--yellow)';
+      }, 1000);
+    }
+    function fpVerifyOtp() {
+      const ds = document.getElementById('fp2').querySelectorAll('.otp-d');
+      const code = Array.from(ds).map(d => d.value).join('');
+      const btn = document.getElementById('fpVerifyBtn');
+      if (code.length < 6) { document.getElementById('fpErr2').style.display = 'block'; return; }
+      document.getElementById('fpErr2').style.display = 'none';
+      btn.textContent = 'ĐANG XÁC THỰC...'; btn.style.opacity = '.7';
+      setTimeout(() => {
+        btn.textContent = 'ĐỔI MẬT KHẨU →'; btn.style.opacity = '1';
+        clearInterval(_fpTimer);
+        document.getElementById('fpPw1').value = '';
+        document.getElementById('fpPw2').value = '';
+        document.getElementById('fpStrengthFill').style.width = '0';
+        document.getElementById('fpStrengthLabel').textContent = '';
+        _fpShowOnly('fp3');
+        setTimeout(() => document.getElementById('fpPw1').focus(), 100);
+      }, 900);
+    }
+    function fpResend() {
+      const ds = document.getElementById('fp2').querySelectorAll('.otp-d');
+      ds.forEach(d => d.value = ''); document.getElementById('fpErr2').style.display = 'none';
+      fpSendOtp();
+    }
+    function fpStrength(pw) {
+      let score = 0;
+      if (pw.length >= 8) score++;
+      if (/[A-Z]/.test(pw)) score++;
+      if (/[0-9]/.test(pw)) score++;
+      if (/[^A-Za-z0-9]/.test(pw)) score++;
+      const colors = ['var(--red)', 'var(--yellow)', 'var(--cyan)', 'var(--green)'];
+      const labels = ['Yếu', 'Trung bình', 'Mạnh', 'Rất mạnh'];
+      const fill = document.getElementById('fpStrengthFill');
+      const label = document.getElementById('fpStrengthLabel');
+      fill.style.width = (score * 25) + '%';
+      fill.style.background = colors[score - 1] || 'var(--red)';
+      label.textContent = pw ? (labels[score - 1] || 'Yếu') : '';
+      label.style.color = colors[score - 1] || 'var(--red)';
+    }
+    function fpResetPassword() {
+      const pw1 = document.getElementById('fpPw1').value;
+      const pw2 = document.getElementById('fpPw2').value;
+      const err = document.getElementById('fpErr3');
+      if (pw1.length < 8) { err.style.display = 'block'; err.textContent = 'Mật khẩu phải có ít nhất 8 ký tự.'; return; }
+      if (pw1 !== pw2) { err.style.display = 'block'; err.textContent = 'Mật khẩu xác nhận không khớp.'; return; }
+      err.style.display = 'none';
+      _fpShowOnly('fp4');
+    }
+
+    // Init Theme
+    (function initLoginTheme() {
+      const t = localStorage.getItem('ioc_theme') || 'dark';
+      if (t === 'light') document.body.classList.add('light');
+    })();
+  </script>
+</body>
+
+</html>

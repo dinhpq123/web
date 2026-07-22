@@ -1,0 +1,26 @@
+{
+  "name": "hadiwa-ioc-simulator-tools",
+  "version": "1.0.0",
+  "description": "Hadiwa IOC — Bộ công cụ giả lập thiết bị thủy lợi & đê điều (Chi cục PCTT TP. Hà Nội)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "start:http": "node simulators/hydro-http-simulator.js",
+    "start:mqtt": "node simulators/flood-mqtt-publisher.js",
+    "start:reservoir": "node simulators/reservoir-scada.js",
+    "start:datalogger": "node simulators/rainfall-datalogger.js",
+    "start:dashboard": "node dashboard/server.js",
+    "dev": "node index.js"
+  },
+  "keywords": ["hadiwa", "pctt", "thuy-loi", "de-dieu", "iot", "scada", "simulator"],
+  "author": "Hadiwa IOC Dev Team",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "aedes": "^0.51.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mqtt": "^5.5.0",
+    "ws": "^8.18.0"
+  }
+}

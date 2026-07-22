@@ -1,0 +1,898 @@
+[
+  {
+    "module": "Hệ thống",
+    "feature": "Đăng nhập",
+    "caption": "Màn hình đăng nhập",
+    "desc": "Giao diện đăng nhập chính của hệ thống IOC, hỗ trợ xác thực bảo mật.",
+    "id": "01_login_page_1772373854359",
+    "file": "screenshots/01_login_page_1772373854359.png"
+  },
+  {
+    "module": "Hệ thống",
+    "feature": "Đăng nhập",
+    "caption": "Màn hình đăng nhập",
+    "desc": "Giao diện đăng nhập chính của hệ thống IOC, hỗ trợ xác thực bảo mật.",
+    "id": "01_login_page_1772382817574",
+    "file": "screenshots/01_login_page_1772382817574.png"
+  },
+  {
+    "module": "Hệ thống",
+    "feature": "Đăng nhập",
+    "caption": "Chọn vai trò",
+    "desc": "Người dùng lựa chọn vai trò (Role) phù hợp để truy cập các phân hệ tương ứng.",
+    "id": "02_dashboard_alarms_1772373914752",
+    "file": "screenshots/02_dashboard_alarms_1772373914752.png"
+  },
+  {
+    "module": "Hệ thống",
+    "feature": "Đăng nhập",
+    "caption": "Chọn vai trò",
+    "desc": "Người dùng lựa chọn vai trò (Role) phù hợp để truy cập các phân hệ tương ứng.",
+    "id": "02_dashboard_collapsed_1772373918500",
+    "file": "screenshots/02_dashboard_collapsed_1772373918500.png"
+  },
+  {
+    "module": "Hệ thống",
+    "feature": "Đăng nhập",
+    "caption": "Chọn vai trò",
+    "desc": "Người dùng lựa chọn vai trò (Role) phù hợp để truy cập các phân hệ tương ứng.",
+    "id": "02_dashboard_expanded_1772373910979",
+    "file": "screenshots/02_dashboard_expanded_1772373910979.png"
+  },
+  {
+    "module": "Hệ thống",
+    "feature": "Đăng nhập",
+    "caption": "Chọn vai trò",
+    "desc": "Người dùng lựa chọn vai trò (Role) phù hợp để truy cập các phân hệ tương ứng.",
+    "id": "02_login_role_selection_1772382839502",
+    "file": "screenshots/02_login_role_selection_1772382839502.png"
+  },
+  {
+    "module": "Hệ thống",
+    "feature": "Đăng nhập",
+    "caption": "Xác thực OTP",
+    "desc": "Lớp bảo mật thứ hai (2FA) yêu cầu nhập mã OTP gửi tới thiết bị di động.",
+    "id": "03_login_otp_screen_1772382870126",
+    "file": "screenshots/03_login_otp_screen_1772382870126.png"
+  },
+  {
+    "module": "Hệ thống",
+    "feature": "Đăng nhập",
+    "caption": "Xác thực OTP",
+    "desc": "Lớp bảo mật thứ hai (2FA) yêu cầu nhập mã OTP gửi tới thiết bị di động.",
+    "id": "03_videowall_1772373942691",
+    "file": "screenshots/03_videowall_1772373942691.png"
+  },
+  {
+    "module": "Hệ thống",
+    "feature": "Đăng nhập",
+    "caption": "Xác thực OTP",
+    "desc": "Lớp bảo mật thứ hai (2FA) yêu cầu nhập mã OTP gửi tới thiết bị di động.",
+    "id": "03_videowall_expanded_1772373938911",
+    "file": "screenshots/03_videowall_expanded_1772373938911.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Navigation",
+    "caption": "Sidebar mở rộng",
+    "desc": "Thanh điều hướng phân tầng giúp truy cập nhanh 6 phân hệ lớn của hệ thống.",
+    "id": "04_gis_1772373960882",
+    "file": "screenshots/04_gis_1772373960882.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Navigation",
+    "caption": "Sidebar mở rộng",
+    "desc": "Thanh điều hướng phân tầng giúp truy cập nhanh 6 phân hệ lớn của hệ thống.",
+    "id": "04_gis_expanded_1772373958956",
+    "file": "screenshots/04_gis_expanded_1772373958956.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Navigation",
+    "caption": "Sidebar mở rộng",
+    "desc": "Thanh điều hướng phân tầng giúp truy cập nhanh 6 phân hệ lớn của hệ thống.",
+    "id": "04_shell_sidebar_expanded_1772382893491",
+    "file": "screenshots/04_shell_sidebar_expanded_1772382893491.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Navigation",
+    "caption": "Sidebar thu gọn",
+    "desc": "Tối ưu không gian hiển thị cho các bản đồ và biểu đồ dữ liệu lớn.",
+    "id": "05_camera_1772373997016",
+    "file": "screenshots/05_camera_1772373997016.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Navigation",
+    "caption": "Sidebar thu gọn",
+    "desc": "Tối ưu không gian hiển thị cho các bản đồ và biểu đồ dữ liệu lớn.",
+    "id": "05_camera_expanded_1772373994989",
+    "file": "screenshots/05_camera_expanded_1772373994989.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Navigation",
+    "caption": "Sidebar thu gọn",
+    "desc": "Tối ưu không gian hiển thị cho các bản đồ và biểu đồ dữ liệu lớn.",
+    "id": "05_shell_sidebar_collapsed_1772382909364",
+    "file": "screenshots/05_shell_sidebar_collapsed_1772382909364.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Tính năng",
+    "caption": "Chế độ Sáng/Tối",
+    "desc": "Hỗ trợ thay đổi giao diện linh hoạt theo điều kiện ánh sáng môi trường.",
+    "id": "06_callcenter_1772374019778",
+    "file": "screenshots/06_callcenter_1772374019778.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Tính năng",
+    "caption": "Chế độ Sáng/Tối",
+    "desc": "Hỗ trợ thay đổi giao diện linh hoạt theo điều kiện ánh sáng môi trường.",
+    "id": "06_callcenter_expanded_1772374018045",
+    "file": "screenshots/06_callcenter_expanded_1772374018045.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Tính năng",
+    "caption": "Chế độ Sáng/Tối",
+    "desc": "Hỗ trợ thay đổi giao diện linh hoạt theo điều kiện ánh sáng môi trường.",
+    "id": "06_shell_theme_toggle_1772382927417",
+    "file": "screenshots/06_shell_theme_toggle_1772382927417.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Cá nhân hóa",
+    "caption": "Thông tin người dùng",
+    "desc": "Xem nhanh thông tin tài khoản và phân quyền hiện tại.",
+    "id": "07_scada_1772374036529",
+    "file": "screenshots/07_scada_1772374036529.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Cá nhân hóa",
+    "caption": "Thông tin người dùng",
+    "desc": "Xem nhanh thông tin tài khoản và phân quyền hiện tại.",
+    "id": "07_scada_expanded_1772374034972",
+    "file": "screenshots/07_scada_expanded_1772374034972.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Cảnh báo",
+    "caption": "Bảng thông báo nhanh",
+    "desc": "Hiển thị danh sách các cảnh báo vận hành mới nhất từ SCADA.",
+    "id": "08_plants_1772374051829",
+    "file": "screenshots/08_plants_1772374051829.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Cảnh báo",
+    "caption": "Bảng thông báo nhanh",
+    "desc": "Hiển thị danh sách các cảnh báo vận hành mới nhất từ SCADA.",
+    "id": "08_plants_expanded_1772374049985",
+    "file": "screenshots/08_plants_expanded_1772374049985.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Cảnh báo",
+    "caption": "Bảng thông báo nhanh",
+    "desc": "Hiển thị danh sách các cảnh báo vận hành mới nhất từ SCADA.",
+    "id": "08_shell_notifications_1772382970823",
+    "file": "screenshots/08_shell_notifications_1772382970823.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Dashboard",
+    "caption": "Dashboard Tổng quan",
+    "desc": "Trung tâm chỉ huy hiển thị KPI toàn diện về sản lượng, thất thoát và trạng thái trạm.",
+    "id": "09_dashboard_full_1772383006105",
+    "file": "screenshots/09_dashboard_full_1772383006105.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Dashboard",
+    "caption": "Dashboard Tổng quan",
+    "desc": "Trung tâm chỉ huy hiển thị KPI toàn diện về sản lượng, thất thoát và trạng thái trạm.",
+    "id": "09_quality_1772374066401",
+    "file": "screenshots/09_quality_1772374066401.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Dashboard",
+    "caption": "Dashboard Tổng quan",
+    "desc": "Trung tâm chỉ huy hiển thị KPI toàn diện về sản lượng, thất thoát và trạng thái trạm.",
+    "id": "09_quality_expanded_1772374064753",
+    "file": "screenshots/09_quality_expanded_1772374064753.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "GIS",
+    "caption": "Bản đồ số GIS",
+    "desc": "Quản lý hạ tầng mạng lưới cấp nước trên nền bản đồ không gian địa lý.",
+    "id": "10_gis_map_full_1772383031485",
+    "file": "screenshots/10_gis_map_full_1772383031485.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "GIS",
+    "caption": "Bản đồ số GIS",
+    "desc": "Quản lý hạ tầng mạng lưới cấp nước trên nền bản đồ không gian địa lý.",
+    "id": "10_lims_1772374081529",
+    "file": "screenshots/10_lims_1772374081529.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "GIS",
+    "caption": "Bản đồ số GIS",
+    "desc": "Quản lý hạ tầng mạng lưới cấp nước trên nền bản đồ không gian địa lý.",
+    "id": "10_lims_expanded_1772374079699",
+    "file": "screenshots/10_lims_expanded_1772374079699.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "GIS",
+    "caption": "Tương tác bản đồ",
+    "desc": "Khả năng bật/tắt các lớp dữ liệu (Layer) như đường ống, đồng hồ, van công suất.",
+    "id": "11_gis_map_layers_1772383058348",
+    "file": "screenshots/11_gis_map_layers_1772383058348.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "GIS",
+    "caption": "Tương tác bản đồ",
+    "desc": "Khả năng bật/tắt các lớp dữ liệu (Layer) như đường ống, đồng hồ, van công suất.",
+    "id": "11_scheduler_1772374107982",
+    "file": "screenshots/11_scheduler_1772374107982.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "GIS",
+    "caption": "Tương tác bản đồ",
+    "desc": "Khả năng bật/tắt các lớp dữ liệu (Layer) như đường ống, đồng hồ, van công suất.",
+    "id": "11_scheduler_expanded_1772374094282",
+    "file": "screenshots/11_scheduler_expanded_1772374094282.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Video Wall",
+    "caption": "Tường video giám sát",
+    "desc": "Layout đa màn hình dành cho trung tâm điều hành (NOC) giám sát luồng dữ liệu.",
+    "id": "12_alerts_1772374122235",
+    "file": "screenshots/12_alerts_1772374122235.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Video Wall",
+    "caption": "Tường video giám sát",
+    "desc": "Layout đa màn hình dành cho trung tâm điều hành (NOC) giám sát luồng dữ liệu.",
+    "id": "12_alerts_expanded_1772374120619",
+    "file": "screenshots/12_alerts_expanded_1772374120619.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Video Wall",
+    "caption": "Tường video giám sát",
+    "desc": "Layout đa màn hình dành cho trung tâm điều hành (NOC) giám sát luồng dữ liệu.",
+    "id": "12_videowall_standard_1772383101784",
+    "file": "screenshots/12_videowall_standard_1772383101784.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Camera CCTV",
+    "caption": "Lưới Camera giám sát",
+    "desc": "Tích hợp trực tiếp luồng video từ các điểm nóng vận hành trên địa bàn.",
+    "id": "13_camera_grid_1772383134947",
+    "file": "screenshots/13_camera_grid_1772383134947.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Camera CCTV",
+    "caption": "Lưới Camera giám sát",
+    "desc": "Tích hợp trực tiếp luồng video từ các điểm nóng vận hành trên địa bàn.",
+    "id": "13_nrw_1772374142057",
+    "file": "screenshots/13_nrw_1772374142057.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Camera CCTV",
+    "caption": "Lưới Camera giám sát",
+    "desc": "Tích hợp trực tiếp luồng video từ các điểm nóng vận hành trên địa bàn.",
+    "id": "13_nrw_expanded_1772374140184",
+    "file": "screenshots/13_nrw_expanded_1772374140184.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Camera CCTV",
+    "caption": "Bộ lọc camera",
+    "desc": "Lọc camera nhanh theo Nhà máy hoặc Khu vực địa lý cụ thể.",
+    "id": "14_camera_factory_filter_1772383164089",
+    "file": "screenshots/14_camera_factory_filter_1772383164089.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Camera CCTV",
+    "caption": "Bộ lọc camera",
+    "desc": "Lọc camera nhanh theo Nhà máy hoặc Khu vực địa lý cụ thể.",
+    "id": "14_incidents_1772374156528",
+    "file": "screenshots/14_incidents_1772374156528.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Camera CCTV",
+    "caption": "Bộ lọc camera",
+    "desc": "Lọc camera nhanh theo Nhà máy hoặc Khu vực địa lý cụ thể.",
+    "id": "14_incidents_expanded_1772374154854",
+    "file": "screenshots/14_incidents_expanded_1772374154854.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Tổng đài CSKH",
+    "caption": "Danh sách cuộc gọi",
+    "desc": "Quản lý thông tin tiếp nhận yêu cầu từ khách hàng qua đường dây nóng.",
+    "id": "15_assets_1772374171521",
+    "file": "screenshots/15_assets_1772374171521.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Tổng đài CSKH",
+    "caption": "Danh sách cuộc gọi",
+    "desc": "Quản lý thông tin tiếp nhận yêu cầu từ khách hàng qua đường dây nóng.",
+    "id": "15_assets_expanded_1772374170006",
+    "file": "screenshots/15_assets_expanded_1772374170006.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Tổng đài CSKH",
+    "caption": "Danh sách cuộc gọi",
+    "desc": "Quản lý thông tin tiếp nhận yêu cầu từ khách hàng qua đường dây nóng.",
+    "id": "15_callcenter_list_1772383196299",
+    "file": "screenshots/15_callcenter_list_1772383196299.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Tổng đài CSKH",
+    "caption": "Chi tiết cuộc gọi",
+    "desc": "Xem lại nội dung và lịch sử xử lý cho từng phản ánh của khách hàng.",
+    "id": "16_biz_overview_1772374186184",
+    "file": "screenshots/16_biz_overview_1772374186184.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Tổng đài CSKH",
+    "caption": "Chi tiết cuộc gọi",
+    "desc": "Xem lại nội dung và lịch sử xử lý cho từng phản ánh của khách hàng.",
+    "id": "16_biz_overview_expanded_1772374184565",
+    "file": "screenshots/16_biz_overview_expanded_1772374184565.png"
+  },
+  {
+    "module": "Điều hành Tập trung",
+    "feature": "Tổng đài CSKH",
+    "caption": "Chi tiết cuộc gọi",
+    "desc": "Xem lại nội dung và lịch sử xử lý cho từng phản ánh của khách hàng.",
+    "id": "16_callcenter_detail_1772383227165",
+    "file": "screenshots/16_callcenter_detail_1772383227165.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "SCADA",
+    "caption": "Bản đồ mạng lưới SCADA",
+    "desc": "Theo dõi áp lực và lưu lượng trên toàn bộ hệ thống trạm bơm trung chuyển.",
+    "id": "17_customers_1772374203774",
+    "file": "screenshots/17_customers_1772374203774.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "SCADA",
+    "caption": "Bản đồ mạng lưới SCADA",
+    "desc": "Theo dõi áp lực và lưu lượng trên toàn bộ hệ thống trạm bơm trung chuyển.",
+    "id": "17_customers_expanded_1772374202146",
+    "file": "screenshots/17_customers_expanded_1772374202146.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "SCADA",
+    "caption": "Bản đồ mạng lưới SCADA",
+    "desc": "Theo dõi áp lực và lưu lượng trên toàn bộ hệ thống trạm bơm trung chuyển.",
+    "id": "17_scada_map_full_1772383271716",
+    "file": "screenshots/17_scada_map_full_1772383271716.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "SCADA",
+    "caption": "Chi tiết điểm đo",
+    "desc": "Biểu đồ chi tiết về diễn biến áp lực và mực nước trong 24h qua.",
+    "id": "18_reports_1772374218466",
+    "file": "screenshots/18_reports_1772374218466.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "SCADA",
+    "caption": "Chi tiết điểm đo",
+    "desc": "Biểu đồ chi tiết về diễn biến áp lực và mực nước trong 24h qua.",
+    "id": "18_reports_expanded_1772374216743",
+    "file": "screenshots/18_reports_expanded_1772374216743.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "SCADA",
+    "caption": "Chi tiết điểm đo",
+    "desc": "Biểu đồ chi tiết về diễn biến áp lực và mực nước trong 24h qua.",
+    "id": "18_scada_device_detail_1772383301082",
+    "file": "screenshots/18_scada_device_detail_1772383301082.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Quản lý Nhà máy",
+    "caption": "Trạng thái vận hành",
+    "desc": "Tổng hợp trạng thái hoạt động của các nhà máy sản xuất nước sạch.",
+    "id": "19_hrm_1772374235095",
+    "file": "screenshots/19_hrm_1772374235095.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Quản lý Nhà máy",
+    "caption": "Trạng thái vận hành",
+    "desc": "Tổng hợp trạng thái hoạt động của các nhà máy sản xuất nước sạch.",
+    "id": "19_hrm_expanded_1772374233310",
+    "file": "screenshots/19_hrm_expanded_1772374233310.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Quản lý Nhà máy",
+    "caption": "Trạng thái vận hành",
+    "desc": "Tổng hợp trạng thái hoạt động của các nhà máy sản xuất nước sạch.",
+    "id": "19_plant_status_list_1772383345281",
+    "file": "screenshots/19_plant_status_list_1772383345281.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Quản lý Nhà máy",
+    "caption": "Thông số chi tiết nhà máy",
+    "desc": "Phân tích hiệu suất sản xuất và tiêu thụ điện năng của từng đơn vị.",
+    "id": "20_logs_1772374250066",
+    "file": "screenshots/20_logs_1772374250066.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Quản lý Nhà máy",
+    "caption": "Thông số chi tiết nhà máy",
+    "desc": "Phân tích hiệu suất sản xuất và tiêu thụ điện năng của từng đơn vị.",
+    "id": "20_logs_expanded_1772374248505",
+    "file": "screenshots/20_logs_expanded_1772374248505.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Quản lý Nhà máy",
+    "caption": "Thông số chi tiết nhà máy",
+    "desc": "Phân tích hiệu suất sản xuất và tiêu thụ điện năng của từng đơn vị.",
+    "id": "20_plant_operation_detail_1772383373681",
+    "file": "screenshots/20_plant_operation_detail_1772383373681.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Chất lượng nước",
+    "caption": "Giám sát chất lượng",
+    "desc": "Theo dõi các chỉ số lý hóa (pH, Độ đục, Clo dư) theo thời gian thực.",
+    "id": "21_settings_roles_collapsed_1772374502387",
+    "file": "screenshots/21_settings_roles_collapsed_1772374502387.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Chất lượng nước",
+    "caption": "Giám sát chất lượng",
+    "desc": "Theo dõi các chỉ số lý hóa (pH, Độ đục, Clo dư) theo thời gian thực.",
+    "id": "21_settings_roles_collapsed_1772374528706",
+    "file": "screenshots/21_settings_roles_collapsed_1772374528706.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Chất lượng nước",
+    "caption": "Giám sát chất lượng",
+    "desc": "Theo dõi các chỉ số lý hóa (pH, Độ đục, Clo dư) theo thời gian thực.",
+    "id": "21_settings_roles_expanded_1772374499664",
+    "file": "screenshots/21_settings_roles_expanded_1772374499664.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Chất lượng nước",
+    "caption": "Giám sát chất lượng",
+    "desc": "Theo dõi các chỉ số lý hóa (pH, Độ đục, Clo dư) theo thời gian thực.",
+    "id": "21_settings_roles_expanded_1772374531279",
+    "file": "screenshots/21_settings_roles_expanded_1772374531279.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Chất lượng nước",
+    "caption": "Giám sát chất lượng",
+    "desc": "Theo dõi các chỉ số lý hóa (pH, Độ đục, Clo dư) theo thời gian thực.",
+    "id": "21_settings_system_collapsed_1772374488486",
+    "file": "screenshots/21_settings_system_collapsed_1772374488486.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Chất lượng nước",
+    "caption": "Giám sát chất lượng",
+    "desc": "Theo dõi các chỉ số lý hóa (pH, Độ đục, Clo dư) theo thời gian thực.",
+    "id": "21_settings_system_expanded_1772374479802",
+    "file": "screenshots/21_settings_system_expanded_1772374479802.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Chất lượng nước",
+    "caption": "Giám sát chất lượng",
+    "desc": "Theo dõi các chỉ số lý hóa (pH, Độ đục, Clo dư) theo thời gian thực.",
+    "id": "21_water_quality_monitor_1772383415469",
+    "file": "screenshots/21_water_quality_monitor_1772383415469.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "LIMS",
+    "caption": "Kết quả phòng thí nghiệm",
+    "desc": "Quản lý các phiếu xét nghiệm nước định kỳ và đột xuất.",
+    "id": "22_aiagent_collapsed_1772374584051",
+    "file": "screenshots/22_aiagent_collapsed_1772374584051.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "LIMS",
+    "caption": "Kết quả phòng thí nghiệm",
+    "desc": "Quản lý các phiếu xét nghiệm nước định kỳ và đột xuất.",
+    "id": "22_aiagent_expanded_1772374571135",
+    "file": "screenshots/22_aiagent_expanded_1772374571135.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "LIMS",
+    "caption": "Kết quả phòng thí nghiệm",
+    "desc": "Quản lý các phiếu xét nghiệm nước định kỳ và đột xuất.",
+    "id": "22_lab_results_entry_1772383446635",
+    "file": "screenshots/22_lab_results_entry_1772383446635.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Lịch bơm",
+    "caption": "Quản lý lịch chạy máy",
+    "desc": "Tối ưu hóa thời gian chạy bơm theo khung giờ giá điện thấp điểm.",
+    "id": "23_chatbot_collapsed_1772374605223",
+    "file": "screenshots/23_chatbot_collapsed_1772374605223.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Lịch bơm",
+    "caption": "Quản lý lịch chạy máy",
+    "desc": "Tối ưu hóa thời gian chạy bơm theo khung giờ giá điện thấp điểm.",
+    "id": "23_chatbot_collapsed_1772374635745",
+    "file": "screenshots/23_chatbot_collapsed_1772374635745.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Lịch bơm",
+    "caption": "Quản lý lịch chạy máy",
+    "desc": "Tối ưu hóa thời gian chạy bơm theo khung giờ giá điện thấp điểm.",
+    "id": "23_chatbot_expanded_1772374602301",
+    "file": "screenshots/23_chatbot_expanded_1772374602301.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Lịch bơm",
+    "caption": "Quản lý lịch chạy máy",
+    "desc": "Tối ưu hóa thời gian chạy bơm theo khung giờ giá điện thấp điểm.",
+    "id": "23_chatbot_expanded_1772374632740",
+    "file": "screenshots/23_chatbot_expanded_1772374632740.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Lịch bơm",
+    "caption": "Quản lý lịch chạy máy",
+    "desc": "Tối ưu hóa thời gian chạy bơm theo khung giờ giá điện thấp điểm.",
+    "id": "23_pumping_schedule_1772383474927",
+    "file": "screenshots/23_pumping_schedule_1772383474927.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Thiết lập cảnh báo",
+    "caption": "Cấu hình ngưỡng cảnh báo",
+    "desc": "Thiết lập các kịch bản cảnh báo tự động khi thông số vượt ngưỡng.",
+    "id": "24_alert_config_list_1772383507620",
+    "file": "screenshots/24_alert_config_list_1772383507620.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Thiết lập cảnh báo",
+    "caption": "Cấu hình ngưỡng cảnh báo",
+    "desc": "Thiết lập các kịch bản cảnh báo tự động khi thông số vượt ngưỡng.",
+    "id": "24_datahub_collapsed_1772374653545",
+    "file": "screenshots/24_datahub_collapsed_1772374653545.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Thiết lập cảnh báo",
+    "caption": "Cấu hình ngưỡng cảnh báo",
+    "desc": "Thiết lập các kịch bản cảnh báo tự động khi thông số vượt ngưỡng.",
+    "id": "24_datahub_expanded_1772374650618",
+    "file": "screenshots/24_datahub_expanded_1772374650618.png"
+  },
+  {
+    "module": "Kỹ thuật & Mạng lưới",
+    "feature": "NRW",
+    "caption": "Phân tích thất thoát",
+    "desc": "Theo dõi tỷ lệ nước không doanh thu (NRW) theo từng khu vực DMA.",
+    "id": "25_business_overview_dark_1772374676805",
+    "file": "screenshots/25_business_overview_dark_1772374676805.png"
+  },
+  {
+    "module": "Kỹ thuật & Mạng lưới",
+    "feature": "NRW",
+    "caption": "Phân tích thất thoát",
+    "desc": "Theo dõi tỷ lệ nước không doanh thu (NRW) theo từng khu vực DMA.",
+    "id": "25_business_overview_dark_theme_1772374696413",
+    "file": "screenshots/25_business_overview_dark_theme_1772374696413.png"
+  },
+  {
+    "module": "Kỹ thuật & Mạng lưới",
+    "feature": "NRW",
+    "caption": "Phân tích thất thoát",
+    "desc": "Theo dõi tỷ lệ nước không doanh thu (NRW) theo từng khu vực DMA.",
+    "id": "25_business_overview_light_1772374674139",
+    "file": "screenshots/25_business_overview_light_1772374674139.png"
+  },
+  {
+    "module": "Kỹ thuật & Mạng lưới",
+    "feature": "NRW",
+    "caption": "Phân tích thất thoát",
+    "desc": "Theo dõi tỷ lệ nước không doanh thu (NRW) theo từng khu vực DMA.",
+    "id": "25_business_overview_light_theme_1772374693425",
+    "file": "screenshots/25_business_overview_light_theme_1772374693425.png"
+  },
+  {
+    "module": "Kỹ thuật & Mạng lưới",
+    "feature": "NRW",
+    "caption": "Phân tích thất thoát",
+    "desc": "Theo dõi tỷ lệ nước không doanh thu (NRW) theo từng khu vực DMA.",
+    "id": "25_nrw_dashboard_1772383579676",
+    "file": "screenshots/25_nrw_dashboard_1772383579676.png"
+  },
+  {
+    "module": "Kỹ thuật & Mạng lưới",
+    "feature": "NRW",
+    "caption": "Chi tiết vùng DMA",
+    "desc": "Phân tích dòng chảy đêm (MNF) để phát hiện rò rỉ ngầm.",
+    "id": "26_nrw_dma_detail_1772383608418",
+    "file": "screenshots/26_nrw_dma_detail_1772383608418.png"
+  },
+  {
+    "module": "Kỹ thuật & Mạng lưới",
+    "feature": "NRW",
+    "caption": "Chi tiết vùng DMA",
+    "desc": "Phân tích dòng chảy đêm (MNF) để phát hiện rò rỉ ngầm.",
+    "id": "26_user_profile_1772374711034",
+    "file": "screenshots/26_user_profile_1772374711034.png"
+  },
+  {
+    "module": "Kỹ thuật & Mạng lưới",
+    "feature": "Quản lý Sự cố",
+    "caption": "Danh sách sự cố mạng lưới",
+    "desc": "Quản lý tiếp nhận và phân loại các điểm vỡ ống, rò rỉ trên địa bàn.",
+    "id": "27_factory_dropdown_1772374713853",
+    "file": "screenshots/27_factory_dropdown_1772374713853.png"
+  },
+  {
+    "module": "Kỹ thuật & Mạng lưới",
+    "feature": "Quản lý Sự cố",
+    "caption": "Danh sách sự cố mạng lưới",
+    "desc": "Quản lý tiếp nhận và phân loại các điểm vỡ ống, rò rỉ trên địa bàn.",
+    "id": "27_incident_list_1772383635954",
+    "file": "screenshots/27_incident_list_1772383635954.png"
+  },
+  {
+    "module": "Kỹ thuật & Mạng lưới",
+    "feature": "Quản lý Sự cố",
+    "caption": "Form xử lý sự cố",
+    "desc": "Giao diện cập nhật tiến độ và hình ảnh hiện trường lần vết xử lý.",
+    "id": "28_incident_form_edit_1772383663725",
+    "file": "screenshots/28_incident_form_edit_1772383663725.png"
+  },
+  {
+    "module": "Kỹ thuật & Mạng lưới",
+    "feature": "Vật tư & Thiết bị",
+    "caption": "Thống kê kho vật tư",
+    "desc": "Giám sát lượng tồn kho vật tư kỹ thuật phục vụ sửa chữa mạng lưới.",
+    "id": "29_inventory_summary_1772383704693",
+    "file": "screenshots/29_inventory_summary_1772383704693.png"
+  },
+  {
+    "module": "Kỹ thuật & Mạng lưới",
+    "feature": "Vật tư & Thiết bị",
+    "caption": "Bản đồ tài sản",
+    "desc": "Vị trí địa lý của các van, đồng hồ tổng và thiết bị trên mạng lưới.",
+    "id": "30_asset_map_view_1772383744116",
+    "file": "screenshots/30_asset_map_view_1772383744116.png"
+  },
+  {
+    "module": "Quản lý Kinh doanh",
+    "feature": "Tổng quan",
+    "caption": "KPI Kinh doanh",
+    "desc": "Dashboard theo dõi doanh thu, tỷ lệ thu nợ và phát triển khách hàng mới.",
+    "id": "31_business_kpi_dashboard_1772383774461",
+    "file": "screenshots/31_business_kpi_dashboard_1772383774461.png"
+  },
+  {
+    "module": "Quản lý Kinh doanh",
+    "feature": "Khách hàng",
+    "caption": "Danh bạ khách hàng",
+    "desc": "Quản lý thông tin hợp đồng và hồ sơ của hơn 49.000 khách hàng.",
+    "id": "32_customer_list_1772383804988",
+    "file": "screenshots/32_customer_list_1772383804988.png"
+  },
+  {
+    "module": "Quản lý Kinh doanh",
+    "feature": "Khách hàng",
+    "caption": "Chi tiết hóa đơn",
+    "desc": "Lịch sử dùng nước và thanh toán hóa đơn chi tiết của từng hộ tiêu thụ.",
+    "id": "33_invoice_detail_1772383850596",
+    "file": "screenshots/33_invoice_detail_1772383850596.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Lịch bơm",
+    "caption": "Modal Chỉnh sửa lịch",
+    "desc": "Giao diện thay đổi giờ chạy bơm thủ công hoặc reset về tối ưu AI.",
+    "id": "34_scheduler_edit_modal_1772383990842",
+    "file": "screenshots/34_scheduler_edit_modal_1772383990842.png"
+  },
+  {
+    "module": "Quản lý Sản xuất",
+    "feature": "Thiết lập cảnh báo",
+    "caption": "Modal Tạo cảnh báo",
+    "desc": "Giao diện cấu hình luật cảnh báo mới với các điều kiện logic phức tạp.",
+    "id": "35_alert_create_modal_1772384008978",
+    "file": "screenshots/35_alert_create_modal_1772384008978.png"
+  },
+  {
+    "module": "Kỹ thuật & Mạng lưới",
+    "feature": "NRW",
+    "caption": "Modal Lịch sử rò rỉ",
+    "desc": "Xem diễn biến rò rỉ trong quá khứ của một vùng DMA cụ thể.",
+    "id": "36_nrw_history_modal_1772384682310",
+    "file": "screenshots/36_nrw_history_modal_1772384682310.png"
+  },
+  {
+    "module": "Kỹ thuật & Mạng lưới",
+    "feature": "Quản lý Sự cố",
+    "caption": "Chi tiết vòng đời sự cố",
+    "desc": "Timeline chi tiết từ lúc phát hiện đến khi hoàn thành xử lý sự cố.",
+    "id": "37_incident_detail_view_1772384108967",
+    "file": "screenshots/37_incident_detail_view_1772384108967.png"
+  },
+  {
+    "module": "Trung tâm AI",
+    "feature": "AI Agent",
+    "caption": "Phân tích Dữ liệu AI",
+    "desc": "Agent thông minh phân tích xu hướng và phát hiện bất thường tự động.",
+    "id": "38_ai_agent_page_1772384160526",
+    "file": "screenshots/38_ai_agent_page_1772384160526.png"
+  },
+  {
+    "module": "Trung tâm AI",
+    "feature": "Data Hub",
+    "caption": "Kho dữ liệu tích hợp",
+    "desc": "Quản lý các nguồn dữ liệu từ IoT, ERP và bên thứ ba đổ về hệ thống.",
+    "id": "39_data_hub_page_1772384177722",
+    "file": "screenshots/39_data_hub_page_1772384177722.png"
+  },
+  {
+    "module": "Trung tâm AI",
+    "feature": "AI Assistant",
+    "caption": "Chatbot Nội bộ",
+    "desc": "Trợ lý ảo hỗ trợ tra cứu thông tin vận hành bằng ngôn ngữ tự nhiên.",
+    "id": "40_chatbot_init_1772384210918",
+    "file": "screenshots/40_chatbot_init_1772384210918.png"
+  },
+  {
+    "module": "Trung tâm AI",
+    "feature": "AI Assistant",
+    "caption": "Menu phân loại AI",
+    "desc": "Lựa chọn các chuyên gia AI phù hợp (Sản xuất, Kinh doanh, Kỹ thuật).",
+    "id": "41_chatbot_categories_1772384232508",
+    "file": "screenshots/41_chatbot_categories_1772384232508.png"
+  },
+  {
+    "module": "Trung tâm AI",
+    "feature": "AI Assistant",
+    "caption": "Xử lý file bằng AI",
+    "desc": "Tính năng đính kèm tài liệu để AI tóm tắt hoặc phân tích dữ liệu.",
+    "id": "42_chatbot_file_picker_state_1772384258434",
+    "file": "screenshots/42_chatbot_file_picker_state_1772384258434.png"
+  },
+  {
+    "module": "Trung tâm AI",
+    "feature": "AI Assistant",
+    "caption": "Kết quả dạng Bảng",
+    "desc": "AI tổng hợp dữ liệu và hiển thị dưới dạng bảng biểu chuyên nghiệp.",
+    "id": "43_chatbot_table_response_1772384424002",
+    "file": "screenshots/43_chatbot_table_response_1772384424002.png"
+  },
+  {
+    "module": "Trung tâm AI",
+    "feature": "AI Assistant",
+    "caption": "Kết quả dạng Biểu đồ",
+    "desc": "AI tự động vẽ biểu đồ xu hướng dựa trên dữ liệu tra cứu được.",
+    "id": "44_chatbot_chart_response_1772384478690",
+    "file": "screenshots/44_chatbot_chart_response_1772384478690.png"
+  },
+  {
+    "module": "Giao diện Shell",
+    "feature": "Cá nhân hóa",
+    "caption": "Popover Hồ sơ",
+    "desc": "Menu mở rộng cho phép đổi mật khẩu, cài đặt giao diện và đăng xuất.",
+    "id": "45_header_profile_popover_1772384537345",
+    "file": "screenshots/45_header_profile_popover_1772384537345.png"
+  },
+  {
+    "module": "App Khách hàng",
+    "feature": "Hệ thống",
+    "caption": "Đăng nhập App khách hàng",
+    "desc": "Giao diện đăng nhập Smart Water Care dành cho hộ tiêu thụ qua số điện thoại.",
+    "id": "50_customer_login_1772384971884",
+    "file": "screenshots/50_customer_login_1772384971884.png"
+  },
+  {
+    "module": "App Khách hàng",
+    "feature": "Trang chủ",
+    "caption": "Trang chủ Smart Water Care",
+    "desc": "Giao diện hiện đại với glassmorphism hiển thị chỉ số dùng nước và thông tin thanh toán nhanh.",
+    "id": "51_customer_home_1772385044395",
+    "file": "screenshots/51_customer_home_1772385044395.png"
+  },
+  {
+    "module": "App Khách hàng",
+    "feature": "Hóa đơn",
+    "caption": "Tra cứu hóa đơn",
+    "desc": "Chi tiết tiền nước, thuế và các phí dịch vụ kèm theo trạng thái thanh toán.",
+    "id": "52_customer_billing_1772385064293",
+    "file": "screenshots/52_customer_billing_1772385064293.png"
+  },
+  {
+    "module": "App Khách hàng",
+    "feature": "Tiêu thụ",
+    "caption": "Theo dõi tiêu thụ",
+    "desc": "Biểu đồ so sánh lượng nước dùng hàng tháng và dự báo bằng AI.",
+    "id": "53_customer_meter_reading_1772385076659",
+    "file": "screenshots/53_customer_meter_reading_1772385076659.png"
+  },
+  {
+    "module": "App Khách hàng",
+    "feature": "AI Assistant",
+    "caption": "Chatbot Wawa",
+    "desc": "Trợ lý ảo thông minh hỗ trợ khách hàng hỏi đáp về giá nước và chính sách.",
+    "id": "54_customer_chatbot_init_1772385108126",
+    "file": "screenshots/54_customer_chatbot_init_1772385108126.png"
+  },
+  {
+    "module": "App Khách hàng",
+    "feature": "AI Assistant",
+    "caption": "Trả lời câu hỏi hóa đơn",
+    "desc": "AI truy xuất dữ liệu hóa đơn thời gian thực để trả lời khách hàng.",
+    "id": "55_customer_chatbot_response_1772385139832",
+    "file": "screenshots/55_customer_chatbot_response_1772385139832.png"
+  },
+  {
+    "module": "App Khách hàng",
+    "feature": "AI Assistant",
+    "caption": "Gợi ý thông minh",
+    "desc": "Hệ thống gợi ý các câu hỏi thường gặp giúp khách hàng tìm kiếm thông tin nhanh hơn.",
+    "id": "56_customer_chatbot_suggestions_1772385156072",
+    "file": "screenshots/56_customer_chatbot_suggestions_1772385156072.png"
+  },
+  {
+    "module": "App Khách hàng",
+    "feature": "Tài khoản",
+    "caption": "Thông tin hợp đồng",
+    "desc": "Quản lý mã khách hàng, địa điểm dùng nước và các phương thức thanh toán đã liên kết.",
+    "id": "57_customer_profile_1772385182952",
+    "file": "screenshots/57_customer_profile_1772385182952.png"
+  }
+]

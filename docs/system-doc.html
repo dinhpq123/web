@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Hadiwa IOC — System Reference v5.3</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#080b14;--s:#0e1220;--b:rgba(255,255,255,.07);--t:#e2e8f0;--m:rgba(255,255,255,.38);
+  --pu:#7c3aed;--cy:#06b6d4;--gr:#10b981;--or:#f97316;--re:#ef4444;--ye:#f59e0b;--bl:#3b82f6}
+body{background:var(--bg);color:var(--t);font-family:Inter,sans-serif;line-height:1.6;padding-bottom:80px}
+.hero{background:radial-gradient(ellipse at 60% 0%,rgba(124,58,237,.18),transparent 60%),var(--s);
+  border-bottom:1px solid var(--b);padding:32px 40px;display:flex;align-items:center;gap:20px;position:sticky;top:0;z-index:100}
+.logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#06b6d4);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hero h1{font-size:20px;font-weight:900;background:linear-gradient(90deg,#c4b5fd,#67e8f9);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:12px;color:var(--m)}
+.ver{margin-left:auto;text-align:right;font-size:11px;color:var(--m)}
+.ver strong{color:var(--cy);font-size:18px;font-weight:900;display:block}
+.wrap{display:flex;max-width:1200px;margin:0 auto;padding:28px 20px;gap:28px}
+.nav{width:190px;flex-shrink:0;position:sticky;top:100px;height:fit-content}
+.nav-sec{margin-bottom:18px}
+.nt{font-size:9px;font-weight:800;color:var(--m);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.nl{display:block;font-size:12px;color:var(--m);padding:3px 8px;border-radius:6px;transition:.15s;text-decoration:none}
+.nl:hover{background:rgba(255,255,255,.06);color:var(--t)}
+.main{flex:1;min-width:0}
+h2.sec{font-size:11px;font-weight:800;color:var(--m);text-transform:uppercase;letter-spacing:.1em;
+  margin:28px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--b);scroll-margin-top:110px}
+.card{background:rgba(255,255,255,.02);border:1px solid var(--b);border-radius:12px;padding:16px 18px;margin-bottom:12px;scroll-margin-top:110px}
+.card h3{font-size:14px;font-weight:800;color:var(--t);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.card p{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:8px;line-height:1.6}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.mini{background:rgba(255,255,255,.03);border:1px solid var(--b);border-radius:8px;padding:10px 12px;font-size:11px}
+.mini strong{display:block;font-weight:700;margin-bottom:3px}
+.mini span{color:var(--m);line-height:1.5}
+table{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}
+th{padding:5px 10px;text-align:left;color:var(--m);font-weight:700;font-size:10px;text-transform:uppercase;border-bottom:1px solid var(--b)}
+td{padding:6px 10px;border-bottom:1px solid rgba(255,255,255,.04);font-family:"JetBrains Mono",monospace}
+.chip{display:inline-block;padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;margin:1px 1px 1px 0}
+.lbl{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--m);margin:10px 0 5px}
+ul.fl{list-style:none;padding:0}
+ul.fl li{font-size:12px;color:rgba(255,255,255,.65);padding:2px 0;display:flex;align-items:flex-start;gap:6px;line-height:1.5}
+ul.fl li::before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0;margin-top:7px}
+.mono{font-family:"JetBrains Mono",monospace;font-size:11px}
+.tag{font-size:9px;font-weight:800;padding:1px 6px;border-radius:4px}
+</style>
+</head>
+<body>
+<div class="hero">
+  <div class="logo"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+  <div><h1>Hadiwa IOC — System Reference</h1><p>Tài liệu hệ thống đầy đủ · Chi cục TT-PCTT Hà Nội</p></div>
+  <div class="ver"><strong>v5.3</strong>13/03/2026</div>
+</div>
+<div class="wrap">
+<nav class="nav">
+  <div class="nav-sec"><div class="nt">Phân hệ</div>
+    <a class="nl" href="#ph1">1. Điều hành Tổng hợp</a>
+    <a class="nl" href="#ph2">2. Thủy lợi & Đê điều</a>
+    <a class="nl" href="#ph3">3. Chỉ đạo PCTT</a>
+    <a class="nl" href="#ph4">4. IoT & Cảnh báo</a>
+    <a class="nl" href="#ph5">5. Bản đồ GIS</a>
+    <a class="nl" href="#ph6">6. Báo cáo</a>
+    <a class="nl" href="#ph7">7. Cộng đồng</a>
+    <a class="nl" href="#ph8">8. Trung tâm AI</a>
+    <a class="nl" href="#ph9">9. Nhân sự</a>
+    <a class="nl" href="#ph10">10. Sự cố</a>
+    <a class="nl" href="#ph11">11. Quy trình</a>
+    <a class="nl" href="#ph12">12. Quản trị</a>
+  </div>
+  <div class="nav-sec"><div class="nt">Cấu hình</div>
+    <a class="nl" href="#cfg-preset">Presets</a>
+    <a class="nl" href="#cfg-hub">Hub Config</a>
+    <a class="nl" href="#cfg-thresh">Thresholds</a>
+    <a class="nl" href="#cfg-sla">SLA Rules</a>
+    <a class="nl" href="#cfg-roles">Roles & Auth</a>
+    <a class="nl" href="#cfg-reservoir">Hồ chứa</a>
+  </div>
+</nav>
+<div class="main">
+
+<!-- ── PH 1 ── -->
+<h2 class="sec" id="ph1">Phân hệ 1 — Điều hành Tổng hợp</h2>
+<div class="card">
+  <h3><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7c3aed" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+    Dashboard PCTT (dashboard.js)
+    <span class="tag" style="background:rgba(124,58,237,.15);color:#c4b5fd">dashboard</span>
+  </h3>
+  <p>Màn hình tổng quan cho lãnh đạo: KPI realtime, biểu đồ lượng mưa, trạng thái đê điều, cảnh báo gần đây.</p>
+  <div class="grid3">
+    <div class="mini"><strong>6 KPI tiles</strong><span>Cảnh báo chưa xử lý · Mưa 12h · Mực nước Hồng · Sự cố đang mở · Đê xung yếu · Đội triển khai</span></div>
+    <div class="mini"><strong>Charts</strong><span>Biểu đồ mưa 24h (sparkline), biểu đồ mực nước 7 ngày, gauge đê điều</span></div>
+    <div class="mini"><strong>Refresh</strong><span>Auto-refresh mỗi 60 giây (startDashRefresh). Nút refresh thủ công</span></div>
+  </div>
+</div>
+<div class="card">
+  <h3>Operations Command Center (pcttOperations.js) <span class="tag" style="background:rgba(124,58,237,.15);color:#c4b5fd">v5.0</span></h3>
+  <p>Trung tâm điều hành tổng hợp khi có thiên tai. 4 tab: Tổng quan · Lực lượng & PT · Liên lạc · Giao ban.</p>
+  <ul class="fl">
+    <li style="color:#ef4444">Alert bar: cấp độ thiên tai + pulse animation + bản tin báo động</li>
+    <li style="color:#f97316">6 KPI: cấp độ · đơn vị triển khai · diện ngập (ha) · dân sơ tán · máy bơm · thương vong</li>
+    <li style="color:#38bdf8">6 Quick-actions: Điều động · Sơ tán · Thông báo khẩn · Cấp vật tư · Lệnh công tác · Báo cáo nhanh</li>
+    <li>Bảng lực lượng 7 đơn vị: type icons (đội ứng phó/máy bơm/trực thăng/quân đội), status badge, liên lạc</li>
+    <li>Nhật ký liên lạc: CẢNH BÁO/CHỈ ĐẠO/YÊU CẦU/PHÁT SÓNG/BÁO CÁO có màu riêng</li>
+    <li>Tab Giao ban: tự sinh bản giao ban 5 mục + nút In/PDF</li>
+  </ul>
+</div>
+<div class="card">
+  <h3>Video Wall & Camera (videowall.js, camera.js)</h3>
+  <ul class="fl">
+    <li>Video Wall: multi-screen layout camera CCTV, bản đồ ngập, dashboard realtime</li>
+    <li>Camera: giám sát CCTV 24/7, PTZ control, search theo địa điểm, playback</li>
+  </ul>
+</div>
+
+<!-- ── PH 2 ── -->
+<h2 class="sec" id="ph2">Phân hệ 2 — Thủy lợi & Đê điều</h2>
+<div class="card">
+  <h3>Dike Management (dikeManagement.js) <span class="tag" style="background:rgba(8,145,178,.15);color:#67e8f9">v4.3</span></h3>
+  <div class="grid2">
+    <div><div class="lbl">4 Tabs</div>
+      <ul class="fl">
+        <li>Danh mục (6 tuyến đê cấp I–III, sông, km, cao trình)</li>
+        <li>Nhật ký tuần tra (log hàng ngày, highlight bất thường)</li>
+        <li>Điểm xung yếu (Emergency/Critical/Warning/Info chips)</li>
+        <li>Vi phạm hành lang (biên bản, hình thức xử lý)</li>
+      </ul>
+    </div>
+    <div><div class="lbl">Dữ liệu mẫu</div>
+      <ul class="fl">
+        <li>Đê Hữu Đáy — Cấp I, 67.5km, H=7.8m</li>
+        <li>Đê Hữu Hồng — Cấp I, 45.2km, H=9.1m</li>
+        <li>Đê Tả Đáy — Cấp II, 38.9km, H=6.5m</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <h3>Reservoir Monitoring (reservoirMonitor.js) <span class="tag" style="background:rgba(8,145,178,.15);color:#67e8f9">v5.3</span></h3>
+  <p>Giám sát 5 hồ chứa thủy lợi. Capacity bars màu cảnh báo. Gate control status. Nhật ký điều tiết.</p>
+  <table>
+    <thead><tr><th>Hồ</th><th>Dung tích (tr.m³)</th><th>Mực nước TK (m)</th><th>Trạng thái</th></tr></thead>
+    <tbody>
+      <tr><td>Tuy Lai</td><td>4.2</td><td>21.8</td><td style="color:#f59e0b">Warning (21.45m)</td></tr>
+      <tr><td>Đồng Mô</td><td>8.6</td><td>16.5</td><td style="color:#10b981">OK (15.8m)</td></tr>
+      <tr><td>Suối Hai</td><td>47.5</td><td>18.7</td><td style="color:#f97316">Danger (18.1m)</td></tr>
+      <tr><td>Quan Sơn</td><td>19.8</td><td>12.5</td><td style="color:#10b981">OK (11.8m)</td></tr>
+      <tr><td>Vai Người</td><td>2.1</td><td>8.4</td><td style="color:#ef4444">Critical (8.38m)</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="card">
+  <h3>Irrigation Assets & Dike Permit (irrigationAssets.js, dikePermit.js)</h3>
+  <ul class="fl">
+    <li>Irrigation Assets: quản lý hệ thống công trình thủy lợi (kênh, trạm bơm, cống)</li>
+    <li>Dike Permit: quản lý hồ sơ cấp phép xây dựng công trình trong phạm vi bảo vệ đê điều</li>
+  </ul>
+</div>
+
+<!-- ── PH 3 ── -->
+<h2 class="sec" id="ph3">Phân hệ 3 — Chỉ đạo PCTT</h2>
+<div class="card">
+  <h3>PCTT Command & Fund (pcttCommand.js, pcttFund.js)</h3>
+  <ul class="fl">
+    <li>pcttCommand: Chỉ đạo tổng hợp PCTT — văn bản chỉ đạo, họp BCH PCTT</li>
+    <li>pcttFund: Quỹ phòng chống thiên tai — quản lý thu chi, phân bổ kinh phí</li>
+  </ul>
+</div>
+<div class="card">
+  <h3>Document Management (documentManagement.js) <span class="tag" style="background:rgba(8,145,178,.15);color:#67e8f9">v5.2</span></h3>
+  <p>Registry 12 văn bản PCTT. Workflow ký duyệt 3 bước (Nháp→Trình ký→Đã ký).</p>
+  <div class="grid3">
+    <div class="mini"><strong>7 Loại văn bản</strong><span>Quyết định · Công văn · Thông báo · Phương án PCTT · Biên bản · Báo cáo · Kế hoạch</span></div>
+    <div class="mini"><strong>Tìm kiếm</strong><span>Full-text search theo mã số và trích yếu. Filter chip per loại. Urgent flag</span></div>
+    <div class="mini"><strong>Actions</strong><span>Xem chi tiết · Ký duyệt · Trình ký · Tải về · Xuất Excel</span></div>
+  </div>
+</div>
+<div class="card">
+  <h3>4 Tại chỗ (fourOnSite.js)</h3>
+  <p>Quản lý nguồn lực "4 tại chỗ": Lực lượng · Phương tiện · Vật tư · Hậu cần. Với bảng thống kê theo đơn vị.</p>
+</div>
+
+<!-- ── PH 4 ── -->
+<h2 class="sec" id="ph4">Phân hệ 4 — IoT & Cảnh báo sớm</h2>
+<div class="card">
+  <h3>IoT Monitor (iotMonitor.js)</h3>
+  <p>Theo dõi realtime từ 15+ trạm đo. Alert BD1/BD2 theo ngưỡng per trạm.</p>
+  <div class="grid2">
+    <div><div class="lbl">3 Tabs</div>
+      <ul class="fl">
+        <li>Overview: KPI tổng hợp, bảng trạm đo</li>
+        <li>Detail: chart mực nước 24h, lượng mưa accumulated</li>
+        <li>Alerts: danh sách cảnh báo đang active</li>
+      </ul>
+    </div>
+    <div><div class="lbl">Station Fields</div>
+      <ul class="fl">
+        <li>waterLevel (m), rainfall (mm), alertLevel1, alertLevel2</li>
+        <li>status: online / warning / offline</li>
+        <li>river, district, sensorCount, devices[]</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <h3>Early Warning / Decision Support Hub (alerts.js) <span class="tag" style="background:rgba(5,150,105,.15);color:#6ee7b7">v4.1</span></h3>
+  <div class="grid2">
+    <div><ul class="fl">
+      <li>Tab Live Alerts: 5-step AI response guide per alert</li>
+      <li>Tab Rule Engine: condition-action trigger rules</li>
+    </ul></div>
+    <div><ul class="fl">
+      <li>Tab Risk Matrix: 8 huyện × 4 rủi ro heatmap</li>
+      <li>Tab Channels: Zalo/Email/SMS/PA/Push toggles</li>
+    </ul></div>
+  </div>
+</div>
+<div class="card">
+  <h3>Weather Bulletin + v4.4 Supplement (weatherBulletin.js, weather_v44.js)</h3>
+  <ul class="fl">
+    <li>Soạn thảo bản tin thủy văn theo template PCTT — draft/published/archived</li>
+    <li style="color:#f59e0b">v4.4: 7-day forecast grid — SVG weather icons, temp high/low, rainfall mm, wind km/h</li>
+    <li style="color:#38bdf8">v4.4: 24h hourly rainfall bars — 3 color levels: &lt;10mm · &lt;30mm · ≥30mm</li>
+    <li style="color:#ef4444">v4.4: District flood risk matrix — 8 quận/huyện, risk score 0–100%</li>
+  </ul>
+</div>
+
+<!-- ── PH 5 ── -->
+<h2 class="sec" id="ph5">Phân hệ 5 — Bản đồ GIS</h2>
+<div class="card">
+  <h3>GIS Map (gis.js)</h3>
+  <ul class="fl">
+    <li>Leaflet map với OpenStreetMap / satellite base layer toggling</li>
+    <li>Layers: tuyến đê, trạm đo IoT, vùng ngập lụt, sự cố, hồ chứa</li>
+    <li>Click feature → popup với KPI (mực nước, tình trạng, cập nhật)</li>
+    <li>Draw tools: đo khoảng cách, thêm điểm sự cố trực tiếp từ map</li>
+  </ul>
+</div>
+
+<!-- ── PH 6 ── -->
+<h2 class="sec" id="ph6">Phân hệ 6 — Báo cáo & Truyền thông</h2>
+<div class="card">
+  <h3>Reports (reports.js)</h3>
+  <ul class="fl">
+    <li>Báo cáo định kỳ: ngày / tuần / tháng / quý theo mẫu TW</li>
+    <li>Export: Excel, PDF, Word</li>
+    <li>Lịch sử báo cáo, phê duyệt, chia sẻ</li>
+  </ul>
+</div>
+<div class="card">
+  <h3>PCTT Media + Comms Devices (pcttMedia.js, commsDevices.js)</h3>
+  <ul class="fl">
+    <li>TTS Studio: soạn thông báo thiên tai, preview giọng đọc, lịch phát loa PA</li>
+    <li>5 kênh thông báo: Zalo OA · SMS · Email · Push App · Loa PA</li>
+    <li>Bộ đàm (radio), điện thoại IP, màn hình LED quản lý nội dung</li>
+  </ul>
+</div>
+
+<!-- ── PH 7 ── -->
+<h2 class="sec" id="ph7">Phân hệ 7 — Phản ánh Cộng đồng</h2>
+<div class="card">
+  <h3>Community Reports (communityReports.js — 740 dòng)</h3>
+  <div class="grid2">
+    <div><div class="lbl">7 Loại phản ánh</div>
+      <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:4px">
+        <span class="chip" style="background:rgba(8,145,178,.15);color:#67e8f9">Đê điều</span>
+        <span class="chip" style="background:rgba(59,130,246,.15);color:#93c5fd">Ngập lụt</span>
+        <span class="chip" style="background:rgba(139,92,246,.15);color:#ddd6fe">Sạt lở</span>
+        <span class="chip" style="background:rgba(245,158,11,.15);color:#fcd34d">Cống tắc</span>
+        <span class="chip" style="background:rgba(249,115,22,.15);color:#fed7aa">Vi phạm</span>
+        <span class="chip" style="background:rgba(16,185,129,.15);color:#6ee7b7">Cây đổ</span>
+        <span class="chip" style="background:rgba(100,116,139,.15);color:#cbd5e1">Hạ tầng</span>
+      </div>
+    </div>
+    <div><div class="lbl">Tabs</div>
+      <ul class="fl">
+        <li>Chờ xử lý / Đang xử lý / Đã giải quyết / Từ chối</li>
+        <li>AI Analytics: category heatmap, response time stats, AI recommendations</li>
+        <li>Image gallery lightbox (picsum.photos seeded)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ── PH 8 ── -->
+<h2 class="sec" id="ph8">Phân hệ 8 — Trung tâm AI</h2>
+<div class="card">
+  <h3>AI Agent (aiagent.js — 448 dòng)</h3>
+  <div class="grid2">
+    <div><div class="lbl">5 Tabs</div>
+      <ul class="fl">
+        <li>Tác vụ lập lịch (scheduled jobs)</li>
+        <li>Giám sát bất thường (anomaly detection)</li>
+        <li>Cảnh báo thông minh (smart alert rules)</li>
+        <li>AI Agent Chuyên biệt — Gemini integration</li>
+        <li>Thống kê hiệu suất Agent</li>
+      </ul>
+    </div>
+    <div><div class="lbl">AI Engine v5.1 (ai_v51.js)</div>
+      <ul class="fl">
+        <li>aiGetLiveContext() — đọc DATA thực</li>
+        <li>7 PCTT Q&A pairs với trigger matching (accent-normalized)</li>
+        <li>sendChatMessage patcher</li>
+        <li>Query chip panel + dispatch widget</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <h3>Chatbot & DataHub (chatbot.js, datahub.js)</h3>
+  <ul class="fl">
+    <li>Chatbot: giao diện hỏi-đáp AI — categories: PCTT/Đê điều/Thủy lợi/Quy trình/Hành chính</li>
+    <li>DataHub: import KPI từ văn bản (AI extraction), lịch sử data, AI/RAG model selector</li>
+  </ul>
+</div>
+
+<!-- ── PH 9 ── -->
+<h2 class="sec" id="ph9">Phân hệ 9 — Nhân sự & Tổ chức</h2>
+<div class="card">
+  <h3>HRM (hrm.js, hrm_additions.js)</h3>
+  <ul class="fl">
+    <li>Sơ đồ tổ chức Chi cục TT-PCTT Hà Nội (3 phòng + 2 chi cục con + đội ứng phó)</li>
+    <li>Danh sách cán bộ: chức vụ, đơn vị, SĐT, email, trạng thái trực</li>
+    <li>Phân công trực ban: ca ngày/đêm, lịch tuần</li>
+    <li>Thông báo nội bộ: push notification multi-channel</li>
+  </ul>
+</div>
+
+<!-- ── PH 10 ── -->
+<h2 class="sec" id="ph10">Phân hệ 10 — Sự cố & Điều phối</h2>
+<div class="card">
+  <h3>Incidents (incidents.js + incidents_v42.js) <span class="tag" style="background:rgba(249,115,22,.15);color:#fed7aa">v4.2</span></h3>
+  <div class="grid2">
+    <div><div class="lbl">3 View modes</div>
+      <ul class="fl"><li>Kanban board (by status column)</li><li>Table view (sortable columns)</li><li>Timeline view</li></ul>
+      <div class="lbl">7-Bước Workflow</div>
+      <div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:3px">
+        <span class="chip" style="background:rgba(99,102,241,.15);color:#a5b4fc">1 Tiếp nhận</span>
+        <span class="chip" style="background:rgba(6,182,212,.15);color:#67e8f9">2 Xác minh</span>
+        <span class="chip" style="background:rgba(139,92,246,.15);color:#ddd6fe">3 Phân loại</span>
+        <span class="chip" style="background:rgba(245,158,11,.15);color:#fcd34d">4 Giao xử lý</span>
+        <span class="chip" style="background:rgba(249,115,22,.15);color:#fed7aa">5 Cập nhật</span>
+        <span class="chip" style="background:rgba(16,185,129,.15);color:#6ee7b7">6 Nghiệm thu</span>
+        <span class="chip" style="background:rgba(59,130,246,.15);color:#93c5fd">7 Báo cáo</span>
+      </div>
+    </div>
+    <div><div class="lbl">Fields per Incident</div>
+      <ul class="fl">
+        <li>id · type · severity · status</li>
+        <li>location · district · reporter</li>
+        <li>assignedTo · assignedUnit</li>
+        <li>createdAt · updatedAt</li>
+        <li>checkinTime · checkoutTime</li>
+        <li>materials[] · notes[]</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ── PH 11 ── -->
+<h2 class="sec" id="ph11">Phân hệ 11 — Quy trình & Tác nghiệp</h2>
+<div class="card">
+  <h3>Workflow Builder (workflows.js + 3 files)</h3>
+  <ul class="fl">
+    <li>workflows-list.js: danh sách quy trình — list view + card view, search, filter, pagination</li>
+    <li>workflows.js: visual builder kéo-thả node — Start/Action/Decision/Parallel/End</li>
+    <li>workflows-runner.js: chạy thử quy trình step-by-step với log chi tiết</li>
+    <li>workflows-data.js: 20+ mẫu quy trình sẵn có (ứng phó lũ, sơ tán, gia cố đê...)</li>
+  </ul>
+</div>
+<div class="card">
+  <h3>Scheduler (scheduler.js)</h3>
+  <ul class="fl">
+    <li>Lịch tác vụ tuần tra theo ca (ngày/đêm)</li>
+    <li>Lịch bảo dưỡng máy bơm, thiết bị cơ điện</li>
+    <li>Nhắc nhở tự động qua notification channels</li>
+  </ul>
+</div>
+
+<!-- ── PH 12 ── -->
+<h2 class="sec" id="ph12">Phân hệ 12 — Quản trị Hệ thống</h2>
+<div class="card">
+  <h3>Settings & Audit Log (settings via app.js, log.js)</h3>
+  <ul class="fl">
+    <li>Settings Dashboard: toggle từng module/tab theo preset, theme config</li>
+    <li>User Management: RBAC roles, 2FA, session management</li>
+    <li>Audit Log: full trail mọi thao tác quan trọng (timestamp · user · action · detail)</li>
+    <li>System Monitor: health check các services, storage usage</li>
+  </ul>
+</div>
+
+<!-- ── CFG PRESETS ── -->
+<h2 class="sec" id="cfg-preset">Cấu hình — Config Presets (config.js)</h2>
+<div class="card">
+  <p>Chọn preset tại <span class="mono">APP_CONFIG.preset</span>. 4 preset chính:</p>
+  <table>
+    <thead><tr><th>Preset Key</th><th>Tên</th><th>Dùng khi</th><th>Modules chính bật</th></tr></thead>
+    <tbody>
+      <tr><td style="color:#c4b5fd">pctt_hanoi</td><td>Chi cục TT-PCTT HN</td><td>Vận hành sản xuất</td><td>Tất cả 12 phân hệ</td></tr>
+      <tr><td style="color:#67e8f9">pctt_basic</td><td>PCTT Cơ bản</td><td>Đơn vị cấp huyện</td><td>Dashboard · IoT · Incidents · Reports</td></tr>
+      <tr><td style="color:#ef4444">pctt_command</td><td>Chỉ huy khẩn cấp</td><td>Trong thiên tai</td><td>Dashboard · Operations · IoT · Incidents · GIS</td></tr>
+      <tr><td style="color:#fcd34d">iot_only</td><td>Giám sát IoT</td><td>Phòng kỹ thuật</td><td>IoT Monitor · Alerts · Weather</td></tr>
+      <tr><td style="color:#6ee7b7">custom</td><td>Tùy chỉnh</td><td>Dùng APP_CONFIG.features trực tiếp</td><td>—</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ── CFG HUB ── -->
+<h2 class="sec" id="cfg-hub">Cấu hình — Hub Launcher (hub.js)</h2>
+<div class="card">
+  <p>Chỉnh tại <span class="mono">HUB_CONFIG</span> trong hub.js:</p>
+  <table>
+    <thead><tr><th>Tham số</th><th>Mặc định</th><th>Phạm vi</th><th>Mô tả</th></tr></thead>
+    <tbody>
+      <tr><td>borderWidth</td><td>2.5</td><td>1 → 4 (px)</td><td>Độ dày viền icon hub</td></tr>
+      <tr><td>borderOpacity</td><td>'66'</td><td>00 → ff (hex)</td><td>Opacity viền (hex 2 ký tự)</td></tr>
+      <tr><td>hoverScale</td><td>1.28</td><td>1.1 → 1.5</td><td>Tỉ lệ phóng to khi hover</td></tr>
+      <tr><td>sound.enabled</td><td>true</td><td>true / false</td><td>Đọc tên phân hệ khi hover</td></tr>
+      <tr><td>sound.lang</td><td>'vi-VN'</td><td>'vi-VN' / 'en-US'</td><td>Ngôn ngữ TTS</td></tr>
+      <tr><td>sound.rate</td><td>1.0</td><td>0.5 → 2.0</td><td>Tốc độ đọc</td></tr>
+      <tr><td>sound.pitch</td><td>1.0</td><td>0.5 → 2.0</td><td>Cao độ giọng đọc</td></tr>
+      <tr><td>sound.volume</td><td>0.85</td><td>0.0 → 1.0</td><td>Âm lượng</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ── CFG THRESH ── -->
+<h2 class="sec" id="cfg-thresh">Cấu hình — Water Level Thresholds</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>Sông / Trạm</th><th style="color:#f59e0b">Báo động 1 (m)</th><th style="color:#f97316">Báo động 2 (m)</th><th style="color:#ef4444">Báo động 3 (m)</th></tr></thead>
+    <tbody>
+      <tr><td>Sông Hồng — Hà Nội</td><td>9.50</td><td>11.50</td><td>13.40</td></tr>
+      <tr><td>Sông Đáy — Quốc Oai</td><td>4.50</td><td>5.00</td><td>5.50</td></tr>
+      <tr><td>Sông Tích — Sơn Tây</td><td>5.00</td><td>6.00</td><td>7.00</td></tr>
+      <tr><td>Sông Bùi — Xuân Mai</td><td>3.50</td><td>4.50</td><td>5.50</td></tr>
+      <tr><td>Sông Nhuệ — Hà Đông</td><td>3.50</td><td>4.20</td><td>4.80</td></tr>
+      <tr><td>Sông Đáy — Ba Thá</td><td>5.00</td><td>5.50</td><td>6.00</td></tr>
+    </tbody>
+  </table>
+  <div class="lbl" style="margin-top:12px">Ngưỡng lượng mưa (mm)</div>
+  <table>
+    <thead><tr><th>Ngưỡng</th><th>1 giờ</th><th>6 giờ</th><th>12 giờ</th><th>24 giờ</th></tr></thead>
+    <tbody>
+      <tr><td style="color:#f59e0b">Cảnh báo BD1</td><td>16</td><td>50</td><td>80</td><td>100</td></tr>
+      <tr><td style="color:#f97316">Nguy hiểm BD2</td><td>30</td><td>80</td><td>120</td><td>200</td></tr>
+      <tr><td style="color:#ef4444">Rất nguy hiểm BD3</td><td>50</td><td>120</td><td>180</td><td>300</td></tr>
+    </tbody>
+  </table>
+  <div class="lbl" style="margin-top:12px">Ngưỡng lượng mưa IoT (hourly chart — weather_v44.js)</div>
+  <table>
+    <thead><tr><th>Mức</th><th>Màu</th><th>Điều kiện</th></tr></thead>
+    <tbody>
+      <tr><td>Thấp</td><td style="color:#38bdf8">Cyan</td><td>&lt; 10 mm/h</td></tr>
+      <tr><td>Trung bình</td><td style="color:#f59e0b">Vàng</td><td>10 – 29 mm/h</td></tr>
+      <tr><td>Cao</td><td style="color:#ef4444">Đỏ</td><td>≥ 30 mm/h</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ── CFG SLA ── -->
+<h2 class="sec" id="cfg-sla">Cấu hình — SLA Rules (incidents_v42.js)</h2>
+<div class="card">
+  <p>Cấu hình tại <span class="mono">INC_SLA</span> (phút):</p>
+  <table>
+    <thead><tr><th>Mức độ</th><th>Giới hạn (phút)</th><th>Thời gian tương đương</th><th>Màu SLA bar</th></tr></thead>
+    <tbody>
+      <tr><td style="color:#ef4444">critical</td><td>60</td><td>1 giờ</td><td>Đỏ nhấp nháy khi quá hạn</td></tr>
+      <tr><td style="color:#f97316">high</td><td>240</td><td>4 giờ</td><td>Cam → Đỏ</td></tr>
+      <tr><td style="color:#f59e0b">medium</td><td>1440</td><td>24 giờ</td><td>Xanh → Vàng → Đỏ</td></tr>
+      <tr><td style="color:#10b981">low</td><td>4320</td><td>3 ngày</td><td>Xanh</td></tr>
+    </tbody>
+  </table>
+  <div class="lbl" style="margin-top:10px">SLA Bar màu theo %</div>
+  <div style="display:flex;gap:8px;margin-top:4px;flex-wrap:wrap">
+    <span class="chip" style="background:rgba(16,185,129,.15);color:#6ee7b7">&lt;60% — Xanh OK</span>
+    <span class="chip" style="background:rgba(245,158,11,.15);color:#fcd34d">60–85% — Vàng Warning</span>
+    <span class="chip" style="background:rgba(239,68,68,.15);color:#fca5a5">&gt;85% — Đỏ Nguy hiểm</span>
+    <span class="chip" style="background:rgba(239,68,68,.3);color:#fca5a5">QUÁ HẠN — Nhấp nháy</span>
+  </div>
+</div>
+
+<!-- ── CFG ROLES ── -->
+<h2 class="sec" id="cfg-roles">Cấu hình — Roles & Authentication</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>Role</th><th>Quyền</th><th>Hub Groups</th></tr></thead>
+    <tbody>
+      <tr><td style="color:#c4b5fd">superadmin</td><td>Tất cả — bypass filters</td><td>Tất cả 12 phân hệ</td></tr>
+      <tr><td style="color:#f97316">chihuy</td><td>Xem + Phê duyệt + Chỉ đạo</td><td>command · pctt · incidents · reports · gis</td></tr>
+      <tr><td style="color:#38bdf8">kythuat</td><td>Vận hành IoT + Sự cố</td><td>iot · incidents · hydraulic · workflows</td></tr>
+      <tr><td style="color:#fcd34d">hanhchinh</td><td>Báo cáo + Văn bản</td><td>reports · community · hrm</td></tr>
+      <tr><td style="color:#6ee7b7">readonly</td><td>Chỉ xem dashboard, GIS</td><td>dashboard · gis</td></tr>
+    </tbody>
+  </table>
+  <div class="lbl" style="margin-top:10px">Security Features</div>
+  <ul class="fl">
+    <li>Multi-factor Auth (2FA) cho các thao tác nhạy cảm (phê duyệt, điều động)</li>
+    <li>OTP qua SMS/Email cho leader-mandated approval workflow</li>
+    <li>Session timeout tự động sau 30 phút không hoạt động</li>
+    <li>Full audit log: mọi thao tác có timestamp + user identity</li>
+  </ul>
+</div>
+
+<!-- ── CFG RESERVOIR ── -->
+<h2 class="sec" id="cfg-reservoir">Cấu hình — Reservoir Warning Levels (reservoirMonitor.js)</h2>
+<div class="card">
+  <table>
+    <thead><tr><th>Hồ</th><th>MNDBT (m)</th><th style="color:#f59e0b">Cảnh báo (m)</th><th style="color:#f97316">Nguy hiểm (m)</th><th style="color:#ef4444">Khẩn cấp (m)</th></tr></thead>
+    <tbody>
+      <tr><td>Tuy Lai</td><td>21.0</td><td>21.5</td><td>22.0</td><td>22.5</td></tr>
+      <tr><td>Đồng Mô</td><td>15.0</td><td>16.0</td><td>16.5</td><td>17.0</td></tr>
+      <tr><td>Suối Hai</td><td>17.5</td><td>18.0</td><td>18.5</td><td>19.0</td></tr>
+      <tr><td>Quan Sơn</td><td>11.0</td><td>11.5</td><td>12.0</td><td>12.5</td></tr>
+      <tr><td>Vai Người</td><td>7.8</td><td>8.0</td><td>8.2</td><td>8.4</td></tr>
+    </tbody>
+  </table>
+  <div class="lbl" style="margin-top:10px">Status Color Logic</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+    <span class="chip" style="background:rgba(16,185,129,.15);color:#6ee7b7">ok — Dưới Cảnh báo</span>
+    <span class="chip" style="background:rgba(245,158,11,.15);color:#fcd34d">warning — ≥ warnL1</span>
+    <span class="chip" style="background:rgba(249,115,22,.15);color:#fed7aa">danger — ≥ warnL2</span>
+    <span class="chip" style="background:rgba(239,68,68,.15);color:#fca5a5">critical — ≥ warnL3</span>
+  </div>
+</div>
+
+<div style="margin-top:32px;padding:16px;background:rgba(255,255,255,.02);border:1px solid var(--b);border-radius:10px;text-align:center;font-size:11px;color:var(--m)">
+  <strong style="color:var(--t)">Hadiwa IOC System Reference v5.3</strong> · Chi cục Thủy lợi & Phòng chống Thiên tai Hà Nội · Cập nhật: 13/03/2026 · Lưu hành nội bộ
+</div>
+
+</div></div>
+<script>
+document.querySelectorAll(".nl").forEach(l=>{
+  l.addEventListener("click",e=>{const h=l.getAttribute("href");if(h.startsWith("#")){e.preventDefault();document.getElementById(h.slice(1))?.scrollIntoView({behavior:"smooth",block:"start"});}});
+});
+</script>
+</body></html>

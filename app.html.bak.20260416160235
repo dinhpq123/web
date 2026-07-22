@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hadiwa IOC — Thủy lợi & PCTT</title>
+    <!-- Performance Optimization: Preload essential assets -->
+    <link rel="preload" href="assets/hadiwa_logo.svg" as="image">
+    <link rel="preload" href="assets/mascot-hadiwa.svg" as="image">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link href="css/main.css?v=20260304ah" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app" id="app-root">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-logo" style="cursor:pointer" onclick="if(typeof showModuleHub==='function'){showModuleHub(page=>{if(typeof buildSidebar==='function')buildSidebar();navigate(page)})}">
+                <div class="logo-icon" style="background:none;padding:0;overflow:hidden">
+                    <img src="assets/hadiwa_logo.svg" alt="Hadiwa"
+                        style="width:100%;height:100%;object-fit:contain;border-radius:10px">
+                </div>
+                <div class="logo-name">
+                    <h2>HADIWA</h2><span>IOC Thủy lợi &amp; PCTT</span>
+                </div>
+            </div>
+            <div class="sidebar-logo-hint" style="text-align:center;padding:0 8px 8px;margin-top:-8px">
+                <span style="font-size:9px;color:rgba(255,255,255,.2);letter-spacing:.08em;cursor:pointer"
+                  onclick="if(typeof showModuleHub==='function'){showModuleHub(page=>{if(typeof buildSidebar==='function')buildSidebar();navigate(page)})}">
+                  ↑ Nhấn để mở Trình khởi chạy
+                </span>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav"></nav>
+            <div class="sidebar-footer" style="border-top:1px solid rgba(255,255,255,.05);margin:0 12px;">
+                <!-- Expanded: text + full logo on same row -->
+                <div class="sidebar-footer-expanded"
+                    style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 0">
+                    <div
+                        style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-family:'Roboto Mono',monospace">
+                        Powered By</div>
+                    <img src="assets/system-logo.png" alt="System Logo"
+                        style="height:28px;object-fit:contain;opacity:0.85">
+                </div>
+                <!-- Collapsed: "By" label above, small icon below -->
+                <div class="sidebar-footer-collapsed"
+                    style="display:none;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 0">
+                    <div
+                        style="font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-family:'Roboto Mono',monospace">
+                        By</div>
+                    <img src="assets/system-logo-small.png" alt="System"
+                        style="width:32px;height:32px;object-fit:contain;opacity:0.85">
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <div class="main-wrapper">
+            <header class="app-header">
+                <div class="header-left">
+                    <button class="toggle-btn" onclick="toggleSidebar()" title="Thu/Mở sidebar">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg>
+                    </button>
+                    <div class="breadcrumb" id="breadcrumb"><strong>Dashboard</strong></div>
+                </div>
+                <div class="header-center">
+                    <div class="sys-status">
+                        <div class="pulse-dot green" id="sysStatusDot"></div>
+                        <span id="sysStatusText">Hệ thống hoạt động bình thường</span>
+                    </div>
+                    <!-- 
+                    <div class="sys-status" style="margin-left:12px;cursor:pointer" onclick="toggleMockWebSocket()"
+                        title="Click để thử nghiệm ngắt kết nối WebSocket">
+                        <div class="pulse-dot green" id="wsStatusDot"
+                            style="width:6px;height:6px;box-shadow:0 0 8px var(--green)"></div>
+                        <span id="wsStatusText"
+                            style="color:var(--green);font-family:'Roboto Mono',monospace;font-size:11px">WS:
+                            Connected</span>
+                    </div>
+                    -->
+                </div>
+                <div class="header-right">
+                    <button class="hdr-icon-btn" title="Trình khởi chạy phân hệ"
+                        onclick="if(typeof showModuleHub==='function'){showModuleHub(page=>{if(typeof buildSidebar==='function')buildSidebar();navigate(page)})}"
+                        style="position:relative">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>
+                            <line x1="12" y1="2" x2="12" y2="6"/><line x1="12" y1="18" x2="12" y2="22"/>
+                            <line x1="2" y1="12" x2="6" y2="12"/><line x1="18" y1="12" x2="22" y2="12"/>
+                        </svg>
+                    </button>
+                    <button class="hdr-icon-btn" onclick="showAlarms()" title="Cảnh báo">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                            <path d="M13.73 21a2 2 0 01-3.46 0" />
+                        </svg>
+                        <span class="badge" id="alarmBadge">3</span>
+                    </button>
+                    <div
+                        style="display:flex; align-items:center; gap:8px; margin-right:12px; padding-right:16px; border-right:1px solid rgba(255,255,255,.1)">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)"
+                            stroke-width="1.5">
+                            <path
+                                d="M17.5 19C19.9853 19 22 16.9853 22 14.5C22 12.1166 20.1517 10.1683 17.8091 10.0152C17.3875 6.6346 14.4984 4 11 4C7.13401 4 4 7.13401 4 11C4 11.2312 4.01121 11.4597 4.03306 11.6845C2.28588 12.3023 1 13.9961 1 16C1 18.2091 2.79086 20 5 20H17.5V19Z"
+                                fill="rgba(0,200,255,.1)" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <div style="line-height:1.2; text-align:left">
+                            <div style="font-size:13px; font-weight:600; color:var(--text)">24°C Hà Nội</div>
+                            <div style="font-size:10px; color:var(--muted)">Độ ẩm 78% · Gió ĐN 4m/s</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="hdr-clock" id="clock"></div>
+                        <div class="hdr-date" id="date"></div>
+                    </div>
+                    <div class="hdr-user" id="headerUser">
+                        <div class="avatar"
+                            style="width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:16px;background:linear-gradient(135deg,#0050cc,#00c8ff);border:1.5px solid rgba(0,200,255,.3)"
+                            id="headerAvatar">👨‍💻</div>
+                        <div style="line-height:1.3">
+                            <div style="font-size:13px;font-weight:600" id="headerUserName">...</div>
+                            <div style="font-size:10px;color:var(--muted)" id="headerUserRole">...</div>
+                        </div>
+                    </div>
+                    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()"
+                        title="Chuyển đổi giao diện sáng/tối">
+                        <svg id="themeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                        <span id="themeLabel">Sáng</span>
+                    </button>
+                    <!-- Fullscreen toggle -->
+                    <button id="fullscreenBtn" class="theme-toggle-btn" onclick="toggleFullscreen()"
+                        title="Toàn màn hình (F11)" style="padding:6px 8px">
+                        <svg id="fsIconExpand" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3" />
+                        </svg>
+                        <svg id="fsIconCollapse" width="15" height="15" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" style="display:none">
+                            <path
+                                d="M8 3v3a2 2 0 01-2 2H3m18 0h-3a2 2 0 01-2-2V3m0 18v-3a2 2 0 012-2h3M3 16h3a2 2 0 012 2v3" />
+                        </svg>
+                    </button>
+                    <button class="btn btn-ghost btn-sm" onclick="logout()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4" />
+                            <polyline points="16 17 21 12 16 7" />
+                            <line x1="21" y1="12" x2="9" y2="12" />
+                        </svg>
+                        Đăng xuất
+                    </button>
+                </div>
+            </header>
+            <main class="content-area" id="contentArea">
+                <div class="empty-state">
+                    <div class="spinner"></div>
+                    <p>Đang tải...</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- ALARM PANEL -->
+    <div id="alarmOverlay" style="display:none;position:fixed;inset:0;z-index:500"
+        onclick="if(event.target===this)this.style.display='none'">
+        <div
+            style="position:absolute;right:0;top:0;bottom:0;width:380px;background:var(--bg-elevated);border-left:1px solid var(--border);padding:20px;overflow-y:auto;animation:slideRight .3s ease">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+                <h3 style="font-size:16px;font-weight:600">Cảnh báo</h3>
+                <button class="modal-close" onclick="document.getElementById('alarmOverlay').style.display='none'"><svg
+                        width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg></button>
+            </div>
+            <div id="alarmPanelList" class="alarm-list"></div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/rbac.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/pages/dashboard.js"></script>
+    <script src="js/gis_pipe_data.js"></script>
+    <script src="js/pages/gis.js"></script>
+    <script src="js/pages/camera.js"></script>
+    <script src="js/pages/videowall.js"></script>
+
+    <script src="js/pages/reports.js"></script>
+    <script src="js/pages/reports_irr_detail.js"></script>
+    <script src="js/pages/scada.js"></script>
+    <script src="js/pages/alerts.js"></script>
+    <script src="js/pages/alerts_modals.js"></script>
+    <script src="js/pages/scheduler.js"></script>
+    <script src="js/pages/incidents.js"></script>
+    <script src="js/pages/incidents_v42.js"></script>
+    <script src="js/notification_helper.js"></script>
+    <script src="js/pages/weatherBulletin.js"></script>
+    <script src="js/pages/weather_v44.js"></script>
+    <script src="js/pages/pcttMedia.js"></script>
+    <script src="js/pages/communityReports.js"></script>
+    <script src="js/pages/commsDevices.js"></script>
+    <script src="js/pages/plants.js"></script>
+    <script src="js/pages/production.js"></script>
+    <script src="js/pages/lims.js"></script>
+    <script src="js/pages/business_overview.js"></script>
+    <script src="js/pages/business_history.js"></script>
+    <script src="js/pages/business.js"></script>
+    <script src="js/pages/callcenter.js"></script>
+    <script src="js/pages/customerdetail.js"></script>
+    <script src="js/pages/hrm.js"></script>
+    <script src="js/pages/workflows-data.js"></script>
+    <script src="js/pages/workflows-list.js"></script>
+    <script src="js/pages/workflows-runner.js"></script>
+    <script src="js/pages/workflows.js"></script>
+    <script src="js/pages/hrm_additions.js"></script>
+    <script src="js/pages/nrw.js"></script>
+    <script src="js/pages/aiagent.js"></script>
+    <script src="js/pages/chatbot.js"></script>
+    <script src="js/pages/ai_v51.js"></script>
+    <script src="js/pages/datahub.js"></script>
+    <script src="js/pages/dieuhanhPage.js"></script>
+    <script src="js/pages/log.js"></script>
+
+    <!-- NEW PCTT MODULES -->
+    <script src="js/pages/irrigationAssets.js"></script>
+    <script src="js/pages/reservoirMonitor.js"></script>
+    <script src="js/pages/dikeManagement.js"></script>
+    <script src="js/pages/dikeManagement_modals.js"></script>
+    <script src="js/utils/importHelper.js"></script>
+    <script src="js/pages/dikeInspection.js"></script>
+    <script src="js/pages/irrigationDataEntry.js"></script>
+    <script src="js/pages/hydrologicalData.js"></script>
+    <script src="js/pages/pcttDamageReport.js"></script>
+    <script src="js/pages/dikePermit.js"></script>
+    <script src="js/pages/pcttDocuments.js"></script>
+    <script src="js/pages/documentManagement.js"></script>
+    <script src="js/pages/documentManagement_modals.js"></script>
+    <script src="js/pages/pcttCommand.js"></script>
+    <script src="js/pages/communeReporting.js"></script>
+    <script src="js/pages/pcttOperations.js"></script>
+    <script src="js/pages/pcttFund.js"></script>
+    <script src="js/pages/iotMonitor.js"></script>
+    <script src="js/pages/fourOnSite.js"></script>
+    <script src="js/pages/fourOnSite_modals.js"></script>
+
+    <script src="js/filterbar.js"></script>
+    <script src="js/onboarding-config.js"></script>
+    <script src="js/onboarding.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/hub.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- STICKY CHATBOT WIDGET -->
+    <div id="qwcChatbot"
+        style="position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;align-items:flex-end">
+
+        <!-- Chat Window -->
+        <div id="qwcChatWindow"
+            style="display:none;width:400px;height:550px;background:#071629;border:1px solid rgba(0,200,255,.2);border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,0.5);margin-bottom:16px;overflow:visible;transform-origin:bottom right;animation:chatPop .3s cubic-bezier(0.175,0.885,0.32,1.275);flex-direction:column">
+
+            <!-- Header -->
+            <div
+                style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;background:var(--surface);border-radius:16px 16px 0 0">
+                <div style="font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px;color:#fff">
+                    <div
+                        style="width:26px;height:26px;background:rgba(0,200,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;padding:3px">
+                        <img src="assets/system-logo-small.png" style="width:100%;height:100%;object-fit:contain">
+                    </div>
+                    Hadiwa AI Trợ lý
+                </div>
+                <div style="display:flex;align-items:center;gap:6px">
+                    <!-- TTS Toggle -->
+                    <button id="qwcTtsBtn" title="Bật/tắt đọc to phản hồi AI" onclick="toggleStickyTts(this)"
+                        style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--muted);width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s"
+                        onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                        onmouseout="this.style.background=window._qwcTtsOn?'rgba(0,200,255,.15)':'rgba(255,255,255,.05)'">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+                            <path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" />
+                        </svg>
+                    </button>
+                    <!-- Close -->
+                    <button onclick="document.getElementById('qwcChatWindow').style.display='none'"
+                        style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--text);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:.2s"
+                        onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                        onmouseout="this.style.background='rgba(255,255,255,.05)'"><svg width="10" height="10"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg></button>
+                </div>
+            </div>
+
+            <!-- Messages Area -->
+            <div id="stickyChatMessages" class="chat-messages" style="flex:1;overflow-y:auto;padding:14px 14px 0">
+                <div class="chat-msg">
+                    <div class="chat-avatar ai"><img src="assets/system-logo-small.png"
+                            style="width:100%;height:100%;object-fit:contain"></div>
+                    <div class="chat-bubble ai">Xin chào! Tôi là Hadiwa AI Trợ lý PCTT. Tôi có thể giúp gì cho bạn?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Voice Listening Animation (hidden by default) -->
+            <div id="qwcVoiceBar"
+                style="display:none;align-items:center;gap:8px;padding:8px 16px;background:rgba(255,23,68,.07);border-top:1px solid rgba(255,23,68,.2)">
+                <div style="display:flex;gap:3px;align-items:center">
+                    <div class="voice-bar-dot" style="animation-delay:0s"></div>
+                    <div class="voice-bar-dot" style="animation-delay:0.1s"></div>
+                    <div class="voice-bar-dot" style="animation-delay:0.2s"></div>
+                    <div class="voice-bar-dot" style="animation-delay:0.3s"></div>
+                    <div class="voice-bar-dot" style="animation-delay:0.4s"></div>
+                    <div class="voice-bar-dot" style="animation-delay:0.5s"></div>
+                    <div class="voice-bar-dot" style="animation-delay:0.6s"></div>
+                </div>
+                <span style="font-size:12px;color:var(--red);display:flex;align-items:center;gap:5px">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
+                        <path d="M19 10v2a7 7 0 01-14 0v-2" />
+                        <line x1="12" y1="19" x2="12" y2="23" />
+                        <line x1="8" y1="23" x2="16" y2="23" />
+                    </svg>
+                    Đang nghe...
+                </span>
+                <button onclick="stopStickyVoice()"
+                    style="margin-left:auto;font-size:11px;color:var(--muted);background:none;border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:3px 8px;cursor:pointer">Dừng</button>
+            </div>
+
+            <!-- Output Format Bar -->
+            <div id="qwcFormatBar"
+                style="display:flex;align-items:center;gap:5px;padding:6px 14px 2px;overflow-x:auto;scrollbar-width:none;border-top:1px solid rgba(255,255,255,.04);flex-shrink:0;flex-wrap:nowrap">
+            </div>
+
+            <!-- Suggestion Chips -->
+            <div id="qwcSuggestions"
+                style="display:flex;gap:6px;padding:6px 14px 8px;overflow-x:auto;scrollbar-width:none;flex-shrink:0">
+            </div>
+
+
+
+            <!-- Uploaded File Preview -->
+            <div id="stickyFilePreview"
+                style="display:none;padding:10px 16px;border-top:1px solid rgba(255,255,255,.05);background:rgba(0,0,0,.2);position:relative">
+                <div id="stickyFilePreviewContent" style="display:flex;align-items:center;gap:12px"></div>
+                <button onclick="clearStickyFile()"
+                    style="position:absolute;top:50%;right:12px;transform:translateY(-50%);background:rgba(255,23,68,.1);border:1px solid rgba(255,23,68,.3);color:#ff6b6b;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s"><svg
+                        width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg></button>
+            </div>
+
+            <!-- Input Box -->
+            <div
+                style="background:#131d36;padding:16px;border-radius:0 0 16px 16px;border-top:1px solid rgba(255,255,255,.05);position:relative">
+                <div style="position:relative;margin-bottom:12px">
+                    <input type="text" id="stickyChatInput" placeholder="Hỏi Hadiwa AI • • •"
+                        onkeydown="if(event.key==='Enter') sendStickyChat()"
+                        style="width:100%;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:14px;font-family:'Inter',sans-serif;padding:12px 45px 12px 14px;outline:none;caret-color:var(--cyan);transition:border-color .2s"
+                        onfocus="this.style.borderColor='var(--cyan)'"
+                        onblur="this.style.borderColor='rgba(255,255,255,.1)'">
+                    <button class="chat-send" onclick="sendStickyChat()"
+                        style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--cyan);color:#fff;border:none;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;padding:0">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none">
+                            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div style="display:flex;align-items:center;justify-content:space-between">
+                    <div style="display:flex;align-items:center;gap:20px">
+                        <!-- Plus Icon -->
+                        <input type="file" id="qwcChatAttach" style="display:none"
+                            onchange="handleStickyFileAttach(this)">
+                        <button onclick="document.getElementById('qwcChatAttach').click()"
+                            style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;padding:0;transition:.2s"
+                            onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--muted)'"
+                            title="Đính kèm">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <line x1="5" y1="12" x2="19" y2="12" />
+                            </svg>
+                        </button>
+
+                        <!-- Tool Button -->
+                        <div style="position:relative;display:inline-block">
+                            <button
+                                onclick="const m = document.getElementById('qwcToolMenu'); window._qwcCatClose?window._qwcCatClose():null; m.style.display = m.style.display==='block'?'none':'block'; window._qwcToolClose=()=>m.style.display='none'; event.stopPropagation();"
+                                style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;padding:2px 6px;border-radius:6px;transition:.2s"
+                                onmouseover="this.style.background='rgba(255,255,255,.05)';this.style.color='#fff'"
+                                onmouseout="this.style.background='transparent';this.style.color='var(--muted)'"
+                                title="Công cụ">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path
+                                        d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />
+                                </svg>
+                                <span id="qwcToolLabel">Công cụ</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9" />
+                                </svg>
+                            </button>
+                            <!-- Tool Dropdown -->
+                            <div id="qwcToolMenu"
+                                style="display:none;position:absolute;bottom:calc(100% + 10px);left:-20px;background:#1e293b;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px;min-width:180px;box-shadow:0 4px 20px rgba(0,0,0,.5);z-index:100;animation:chatPop .2s ease">
+                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                    onmouseout="this.style.background='transparent'"
+                                    onclick="document.getElementById('qwcToolLabel').innerText='Tra cứu SCADA'; this.parentElement.style.display='none'">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" style="flex-shrink:0">
+                                        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+                                        <polyline points="16 7 22 7 22 13" />
+                                    </svg> Tra cứu SCADA
+                                </div>
+                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                    onmouseout="this.style.background='transparent'"
+                                    onclick="document.getElementById('qwcToolLabel').innerText='Bản đồ GIS'; this.parentElement.style.display='none'">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" style="flex-shrink:0">
+                                        <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21" />
+                                        <line x1="9" y1="3" x2="9" y2="18" />
+                                        <line x1="15" y1="6" x2="15" y2="21" />
+                                    </svg> Bản đồ GIS
+                                </div>
+                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                    onmouseout="this.style.background='transparent'"
+                                    onclick="document.getElementById('qwcToolLabel').innerText='Viết Báo cáo'; this.parentElement.style.display='none'">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" style="flex-shrink:0">
+                                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                                        <polyline points="14 2 14 8 20 8" />
+                                        <line x1="16" y1="13" x2="8" y2="13" />
+                                        <line x1="16" y1="17" x2="8" y2="17" />
+                                    </svg> Viết báo cáo
+                                </div>
+                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                    onmouseout="this.style.background='transparent'"
+                                    onclick="document.getElementById('qwcToolLabel').innerText='Quản trị RAG'; this.parentElement.style.display='none'">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" style="flex-shrink:0">
+                                        <rect x="2" y="2" width="6" height="6" rx="1" />
+                                        <rect x="16" y="2" width="6" height="6" rx="1" />
+                                        <rect x="9" y="9" width="6" height="6" rx="1" />
+                                        <rect x="2" y="16" width="6" height="6" rx="1" />
+                                        <rect x="16" y="16" width="6" height="6" rx="1" />
+                                        <path d="M5 8v3a1 1 0 001 1h3M15 12h3a1 1 0 001-1V8M12 15v3" />
+                                    </svg> Quản trị RAG
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:flex;align-items:center;gap:12px">
+                        <!-- Category Selector -->
+                        <div style="position:relative;display:inline-block">
+                            <button
+                                onclick="const m = document.getElementById('qwcCatMenu'); window._qwcToolClose?window._qwcToolClose():null; m.style.display = m.style.display==='block'?'none':'block'; window._qwcCatClose=()=>m.style.display='none'; event.stopPropagation();"
+                                style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:4px;font-size:13px;font-weight:500;padding:4px 8px;border-radius:6px;transition:.2s"
+                                onmouseover="this.style.background='rgba(255,255,255,.05)';this.style.color='#fff'"
+                                onmouseout="this.style.background='transparent';this.style.color='var(--muted)'">
+                                <span id="qwcCatLabel">Sản xuất</span>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9" />
+                                </svg>
+                            </button>
+                            <!-- Cat Dropdown -->
+                            <div id="qwcCatMenu"
+                                style="display:none;position:absolute;bottom:calc(100% + 5px);right:0;background:#1e293b;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px;min-width:160px;box-shadow:0 4px 20px rgba(0,0,0,.5);z-index:100;animation:chatPop .2s ease">
+                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                    onmouseout="this.style.background='transparent'"
+                                    onclick="document.getElementById('qwcCatLabel').innerHTML='<svg width=&quot;13&quot; height=&quot;13&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; style=&quot;flex-shrink:0;vertical-align:middle&quot;><rect x=&quot;3&quot; y=&quot;11&quot; width=&quot;18&quot; height=&quot;10&quot; rx=&quot;2&quot;/><path d=&quot;M12 11V7&quot;/><circle cx=&quot;12&quot; cy=&quot;5&quot; r=&quot;2&quot;/><path d=&quot;M8 11V9a4 4 0 018 0v2&quot;/></svg> Tất cả'; this.parentElement.style.display='none'">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" style="flex-shrink:0">
+                                        <rect x="3" y="11" width="18" height="10" rx="2" />
+                                        <path d="M12 11V7" />
+                                        <circle cx="12" cy="5" r="2" />
+                                        <path d="M8 11V9a4 4 0 018 0v2" />
+                                    </svg> Tất cả
+                                </div>
+                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;background:rgba(255,255,255,.05);display:flex;align-items:center;gap:8px"
+                                    onclick="document.getElementById('qwcCatLabel').innerText='Sản xuất'; this.parentElement.style.display='none'">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" style="flex-shrink:0">
+                                        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                                        <polyline points="9 22 9 12 15 12 15 22" />
+                                    </svg> Sản xuất
+                                </div>
+                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                    onmouseout="this.style.background='transparent'"
+                                    onclick="document.getElementById('qwcCatLabel').innerText='Chất lượng'; this.parentElement.style.display='none'">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" style="flex-shrink:0">
+                                        <path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z" />
+                                    </svg> Chất lượng nước
+                                </div>
+                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                    onmouseout="this.style.background='transparent'"
+                                    onclick="document.getElementById('qwcCatLabel').innerText='Mạng lưới'; this.parentElement.style.display='none'">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" style="flex-shrink:0">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="2" y1="12" x2="22" y2="12" />
+                                        <path
+                                            d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+                                    </svg> Mạng lưới tuyến ống
+                                </div>
+                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                    onmouseout="this.style.background='transparent'"
+                                    onclick="document.getElementById('qwcCatLabel').innerText='Kinh doanh'; this.parentElement.style.display='none'">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" style="flex-shrink:0">
+                                        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg> Kinh doanh & CSKH
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mic Button -->
+                        <button id="stickyMicBtn" onclick="toggleStickyVoice()"
+                            style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;padding:0;transition:.2s"
+                            onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--muted)'"
+                            title="Voice chat">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z" />
+                                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                                <line x1="12" y1="19" x2="12" y2="22" />
+                                <line x1="8" y1="22" x2="16" y2="22" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mascot Button -->
+        <div style="position:relative;width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#0050cc,#00c8ff);border:2px solid rgba(255,255,255,.2);background-clip:padding-box;box-shadow:0 6px 20px rgba(0,150,255,0.4);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .2s"
+            onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'"
+            onclick="const w = document.getElementById('qwcChatWindow'); w.style.display = w.style.display==='none'?'flex':'none'; if(w.style.display==='flex') w.querySelector('input').focus();">
+            <div
+                style="position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--cyan);z-index:-1;filter:blur(6px);opacity:0.6;animation:haloPulse 3s infinite">
+            </div>
+            <img src="assets/mascot-hadiwa.svg" alt="Hadiwa AI"
+                style="width:40px;height:40px;object-fit:contain;pointer-events:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.2))">
+        </div>
+    </div>
+
+    <style>
+        @keyframes chatPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes haloPulse {
+            0% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: scale(1.15);
+                filter: blur(8px);
+            }
+
+            100% {
+                opacity: 0.4;
+                transform: scale(1);
+            }
+        }
+    </style>
+</body>
+
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hadiwa IOC — Simulator Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="status.css" />
+  <link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <svg class="brand-logo" width="36" height="36" viewBox="0 0 36 36" fill="none">
+          <rect width="36" height="36" rx="10" fill="url(#logoGradA)"/>
+          <path d="M8 24 Q18 10 28 24 Q24 30 18 28 Q12 30 8 24Z" fill="url(#waveGradA)" opacity="0.9"/>
+          <path d="M11 25 Q18 13 25 25" stroke="white" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="logoGradA" x1="0" y1="0" x2="36" y2="36">
+              <stop offset="0%" stop-color="#6d28d9"/>
+              <stop offset="100%" stop-color="#4f46e5"/>
+            </linearGradient>
+            <linearGradient id="waveGradA" x1="8" y1="10" x2="28" y2="30">
+              <stop offset="0%" stop-color="#c4b5fd"/>
+              <stop offset="100%" stop-color="#ffffff"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div>
+          <h1 class="brand-title">Simulator Admin</h1>
+          <p class="brand-sub">Quản lý thiết bị &amp; Điều khiển — Hadiwa IOC</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="index.html" class="btn-back">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+          Status Dashboard
+        </a>
+        <div class="conn-pill" id="connPill">
+          <span class="conn-dot" id="connDot"></span>
+          <span id="connLabel">Đang kết nối…</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ADMIN LAYOUT: sidebar + main -->
+  <div class="admin-layout">
+
+    <!-- LEFT SIDEBAR: Device Type List -->
+    <aside class="admin-sidebar">
+      <div class="sidebar-section">
+        <div class="sidebar-section-title">Loại thiết bị</div>
+        <nav class="type-list" id="typeList">
+          <button class="type-item active" data-type="pump" onclick="selectType('pump')">
+            <svg class="type-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8l4 4-4 4"/></svg>
+            <div class="type-item-text">
+              <div class="type-item-name">Trạm bơm</div>
+              <div class="type-item-sub">Tiêu úng & tưới tiêu</div>
+            </div>
+            <span class="type-count" id="count-pump">0</span>
+          </button>
+          <button class="type-item" data-type="sluice" onclick="selectType('sluice')">
+            <svg class="type-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 12h18M12 3v18"/></svg>
+            <div class="type-item-text">
+              <div class="type-item-name">Cống điều tiết</div>
+              <div class="type-item-sub">Van + SCADA thủy lực</div>
+            </div>
+            <span class="type-count" id="count-sluice">0</span>
+          </button>
+          <button class="type-item" data-type="floodSensor" onclick="selectType('floodSensor')">
+            <svg class="type-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 18h18M3 14h18M3 10h18M3 6h18"/></svg>
+            <div class="type-item-text">
+              <div class="type-item-name">Cảm biến ngập</div>
+              <div class="type-item-sub">IoT mực nước</div>
+            </div>
+            <span class="type-count" id="count-floodSensor">0</span>
+          </button>
+          <button class="type-item" data-type="landslide" onclick="selectType('landslide')">
+            <svg class="type-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 12s-5-8-10-8S2 12 2 12s5 8 10 8 10-8 10-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            <div class="type-item-text">
+              <div class="type-item-name">Cảm biến sạt lở</div>
+              <div class="type-item-sub">Tilt & displacement</div>
+            </div>
+            <span class="type-count" id="count-landslide">0</span>
+          </button>
+          <button class="type-item" data-type="weather" onclick="selectType('weather')">
+            <svg class="type-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9z"/></svg>
+            <div class="type-item-text">
+              <div class="type-item-name">Trạm khí tượng</div>
+              <div class="type-item-sub">KT thủy văn + dự báo</div>
+            </div>
+            <span class="type-count" id="count-weather">0</span>
+          </button>
+        </nav>
+      </div>
+
+      <div class="sidebar-section" style="margin-top:12px;">
+        <div class="sidebar-section-title">Kịch bản hệ thống</div>
+        <div class="scenario-mini" id="scenarioMini">
+          <div style="font-size:11px;color:var(--text2)">Đang tải…</div>
+        </div>
+      </div>
+
+      <div class="sidebar-section" style="margin-top:12px;">
+        <div class="sidebar-section-title">Chế độ hoạt động</div>
+        <div class="mode-mini" id="modeMini">
+          <div style="font-size:11px;color:var(--text2)">Đang tải…</div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="admin-main">
+      <!-- TOPBAR of main -->
+      <div class="admin-topbar">
+        <div class="admin-topbar-left">
+          <h2 class="admin-section-title" id="adminSectionTitle">Trạm bơm</h2>
+          <span class="admin-count-badge" id="adminCountBadge">0 thiết bị</span>
+        </div>
+        <div class="admin-topbar-right">
+          <!-- Search -->
+          <div class="search-box">
+            <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchInput" class="search-input" placeholder="Tìm kiếm…" oninput="applyFilter()">
+          </div>
+          <!-- View toggle -->
+          <div class="view-toggle">
+            <button class="view-btn active" id="btnViewGrid" onclick="setView('grid')" title="Grid view">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            </button>
+            <button class="view-btn" id="btnViewTable" onclick="setView('table')" title="Table view">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            </button>
+          </div>
+          <!-- Add button -->
+          <button class="btn-add" onclick="openAdd()">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Thêm mới
+          </button>
+        </div>
+      </div>
+
+      <!-- DEVICE GRID VIEW -->
+      <div class="admin-grid" id="adminGrid">
+        <div class="admin-empty">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="rgba(100,116,139,.35)" stroke-width="1.5" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+          <div>Chọn loại thiết bị ở bên trái để xem danh sách</div>
+        </div>
+      </div>
+
+      <!-- DEVICE TABLE VIEW (hidden by default) -->
+      <div class="admin-table-wrap" id="adminTableWrap" style="display:none">
+        <table class="admin-table" id="adminTable">
+          <thead id="adminTableHead"></thead>
+          <tbody id="adminTableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- CONTROL PANEL: Scenario + Mode -->
+      <div class="ctrl-panels">
+        <!-- Scenario -->
+        <div class="ctrl-panel-card" id="scenarioPanelCard">
+          <div class="ctrl-panel-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Kịch bản giả lập — áp dụng toàn hệ thống
+          </div>
+          <div class="scenario-cards" id="scenarioCards">
+            <div style="font-size:12px;color:var(--text2)">Đang tải kịch bản…</div>
+          </div>
+        </div>
+
+        <!-- Mode -->
+        <div class="ctrl-panel-card" id="modePanelCard">
+          <div class="ctrl-panel-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+            Chế độ Auto / Manual
+            <button class="btn-all-auto" onclick="setAllMode('auto')">Tất cả → Auto</button>
+            <button class="btn-all-manual" onclick="setAllMode('manual')">Tất cả → Manual</button>
+          </div>
+          <div class="mode-cards" id="modeCards">
+            <div style="font-size:12px;color:var(--text2)">Đang tải…</div>
+          </div>
+        </div>
+
+        <!-- Direct Control -->
+        <div class="ctrl-panel-card" id="controlPanelCard">
+          <div class="ctrl-panel-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Điều khiển trực tiếp
+          </div>
+          <div class="direct-control-grid">
+            <div class="dc-ctrl-group">
+              <label class="dc-ctrl-label">Loại</label>
+              <select class="admin-sel" id="ctrlType" onchange="loadCtrlIds()">
+                <option value="pump">Trạm bơm</option>
+                <option value="sluice">Cống điều tiết</option>
+              </select>
+            </div>
+            <div class="dc-ctrl-group">
+              <label class="dc-ctrl-label">Thiết bị</label>
+              <select class="admin-sel" id="ctrlId"></select>
+            </div>
+            <div class="dc-ctrl-group">
+              <label class="dc-ctrl-label">Lệnh</label>
+              <select class="admin-sel" id="ctrlAction">
+                <option value="start_pump">Khởi động tổ máy</option>
+                <option value="stop_pump">Dừng tổ máy</option>
+                <option value="shutdown">Tắt hoàn toàn</option>
+                <option value="restore">Khôi phục</option>
+              </select>
+            </div>
+            <div class="dc-ctrl-group" id="ctrlPctGroup" style="display:none">
+              <label class="dc-ctrl-label">% mở cống</label>
+              <input type="range" id="ctrlPct" min="0" max="100" value="50" class="admin-slider" oninput="document.getElementById('ctrlPctVal').textContent=this.value+'%'">
+              <span id="ctrlPctVal" style="font-family:var(--mono);font-size:12px;color:var(--cyan)">50%</span>
+            </div>
+            <div class="dc-ctrl-group" style="display:flex;align-items:flex-end;">
+              <button class="btn-ctrl-apply" onclick="applyDirectControl()">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                Thực hiện
+              </button>
+            </div>
+          </div>
+          <div class="ctrl-result" id="ctrlResult"></div>
+        </div>
+      </div>
+
+      <!-- API INTEGRATION CONFIG PANEL -->
+      <div class="ctrl-panel-card" id="apiConfigPanel">
+        <div class="ctrl-panel-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          Cấu hình kết nối & Tích hợp API
+          <span style="font-size:10px;font-weight:400;color:var(--text2);margin-left:8px">— Dành cho bên tích hợp hệ thống bên ngoài</span>
+        </div>
+
+        <!-- Auth credentials -->
+        <div class="api-config-section">
+          <div class="api-config-label">Xác thực (Basic Auth — Nginx)</div>
+          <div class="api-cred-row">
+            <span class="api-cred-key">Username</span>
+            <code class="api-code">demo</code>
+            <span class="api-cred-key" style="margin-left:18px">Password</span>
+            <code class="api-code">iclev</code>
+          </div>
+          <div style="font-size:11px;color:var(--text2);margin-top:6px">Áp dụng cho mọi request qua nginx proxy (HTTPS). Không cần auth khi gọi trực tiếp cổng nội bộ (internal/localhost only).</div>
+        </div>
+
+        <!-- Endpoint table -->
+        <div class="api-config-section">
+          <div class="api-config-label">Danh sách Simulator Endpoints</div>
+          <div class="api-table-wrap">
+            <table class="api-table">
+              <thead><tr><th>Simulator</th><th>Port nội bộ</th><th>Base URL (qua Proxy)</th><th>Protocol</th><th>Endpoint chính</th></tr></thead>
+              <tbody id="apiEndpointTable">
+                <tr><td><span class="api-badge badge-admin">Admin Server</span></td><td><code class="api-code">7520</code></td><td><code class="api-code api-url">/hadiwa-simulator/api/admin/</code></td><td><span class="proto-badge http">HTTP REST</span></td><td>status, devices, scenario, mode, catalog</td></tr>
+                <tr><td><span class="api-badge badge-hydro">Thủy văn</span></td><td><code class="api-code">7410</code></td><td><code class="api-code api-url">/hadiwa-simulator/api/sim/hydro/</code></td><td><span class="proto-badge http">HTTP REST</span></td><td>stations, alerts, scenario</td></tr>
+                <tr><td><span class="api-badge badge-pump">MQTT Broker</span></td><td><code class="api-code">7411</code></td><td><code class="api-code api-url">tcp://tools.iclever.vn:1883</code></td><td><span class="proto-badge mqtt">MQTT</span></td><td>hadiwa/pump/#, hadiwa/flood/#</td></tr>
+                <tr><td><span class="api-badge badge-pump">MQTT WS</span></td><td><code class="api-code">7412</code></td><td><code class="api-code api-url">ws://tools.iclever.vn:7412</code></td><td><span class="proto-badge ws">WebSocket</span></td><td>hadiwa/#</td></tr>
+                <tr><td><span class="api-badge badge-res">Hồ chứa SCADA</span></td><td><code class="api-code">7413</code></td><td><code class="api-code api-url">/hadiwa-simulator/api/sim/reservoir/</code></td><td><span class="proto-badge http">HTTP REST</span></td><td>reservoirs, summary, gate/:id</td></tr>
+                <tr><td><span class="api-badge badge-rain">Datalogger mưa</span></td><td><code class="api-code">7414</code></td><td><code class="api-code api-url">/hadiwa-simulator/api/sim/datalogger/</code></td><td><span class="proto-badge http">HTTP REST</span></td><td>rainfall/summary, loggers</td></tr>
+                <tr><td><span class="api-badge badge-pump">Trạm bơm</span></td><td><code class="api-code">7415</code></td><td><code class="api-code api-url">/hadiwa-simulator/api/sim/pump/</code></td><td><span class="proto-badge http">HTTP REST</span></td><td>stations</td></tr>
+                <tr><td><span class="api-badge badge-flood">Cảm biến ngập</span></td><td><code class="api-code">7416</code></td><td><code class="api-code api-url">/hadiwa-simulator/api/sim/flood/</code></td><td><span class="proto-badge http">HTTP REST</span></td><td>sensors</td></tr>
+                <tr><td><span class="api-badge badge-sluice">Cống thủy lực</span></td><td><code class="api-code">7417</code></td><td><code class="api-code api-url">/hadiwa-simulator/api/sim/sluice/</code></td><td><span class="proto-badge http">HTTP REST</span></td><td>sluices</td></tr>
+                <tr><td><span class="api-badge badge-weather">Khí tượng</span></td><td><code class="api-code">7418</code></td><td><code class="api-code api-url">/hadiwa-simulator/api/sim/weather/</code></td><td><span class="proto-badge http">HTTP REST</span></td><td>current</td></tr>
+                <tr><td><span class="api-badge badge-landslide">Sạt lở</span></td><td><code class="api-code">7419</code></td><td><code class="api-code api-url">/hadiwa-simulator/api/sim/landslide/</code></td><td><span class="proto-badge http">HTTP REST</span></td><td>sensors</td></tr>
+                <tr><td><span class="api-badge badge-sse">SSE Stream</span></td><td><code class="api-code">7520</code></td><td><code class="api-code api-url">/hadiwa-simulator/api/admin/stream</code></td><td><span class="proto-badge sse">SSE</span></td><td>Real-time push (EventSource)</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Integration examples -->
+        <div class="api-config-section">
+          <div class="api-config-label">Ví dụ tích hợp</div>
+          <div class="api-examples-grid">
+            <div class="api-example-card">
+              <div class="api-ex-title">curl — Lấy trạng thái trạm bơm</div>
+              <pre class="api-pre">curl -u demo:iclev \
+  https://tools.iclever.vn/hadiwa-simulator/api/admin/status</pre>
+            </div>
+            <div class="api-example-card">
+              <div class="api-ex-title">curl — Đổi kịch bản</div>
+              <pre class="api-pre">curl -u demo:iclev -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"scenario":"flood"}' \
+  https://tools.iclever.vn/hadiwa-simulator/api/admin/scenario</pre>
+            </div>
+            <div class="api-example-card">
+              <div class="api-ex-title">JavaScript — SSE real-time</div>
+              <pre class="api-pre">const es = new EventSource(
+  '/hadiwa-simulator/api/admin/stream',
+  { withCredentials: true }
+);
+es.onmessage = e => {
+  const data = JSON.parse(e.data);
+  console.log(data);
+};</pre>
+            </div>
+            <div class="api-example-card">
+              <div class="api-ex-title">MQTT — Subscribe dữ liệu</div>
+              <pre class="api-pre">mqtt.connect('tcp://tools.iclever.vn:1883',
+  { clientId: 'my-system' }
+).subscribe('hadiwa/pump/#')
+ .subscribe('hadiwa/flood/#');</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- Response schema -->
+        <div class="api-config-section">
+          <div class="api-config-label">Cấu trúc Response chuẩn</div>
+          <div class="api-examples-grid">
+            <div class="api-example-card">
+              <div class="api-ex-title">Thành công</div>
+              <pre class="api-pre">{ "success": true, "data": {...}, "time": "..." }</pre>
+            </div>
+            <div class="api-example-card">
+              <div class="api-ex-title">Lỗi</div>
+              <pre class="api-pre">{ "success": false, "error": "..." }</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    </main>
+  </div>
+
+  <!-- MODAL: Add / Edit Device -->
+  <div class="modal-overlay" id="deviceModal" onclick="if(event.target===this)closeModal()">
+    <div class="modal-box">
+      <div class="modal-hdr">
+        <div>
+          <div class="modal-title" id="modalTitle">Thêm thiết bị mới</div>
+          <div class="modal-subtitle" id="modalSubtitle"></div>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="modal-ftr">
+        <button class="btn-cancel" onclick="closeModal()">Hủy</button>
+        <button class="btn-save" id="modalSaveBtn" onclick="saveDevice()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Lưu
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONFIRM MODAL -->
+  <div class="modal-overlay" id="confirmModal" onclick="if(event.target===this)closeConfirm()">
+    <div class="modal-box" style="max-width:420px">
+      <div class="modal-hdr">
+        <div class="modal-title" style="color:#f87171">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-3px;margin-right:6px" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          Xác nhận xóa
+        </div>
+      </div>
+      <div class="modal-body">
+        <p id="confirmMsg" style="color:var(--text2);font-size:13px;line-height:1.7;">Bạn có chắc chắn muốn xóa thiết bị này? Hành động này không thể hoàn tác.</p>
+      </div>
+      <div class="modal-ftr">
+        <button class="btn-cancel" onclick="closeConfirm()">Hủy</button>
+        <button class="btn-delete-confirm" id="btnDeleteConfirm">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          Xóa thiết bị
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toastWrap"></div>
+  <script src="admin-v2.js"></script>
+</body>
+</html>

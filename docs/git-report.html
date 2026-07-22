@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Quawaco IOC – Git Report</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --cyan: #00c8ff;
+            --blue: #0050cc;
+            --green: #00e676;
+            --yellow: #ffca28;
+            --red: #ff1744;
+            --purple: #7c3aed;
+            --bg: #030e1c;
+            --surface: #071629;
+            --text: #e3f2fd;
+            --muted: #546e7a;
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 40px 48px;
+            print-color-adjust: exact;
+            -webkit-print-color-adjust: exact;
+        }
+
+        /* ── COVER ── */
+        .cover {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 90vh;
+            text-align: center;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0, 80, 204, .25) 0%, transparent 70%);
+            border-bottom: 1px solid rgba(0, 200, 255, .15);
+            margin-bottom: 56px;
+            padding-bottom: 56px;
+        }
+
+        .cover-logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #0050cc, #00c8ff);
+            border-radius: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 48px rgba(0, 200, 255, .45);
+            margin-bottom: 28px;
+        }
+
+        .cover-logo svg {
+            width: 44px;
+            height: 44px;
+            fill: #fff
+        }
+
+        .cover h1 {
+            font-size: 52px;
+            font-weight: 800;
+            letter-spacing: 5px;
+            background: linear-gradient(90deg, #e3f2fd, #00c8ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .cover-sub {
+            font-size: 14px;
+            letter-spacing: 4px;
+            color: var(--cyan);
+            text-transform: uppercase;
+            font-family: 'Roboto Mono', monospace;
+            margin-bottom: 40px
+        }
+
+        .cover-meta {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap
+        }
+
+        .cover-meta-item {
+            text-align: center
+        }
+
+        .cover-meta-item .num {
+            font-size: 40px;
+            font-weight: 800;
+            color: var(--cyan);
+            line-height: 1
+        }
+
+        .cover-meta-item .lbl {
+            font-size: 11px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+            font-family: 'Roboto Mono', monospace
+        }
+
+        /* ── SECTION HEADERS ── */
+        .section {
+            margin-bottom: 56px
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--cyan);
+            font-family: 'Roboto Mono', monospace;
+            border-bottom: 1px solid rgba(0, 200, 255, .18);
+            padding-bottom: 12px;
+            margin-bottom: 24px;
+        }
+
+        .section-title svg {
+            flex-shrink: 0
+        }
+
+        /* ── BRANCH CARDS ── */
+        .branch-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px
+        }
+
+        .branch-card {
+            background: rgba(0, 200, 255, .04);
+            border: 1px solid rgba(0, 200, 255, .15);
+            border-radius: 14px;
+            padding: 20px 22px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .branch-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blue), var(--cyan));
+        }
+
+        .branch-card.active::before {
+            background: linear-gradient(90deg, var(--green), var(--cyan))
+        }
+
+        .branch-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 6px;
+            font-family: 'Roboto Mono', monospace
+        }
+
+        .branch-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 20px;
+            margin-bottom: 10px;
+        }
+
+        .badge-active {
+            background: rgba(0, 230, 118, .12);
+            color: var(--green);
+            border: 1px solid rgba(0, 230, 118, .25)
+        }
+
+        .badge-stable {
+            background: rgba(255, 202, 40, .1);
+            color: var(--yellow);
+            border: 1px solid rgba(255, 202, 40, .25)
+        }
+
+        .badge-feature {
+            background: rgba(124, 58, 237, .12);
+            color: #c4b5fd;
+            border: 1px solid rgba(124, 58, 237, .25)
+        }
+
+        .branch-desc {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.6
+        }
+
+        .branch-stat {
+            font-size: 11px;
+            color: rgba(0, 200, 255, .7);
+            margin-top: 8px;
+            font-family: 'Roboto Mono', monospace
+        }
+
+        /* ── TAGS ── */
+        .tag-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: rgba(255, 202, 40, .04);
+            border: 1px solid rgba(255, 202, 40, .2);
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 12px;
+        }
+
+        .tag-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--yellow);
+            font-family: 'Roboto Mono', monospace;
+            flex-shrink: 0;
+            min-width: 160px;
+        }
+
+        .tag-desc {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.5
+        }
+
+        /* ── TIMELINE ── */
+        .timeline {
+            position: relative;
+            padding-left: 28px
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(0, 200, 255, .5), rgba(0, 80, 204, .1));
+            border-radius: 2px;
+        }
+
+        .tl-group {
+            margin-bottom: 28px
+        }
+
+        .tl-date-label {
+            font-size: 11px;
+            font-family: 'Roboto Mono', monospace;
+            color: var(--cyan);
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tl-date-label::before {
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--cyan);
+            box-shadow: 0 0 8px var(--cyan);
+            margin-left: -33px;
+            flex-shrink: 0;
+        }
+
+        .tl-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: rgba(255, 255, 255, .02);
+            border: 1px solid rgba(255, 255, 255, .05);
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            transition: .2s;
+        }
+
+        .tl-hash {
+            font-size: 11px;
+            font-family: 'Roboto Mono', monospace;
+            color: rgba(0, 200, 255, .6);
+            flex-shrink: 0;
+            width: 60px;
+            padding-top: 1px;
+        }
+
+        .tl-time {
+            font-size: 10px;
+            color: var(--muted);
+            flex-shrink: 0;
+            width: 42px;
+            padding-top: 2px
+        }
+
+        .tl-msg {
+            font-size: 12px;
+            color: var(--text);
+            line-height: 1.5;
+            flex: 1
+        }
+
+        .tl-tag-badge {
+            flex-shrink: 0;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 1px 8px;
+            border-radius: 10px;
+            background: rgba(255, 202, 40, .12);
+            color: var(--yellow);
+            border: 1px solid rgba(255, 202, 40, .25);
+        }
+
+        .tl-branch-badge {
+            flex-shrink: 0;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 1px 8px;
+            border-radius: 10px;
+            background: rgba(124, 58, 237, .12);
+            color: #c4b5fd;
+            border: 1px solid rgba(124, 58, 237, .25);
+        }
+
+        /* type chips */
+        .chip-feat {
+            background: rgba(0, 200, 255, .08);
+            color: var(--cyan);
+            border: 1px solid rgba(0, 200, 255, .2)
+        }
+
+        .chip-fix {
+            background: rgba(255, 23, 68, .07);
+            color: #ff8a80;
+            border: 1px solid rgba(255, 23, 68, .2)
+        }
+
+        .chip-style {
+            background: rgba(124, 58, 237, .08);
+            color: #c4b5fd;
+            border: 1px solid rgba(124, 58, 237, .2)
+        }
+
+        .chip-ref {
+            background: rgba(255, 202, 40, .08);
+            color: var(--yellow);
+            border: 1px solid rgba(255, 202, 40, .2)
+        }
+
+        .chip-ui {
+            background: rgba(0, 230, 118, .07);
+            color: var(--green);
+            border: 1px solid rgba(0, 230, 118, .2)
+        }
+
+        .commit-type {
+            flex-shrink: 0;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 1px 8px;
+            border-radius: 10px;
+            align-self: flex-start;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            margin-top: 60px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(0, 200, 255, .1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--muted);
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        /* ── PRINT ── */
+        @media print {
+            body {
+                background: #030e1c !important;
+                color: #e3f2fd !important;
+                padding: 24px 32px
+            }
+
+            .cover {
+                min-height: 70vh
+            }
+
+            .tl-item,
+            .branch-card,
+            .tag-row {
+                break-inside: avoid
+            }
+
+            .section {
+                break-inside: avoid
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═══ COVER ═══ -->
+    <div class="cover">
+        <div class="cover-logo">
+            <svg viewBox="0 0 48 48">
+                <path
+                    d="M24 4a20 20 0 110 40A20 20 0 0124 4zm0 4a16 16 0 100 32A16 16 0 0024 8zm-2 7h4v10l6 4-2 3-8-5V15z" />
+            </svg>
+        </div>
+        <h1>QUAWACO IOC</h1>
+        <div class="cover-sub">Git Release Report &middot; Intelligent Operations Center</div>
+        <div class="cover-meta">
+            <div class="cover-meta-item">
+                <div class="num">134</div>
+                <div class="lbl">Total Commits</div>
+            </div>
+            <div class="cover-meta-item">
+                <div class="num">2</div>
+                <div class="lbl">Branches</div>
+            </div>
+            <div class="cover-meta-item">
+                <div class="num">2</div>
+                <div class="lbl">Tags / Versions</div>
+            </div>
+            <div class="cover-meta-item">
+                <div class="num">01/03<br style="line-height:.7">–05/03</div>
+                <div class="lbl">Period (2026)</div>
+            </div>
+        </div>
+        <div style="margin-top:40px;font-size:12px;color:var(--muted);font-family:'Roboto Mono',monospace">
+            Generated: 05/03/2026 01:14 ICT &nbsp;|&nbsp; Author: Quawaco IOC Dev Team
+        </div>
+    </div>
+
+    <!-- ═══ BRANCHES ═══ -->
+    <div class="section">
+        <div class="section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="6" y1="3" x2="6" y2="15" />
+                <circle cx="18" cy="6" r="3" />
+                <circle cx="6" cy="18" r="3" />
+                <path d="M18 9a9 9 0 01-9 9" />
+            </svg>
+            Branches
+        </div>
+        <div class="branch-grid">
+            <div class="branch-card">
+                <div class="branch-name">master</div>
+                <div class="branch-badge badge-stable">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    Stable / Production
+                </div>
+                <div class="branch-desc">Nhánh chính, chứa phiên bản ổn định nhất. Được tag <code
+                        style="color:var(--yellow)">v1.0.0-stable</code> tại commit <code
+                        style="color:var(--cyan)">0955d82</code>.</div>
+                <div class="branch-stat">HEAD → 0955d82 &nbsp;·&nbsp; 05/03/2026 00:43</div>
+            </div>
+            <div class="branch-card active">
+                <div class="branch-name">feature/onboarding-help</div>
+                <div class="branch-badge badge-feature">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    Active Feature Branch
+                </div>
+                <div class="branch-desc">Tính năng Onboarding & Help System: spotlight tour theo từng page, chatbot help
+                    chip N-visits, config tham số tập trung.</div>
+                <div class="branch-stat">HEAD → a818d3f &nbsp;·&nbsp; 05/03/2026 01:05</div>
+            </div>
+            <div class="branch-card" style="border-color:rgba(255,202,40,.2)">
+                <div class="branch-name" style="color:rgba(255,202,40,.9)">v1.0-dark-mode-only</div>
+                <div class="branch-badge badge-stable">Archive Tag</div>
+                <div class="branch-desc">Tag lưu trữ phiên bản dark-mode only trước khi bổ sung light theme toggle.
+                </div>
+                <div class="branch-stat">Early prototype snapshot</div>
+            </div>
+            <div class="branch-card">
+                <div class="branch-name" style="color:var(--muted)">origin/master (remote)</div>
+                <div class="branch-badge"
+                    style="background:rgba(84,110,122,.1);color:var(--muted);border:1px solid rgba(84,110,122,.25)">
+                    Remote</div>
+                <div class="branch-desc">Remote tracking branch on origin. Mirrors local master after each push.</div>
+                <div class="branch-stat">Synced with local master</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ TAGS / VERSIONS ═══ -->
+    <div class="section">
+        <div class="section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z" />
+                <line x1="7" y1="7" x2="7.01" y2="7" />
+            </svg>
+            Versions &amp; Tags
+        </div>
+
+        <div class="tag-row">
+            <div class="tag-name">v1.0.0-stable</div>
+            <div class="tag-desc">
+                <strong style="color:var(--text)">Quawaco IOC v1.0.0 — First Stable Release (05/03/2026)</strong><br>
+                Commit <code style="color:var(--cyan)">0955d82</code> · master · 05/03/2026 00:43 ICT<br><br>
+                Dashboard KPI · GIS Map với incident actions · Sự cố & Lệnh CT · NRW Lịch sử · Kinh doanh detail modal ·
+                Animation engine · Forgot Password 4-step flow · Fullscreen toggle · Sidebar collapsed default ·
+                Status labels Tiếng Việt · Pagination cải thiện
+            </div>
+        </div>
+
+        <div class="tag-row" style="border-color:rgba(84,110,122,.2);background:rgba(84,110,122,.03)">
+            <div class="tag-name" style="color:var(--muted)">v1.0-dark-mode-only</div>
+            <div class="tag-desc" style="color:var(--muted)">
+                <strong style="color:var(--muted)">Prototype — Dark mode only snapshot</strong><br>
+                Lưu trữ phiên bản prototype trước khi thêm light theme, SVG icons và các tính năng nâng cao.
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ COMMIT TIMELINE ═══ -->
+    <div class="section">
+        <div class="section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+            </svg>
+            Commit Timeline (134 commits — mới nhất trước)
+        </div>
+        <div class="timeline">
+
+            <!-- 05/03/2026 -->
+            <div class="tl-group">
+                <div class="tl-date-label">05/03/2026 — Onboarding &amp; Login Polish</div>
+
+                <div class="tl-item">
+                    <span class="tl-hash">a818d3f</span>
+                    <span class="tl-time">01:05</span>
+                    <span class="tl-msg">Fix onboarding: pushStickyMsg + patch updateStickySuggestions to preserve help
+                        chip</span>
+                    <span class="commit-type chip-fix">fix</span>
+                    <span class="tl-branch-badge">onboarding</span>
+                </div>
+                <div class="tl-item">
+                    <span class="tl-hash">93c4537</span>
+                    <span class="tl-time">00:58</span>
+                    <span class="tl-msg">Feature: onboarding & help system — config, spotlight engine, chatbot N-visit
+                        help chip</span>
+                    <span class="commit-type chip-feat">feat</span>
+                    <span class="tl-branch-badge">onboarding</span>
+                </div>
+                <div class="tl-item">
+                    <span class="tl-hash">0955d82</span>
+                    <span class="tl-time">00:43</span>
+                    <span class="tl-msg">Fix: center input icons vertically — move margin-bottom from input to
+                        .inp-wrap</span>
+                    <span class="commit-type chip-fix">fix</span>
+                    <span class="tl-tag-badge">v1.0.0-stable ★</span>
+                </div>
+                <div class="tl-item">
+                    <span class="tl-hash">910fff0</span>
+                    <span class="tl-time">00:38</span>
+                    <span class="tl-msg">Feature: full Quên mật khẩu flow (email→OTP→new password→success) with strength
+                        meter</span>
+                    <span class="commit-type chip-feat">feat</span>
+                </div>
+                <div class="tl-item">
+                    <span class="tl-hash">219370c</span>
+                    <span class="tl-time">00:34</span>
+                    <span class="tl-msg">UI: replace emoji OTP hint icons with SVG + two-line professional layout</span>
+                    <span class="commit-type chip-ui">ui</span>
+                </div>
+                <div class="tl-item">
+                    <span class="tl-hash">fca79a1</span>
+                    <span class="tl-time">00:28</span>
+                    <span class="tl-msg">Fix fullscreen: first-click auto-trigger + header toggle button with icon
+                        swap</span>
+                    <span class="commit-type chip-fix">fix</span>
+                </div>
+                <div class="tl-item">
+                    <span class="tl-hash">4d8939e</span>
+                    <span class="tl-time">00:22</span>
+                    <span class="tl-msg">UX: auto-fullscreen on app load + sidebar collapsed by default</span>
+                    <span class="commit-type chip-ui">ux</span>
+                </div>
+                <div class="tl-item">
+                    <span class="tl-hash">a799f7c</span>
+                    <span class="tl-time">00:09</span>
+                    <span class="tl-msg">Fix: Dashboard "Xem chi tiết" link nhà máy → navigate('plants') not
+                        'production'</span>
+                    <span class="commit-type chip-fix">fix</span>
+                </div>
+            </div>
+
+            <!-- 04/03/2026 -->
+            <div class="tl-group">
+                <div class="tl-date-label">04/03/2026 — Status i18n · Approval · Animation · Chatbot · Điều Hành</div>
+
+                <div class="tl-item"><span class="tl-hash">b9bcd91</span><span class="tl-time">23:39</span><span
+                        class="tl-msg">Fix: statusBadge covers all status values in VN; viewBizHistoryDetail() modal
+                        with KPI grid + trend</span><span class="commit-type chip-fix">fix</span></div>
+                <div class="tl-item"><span class="tl-hash">b38b2cd</span><span class="tl-time">23:33</span><span
+                        class="tl-msg">i18n: translate all English status display strings to Vietnamese (In progress,
+                        Online, Offline…)</span><span class="commit-type chip-ref">i18n</span></div>
+                <div class="tl-item"><span class="tl-hash">320019b</span><span class="tl-time">23:10</span><span
+                        class="tl-msg">NRW: fix Lịch sử tab — 25 mock records, full datetime, status badge,
+                        pagination</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">25c452a</span><span class="tl-time">22:55</span><span
+                        class="tl-msg">Fix: openNewTask() → real modal form with prefill; gisCreateWorkOrder passes
+                        prefill object</span><span class="commit-type chip-fix">fix</span></div>
+                <div class="tl-item"><span class="tl-hash">96e51f2</span><span class="tl-time">22:47</span><span
+                        class="tl-msg">GIS: context-aware action buttons in incident popup (Xem chi tiết / Tạo lệnh
+                        CT)</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">1e53318</span><span class="tl-time">21:59</span><span
+                        class="tl-msg">Factory chart: custom HTML external tooltip + SVG factory icon (no
+                        emoji)</span><span class="commit-type chip-ui">ui</span></div>
+                <div class="tl-item"><span class="tl-hash">114b9a7</span><span class="tl-time">21:40</span><span
+                        class="tl-msg">Center pagination bars globally in CSS; fix business_history inline pagination
+                        z-index</span><span class="commit-type chip-fix">fix</span></div>
+                <div class="tl-item"><span class="tl-hash">b39b5e3</span><span class="tl-time">21:26</span><span
+                        class="tl-msg">Add animation engine (fade/flip/slide/zoom/none) + animation picker in Settings ›
+                        Giao diện</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">b01eb70</span><span class="tl-time">21:15</span><span
+                        class="tl-msg">Smooth in-place modal navigation: fade content without close/reopen</span><span
+                        class="commit-type chip-ui">ux</span></div>
+                <div class="tl-item"><span class="tl-hash">f723cc6</span><span class="tl-time">21:03</span><span
+                        class="tl-msg">Approval detail modal: add prev/next nav with request counter in
+                        footer</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">4f09133</span><span class="tl-time">20:59</span><span
+                        class="tl-msg">Fix modal width: set width+max-width in openModal, widen detail modal to
+                        1100px</span><span class="commit-type chip-fix">fix</span></div>
+                <div class="tl-item"><span class="tl-hash">319534b</span><span class="tl-time">16:43</span><span
+                        class="tl-msg">Approval cards: Xem chi tiết detail modal with file viewer, AI output,
+                        approve/reject</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">851f5fb</span><span class="tl-time">16:28</span><span
+                        class="tl-msg">Điều hành: replace emoji with SVG icons, add OTP 2FA gate to leader
+                        approval</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">85a6429</span><span class="tl-time">15:54</span><span
+                        class="tl-msg">Add Điều hành approval page, KPI import history tab, approval workflow
+                        settings</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">aa90fd2</span><span class="tl-time">15:43</span><span
+                        class="tl-msg">Add OTP 2FA gate for KPI import + 2FA-protected Actions settings
+                        panel</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">21adc18</span><span class="tl-time">15:34</span><span
+                        class="tl-msg">Data Hub: add KPI Business Data Import tab with AI extraction flow</span><span
+                        class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">25ca3e8</span><span class="tl-time">15:21</span><span
+                        class="tl-msg">Sidebar tooltip: fix flicker with event delegation, no cloneNode</span><span
+                        class="commit-type chip-fix">fix</span></div>
+                <div class="tl-item"><span class="tl-hash">d0be961</span><span class="tl-time">14:59</span><span
+                        class="tl-msg">Sticky chatbot: TTS toggle, voice animation, context suggestions, fix typing
+                        indicator</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">94b770c</span><span class="tl-time">14:44</span><span
+                        class="tl-msg">Fix sidebar state persistence: default collapsed, preserve user choice on
+                        navigation</span><span class="commit-type chip-fix">fix</span></div>
+                <div class="tl-item"><span class="tl-hash">96c239b</span><span class="tl-time">09:22</span><span
+                        class="tl-msg">Phase 46/47: Replace emoji icons with SVG in chatbot, add cache-busting ?v=,
+                        click-outside closes dropdowns</span><span class="commit-type chip-ref">refactor</span></div>
+            </div>
+
+            <!-- 02/03/2026 -->
+            <div class="tl-group">
+                <div class="tl-date-label">02/03/2026 — Video Wall · CCTV · Dashboard Sparklines</div>
+                <div class="tl-item"><span class="tl-hash">a4ac927</span><span class="tl-time">08:54</span><span
+                        class="tl-msg">Enhance Video Wall UI and fix CCTV detail view regression</span><span
+                        class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">9f67f86</span><span class="tl-time">02:24</span><span
+                        class="tl-msg">Enhance Call Center KPI cards with sparklines and fix documentation.html
+                        lint</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">b137d7d</span><span class="tl-time">02:20</span><span
+                        class="tl-msg">Enhance CCTV grid icons and pagination</span><span
+                        class="commit-type chip-ui">ui</span></div>
+                <div class="tl-item"><span class="tl-hash">e71fba5</span><span class="tl-time">01:55</span><span
+                        class="tl-msg">Dashboard sparklines and Video Wall GIS integration complete</span><span
+                        class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">19dddbce</span><span class="tl-time">01:51</span><span
+                        class="tl-msg">Dashboard UI fixes, Documentation Hub enhancements</span><span
+                        class="commit-type chip-fix">fix</span></div>
+            </div>
+
+            <!-- 01/03/2026 -->
+            <div class="tl-group">
+                <div class="tl-date-label">01/03/2026 — Core Features Sprint (60+ commits) — Key milestones</div>
+                <div class="tl-item"><span class="tl-hash">24e5831</span><span class="tl-time">21:02</span><span
+                        class="tl-msg">Sidebar menu reorganization into logical modules</span><span
+                        class="commit-type chip-ref">refactor</span></div>
+                <div class="tl-item"><span class="tl-hash">2de2b9f</span><span class="tl-time">19:50</span><span
+                        class="tl-msg">Enhance Alerts Management and Pump Scheduler features</span><span
+                        class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">676e32b</span><span class="tl-time">19:09</span><span
+                        class="tl-msg">Implement Work Order detail modal with timeline and status updates</span><span
+                        class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">452017a</span><span class="tl-time">18:43</span><span
+                        class="tl-msg">feat(incidents): add tasks tab, pagination, and consolidate filters</span><span
+                        class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">b4285c7</span><span class="tl-time">18:14</span><span
+                        class="tl-msg">feat(settings): add UI settings tab with full-width layout, 2FA
+                        pagination</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">05761cc</span><span class="tl-time">17:50</span><span
+                        class="tl-msg">feat(chatbot): enhance main AI input with rich controls and hide sticky bot on
+                        active page</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">67c3e8a</span><span class="tl-time">17:06</span><span
+                        class="tl-msg">feat: Add NRW History Detail modal with timeline</span><span
+                        class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">fdcb4ac</span><span class="tl-time">16:56</span><span
+                        class="tl-msg">feat(hrm): enhance HRM module with factory filters, pagination, advanced
+                        attendance</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">630d268</span><span class="tl-time">14:48</span><span
+                        class="tl-msg">feat(quality): add real-time monitoring grid with factory cards and alert
+                        animations</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">a6a23ac</span><span class="tl-time">14:32</span><span
+                        class="tl-msg">feat(data): add more mock factories for plants page</span><span
+                        class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">c606219</span><span class="tl-time">14:16</span><span
+                        class="tl-msg">feat(plants): implement GIS map viewer and camera surveillance modal</span><span
+                        class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">eb51317</span><span class="tl-time">14:01</span><span
+                        class="tl-msg">feat(plants): separate plant management into dedicated page with grid/list
+                        views</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item"><span class="tl-hash">76e84c0</span><span class="tl-time">13:40</span><span
+                        class="tl-msg">style(lims): glassmorphism search bars; feat: implement sampling record
+                        form</span><span class="commit-type chip-style">style</span></div>
+                <div class="tl-item"><span class="tl-hash">8f904a3</span><span class="tl-time">13:03</span><span
+                        class="tl-msg">fix: remove all remaining emoji icons, replace with SVG in rbac.js, app.js and
+                        all pages</span><span class="commit-type chip-fix">fix</span></div>
+                <div class="tl-item"><span class="tl-hash">83642d2</span><span class="tl-time">13:01</span><span
+                        class="tl-msg">feat: replace all emoji icons with professional inline SVG icons across IOC
+                        Center app</span><span class="commit-type chip-feat">feat</span></div>
+                <div class="tl-item" style="opacity:.6"><span class="tl-hash">…</span><span class="tl-time"></span><span
+                        class="tl-msg" style="color:var(--muted)">+ 45 thêm commits ngày 01/03/2026 (login, dashboard,
+                        GIS, SCADA, camera, sidebar, modals…)</span></div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ═══ MODULES SUMMARY ═══ -->
+    <div class="section">
+        <div class="section-title">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="7" />
+                <rect x="14" y="3" width="7" height="7" />
+                <rect x="14" y="14" width="7" height="7" />
+                <rect x="3" y="14" width="7" height="7" />
+            </svg>
+            Modules Implemented
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+            <div
+                style="background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);border-radius:10px;padding:14px">
+                <div style="font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:1px;margin-bottom:6px">
+                    OPERATIONS</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.8">Dashboard KPI<br>GIS Map
+                    (Leaflet)<br>SCADA / RTU<br>Camera / CCTV<br>Video Wall<br>Alerts</div>
+            </div>
+            <div
+                style="background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);border-radius:10px;padding:14px">
+                <div style="font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:1px;margin-bottom:6px">
+                    INCIDENTS</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.8">Sự cố & Lệnh CT<br>Work Order detail
+                    modal<br>NRW Thất thoát<br>Điều hành & Phê duyệt<br>Lịch & Phân công<br>Call Center</div>
+            </div>
+            <div
+                style="background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);border-radius:10px;padding:14px">
+                <div style="font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:1px;margin-bottom:6px">
+                    BUSINESS & AI</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.8">Kinh doanh Tổng quan<br>Lịch sử KD
+                    detail<br>Data Hub & AI KPI<br>AI Chatbot (sticky+full)<br>Onboarding / Help tour<br>Settings &
+                    Animation</div>
+            </div>
+            <div
+                style="background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);border-radius:10px;padding:14px">
+                <div style="font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:1px;margin-bottom:6px">
+                    QUALITY & ASSETS</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.8">Chất lượng nước<br>LIMS Phòng thí
+                    nghiệm<br>Quản lý nhà máy<br>Vật tư & Thiết bị<br>Nhân sự (HRM)<br>Khách hàng</div>
+            </div>
+            <div
+                style="background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);border-radius:10px;padding:14px">
+                <div style="font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:1px;margin-bottom:6px">
+                    SECURITY & AUTH</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.8">Multi-role RBAC<br>Login 3-step
+                    (2FA)<br>Forgot Password flow<br>OTP countdown<br>2FA for SCADA actions<br>Leader approval gate
+                </div>
+            </div>
+            <div
+                style="background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);border-radius:10px;padding:14px">
+                <div style="font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:1px;margin-bottom:6px">UX /
+                    SHELL</div>
+                <div style="font-size:12px;color:var(--muted);line-height:1.8">Dark/Light theme<br>Fullscreen
+                    toggle<br>Sidebar collapsed default<br>Status labels i18n VN<br>Animation system<br>Onboarding
+                    spotlight tour</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <span>Quawaco IOC — Intelligent Operations Center</span>
+        <span>© 2026 Công ty Cổ phần Nước & Môi trường Quảng Ninh</span>
+        <span>v1.0.0-stable · 05/03/2026</span>
+    </footer>
+
+</body>
+
+</html>

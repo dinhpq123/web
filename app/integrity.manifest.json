@@ -1,0 +1,756 @@
+{
+  "generated_at_utc": "2026-03-25T21:50:35.487803+00:00",
+  "file_count": 150,
+  "files": [
+    {
+      "path": "Tools_v1.zip",
+      "size": 5657356,
+      "sha256": "7d6da4eb9b650a37cde874845aa5ddb1cbfe4a679f035022f750386bbbd9a899"
+    },
+    {
+      "path": "V0.1.zip",
+      "size": 18888237,
+      "sha256": "958187e73ef3cc1948730c74866b538237deeb61f0ffde822442bd8a42b84686"
+    },
+    {
+      "path": "analysis.txt",
+      "size": 13535,
+      "sha256": "bafa54abdcf4abaca41a8c39d1fe2bd2a33d622040f3aff61d8f810ad02e3a6c"
+    },
+    {
+      "path": "app.html",
+      "size": 28837,
+      "sha256": "2d046037e8dbc9ebf2cf87fbdfb5702feeb4dd94aebf95d32d32ea6e7a1a5395"
+    },
+    {
+      "path": "assets/admin_avatar.png",
+      "size": 551932,
+      "sha256": "1f32fd4735db654fc223e7ed75059f49183e4cdef083d8398558205bbb49d8ed"
+    },
+    {
+      "path": "assets/mascot-quawaco-new.png",
+      "size": 470266,
+      "sha256": "4b2de31d630535d5f444c785c5e8e13be1495bdc3ff232123e11e89b7939ba66"
+    },
+    {
+      "path": "assets/mascot-quawaco.png",
+      "size": 470266,
+      "sha256": "4b2de31d630535d5f444c785c5e8e13be1495bdc3ff232123e11e89b7939ba66"
+    },
+    {
+      "path": "assets/mock-images/0.png",
+      "size": 418045,
+      "sha256": "27aa4f3f5d822d230845f12ff2ef239eb794e4f5901d7db190f891a819a69b3a"
+    },
+    {
+      "path": "assets/mock-images/cctv_chemical_storage_1772284632893.png",
+      "size": 798761,
+      "sha256": "8ba9416b304f6b199699e2af7a54e7a79da39c3d7080463922a2279eb9d74352"
+    },
+    {
+      "path": "assets/mock-images/cctv_control_room_1772284570329.png",
+      "size": 719772,
+      "sha256": "896c1033eb0519a09feeb12e643f6c53aa71839d6cc439500a201c2b52e2cc66"
+    },
+    {
+      "path": "assets/mock-images/cctv_electrical_room.png",
+      "size": 821569,
+      "sha256": "26df160fdfe3b6ad458b6a81d6eccd45580f82a428744f0d43264eeba210ac6c"
+    },
+    {
+      "path": "assets/mock-images/cctv_entrance_hall.png",
+      "size": 646160,
+      "sha256": "d80611f06ca6c16c21be8d8c06a1c36a13d90cd926620c3db9d79cb87a0e8742"
+    },
+    {
+      "path": "assets/mock-images/cctv_filter_room.png",
+      "size": 814220,
+      "sha256": "7dc528c6db6bd870bc6b526ed565dfb05b6997752b0d99977cc4cf78dcb94096"
+    },
+    {
+      "path": "assets/mock-images/cctv_gate_online_1772284484245.png",
+      "size": 759544,
+      "sha256": "60be364e02af4e3be72060f340a55dcee6a49ceec7631073aeaa32a644f7b275"
+    },
+    {
+      "path": "assets/mock-images/cctv_lab_room.png",
+      "size": 800537,
+      "sha256": "117c23d011968c38fd88c7669af4ca7846a647bc8c509574c4740b2a57958f0d"
+    },
+    {
+      "path": "assets/mock-images/cctv_loading_dock.png",
+      "size": 780326,
+      "sha256": "508602b69c3fdb2b5acad5b991150b6d3e99e785f322bcce5247eeefcae9e0e2"
+    },
+    {
+      "path": "assets/mock-images/cctv_main_gate.png",
+      "size": 817552,
+      "sha256": "2b4aaf41f7cf6964f3968db9450bc26142c69e52c862e6eea09fb63c88c62070"
+    },
+    {
+      "path": "assets/mock-images/cctv_outdoor_yard.png",
+      "size": 877545,
+      "sha256": "e2f2d2ec20c80a5b7e70d9de86625206a861d732d636844f52278d81a6c92227"
+    },
+    {
+      "path": "assets/mock-images/cctv_perimeter_fence_1772284669824.png",
+      "size": 712127,
+      "sha256": "ce6e0a17154e219f13a673a4f061e42bcdf0443e0b04d646330aef39c6d07939"
+    },
+    {
+      "path": "assets/mock-images/cctv_pump_room_1772284518940.png",
+      "size": 738782,
+      "sha256": "346f58e9b54264c4f4028b14434b70c6c0eb47999b2c8949f38a2081604f5fbb"
+    },
+    {
+      "path": "assets/mock-images/cctv_reservoir_1772284541732.png",
+      "size": 758735,
+      "sha256": "243a6e9992307af5dd471ea37dd4c9fcca7ce89072469a48943724c49a964f2f"
+    },
+    {
+      "path": "assets/mock-images/cctv_sedimentation_basin.png",
+      "size": 825172,
+      "sha256": "930743b287a11675ed859b4e1cd25add69fedb887dbdd71203b9d811ffabb631"
+    },
+    {
+      "path": "assets/mock-images/cctv_server_room.png",
+      "size": 802031,
+      "sha256": "8076f5c85593eec311b000be4a0eaa84da92b696d48152cd574ab8944ade62f3"
+    },
+    {
+      "path": "assets/mock-images/cctv_water_tower.png",
+      "size": 810457,
+      "sha256": "e1a6123d2c8ce9c771ec50ad9ed8c40d7c75ece6ca925859377c9af21e0735c0"
+    },
+    {
+      "path": "assets/quawaco_logo.png",
+      "size": 30459,
+      "sha256": "a5f8a0cf3b2ab4ff37709524d9e426c8b811604e9e18b3683aa2726c1dce11be"
+    },
+    {
+      "path": "assets/system-logo-small.png",
+      "size": 30095,
+      "sha256": "69cf619b76d127ba8040e8dae88263b0d9800e9bc097afb6d26e36545137da14"
+    },
+    {
+      "path": "assets/system-logo.png",
+      "size": 70516,
+      "sha256": "ff19c1565a8bb8c3cd14ef736cb4595f6452ef261ea901550480627e6a5203cd"
+    },
+    {
+      "path": "css/main.css",
+      "size": 34878,
+      "sha256": "d35c2931799957d1a2014783e272286a8c479b2de17e1f8de4aab536a8d418f7"
+    },
+    {
+      "path": "docs/2. PLDGHT.xls",
+      "size": 1626112,
+      "sha256": "cf837ec5c3eaf9dc35a177047e93ef0df2ed2766676be4d644a780b353d760e6"
+    },
+    {
+      "path": "docs/De cuong tich hop phan mem quan ly PCTT.docx",
+      "size": 14987,
+      "sha256": "e918f35a42fee61f7fc5f420f2af016eb1bcf26fdce70570bd3f1ec7aa140871"
+    },
+    {
+      "path": "docs/changelog.html",
+      "size": 32792,
+      "sha256": "76a8e91de0fdf942fcbc804d3f33e1aef6a9fc4cad3f683cbdd2bde8f87bea58"
+    },
+    {
+      "path": "docs/gen_doc.py",
+      "size": 37964,
+      "sha256": "c8ae2a7f12bf050978de436853c42305660175b09c81c3b8b3f8cea5777644fb"
+    },
+    {
+      "path": "docs/gen_docx.py",
+      "size": 6035,
+      "sha256": "af178314af3bd4f2a146c3ad2c14b3c18f1e6324e4ad0a4627547b1923184056"
+    },
+    {
+      "path": "docs/gen_html.py",
+      "size": 36571,
+      "sha256": "977ff1f2f669f5920eca3e53327486e4defaacd9d278cb7b9ac78390f4869c3e"
+    },
+    {
+      "path": "docs/gen_pptx.py",
+      "size": 13281,
+      "sha256": "532462a6120c45b8c0f205e181867fd8f03306143c5718d0a696bec1b7c1e4ba"
+    },
+    {
+      "path": "docs/git-report.html",
+      "size": 27052,
+      "sha256": "771125a5b1b2e6c0d6c93b3f2b69a33c5054895bf02dd12153a370143d853fac"
+    },
+    {
+      "path": "docs/manifest.json",
+      "size": 38001,
+      "sha256": "04cbbfaed5aaabba8957dfd43f114d4a8239ebf3b1c31919dfd0caae2bc80981"
+    },
+    {
+      "path": "docs/system-doc.html",
+      "size": 25809,
+      "sha256": "4ea55d8af71893eb6d64dce4e25b6143516eb94a275d01210350dddba069c50f"
+    },
+    {
+      "path": "docs/system-guide.html",
+      "size": 29954,
+      "sha256": "94e6075878beeedb1858e58b82947de8cf45fc3d96b52bcccc15c8ef26b0cc95"
+    },
+    {
+      "path": "docs/\u0110e\u0302\u0300 xua\u0302\u0301t Chuye\u0302\u0309n \u0111o\u0302\u0309i so\u0302\u0301 Thu\u0309y lo\u031b\u0323i.docx",
+      "size": 16249,
+      "sha256": "8413c2da981b4a55e59ef27766a6dad5178cb996465c94f5cbd9794aa96ad2c8"
+    },
+    {
+      "path": "js/app.js",
+      "size": 1201091,
+      "sha256": "eb5a6927f932e60a4ec358160f7a467654bcdeb09d0503513a71577d402ddf18"
+    },
+    {
+      "path": "js/config.js",
+      "size": 70138,
+      "sha256": "d1091788d1694f095a772933ffa44aaba1a75f692c0bf14bab3c3da3b8abb259"
+    },
+    {
+      "path": "js/data.js",
+      "size": 204802,
+      "sha256": "3e2c72068a6b26fb3f805174c78b16cb3ea9db3adf6e02b05ca7d455f6bd61c4"
+    },
+    {
+      "path": "js/export.js",
+      "size": 80051,
+      "sha256": "702d4692e72f0b61ad859ae5eccbac5b6a3697054eaa94981054f2828eff15aa"
+    },
+    {
+      "path": "js/filterbar.js",
+      "size": 113568,
+      "sha256": "1516c3cf8539ceb9bbf76183371908073f76809f0cdf63a1629fad9654a8578d"
+    },
+    {
+      "path": "js/gis_pipe_data.js",
+      "size": 63833,
+      "sha256": "6f025fd6c3a0db754b5a6284bcde050c36188093161c53d137e2693da32ea267"
+    },
+    {
+      "path": "js/hub.js",
+      "size": 149574,
+      "sha256": "7c0913111cedf21d50141eda4f2083ba7b42c95bde35c57b62258def5e4579c1"
+    },
+    {
+      "path": "js/notification_helper.js",
+      "size": 111771,
+      "sha256": "1f8641f17c075e00085266af897052ac55dc05b1e9bbc1237cf217595c12c283"
+    },
+    {
+      "path": "js/onboarding-config.js",
+      "size": 38949,
+      "sha256": "3ebe5927247b6b421d0b9dec3f8f0f43cab7b5b76a02578f34246d639b8fc7d1"
+    },
+    {
+      "path": "js/onboarding.js",
+      "size": 133234,
+      "sha256": "cf4131f671bb9285109198a5d4f5b58a8d7555072ff80ea75111329a2da98bbb"
+    },
+    {
+      "path": "js/pages/ai_v51.js",
+      "size": 81550,
+      "sha256": "a076011f9817405656b5417edd389ace68622c53e05f649fbc9153f38de9b674"
+    },
+    {
+      "path": "js/pages/aiagent.js",
+      "size": 318752,
+      "sha256": "ccbc89945bb2b90b8c3b99397799b004a989142603f8b03b26da79988bc60757"
+    },
+    {
+      "path": "js/pages/alerts.js",
+      "size": 209704,
+      "sha256": "0846a1c73da5da0432b29c4010190b2a74b1e8d633c4a87199d473c81cf0312f"
+    },
+    {
+      "path": "js/pages/alerts_modals.js",
+      "size": 114075,
+      "sha256": "5db9980cdb39459a2c8719a31721fa04724531194184ab6b7062ea3fe15763d8"
+    },
+    {
+      "path": "js/pages/business.js",
+      "size": 213444,
+      "sha256": "51b5629fcb3d041ab74b8484f1e5d2691fd712d80f571605788da9ec3a4a8fd6"
+    },
+    {
+      "path": "js/pages/business_history.js",
+      "size": 117761,
+      "sha256": "130fd62d838baa6b1eec7590d3850267105d81317d5309696007ffef4e40c702"
+    },
+    {
+      "path": "js/pages/business_overview.js",
+      "size": 82415,
+      "sha256": "d761ff3ef8ec0a9a699deddcb1a6ae11b227b7f702f06e2396c0a996098e7cde"
+    },
+    {
+      "path": "js/pages/callcenter.js",
+      "size": 188518,
+      "sha256": "d8ca5dccb50aad57b2ee9826371e3d5271b1050cf23a9f5803fa4a08c467628d"
+    },
+    {
+      "path": "js/pages/camera.js",
+      "size": 331519,
+      "sha256": "393dc3c4d278414833fd984acac7a00e931ffcaae276ef21840335ff8d742835"
+    },
+    {
+      "path": "js/pages/chatbot.js",
+      "size": 634181,
+      "sha256": "d08aedb6ccb47870f0e39d4b411f78b2c4925f658983ff12b625e531e3d72ce5"
+    },
+    {
+      "path": "js/pages/commsDevices.js",
+      "size": 454346,
+      "sha256": "13c2dc5812ef1dd813881c60537f788845b0cf8a23feacf3608cadf466990974"
+    },
+    {
+      "path": "js/pages/communeReporting.js",
+      "size": 183944,
+      "sha256": "5706964b43f232705eed1c38ee567a99e18a9f9057f095a97db120cf7ae9a111"
+    },
+    {
+      "path": "js/pages/communityReports.js",
+      "size": 273391,
+      "sha256": "04d39fa1489ebad4e81be4d3fc8d248cb89c95e6ad24e30bcbd9ee631cfdd009"
+    },
+    {
+      "path": "js/pages/customerdetail.js",
+      "size": 375579,
+      "sha256": "ba5d641cf9c51f773f7e6af29315265744eff0312a0681d0909ab7411fd48bfb"
+    },
+    {
+      "path": "js/pages/dashboard.js",
+      "size": 169075,
+      "sha256": "5ce1791e0603513f7d4c4f45eb0f255c43b0336e598a7aff70a3b51c509fca2e"
+    },
+    {
+      "path": "js/pages/datahub.js",
+      "size": 398217,
+      "sha256": "bddb934471f96631b7a959f5983fd2c2c568f41ff2fef0746e949fec2e8dad08"
+    },
+    {
+      "path": "js/pages/dieuhanhPage.js",
+      "size": 465238,
+      "sha256": "984f332b078934cad74c91e09bf1e2f28b5399cd0630ed3a7cb91ed2f3a78156"
+    },
+    {
+      "path": "js/pages/dikeInspection.js",
+      "size": 376462,
+      "sha256": "6a904149755861aa56d10846f95c1dd98068bd6765b0a609fe4a6cc963a1ec9d"
+    },
+    {
+      "path": "js/pages/dikeManagement.js",
+      "size": 397572,
+      "sha256": "89449dfc49e1bb9823bc110ac3d7902cb74ec97cf1873b2b46b590cae9e811f8"
+    },
+    {
+      "path": "js/pages/dikeManagement_modals.js",
+      "size": 190554,
+      "sha256": "14ff781db4fd2c7a49b711dc27f2b3b8d742e38268f05b0e6af53202794ff964"
+    },
+    {
+      "path": "js/pages/dikePermit.js",
+      "size": 277127,
+      "sha256": "58cbf0bc9f8be2bb610b7a78db3dd5e0739f8578c54ef03db3adb8f40bb44682"
+    },
+    {
+      "path": "js/pages/documentManagement.js",
+      "size": 110556,
+      "sha256": "f04d931d01a4df884624ad824f1d6fc58672fcd9d98bd49d45d1f8e7f956af21"
+    },
+    {
+      "path": "js/pages/documentManagement_modals.js",
+      "size": 169810,
+      "sha256": "a22d6dccdf2978b8b97d7d9c5d399047fca8a9ce09d79ff3a66c4087058ee5f0"
+    },
+    {
+      "path": "js/pages/fourOnSite.js",
+      "size": 170708,
+      "sha256": "d489ef24b57a8ac931924f480f91757fbc4ac1a8fccbc9054d608a43481ff792"
+    },
+    {
+      "path": "js/pages/fourOnSite_modals.js",
+      "size": 139933,
+      "sha256": "25477cbd96885f1d81d8d7bfec12c3daba1aae2011127007087ea8fef132b411"
+    },
+    {
+      "path": "js/pages/gis.js",
+      "size": 426687,
+      "sha256": "41f17af7c2e478eb6ff9ab970b3c867c3dff748bbc888535c5059c38915a0c5e"
+    },
+    {
+      "path": "js/pages/hrm.js",
+      "size": 540662,
+      "sha256": "aba1d4fafc6e51c9fca5fa8c58efc065604a69bfe57b0164e36055b59abdfc14"
+    },
+    {
+      "path": "js/pages/hrm_additions.js",
+      "size": 148023,
+      "sha256": "c1ec9bbc988090f905d2f3038e9d169a5de9489e9ecfb52fdd188c71567a9024"
+    },
+    {
+      "path": "js/pages/hydrologicalData.js",
+      "size": 213603,
+      "sha256": "7c6990fb1438aae009c40dc02f2d31f35f55091976680616c2add0513bf77283"
+    },
+    {
+      "path": "js/pages/incidents.js",
+      "size": 210675,
+      "sha256": "cd4b0660e4ab20a099418d672c1d277edfa2e7b2cd67951816cdb4129edd1fad"
+    },
+    {
+      "path": "js/pages/incidents_v42.js",
+      "size": 105995,
+      "sha256": "12f9d9320a0e3bda8e8f585a670c5d8d0e237b3c2ab2676740c15e1220dc8de7"
+    },
+    {
+      "path": "js/pages/iotMonitor.js",
+      "size": 224039,
+      "sha256": "340404a9b784963ad8303e636b7a2cb02ccc2abd2827107f988f466e6f8751a9"
+    },
+    {
+      "path": "js/pages/irrigationAssets.js",
+      "size": 222490,
+      "sha256": "e4f93308e2ebdc8fe22c8f90e05d4984dea7b5fa54161164c20c2d53e61ffd0f"
+    },
+    {
+      "path": "js/pages/irrigationDataEntry.js",
+      "size": 254568,
+      "sha256": "0639c5740af7cd00e081acf5a6bd17efafef6a94140f6bd12a420a1e0576b36e"
+    },
+    {
+      "path": "js/pages/lims.js",
+      "size": 502176,
+      "sha256": "5bd43023111781b8a2ed594abc460dce55a661dfb7a7b4f67125d37ba7531050"
+    },
+    {
+      "path": "js/pages/log.js",
+      "size": 52130,
+      "sha256": "cb1c557d414456d378264ad3bca3b7d3911ad79d41fd1dbb84fa9b96e45d4e8f"
+    },
+    {
+      "path": "js/pages/nrw.js",
+      "size": 91760,
+      "sha256": "88af72a536b91cc95f6bc84f3370319685fb9708babd0d8751a8403cbd1cbf74"
+    },
+    {
+      "path": "js/pages/pcttCommand.js",
+      "size": 306598,
+      "sha256": "a7d8923f23191b212ac689fa2f614cd8d6769ea76ed711cdf774cc1819c7d411"
+    },
+    {
+      "path": "js/pages/pcttDamageReport.js",
+      "size": 270326,
+      "sha256": "cfecf7a3c8279fbac3d99189718d2477c0bafe71b6cc1b1bd538beb0d4eb61b0"
+    },
+    {
+      "path": "js/pages/pcttDocuments.js",
+      "size": 171792,
+      "sha256": "12491da5af83c597f9d4111d617f30bdf95648d41e12920212071c30e39cca37"
+    },
+    {
+      "path": "js/pages/pcttFund.js",
+      "size": 222941,
+      "sha256": "32acd29a1f5b49e403fb124f49fd86f445e35f28227f7d1692a35df42af45c25"
+    },
+    {
+      "path": "js/pages/pcttMedia.js",
+      "size": 496420,
+      "sha256": "99cb11e58b6884af99c3e46142433050bdbe1edfe505473a5363cce174815aa9"
+    },
+    {
+      "path": "js/pages/pcttOperations.js",
+      "size": 182094,
+      "sha256": "406da4a39e60698a97185bc3076ffa86f6fa1d8e998baa0c2b476025bf758d5c"
+    },
+    {
+      "path": "js/pages/plants.js",
+      "size": 226529,
+      "sha256": "c013052696ba7a2c0ec0439f90bc98575ef20adcc1fbd0479478fa461db958a8"
+    },
+    {
+      "path": "js/pages/production.js",
+      "size": 227066,
+      "sha256": "5558648836d90593fd4f290dbbc4aab645ed6ddfbdba317e3d7be2b692bfe3af"
+    },
+    {
+      "path": "js/pages/quality.js",
+      "size": 82347,
+      "sha256": "067d22c0db16e86785a9e3340b487cfd83dc784c656e32874aa00af9f1394642"
+    },
+    {
+      "path": "js/pages/reports.js",
+      "size": 316986,
+      "sha256": "15c8a110d6902a2d06dfd59b28e80725b8990d141d7d6b060502fce8d0ebd3c8"
+    },
+    {
+      "path": "js/pages/reservoirMonitor.js",
+      "size": 191987,
+      "sha256": "3824afddb6cbae773f2fa0786a5729ef1ac2235852a103e112ad2bc7a4bee131"
+    },
+    {
+      "path": "js/pages/scada.js",
+      "size": 213088,
+      "sha256": "4084ca05893441b3997d1284c6445bab2d6bbc0f266e425ad55c446f9ad47dee"
+    },
+    {
+      "path": "js/pages/scheduler.js",
+      "size": 180042,
+      "sha256": "3dcdb9fb66bcf27ada43d294bedfdfe9865ef4652efcbdc79741672e0ccde955"
+    },
+    {
+      "path": "js/pages/videowall.js",
+      "size": 138055,
+      "sha256": "50dd9675fb857ce11e2ce5f94e4478a3d8b45d6ec7acf5842a4d2f89695f64f0"
+    },
+    {
+      "path": "js/pages/weatherBulletin.js",
+      "size": 287094,
+      "sha256": "cc19ab363b810db9dbad967d26c1ad1a4362d115039de4b79e478d095fdf4122"
+    },
+    {
+      "path": "js/pages/weather_v44.js",
+      "size": 89841,
+      "sha256": "469d7d70c72456a0da255a199fb59f378764e9d1954ed9ed71a393b780ad586d"
+    },
+    {
+      "path": "js/pages/workflows-data.js",
+      "size": 158575,
+      "sha256": "ec1abcf2a34f4376bd94d38270f62bc5134907db6e4a6bef7e40d224412f9600"
+    },
+    {
+      "path": "js/pages/workflows-list.js",
+      "size": 103009,
+      "sha256": "9d3ae655bbf28413d4bcdf14cf8edf83138b2b13fcd17a5608947ebb3f7d8d3d"
+    },
+    {
+      "path": "js/pages/workflows-runner.js",
+      "size": 73557,
+      "sha256": "d4fa66492fb9a292cc4699a8ffa5324ef21e3dd9eab2cf33a396cd37dd083cfb"
+    },
+    {
+      "path": "js/pages/workflows.js",
+      "size": 208676,
+      "sha256": "c9d9e32879baed7961df637c4649f1cc62b4d2e0577bf21d08ee0cec84a170de"
+    },
+    {
+      "path": "js/rbac.js",
+      "size": 78110,
+      "sha256": "ef27320213749a3463fea4c08d6d657eeeedd66fde10f90b8904aa997532b18c"
+    },
+    {
+      "path": "js/utils/importHelper.js",
+      "size": 79319,
+      "sha256": "6638b071848175aac8074130ec477190cea113cdb6131b8cdb7e7e1fd737da4d"
+    },
+    {
+      "path": "login.html",
+      "size": 31233,
+      "sha256": "36e8d65ac47aa4e5e05b6a25bcb6ac69d5a15100c41809c137dd3d757791b4a6"
+    },
+    {
+      "path": "scada_objects.json",
+      "size": 422220,
+      "sha256": "fb59e08307d7739186d4636a9c1f4cbec658404d45ce888424f21708cd66c3b2"
+    },
+    {
+      "path": "spec.txt",
+      "size": 3002,
+      "sha256": "4fe79de9ef4c80e9f935898d78c809bab21f6da9b3dbba5777d6a81796e19bab"
+    },
+    {
+      "path": "tools/.env",
+      "size": 2409,
+      "sha256": "56aacb2b5f14c08f2a04ef1e6f87a4624fda77e7f50753f1d00e4c63e1f0db6f"
+    },
+    {
+      "path": "tools/.env.example",
+      "size": 2409,
+      "sha256": "56aacb2b5f14c08f2a04ef1e6f87a4624fda77e7f50753f1d00e4c63e1f0db6f"
+    },
+    {
+      "path": "tools/.gitignore",
+      "size": 18,
+      "sha256": "07164ec8eff489bc6d5c58088e033be66b6bfb3d7a9904bb3b0188de927fd69d"
+    },
+    {
+      "path": "tools/admin-server.js",
+      "size": 97962,
+      "sha256": "62c0dbf6d20d5f9b7e3e409d6c553e58b7b9a3e6310625dae164abe48b3fc687"
+    },
+    {
+      "path": "tools/config/hadiwa-config.json",
+      "size": 7686,
+      "sha256": "aad701a6cd7f60dbc564b4eb9fb35902c8f0e6a487c4a72e5044177931d97c5e"
+    },
+    {
+      "path": "tools/dashboard/admin-v2.js",
+      "size": 206799,
+      "sha256": "36e95ac201ce5cfbf7afb111622fb24e11275af697928f7dd7824fda4262f6fe"
+    },
+    {
+      "path": "tools/dashboard/admin.css",
+      "size": 19724,
+      "sha256": "c18aa3a48c06200174a517e93bff10823182bb82c90b4b734e1d9aeb73f4ba6b"
+    },
+    {
+      "path": "tools/dashboard/admin.html",
+      "size": 19141,
+      "sha256": "da00b87684ba588e95d4879bc0af9f628f4914912a5a549ffc39b9b86f472203"
+    },
+    {
+      "path": "tools/dashboard/admin.js",
+      "size": 124864,
+      "sha256": "1f02cccbae05c73c1f69fce35892d3a18200dd603d481ebd5f951b4fbf5cd309"
+    },
+    {
+      "path": "tools/dashboard/dashboard.css",
+      "size": 13702,
+      "sha256": "decc50946fcab3974aae429d511da3b390379da3a6c1defe884a091de8a414a0"
+    },
+    {
+      "path": "tools/dashboard/dashboard.js",
+      "size": 89901,
+      "sha256": "57f8972c30f03c5dcc9524fe5cfb01def029f792097030f9c6b808be4a6ec621"
+    },
+    {
+      "path": "tools/dashboard/index.html",
+      "size": 12262,
+      "sha256": "c0bb6f96ed10a0b19c857a8f1ce5035a7dc25c1ac8a5d3bd9591690224910698"
+    },
+    {
+      "path": "tools/dashboard/server.js",
+      "size": 27896,
+      "sha256": "39020feb6368c587d0aa8374e26d813577a4c988803d274e6fc9f62ad6c57a5c"
+    },
+    {
+      "path": "tools/dashboard/status.css",
+      "size": 9103,
+      "sha256": "1885342b98271f126787dab085101b0d57f920f2ebe2b3b4859c5ac4fe9d947f"
+    },
+    {
+      "path": "tools/dashboard/status.js",
+      "size": 108555,
+      "sha256": "4cc89a5730da06ef7fe8040c3e9d22afdb23c05ec34a1cea97a3dc4c2d74d9fb"
+    },
+    {
+      "path": "tools/data/device-catalog.js",
+      "size": 92360,
+      "sha256": "905e7d80ba64c969ddd10ec3cc8520ff1d109a87315091e20ab45f8e55915c7a"
+    },
+    {
+      "path": "tools/data/flood-sensors.json",
+      "size": 9217,
+      "sha256": "112fea185b01df98ddf0d3e83ebf8d5cd90e47218850f305188c95fd1db8cfc4"
+    },
+    {
+      "path": "tools/data/landslide-sensors.json",
+      "size": 5267,
+      "sha256": "2195d5beb5aec064be144a6acd0b56727b680069312f44da628b289f9232155f"
+    },
+    {
+      "path": "tools/data/pump-stations.json",
+      "size": 6887,
+      "sha256": "617599ddf34ede156616e38aeaddd640cbae417c27f868eb7f3b1966f9c556d2"
+    },
+    {
+      "path": "tools/data/scenarios.json",
+      "size": 3590,
+      "sha256": "9f22b2d966cc0dfe218060524b9a82b4f993284954d1472e849ef884a57f4ef6"
+    },
+    {
+      "path": "tools/data/sluice-gates.json",
+      "size": 7763,
+      "sha256": "18c0a2ef364e851b4a16e856ce1915ca238b7083de6aca4d928082e76138b1a8"
+    },
+    {
+      "path": "tools/data/weather-stations.json",
+      "size": 2064,
+      "sha256": "5e60c4f8c3ee3545591423b739422396647ac250684ec1657ebb48aaa0e48015"
+    },
+    {
+      "path": "tools/engines/hydro-engine.js",
+      "size": 47165,
+      "sha256": "299b8018bebd044618e68cee9c3094b2c074f26130db2a21f99f5e7a76e8a08d"
+    },
+    {
+      "path": "tools/engines/pump-engine.js",
+      "size": 53941,
+      "sha256": "9c9fd1c15e637ba18c678edb47311ff3356144c6df5db2bcbedfee5f3e5c418e"
+    },
+    {
+      "path": "tools/engines/reservoir-engine.js",
+      "size": 42339,
+      "sha256": "d255adaaa995e1e437468b46449c4164a685f88f5143444828daec539863b6de"
+    },
+    {
+      "path": "tools/engines/sluice-engine.js",
+      "size": 45853,
+      "sha256": "56316cbda3374b8838a479c452ceb1a93c61ad04df906985278bab22d3b29eca"
+    },
+    {
+      "path": "tools/index.js",
+      "size": 46728,
+      "sha256": "14fa1e3fb08043716e77483f302e96ae29b7c36170764beeacb2df4b509bc0d2"
+    },
+    {
+      "path": "tools/package-lock.json",
+      "size": 63818,
+      "sha256": "0cb2ed5b424d4766175c4aaf20df0df536ce5cf11e5ce49259c18a4f1f851dfd"
+    },
+    {
+      "path": "tools/package.json",
+      "size": 911,
+      "sha256": "20533debc38a3a3c24c33c483d17190eeda2dcea75211da0b088b458600a7eed"
+    },
+    {
+      "path": "tools/simulators/flood-mqtt-publisher.js",
+      "size": 57832,
+      "sha256": "c7be2464f0ee3666aa6c12a353c7d5546aba4aa0096fad4b74d4ca363f0ee537"
+    },
+    {
+      "path": "tools/simulators/hydro-http-simulator.js",
+      "size": 58821,
+      "sha256": "1a19e3d6314c4f20c4e9af2904d1d818ac0851d54fbc0465a30f24bb1a19afa3"
+    },
+    {
+      "path": "tools/simulators/iot-flood-sensor-simulator.js",
+      "size": 69439,
+      "sha256": "659218d11f94356032e429dddf146d1d0b23a717c8b1537824ea4574e3001776"
+    },
+    {
+      "path": "tools/simulators/landslide-sensor-simulator.js",
+      "size": 60188,
+      "sha256": "888351f1ed449e428498ec3754fc39227032795f68e5d2fb69aebb4aa150dfde"
+    },
+    {
+      "path": "tools/simulators/pump-station-simulator.js",
+      "size": 53700,
+      "sha256": "2f1113159c7311cc9d342491087fca04bc95c2925c42eee8579d54e26d318cee"
+    },
+    {
+      "path": "tools/simulators/rainfall-datalogger.js",
+      "size": 62654,
+      "sha256": "6a2cde04dc3f8f2e9b5cfa7422a8ebb1676096671d5b842db4745d7d27e4890f"
+    },
+    {
+      "path": "tools/simulators/reservoir-scada.js",
+      "size": 62563,
+      "sha256": "7fc0f7d9f59b998a236bfd57da297674d57ce64a686d86a9368d2875469e4378"
+    },
+    {
+      "path": "tools/simulators/sluice-gate-simulator.js",
+      "size": 48867,
+      "sha256": "3826ab2d4c73e01512938eacbc18647e46f9091a9f73479965256e1049236311"
+    },
+    {
+      "path": "tools/simulators/weather-simulator.js",
+      "size": 93599,
+      "sha256": "761db98d037f3b454f725a6453e653920504b0ba54696b1eb4e60942f437c4bd"
+    }
+  ]
+}

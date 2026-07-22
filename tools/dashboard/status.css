@@ -1,0 +1,139 @@
+/* Hadiwa IOC — Status Dashboard CSS */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap');
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0d1117;--bg2:#161b22;--bg3:#1c2433;
+  --border:rgba(255,255,255,.08);
+  --blue:#3b82f6;--teal:#14b8a6;--cyan:#22d3ee;
+  --amber:#f59e0b;--red:#ef4444;--violet:#8b5cf6;
+  --green:#22c55e;--orange:#f97316;
+  --text:#e2e8f0;--text2:#8899aa;--text3:#475569;
+  --radius:10px;--radius-sm:6px;
+  --font:'Inter',sans-serif;--mono:'Roboto Mono',monospace;
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;line-height:1.55;}
+a{color:var(--cyan);text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+/* ── Header ──────────────────────────────────────────────────── */
+.header{background:var(--bg2);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;}
+.header-inner{max-width:1400px;margin:0 auto;padding:0 20px;height:56px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.brand{display:flex;align-items:center;gap:12px;}
+.brand-logo{flex-shrink:0;}
+.brand-title{font-size:15px;font-weight:700;color:var(--text);letter-spacing:-.01em;}
+.brand-sub{font-size:11px;color:var(--text2);margin-top:1px;}
+.header-actions{display:flex;align-items:center;gap:10px;}
+.btn-admin{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;background:rgba(139,92,246,.12);border:1px solid rgba(139,92,246,.3);border-radius:var(--radius-sm);color:#a78bfa;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;}
+.btn-admin:hover{background:rgba(139,92,246,.2);text-decoration:none;}
+.conn-pill{display:flex;align-items:center;gap:7px;padding:5px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:999px;font-size:12px;color:var(--text2);}
+.conn-dot{width:7px;height:7px;border-radius:50%;background:var(--text3);flex-shrink:0;}
+.conn-dot.ok{background:var(--green);box-shadow:0 0 6px rgba(34,197,94,.5);animation:pulse 2s infinite;}
+.conn-dot.err{background:var(--red);}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.time-pill{font-family:var(--mono);font-size:12px;color:var(--text2);}
+
+/* ── Container ───────────────────────────────────────────────── */
+.container{max-width:1400px;margin:0 auto;padding:0 20px;}
+.main-area{padding:20px;max-width:1400px;margin:0 auto;}
+
+/* ── Services Bar ────────────────────────────────────────────── */
+.services-bar{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 0;}
+.services-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:0 20px;max-width:1400px;margin:0 auto;}
+.svc-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:999px;font-size:12px;transition:border-color .15s;}
+.svc-chip.ok{border-color:rgba(34,197,94,.25);}
+.svc-chip.warn{border-color:rgba(245,158,11,.3);}
+.svc-chip.err{border-color:rgba(239,68,68,.3);}
+.svc-icon{display:inline-flex;color:var(--text2);}
+.svc-name{color:var(--text2);font-weight:500;}
+.svc-port{font-family:var(--mono);font-size:10px;color:var(--text3);}
+.svc-badge{font-size:10px;padding:1px 6px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--text2);font-weight:600;margin-left:2px;}
+.svc-chip.ok .svc-badge{background:rgba(34,197,94,.12);color:#4ade80;}
+.svc-chip.err .svc-badge{background:rgba(239,68,68,.12);color:#f87171;}
+.svc-scenario-badge{background:rgba(139,92,246,.15);color:#a78bfa;border:1px solid rgba(139,92,246,.3);}
+
+/* ── KPI Row ───────────────────────────────────────────────── */
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;margin-bottom:24px;}
+.kpi-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;display:flex;align-items:center;gap:12px;transition:border-color .18s;}
+.kpi-card:hover{border-color:var(--cyan);}
+.kpi-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.kpi-blue{background:rgba(59,130,246,.12);color:#60a5fa;}
+.kpi-teal{background:rgba(20,184,166,.12);color:#2dd4bf;}
+.kpi-cyan{background:rgba(34,211,238,.12);color:#22d3ee;}
+.kpi-amber{background:rgba(245,158,11,.12);color:#fbbf24;}
+.kpi-red{background:rgba(239,68,68,.12);color:#f87171;}
+.kpi-violet{background:rgba(139,92,246,.12);color:#a78bfa;}
+.kpi-label{font-size:11px;color:var(--text2);margin-bottom:2px;}
+.kpi-val{font-size:22px;font-weight:700;color:var(--text);font-family:var(--mono);line-height:1;}
+.kpi-unit{font-size:11px;color:var(--text2);}
+.kpi-scenario-val{font-size:15px;font-weight:700;color:#a78bfa;text-transform:uppercase;letter-spacing:.04em;}
+
+/* ── Section ─────────────────────────────────────────────────── */
+.section{margin-bottom:28px;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.section-title{font-size:14px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;}
+.section-meta{display:flex;align-items:center;gap:10px;}
+.refresh-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--text2);background:var(--bg3);border:1px solid var(--border);border-radius:999px;padding:3px 10px;}
+.alert-count{font-size:11px;padding:3px 10px;border-radius:999px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.25);color:#f87171;font-weight:600;}
+
+/* ── Live Grid ───────────────────────────────────────────────── */
+.live-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;}
+.live-grid-sm{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));}
+
+/* ── Device Cards (live status) ──────────────────────────────── */
+.device-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;transition:border-color .18s,box-shadow .18s;cursor:default;}
+.device-card:hover{border-color:rgba(34,211,238,.3);box-shadow:0 4px 16px rgba(0,0,0,.3);}
+.device-card.alert{border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.04);}
+.device-card.warn{border-color:rgba(245,158,11,.3);background:rgba(245,158,11,.03);}
+
+.dc-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
+.dc-id{font-family:var(--mono);font-size:11px;color:var(--cyan);font-weight:500;}
+.dc-name{font-size:12px;font-weight:600;color:var(--text);margin-top:2px;}
+.dc-area{font-size:11px;color:var(--text2);}
+.dc-status-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;padding:3px 8px;border-radius:999px;font-weight:600;white-space:nowrap;}
+.status-running,.status-open,.status-stable{background:rgba(34,197,94,.1);color:#4ade80;border:1px solid rgba(34,197,94,.25);}
+.status-idle,.status-standby,.status-closed{background:rgba(100,116,139,.1);color:#94a3b8;border:1px solid rgba(100,116,139,.2);}
+.status-fault,.status-critical,.status-alarm{background:rgba(239,68,68,.12);color:#f87171;border:1px solid rgba(239,68,68,.3);}
+.status-warning,.status-watch,.status-partial{background:rgba(245,158,11,.1);color:#fbbf24;border:1px solid rgba(245,158,11,.25);}
+.status-offline{background:rgba(75,85,99,.1);color:#6b7280;border:1px solid rgba(75,85,99,.2);}
+
+.dc-metrics{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;}
+.dc-metric{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:6px 8px;}
+.dc-metric-label{font-size:10px;color:var(--text2);margin-bottom:2px;}
+.dc-metric-val{font-size:14px;font-weight:700;color:var(--text);font-family:var(--mono);}
+.dc-metric-val.green{color:var(--green);}
+.dc-metric-val.amber{color:var(--amber);}
+.dc-metric-val.red{color:var(--red);}
+
+/* Progress bar for level */
+.dc-progress{margin-top:8px;}
+.dc-progress-label{display:flex;justify-content:space-between;font-size:11px;color:var(--text2);margin-bottom:4px;}
+.dc-progress-bar{height:6px;background:rgba(255,255,255,.06);border-radius:999px;overflow:hidden;}
+.dc-progress-fill{height:100%;border-radius:999px;transition:width .5s;}
+.fill-green{background:linear-gradient(90deg,var(--teal),var(--green));}
+.fill-amber{background:linear-gradient(90deg,var(--amber),#fde68a);}
+.fill-red{background:linear-gradient(90deg,var(--red),#fca5a5);}
+
+/* ── 2-col sections ──────────────────────────────────────────── */
+.two-col-sections{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+@media(max-width:900px){.two-col-sections{grid-template-columns:1fr;}}
+
+/* Bulletin box */
+.bulletin-box{background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.2);border-radius:var(--radius);padding:12px 16px;margin-top:12px;font-size:12px;color:#fca5a5;line-height:1.65;}
+.bulletin-title{font-weight:700;color:var(--red);margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+
+/* ── Loading ─────────────────────────────────────────────────── */
+.loading-card{grid-column:1/-1;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px;padding:40px;color:var(--text2);font-size:13px;}
+.spinner{width:24px;height:24px;border:3px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ── Footer ──────────────────────────────────────────────────── */
+.footer{margin-top:40px;border-top:1px solid var(--border);padding:14px 0;text-align:center;font-size:12px;color:var(--text2);}
+
+/* ── Toast ───────────────────────────────────────────────────── */
+.toast-wrap{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:200;}
+.toast{padding:11px 18px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-sm);font-size:13px;box-shadow:0 4px 16px rgba(0,0,0,.5);animation:toastIn .2s ease;max-width:320px;}
+@keyframes toastIn{from{transform:translateX(16px);opacity:0}to{transform:none;opacity:1}}
+.toast.ok{border-color:rgba(34,197,94,.4);color:#4ade80;}
+.toast.warn{border-color:rgba(245,158,11,.4);color:#fbbf24;}
+.toast.err{border-color:rgba(239,68,68,.4);color:#f87171;}
