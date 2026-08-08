@@ -62,7 +62,7 @@ function renderDashboard() {
   <!-- Live Ticker -->
   ${isVisible('ticker') ? `
   <div id="dashTicker" style="background:var(--ticker-background);border-bottom:1px solid var(--ticker-border);padding:0;overflow:hidden;display:flex;align-items:center;height:36px;margin:0 -24px 20px -24px">
-    <div style="background:var(--primary);color:var(--bg-surface);font-size:11px;font-weight:700;padding:0 14px;white-space:nowrap;flex-shrink:0;z-index:2;align-self:stretch;display:flex;align-items:center;letter-spacing:.5px">LIVE</div>
+    <div class="dashboard-live-label" style="font-size:11px;padding:0 14px;white-space:nowrap;flex-shrink:0;z-index:2;align-self:stretch;display:flex;align-items:center;letter-spacing:.5px">LIVE</div>
     <div id="tickerTrack" style="display:flex;gap:32px;padding-left:24px;animation:tickerScroll 40s linear infinite;white-space:nowrap;align-items:center;line-height:1">
       ${[
         `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg> Hồ Tuy Lai: Mực nước <b>19.2m</b> — tiệm cận BĐ2 (19.5m), đang mở tràn xả lũ`,
@@ -79,18 +79,15 @@ function renderDashboard() {
 
 
   <div class="page-header" style="margin-bottom:16px">
-    <div class="page-title"><h1>Dashboard Tổng Quan PCTT</h1><p>Cập nhật: ${new Date().toLocaleString('vi-VN')}</p></div>
+    <div class="page-title"><h1>Tổng quan PCTT</h1><p>Dữ liệu cập nhật lúc ${new Date().toLocaleString('vi-VN')}</p></div>
     <div class="page-actions" style="gap:10px;flex-wrap:wrap">
       <!-- Time range filter -->
-      <div style="display:flex;gap:4px;background:var(--segmented-bg);border:1px solid var(--border);border-radius:8px;padding:3px">
+      <div class="dashboard-range">
         ${[['today', 'Hôm nay'], ['week', '7 ngày'], ['month', 'Tháng']].map(([k, l]) => `
-        <button onclick="dashSetRange('${k}')" id="dashRange_${k}"
-          style="font-size:12px;padding:4px 12px;border-radius:6px;border:none;cursor:pointer;transition:all .2s;
-          background:${dashTimeRange === k ? 'var(--segmented-active-bg)' : 'transparent'};
-          color:${dashTimeRange === k ? 'var(--primary-text)' : 'var(--muted)'};font-weight:${dashTimeRange === k ? 600 : 400}">${l}</button>`).join('')}
+        <button class="dashboard-range-btn ${dashTimeRange === k ? 'active' : ''}" onclick="dashSetRange('${k}')" id="dashRange_${k}">${l}</button>`).join('')}
       </div>
       <!-- Auto-refresh countdown -->
-      <div style="display:flex;align-items:center;gap:8px;padding:5px 12px;background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.15);border-radius:8px">
+      <div class="dashboard-refresh-state">
         <div class="pulse-dot green" style="flex-shrink:0"></div>
         <span style="font-size:12px;color:var(--muted)">Làm mới sau</span>
         <span id="dashCountdown" style="font-size:13px;font-weight:700;font-family:'Roboto Mono',monospace;color:var(--primary)">${dashRefreshCount}s</span>
@@ -117,14 +114,14 @@ function renderDashboard() {
     </div>
 
     <!-- Card 2: Trạm IoT Online -->
-    <div class="kpi-card has-sparkline" style="--accent-color:var(--success)">
+    <div class="kpi-card kpi-card-positive has-sparkline" style="--accent-color:var(--evg-accent)">
       <div class="kpi-card-content">
-        <div class="kpi-label">Trạm IoT Online / Tổng</div>
+        <div class="kpi-label">Trạm IoT đang hoạt động</div>
         <div class="kpi-value" id="kpiStations">${onlineStations}/${DATA.stations.length}</div>
         <div class="kpi-sub kpi-status"><span class="kpi-status-dot"></span><strong>${Math.round(onlineStations / DATA.stations.length * 100)}%</strong><span>trạm đang hoạt động</span></div>
       </div>
       <canvas id="spk2" class="kpi-sparkline" width="92" height="34"></canvas>
-      <div class="kpi-icon icon-primary">
+      <div class="kpi-icon icon-positive">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 6-6 4 4 8-9"/><path d="M15 6h6v6"/></svg>
       </div>
     </div>
@@ -342,7 +339,8 @@ function drawDashCharts() {
   const d = DASH_CHART_DATA[dashTimeRange] || DASH_CHART_DATA.today;
   const palette = getChartPalette();
   const gridColor = hexToRgba(palette.cyan, .05);
-  const alertColors = [palette.danger, palette.info, palette.warning, palette.primary, palette.cyan, '#f28c28'];
+  const evgAccent = getThemeColor('--evg-accent', '#2FBF71');
+  const alertColors = [palette.danger, palette.info, palette.warning, evgAccent, palette.cyan, '#f28c28'];
 
   function renderLegend(containerId, items) {
     const container = document.getElementById(containerId);
