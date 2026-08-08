@@ -11,14 +11,14 @@
 
 ## 1. Brand Seed
 
-Treat these values as canonical for the approved Hadiwa `evg-emerald` preset. It adapts EVG green into a restrained teal navigation shell while preserving blue for information and semantic colors for operational state.
+Treat these values as canonical for the approved Hadiwa `evg-emerald` preset. The exact EVG primary `#30BD6F` is the visible navigation selection and primary-action anchor. Darker sidebar values are derived from that same green family only to provide enough contrast for navigation text.
 
 ```text
-Sidebar top          #0F5B55
-Sidebar bottom       #123D42
-Sidebar section      #8BE7B5
-Sidebar active       rgba(48,189,111,.12) → rgba(48,189,111,.30)
-Sidebar active edge  #58CB89
+Sidebar top          #137A43
+Sidebar bottom       #0B5034
+Sidebar section      #8FDEB1
+Sidebar active       #30BD6F → #27A962
+Sidebar active edge  #8FDEB1
 Light primary        #30BD6F
 Light hover          #1BA05C
 Light active         #168B50
@@ -30,14 +30,14 @@ Dark primary         #45D483 (Hadiwa extension; EVG has no dark mode)
 Use exactly:
 
 ```css
---sidebar-background: linear-gradient(180deg, #0F5B55 0%, #123D42 100%);
---sidebar-item-active: linear-gradient(180deg, rgba(48,189,111,.12) 0%, rgba(48,189,111,.30) 100%);
---sidebar-section-accent: #8BE7B5;
---sidebar-active-border: #58CB89;
---sidebar-active-shadow: 0 0 22px rgba(48,189,111,.28) inset;
+--sidebar-background: linear-gradient(180deg, #137A43 0%, #0B5034 100%);
+--sidebar-item-active: linear-gradient(180deg, #30BD6F 0%, #27A962 100%);
+--sidebar-section-accent: #8FDEB1;
+--sidebar-active-border: #8FDEB1;
+--sidebar-active-shadow: 0 0 20px rgba(48,189,111,.26) inset;
 ```
 
-Do not extend the teal navigation palette into workspace cards, charts, tables, or semantic statuses. It is a shell identity, not a coat of paint.
+Do not extend the navigation green into workspace cards, charts, tables, or semantic statuses. It is a shell identity and selection signal, not a coat of paint.
 
 ### Exact EVG navy backup
 
@@ -120,26 +120,26 @@ body.dark {
   --primary-text: #83E8AD;
   --text-on-primary: #FFFFFF;
 
-  --bg-app: #0B1D33;
-  --bg-surface: #142D52;
-  --bg-card: #193A6D;
-  --bg-elevated: #20457E;
-  --bg-secondary: #18355F;
-  --bg-tertiary: #1D4076;
-  --bg-hover: rgba(75, 145, 241, .13);
-  --bg-selected: rgba(75, 145, 241, .22);
-  --bg-header: #142D52;
+  --bg-app: #0C4635;
+  --bg-surface: #13553F;
+  --bg-card: #176348;
+  --bg-elevated: #1E7756;
+  --bg-secondary: #17644A;
+  --bg-tertiary: #1A6E50;
+  --bg-hover: rgba(48, 189, 111, .10);
+  --bg-selected: rgba(48, 189, 111, .18);
+  --bg-header: #13553F;
 
   --text-primary: #F8FBFF;
-  --text-secondary: #D1E2F4;
-  --text-muted: #A4B8CD;
+  --text-secondary: #D9EDE5;
+  --text-muted: #A9CBBE;
   --text-subtle: #B7C9DA;
-  --text-disabled: #71849A;
+  --text-disabled: #769E90;
 
-  --border: rgba(91, 169, 255, .24);
-  --border-light: rgba(113, 166, 255, .14);
-  --border-active: #4B91F1;
-  --border-focus: #5BA9FF;
+  --border: rgba(176, 235, 205, .30);
+  --border-light: rgba(176, 235, 205, .18);
+  --border-active: #30BD6F;
+  --border-focus: #45D483;
 
   --info: #3699FF;
   --info-soft: rgba(54, 153, 255, .16);
@@ -159,15 +159,15 @@ body.dark {
 Approved dark shell:
 
 ```css
---sidebar-background: linear-gradient(180deg, #0F5B55 0%, #123D42 100%);
---workspace-background: linear-gradient(180deg, #0B1D33 0%, #142D52 100%);
---header-background: linear-gradient(90deg, #192B54 0%, #142D52 100%);
---ticker-background: linear-gradient(90deg, #142D52 0%, #192B54 50%, #142D52 100%);
+--sidebar-background: linear-gradient(180deg, #137A43 0%, #0B5034 100%);
+--workspace-background: linear-gradient(180deg, #0C4635 0%, #13553F 100%);
+--header-background: linear-gradient(90deg, #0F5B42 0%, #13553F 100%);
+--ticker-background: linear-gradient(90deg, #13553F 0%, #0F5B42 50%, #13553F 100%);
 --shadow-card: 0 10px 28px rgba(2, 10, 24, .28);
---focus-ring: 0 0 0 3px rgba(91, 169, 255, .22);
+--focus-ring: 0 0 0 3px rgba(69, 212, 131, .22);
 ```
 
-Do not introduce `#030...` black panels or gray overlays as normal surfaces. Use the navy hierarchy above.
+Do not introduce black, near-black (`#07...`) panels or gray overlays as normal surfaces. The darkest normal application surface is `#0C4635`; use the brighter green hierarchy above while retaining blue for information and red/amber for operational status.
 
 ## 4. Sidebar And Shell
 
@@ -175,10 +175,10 @@ Do not introduce `#030...` black panels or gray overlays as normal surfaces. Use
 Sidebar parent background  sidebar gradient
 Sidebar default text       #EAF2FF
 Sidebar active text        #FFFFFF
-Sidebar section heading    #8BE7B5
-Sidebar border             rgba(139,231,181,.22)
-Sidebar item hover         rgba(48,189,111,.12) → rgba(48,189,111,.30)
-Sidebar item active        active gradient
+Sidebar section heading    #8FDEB1
+Sidebar border             rgba(48,189,111,.34)
+Sidebar item hover         #30BD6F → #27A962
+Sidebar item active        #30BD6F → #27A962
 Header light               #FFFFFF
 Header dark                approved header gradient
 Ticker light               #EEF1FA

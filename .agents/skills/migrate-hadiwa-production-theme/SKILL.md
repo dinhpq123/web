@@ -1,6 +1,6 @@
 ---
 name: migrate-hadiwa-production-theme
-description: Migrate a real Hadiwa IOC web application to the approved EVG-derived visual system, using an EVG-compatible teal/green navigation shell, EVG green for brand actions, blue for information, and semantic status colors only where they carry meaning. Preserve the exact extracted EVG navy shell as an optional backup preset. Use when Codex must audit, implement, repair, or validate Hadiwa light/dark themes and every routed or role-gated screen without changing production business logic, auth, RBAC, APIs, routes, or workflows.
+description: Migrate a real Hadiwa IOC web application to the approved EVG-derived visual system, using the exact EVG primary green as the navigation accent, blue for information, and semantic status colors only where they carry meaning. Preserve the exact extracted EVG navy shell as an optional backup preset. Use when Codex must audit, implement, repair, or validate Hadiwa light/dark themes and every routed or role-gated screen without changing production business logic, auth, RBAC, APIs, routes, or workflows.
 ---
 
 # Migrate Hadiwa Production Theme
@@ -50,13 +50,14 @@ If a production behavior bug blocks visual validation, report it separately. Do 
 Use the approved Hadiwa adaptation by default:
 
 - Default preset ID: `evg-emerald`.
-- Sidebar parent: `linear-gradient(180deg, #0F5B55 0%, #123D42 100%)`.
-- Sidebar section labels: `#8BE7B5`.
-- Sidebar active/hover item: `linear-gradient(180deg, rgba(48,189,111,0.12) 0%, rgba(48,189,111,0.30) 100%)`, border `#58CB89`, inset shadow `0 0 22px rgba(48,189,111,0.28)`.
+- Exact EVG primary seed: `#30BD6F`. This is the canonical selected-control and primary-action color.
+- Sidebar parent: `linear-gradient(180deg, #137A43 0%, #0B5034 100%)`, derived from the same primary-green family to maintain readable white navigation text.
+- Sidebar section labels: `#8FDEB1`.
+- Sidebar active item: `linear-gradient(180deg, #30BD6F 0%, #27A962 100%)`, border `#8FDEB1`, inset shadow `0 0 20px rgba(48,189,111,0.26)`.
 - Light brand/action primary: `#30BD6F`; hover `#1BA05C`; form focus border `#20B970`.
 - Information/neutral processing: `#2984EE`; never substitute it for success or primary action without an explicit component contract.
 - Hadiwa dark extension primary: `#45D483`; this is target-designed because EVG source has no dark mode.
-- Dark workspace and header keep navy/blue surfaces; do not extend the teal sidebar across the content canvas.
+- Dark workspace, header, cards, overlays and controls use the visible EVG-green surface hierarchy `#0C4635 -> #1E7756`. Do not use black or near-black green as a normal application surface. Keep enough luminance separation between tiers; never flatten the canvas into one green value.
 - Green is not a generic highlight. Use it for primary actions, selected controls defined by the contract, and true success/online states. Do not color every KPI, chart series, border, icon, or row green.
 - Red, amber, and orange are status/domain colors, not decoration.
 - Purple is allowed only for documented AI/category/role identity.

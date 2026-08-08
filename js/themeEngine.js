@@ -6,12 +6,12 @@
 const BRAND_SEEDS = {
   'evg-emerald': {
     id: 'evg-emerald',
-    name: 'EVG Hadiwa / Teal Green',
-    sidebarNavy: '#123D42',
-    sidebarTop: '#0F5B55',
-    sidebarBottom: '#123D42',
-    sidebarCyan: '#8BE7B5',
-    sidebarBorder: 'rgba(139, 231, 181, 0.22)',
+    name: 'EVG Hadiwa / Primary Green',
+    sidebarNavy: '#0B5034',
+    sidebarTop: '#137A43',
+    sidebarBottom: '#0B5034',
+    sidebarCyan: '#8FDEB1',
+    sidebarBorder: 'rgba(48, 189, 111, 0.34)',
     successLight: '#30BD6F',
     successDark: '#45D483',
     successTextLight: '#137A43',
@@ -20,20 +20,36 @@ const BRAND_SEEDS = {
     activeBlueHover: '#1877E7',
     primaryDark: '#45D483',
     primaryDarkHover: '#62DE97',
-    navActiveStart: 'rgba(48,189,111,0.12)',
-    navActiveEnd: 'rgba(48,189,111,0.30)',
-    navActiveBorder: '#58CB89',
-    navActiveShadow: '0 0 22px rgba(48,189,111,0.28) inset',
-    headerDark: '#192B54',
-    workspaceDark: 'linear-gradient(180deg, #0B1D33 0%, #142D52 100%)',
+    navActiveStart: '#30BD6F',
+    navActiveEnd: '#27A962',
+    navActiveBorder: '#8FDEB1',
+    navActiveShadow: '0 0 20px rgba(48,189,111,0.26) inset',
+    headerDark: '#0F5B42',
+    workspaceDark: 'linear-gradient(180deg, #0C4635 0%, #13553F 100%)',
     brandGreen: '#30BD6F',
     brandGreenHover: '#1BA05C',
     brandGreenActive: '#168B50',
     appBgLight: '#F3F6F9',
-    appBgDark: '#0B1D33',
-    surfaceDark: '#142D52',
-    cardDark: '#193A6D',
-    elevatedDark: '#20457E'
+    appBgDark: '#0C4635',
+    backgroundSecondaryDark: '#11513C',
+    backgroundTertiaryDark: '#155E45',
+    surfaceDark: '#13553F',
+    surfaceSecondaryDark: '#17644A',
+    surfaceMutedDark: '#104B39',
+    cardDark: '#176348',
+    cardAltDark: '#1A6E50',
+    cardSelectedDark: '#207A59',
+    elevatedDark: '#1E7756',
+    inputDark: '#145D45',
+    tableHeaderDark: '#145D45',
+    tableHoverDark: '#1C7052',
+    tableSelectedDark: '#23805D',
+    borderDark: 'rgba(176, 235, 205, 0.30)',
+    chartGridDark: 'rgba(176, 235, 205, 0.14)',
+    tooltipDark: '#0B3D2F',
+    textSecondaryDark: '#D9EDE5',
+    textMutedDark: '#A9CBBE',
+    textDisabledDark: '#769E90'
   },
   'evg-classic-navy': {
     id: 'evg-classic-navy',
@@ -162,8 +178,8 @@ function getContrastRatio(hex1, hex2) {
 
 function getReadableTextColor(bgHex) {
   const whiteRatio = getContrastRatio('#FFFFFF', bgHex);
-  const darkRatio = getContrastRatio('#18183E', bgHex);
-  return whiteRatio >= darkRatio ? '#FFFFFF' : '#18183E';
+  const darkRatio = getContrastRatio('#06101F', bgHex);
+  return whiteRatio >= darkRatio ? '#FFFFFF' : '#06101F';
 }
 
 function ensureContrast(textColor, bgHex, minRatio = 4.5) {
@@ -179,9 +195,194 @@ function themeHexToRgba(hex, alpha) {
   return `rgba(${(value >> 16) & 255}, ${(value >> 8) & 255}, ${value & 255}, ${alpha})`;
 }
 
+function normalizeThemeHex(value, fallback = '#30BD6F') {
+  const raw = String(value || '').trim();
+  const short = /^#([0-9a-f]{3})$/i.exec(raw);
+  const full = /^#([0-9a-f]{6})$/i.exec(raw);
+  if (full) return `#${full[1].toUpperCase()}`;
+  if (short) return `#${short[1].split('').map(char => char + char).join('').toUpperCase()}`;
+  return fallback;
+}
+
+function themeHexToHsl(value) {
+  const hex = normalizeThemeHex(value).slice(1);
+  const r = parseInt(hex.slice(0, 2), 16) / 255;
+  const g = parseInt(hex.slice(2, 4), 16) / 255;
+  const b = parseInt(hex.slice(4, 6), 16) / 255;
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  const delta = max - min;
+  let h = 0;
+
+  if (delta) {
+    if (max === r) h = ((g - b) / delta) % 6;
+    else if (max === g) h = (b - r) / delta + 2;
+    else h = (r - g) / delta + 4;
+    h *= 60;
+    if (h < 0) h += 360;
+  }
+
+  const l = (max + min) / 2;
+  const s = delta ? delta / (1 - Math.abs(2 * l - 1)) : 0;
+  return { h, s: s * 100, l: l * 100 };
+}
+
+function themeHslToHex(h, s, l) {
+  const hue = ((Number(h) % 360) + 360) % 360;
+  const saturation = Math.max(0, Math.min(100, Number(s))) / 100;
+  const lightness = Math.max(0, Math.min(100, Number(l))) / 100;
+  const chroma = (1 - Math.abs(2 * lightness - 1)) * saturation;
+  const x = chroma * (1 - Math.abs((hue / 60) % 2 - 1));
+  const m = lightness - chroma / 2;
+  let rgb = [0, 0, 0];
+
+  if (hue < 60) rgb = [chroma, x, 0];
+  else if (hue < 120) rgb = [x, chroma, 0];
+  else if (hue < 180) rgb = [0, chroma, x];
+  else if (hue < 240) rgb = [0, x, chroma];
+  else if (hue < 300) rgb = [x, 0, chroma];
+  else rgb = [chroma, 0, x];
+
+  return `#${rgb.map(channel => Math.round((channel + m) * 255).toString(16).padStart(2, '0')).join('').toUpperCase()}`;
+}
+
+function createCustomBrandSeed(primary = '#30BD6F', darkBrightness = 32, overrides = {}) {
+  const brand = normalizeThemeHex(primary);
+  const base = themeHexToHsl(brand);
+  const hue = base.h;
+  const saturation = Math.max(38, Math.min(78, base.s));
+  const level = Math.max(22, Math.min(44, Number(darkBrightness) || 32));
+  const shade = (lightness, saturationOffset = 0) => themeHslToHex(
+    hue,
+    Math.max(24, Math.min(82, saturation + saturationOffset)),
+    Math.max(8, Math.min(68, lightness))
+  );
+  const darkSurface = (lightness, saturationOffset = 0) => {
+    let candidateLightness = lightness;
+    let candidate = shade(candidateLightness, saturationOffset);
+    while (candidateLightness > 12 && getContrastRatio('#F8FBFF', candidate) < 4.5) {
+      candidateLightness -= 1;
+      candidate = shade(candidateLightness, saturationOffset);
+    }
+    return candidate;
+  };
+  const hover = shade(Math.max(24, base.l - 7), 2);
+  const active = shade(Math.max(20, base.l - 12), 4);
+  const darkPrimary = shade(Math.max(58, base.l + 8), -4);
+  const customColor = (key, fallback) => overrides[key]
+    ? normalizeThemeHex(overrides[key], fallback)
+    : fallback;
+  const sidebarTop = customColor('sidebarTop', shade(level + 1, 1));
+  const sidebarBottom = customColor('sidebarBottom', shade(level - 7, 3));
+  const backgroundDark = customColor('backgroundDark', darkSurface(level - 10, -14));
+  const surfaceDark = customColor('backgroundDark', darkSurface(level - 3, -16));
+  const cardDark = customColor('cardDark', darkSurface(level + 1, -18));
+  const elevatedDark = customColor('elevatedDark', darkSurface(level + 8, -22));
+
+  return {
+    id: 'custom-brand',
+    name: 'Màu thương hiệu tùy chỉnh',
+    sidebarNavy: sidebarBottom,
+    sidebarTop,
+    sidebarBottom,
+    sidebarCyan: shade(Math.max(68, level + 34), -18),
+    sidebarBorder: themeHexToRgba(brand, 0.34),
+    successLight: '#30BD6F',
+    successDark: '#45D483',
+    successTextLight: '#137A43',
+    successTextDark: '#83E8AD',
+    activeBlue: '#2984EE',
+    activeBlueHover: '#1877E7',
+    primaryDark: darkPrimary,
+    primaryDarkHover: shade(Math.max(64, base.l + 14), -8),
+    navActiveStart: brand,
+    navActiveEnd: hover,
+    navActiveText: getReadableTextColor(brand),
+    navActiveBorder: shade(Math.max(70, level + 38), -18),
+    navActiveShadow: `0 0 20px ${themeHexToRgba(brand, 0.26)} inset`,
+    headerDark: darkSurface(level - 5, -3),
+    workspaceDark: overrides.backgroundDark
+      ? backgroundDark
+      : `linear-gradient(180deg, ${darkSurface(level - 10, -12)} 0%, ${darkSurface(level - 4, -14)} 100%)`,
+    brandGreen: brand,
+    brandGreenHover: hover,
+    brandGreenActive: active,
+    appBgLight: '#F3F6F9',
+    appBgDark: backgroundDark,
+    backgroundSecondaryDark: darkSurface(level - 6, -14),
+    backgroundTertiaryDark: darkSurface(level - 2, -16),
+    surfaceDark,
+    surfaceSecondaryDark: darkSurface(level + 1, -18),
+    surfaceMutedDark: darkSurface(level - 6, -18),
+    cardDark,
+    cardAltDark: overrides.cardDark ? cardDark : darkSurface(level + 4, -20),
+    cardSelectedDark: overrides.elevatedDark ? elevatedDark : darkSurface(level + 7, -18),
+    elevatedDark,
+    inputDark: darkSurface(level - 1, -20),
+    tableHeaderDark: darkSurface(level - 1, -20),
+    tableHoverDark: darkSurface(level + 5, -20),
+    tableSelectedDark: darkSurface(level + 9, -18),
+    borderDark: themeHexToRgba(shade(78, -28), 0.30),
+    chartGridDark: themeHexToRgba(shade(78, -28), 0.14),
+    tooltipDark: darkSurface(Math.max(14, level - 14), -18),
+    textSecondaryDark: '#E1EAE7',
+    textMutedDark: '#B6C8C2',
+    textDisabledDark: '#849B93'
+  };
+}
+
+function getCustomPaletteConfig() {
+  const defaults = { primary: '#30BD6F', darkBrightness: 32 };
+  if (typeof localStorage === 'undefined') return defaults;
+  try {
+    const stored = JSON.parse(localStorage.getItem('ioc_custom_palette') || '{}');
+    const config = {
+      primary: normalizeThemeHex(stored.primary, defaults.primary),
+      darkBrightness: Math.max(22, Math.min(44, Number(stored.darkBrightness) || defaults.darkBrightness))
+    };
+    ['sidebarTop', 'sidebarBottom', 'backgroundDark', 'cardDark', 'elevatedDark'].forEach(key => {
+      if (stored[key]) config[key] = normalizeThemeHex(stored[key]);
+    });
+    return config;
+  } catch (error) {
+    return defaults;
+  }
+}
+
+function setCustomPaletteConfig(config = {}) {
+  const current = getCustomPaletteConfig();
+  const next = {
+    primary: normalizeThemeHex(config.primary, current.primary),
+    darkBrightness: Math.max(22, Math.min(44, Number(config.darkBrightness) || current.darkBrightness))
+  };
+  ['sidebarTop', 'sidebarBottom', 'backgroundDark', 'cardDark', 'elevatedDark'].forEach(key => {
+    if (Object.prototype.hasOwnProperty.call(config, key)) {
+      if (config[key]) next[key] = normalizeThemeHex(config[key]);
+    } else if (current[key]) {
+      next[key] = current[key];
+    }
+  });
+  BRAND_SEEDS['custom-brand'] = createCustomBrandSeed(next.primary, next.darkBrightness, next);
+  if (typeof localStorage !== 'undefined') localStorage.setItem('ioc_custom_palette', JSON.stringify(next));
+  return next;
+}
+
+{
+  const customPalette = getCustomPaletteConfig();
+  BRAND_SEEDS['custom-brand'] = createCustomBrandSeed(
+    customPalette.primary,
+    customPalette.darkBrightness,
+    customPalette
+  );
+}
+
 // ── ADAPTIVE SEMANTIC TOKEN RESOLVER ─────────────────────────────────
 
 function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
+  if (presetId === 'custom-brand') {
+    const custom = getCustomPaletteConfig();
+    BRAND_SEEDS['custom-brand'] = createCustomBrandSeed(custom.primary, custom.darkBrightness, custom);
+  }
   const seed = BRAND_SEEDS[presetId] || BRAND_SEEDS['evg-emerald'];
   const sidebarBg = `linear-gradient(180deg, ${seed.sidebarTop || seed.sidebarNavy} 0%, ${seed.sidebarBottom || seed.sidebarNavy} 100%)`;
   const sidebarActive = `linear-gradient(180deg, ${seed.navActiveStart || seed.activeBlue} 0%, ${seed.navActiveEnd || seed.activeBlueEnd || seed.activeBlue} 100%)`;
@@ -204,7 +405,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
     const sidebarGroupLabel = seed.sidebarCyan;
     const sidebarItemActive = sidebarActive;
     const sidebarText = '#FFFFFF';
-    const sidebarTextActive = '#FFFFFF';
+    const sidebarTextActive = seed.navActiveText || '#FFFFFF';
 
     const brandPrimary = seed.brandGreen || '#30BD6F';
     const primaryHover = seed.brandGreenHover || '#1BA05C';
@@ -365,11 +566,23 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
     const surface = seed.surfaceDark || '#172844';
     const cardBg = seed.cardDark || '#1B3153';
     const elevated = seed.elevatedDark || '#223B61';
-    const cardBorder = 'rgba(91, 169, 255, 0.24)';
+    const backgroundSecondary = seed.backgroundSecondaryDark || '#102743';
+    const backgroundTertiary = seed.backgroundTertiaryDark || '#163157';
+    const surfaceSecondary = seed.surfaceSecondaryDark || '#18355F';
+    const surfaceMuted = seed.surfaceMutedDark || '#122A4A';
+    const cardAlt = seed.cardAltDark || '#1D4076';
+    const cardSelected = seed.cardSelectedDark || '#244C87';
+    const inputBg = seed.inputDark || '#15345F';
+    const tableHeader = seed.tableHeaderDark || '#173762';
+    const tableHover = seed.tableHoverDark || '#1E447B';
+    const tableSelected = seed.tableSelectedDark || '#254F8D';
+    const cardBorder = seed.borderDark || 'rgba(91, 169, 255, 0.24)';
+    const chartGrid = seed.chartGridDark || 'rgba(91, 169, 255, 0.10)';
+    const tooltipBg = seed.tooltipDark || '#071629';
     const textPrimary = '#F8FBFF';
-    const textSecondary = '#D1E2F4';
-    const textMuted = '#A4B8CD';
-    const textDisabled = '#71849A';
+    const textSecondary = seed.textSecondaryDark || '#D1E2F4';
+    const textMuted = seed.textMutedDark || '#A4B8CD';
+    const textDisabled = seed.textDisabledDark || '#71849A';
 
     const sidebarGroupLabel = seed.sidebarCyan;
     const sidebarItemActive = sidebarActive;
@@ -392,17 +605,17 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
 
     return {
       '--color-background': appBg,
-      '--color-background-secondary': '#102743',
-      '--color-background-tertiary': '#163157',
+      '--color-background-secondary': backgroundSecondary,
+      '--color-background-tertiary': backgroundTertiary,
       '--color-surface': surface,
-      '--color-surface-secondary': '#18355F',
+      '--color-surface-secondary': surfaceSecondary,
       '--color-surface-elevated': elevated,
-      '--color-surface-muted': '#122A4A',
-      '--color-surface-selected': 'rgba(75, 145, 241, 0.22)',
+      '--color-surface-muted': surfaceMuted,
+      '--color-surface-selected': themeHexToRgba(seed.brandGreen || '#30BD6F', 0.18),
 
       '--color-card-background': cardBg,
-      '--color-card-background-alt': '#1D4076',
-      '--color-card-selected-background': '#244C87',
+      '--color-card-background-alt': cardAlt,
+      '--color-card-selected-background': cardSelected,
       '--color-card-border': cardBorder,
       '--color-card-selected-border': seed.sidebarCyan,
       '--color-card-shadow': '0 10px 28px rgba(2, 10, 24, 0.28)',
@@ -417,7 +630,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--color-sidebar-item-hover': sidebarActive,
       '--color-sidebar-item-active': sidebarItemActive,
       '--color-sidebar-text': textPrimary,
-      '--color-sidebar-text-active': '#FFFFFF',
+      '--color-sidebar-text-active': seed.navActiveText || '#FFFFFF',
       '--color-sidebar-group-label': sidebarGroupLabel,
 
       '--color-text-primary': textPrimary,
@@ -443,28 +656,28 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--color-button-primary-background': buttonPrimaryBackground,
       '--color-button-primary-hover': buttonPrimaryHover,
       '--color-button-primary-text': buttonPrimaryText,
-      '--color-button-secondary-background': '#1D4076',
+      '--color-button-secondary-background': cardAlt,
       '--color-button-secondary-text': textPrimary,
 
-      '--color-input-background': '#15345F',
+      '--color-input-background': inputBg,
       '--color-input-text': textPrimary,
       '--color-input-placeholder': textMuted,
       '--color-input-border': cardBorder,
       '--color-input-border-focus': brandPrimary,
 
       '--color-table-background': surface,
-      '--color-table-header-background': '#173762',
+      '--color-table-header-background': tableHeader,
       '--color-table-row-background': surface,
-      '--color-table-row-hover': '#1E447B',
-      '--color-table-row-selected': '#254F8D',
+      '--color-table-row-hover': tableHover,
+      '--color-table-row-selected': tableSelected,
 
       '--color-dialog-background': surface,
       '--color-dialog-title': textPrimary,
       '--color-dialog-message': textSecondary,
 
-      '--color-chart-grid': 'rgba(91, 169, 255, 0.10)',
+      '--color-chart-grid': chartGrid,
       '--color-chart-axis': textMuted,
-      '--color-chart-tooltip-background': '#071629',
+      '--color-chart-tooltip-background': tooltipBg,
       '--color-chart-tooltip-text': '#FFFFFF',
 
       '--color-map-popup-background': surface,
@@ -481,10 +694,10 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--bg-surface': surface,
       '--bg-card': cardBg,
       '--bg-elevated': elevated,
-      '--bg-secondary': '#18355F',
-      '--bg-tertiary': '#1D4076',
-      '--bg-hover': 'rgba(75, 145, 241, 0.13)',
-      '--bg-selected': 'rgba(75, 145, 241, 0.22)',
+      '--bg-secondary': surfaceSecondary,
+      '--bg-tertiary': cardAlt,
+      '--bg-hover': themeHexToRgba(seed.brandGreen || '#30BD6F', 0.10),
+      '--bg-selected': themeHexToRgba(seed.brandGreen || '#30BD6F', 0.18),
       '--bg-header': surface,
       '--header-background': headerBackground,
       '--ticker-background': tickerBackground,
@@ -492,7 +705,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--ticker-text': textSecondary,
       '--bg-sidebar': sidebarBg,
       '--bg-dropdown': elevated,
-      '--bg-dropdown2': '#18355F',
+      '--bg-dropdown2': surfaceSecondary,
       '--sidebar-background': sidebarBg,
       '--sidebar-border': sidebarBorder,
       '--sidebar-item-hover': sidebarActive,
@@ -500,7 +713,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--sidebar-active-border': sidebarActiveBorder,
       '--sidebar-active-shadow': sidebarActiveShadow,
       '--sidebar-text': textPrimary,
-      '--sidebar-text-active': '#FFFFFF',
+      '--sidebar-text-active': seed.navActiveText || '#FFFFFF',
       '--sidebar-section-accent': sidebarGroupLabel,
       '--text': textPrimary,
       '--text-primary': textPrimary,
@@ -569,6 +782,10 @@ if (typeof window !== 'undefined') {
     getContrastRatio,
     getReadableTextColor,
     ensureContrast,
+    normalizeThemeHex,
+    createCustomBrandSeed,
+    getCustomPaletteConfig,
+    setCustomPaletteConfig,
     resolveSemanticTokens,
     applyGlobalTheme
   };

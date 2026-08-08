@@ -91,7 +91,7 @@ function wfSave() {
 function renderWfBuilder() {
   return `
 <style>
-.wfb-root{display:flex;height:calc(100vh - 52px);overflow:hidden;font-family:'Inter',sans-serif;background:#0a0c1a}
+.wfb-root{display:flex;height:calc(100vh - 52px);overflow:hidden;font-family:'Inter',sans-serif;background:var(--bg-app)}
 .wfb-palette{width:224px;min-width:224px;background:rgba(255,255,255,.03);border-right:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;overflow:hidden}
 .wfb-palette-head{padding:13px 14px 8px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.38);border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:6px}
 .wfb-palette-body{flex:1;overflow-y:auto;padding:8px}
@@ -103,16 +103,16 @@ function renderWfBuilder() {
 .wfb-block-info{min-width:0}
 .wfb-block-name{font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .wfb-block-desc{font-size:9px;color:rgba(255,255,255,.3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px}
-.wfb-canvas-wrap{flex:1;position:relative;overflow:hidden;background:#070910;cursor:default}
+.wfb-canvas-wrap{flex:1;position:relative;overflow:hidden;background:var(--bg-base);cursor:default}
 .wfb-canvas-wrap.connecting{cursor:crosshair}
-.wfb-grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
+.wfb-grid{position:absolute;inset:0;background:none;pointer-events:none}
 .wfb-node{position:absolute;background:rgba(12,15,28,.94);border-radius:14px;border:2px solid;padding:11px 14px;cursor:pointer;user-select:none;min-width:140px;transition:box-shadow .2s;backdrop-filter:blur(8px)}
 .wfb-node.selected{box-shadow:0 0 0 3px rgba(41,132,238,.65),0 8px 32px rgba(0,0,0,.5)!important}
 .wfb-node-head{display:flex;align-items:center;gap:8px;margin-bottom:3px}
 .wfb-node-icon{display:flex;align-items:center;flex-shrink:0}
 .wfb-node-label{font-size:12px;font-weight:700;color:#fff;flex:1}
 .wfb-node-cat{font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.32)}
-.wfb-port{width:12px;height:12px;border-radius:50%;border:2px solid;position:absolute;cursor:crosshair;transition:transform .15s;background:#070910}
+.wfb-port{width:12px;height:12px;border-radius:50%;border:2px solid;position:absolute;cursor:crosshair;transition:transform .15s;background:var(--bg-card)}
 .wfb-port-out{right:-7px;top:50%;transform:translateY(-50%)}.wfb-port-out:hover{transform:translateY(-50%) scale(1.6)}
 .wfb-port-in{left:-7px;top:50%;transform:translateY(-50%)}.wfb-port-in:hover{transform:translateY(-50%) scale(1.6)}
 .wfb-toolbar{position:absolute;top:12px;left:50%;transform:translateX(-50%);display:flex;gap:7px;background:rgba(10,12,26,.92);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px 13px;z-index:10;backdrop-filter:blur(14px);align-items:center}
@@ -129,7 +129,7 @@ function renderWfBuilder() {
 .wfb-prop-label{font-size:10px;font-weight:600;color:rgba(255,255,255,.38);letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px}
 .wfb-prop-input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:7px 10px;color:#fff;font-size:12px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;box-sizing:border-box}
 .wfb-prop-input:focus{border-color:rgba(41,132,238,.6)}
-.wfb-prop-select{width:100%;background:#0f1629;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:7px 10px;color:#fff;font-size:12px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box}
+.wfb-prop-select{width:100%;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;padding:7px 10px;color:var(--text);font-size:12px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box}
 .wfb-prop-hint{font-size:10px;color:rgba(255,255,255,.28);margin-top:4px;line-height:1.4}
 .wfb-node-del-btn{width:100%;padding:8px;border-radius:8px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#f87171;font-size:12px;font-weight:600;cursor:pointer;margin-top:10px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px}
 .wfb-node-del-btn:hover{background:rgba(239,68,68,.25)}

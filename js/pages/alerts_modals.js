@@ -68,7 +68,7 @@ window.ewDetailAlert = function(id) {
   ];
 
   _ewModal(`
-<div style="background:#0e1220;border:1px solid rgba(255,255,255,.1);border-radius:18px;width:720px;max-width:100%;max-height:90vh;overflow:hidden;display:flex;flex-direction:column">
+<div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:18px;width:720px;max-width:100%;max-height:90vh;overflow:hidden;display:flex;flex-direction:column">
   <!-- Header -->
   <div style="padding:20px 24px 16px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;gap:14px;align-items:flex-start">
     <div style="width:44px;height:44px;border-radius:12px;background:color-mix(in srgb, ${sc} 18%, transparent);border:1px solid color-mix(in srgb, ${sc} 44%, transparent);display:flex;align-items:center;justify-content:center;flex-shrink:0">
@@ -149,7 +149,7 @@ window.ewOpenNewRule = function(id = null) {
   const isEdit = !!r;
 
   _ewModal(`
-<div style="background:#0e1220;border:1px solid rgba(255,255,255,.1);border-radius:16px;width:560px;max-width:100%">
+<div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:16px;width:560px;max-width:100%">
   <div style="padding:18px 22px 14px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between">
     <h3 style="font-size:15px;font-weight:800;color:#fff;margin:0;display:flex;align-items:center;gap:8px">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--warning-text)" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
@@ -287,7 +287,7 @@ window.ewProcessAlert = function(id) {
   if (!a) return;
 
   _ewModal(`
-<div style="background:#0e1220;border:1px solid rgba(255,255,255,.1);border-radius:18px;width:540px;max-width:100%">
+<div style="background:var(--bg-surface);border:1px solid var(--border);border-radius:18px;width:540px;max-width:100%">
   <div style="padding:18px 22px 14px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between">
     <h3 style="font-size:15px;font-weight:800;color:#fff;margin:0;display:flex;align-items:center;gap:8px">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--warning-text)" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>

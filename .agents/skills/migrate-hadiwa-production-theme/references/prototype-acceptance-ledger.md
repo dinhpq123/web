@@ -31,9 +31,9 @@ Find production equivalents by ownership and behavior. Do not assume identical f
 
 ## 2. Global Shell
 
-- The approved default sidebar uses the compatible teal `#0F5B55 -> #123D42` vertical gradient. The exact source `#1E3883 -> #192B54` gradient remains available only in the `evg-classic-navy` backup preset.
-- Active navigation uses the separate `#3371C6 -> #285CAA` gradient.
-- Default section labels are soft green `#8BE7B5`; the backup preset retains source cyan `#1EF5DF`. Normal sidebar text is cool white in both presets.
+- The approved default sidebar uses the primary-green-family `#137A43 -> #0B5034` vertical gradient. The exact source `#1E3883 -> #192B54` gradient remains available only in the `evg-classic-navy` backup preset.
+- Active navigation uses the exact EVG primary `#30BD6F` as its first stop and `#27A962` as its depth stop.
+- Default section labels are soft green `#8FDEB1`; the backup preset retains source cyan `#1EF5DF`. Normal sidebar text is cool white in both presets.
 - Header and ticker use approved light/dark surfaces, not purple or near-black substitutes.
 - Hamburger/collapse control sits inside the sidebar logo row.
 - Logo opens the module launcher; no faint “click logo” instruction strip wastes space below it.
@@ -42,11 +42,11 @@ Find production equivalents by ownership and behavior. Do not assume identical f
 
 ## 3. Color Discipline
 
-- Generic active/selected/highlight state is blue, never green.
-- Generic dark surfaces are navy/blue, never purple-tinted.
+- Generic active/selected state uses EVG primary green; informational actions and data remain blue.
+- Generic dark surfaces use the approved tiered green hierarchy, never purple-tinted or a single flat green.
 - Missing surfaces do not fall back to dirty gray or black blocks.
 - KPI cards do not receive arbitrary red/green/purple/yellow decorative top borders.
-- Green appears only for true online/healthy status, approved IoT category identity, or approved HR role identity.
+- Bright green appears only for primary/selected controls and true online/healthy status; dark green is permitted for structural surfaces.
 - Purple appears only for command/AI/leadership identity where explicitly mapped.
 - Warning, danger and PCTT alert colors correspond to real data meaning.
 - Scientific charts and map layers may remain multi-color; surrounding UI remains semantic.

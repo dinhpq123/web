@@ -1374,6 +1374,203 @@ function initTheme() {
   updateThemeUI(t);
 }
 
+function getPaletteCustomizerConfig() {
+  if (window.ThemeEngine?.getCustomPaletteConfig) return window.ThemeEngine.getCustomPaletteConfig();
+  return { primary: '#30BD6F', darkBrightness: 32 };
+}
+
+function updatePaletteCustomizerUi() {
+  const config = getPaletteCustomizerConfig();
+  const preset = localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
+  const mode = localStorage.getItem('ioc_theme') || 'light';
+  const presetInput = document.getElementById('palettePreset');
+  const colorInput = document.getElementById('paletteColor');
+  const hexInput = document.getElementById('paletteHex');
+  const brightnessInput = document.getElementById('paletteBrightness');
+  const brightnessValue = document.getElementById('paletteBrightnessValue');
+  const modeInput = document.getElementById('paletteMode');
+  const swatches = document.getElementById('paletteSwatches');
+
+  if (presetInput) presetInput.value = preset;
+  if (colorInput) colorInput.value = config.primary;
+  if (hexInput) hexInput.value = config.primary;
+  if (brightnessInput) brightnessInput.value = config.darkBrightness;
+  if (brightnessValue) brightnessValue.textContent = `${config.darkBrightness}%`;
+  if (modeInput) modeInput.value = mode;
+
+  if (swatches && window.ThemeEngine?.createCustomBrandSeed) {
+    const seed = window.ThemeEngine.createCustomBrandSeed(config.primary, config.darkBrightness, config);
+    const colors = [
+      { key: 'primary', label: 'Chính', color: seed.brandGreen },
+      { key: 'sidebarTop', label: 'Sidebar 1', color: seed.sidebarTop },
+      { key: 'sidebarBottom', label: 'Sidebar 2', color: seed.sidebarBottom },
+      { key: 'backgroundDark', label: 'Nền', color: seed.appBgDark },
+      { key: 'cardDark', label: 'Card', color: seed.cardDark },
+      { key: 'elevatedDark', label: 'Nổi', color: seed.elevatedDark }
+    ];
+    swatches.innerHTML = colors.map(item => `
+      <label class="palette-swatch" style="--swatch-color:${item.color}" title="Chọn màu ${item.label}: ${item.color}">
+        <input type="color" value="${item.color}" aria-label="Chọn màu ${item.label}"
+          oninput="previewCustomPaletteToken('${item.key}', this.value, this)">
+        <span>${item.label}</span>
+      </label>
+    `).join('');
+  }
+}
+
+function clampPaletteCustomizerPosition(left, top) {
+  const panel = document.getElementById('paletteCustomizer');
+  if (!panel) return { left: 8, top: 8 };
+  const margin = 8;
+  const maxLeft = Math.max(margin, window.innerWidth - panel.offsetWidth - margin);
+  const maxTop = Math.max(margin, window.innerHeight - panel.offsetHeight - margin);
+  return {
+    left: Math.min(maxLeft, Math.max(margin, Number(left) || margin)),
+    top: Math.min(maxTop, Math.max(margin, Number(top) || margin))
+  };
+}
+
+function restorePaletteCustomizerPosition() {
+  const panel = document.getElementById('paletteCustomizer');
+  if (!panel || panel.hidden) return;
+  try {
+    const saved = JSON.parse(localStorage.getItem('ioc_palette_position') || 'null');
+    if (!saved) return;
+    const position = clampPaletteCustomizerPosition(saved.left, saved.top);
+    panel.style.left = `${position.left}px`;
+    panel.style.top = `${position.top}px`;
+    panel.style.right = 'auto';
+  } catch (error) {
+    localStorage.removeItem('ioc_palette_position');
+  }
+}
+
+function initPaletteCustomizerDrag() {
+  const panel = document.getElementById('paletteCustomizer');
+  const handle = panel?.querySelector('.palette-customizer-head');
+  if (!panel || !handle) return;
+  let drag = null;
+
+  handle.addEventListener('pointerdown', event => {
+    if (event.button !== 0 || event.target.closest('button, input, select, a')) return;
+    const rect = panel.getBoundingClientRect();
+    drag = { pointerId: event.pointerId, offsetX: event.clientX - rect.left, offsetY: event.clientY - rect.top };
+    panel.style.left = `${rect.left}px`;
+    panel.style.top = `${rect.top}px`;
+    panel.style.right = 'auto';
+    panel.classList.add('is-dragging');
+    handle.setPointerCapture(event.pointerId);
+    event.preventDefault();
+  });
+
+  handle.addEventListener('pointermove', event => {
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    const position = clampPaletteCustomizerPosition(event.clientX - drag.offsetX, event.clientY - drag.offsetY);
+    panel.style.left = `${position.left}px`;
+    panel.style.top = `${position.top}px`;
+  });
+
+  const finishDrag = event => {
+    if (!drag || drag.pointerId !== event.pointerId) return;
+    const rect = panel.getBoundingClientRect();
+    localStorage.setItem('ioc_palette_position', JSON.stringify({ left: Math.round(rect.left), top: Math.round(rect.top) }));
+    panel.classList.remove('is-dragging');
+    drag = null;
+  };
+  handle.addEventListener('pointerup', finishDrag);
+  handle.addEventListener('pointercancel', finishDrag);
+  window.addEventListener('resize', restorePaletteCustomizerPosition);
+}
+
+function initPaletteCustomizer() {
+  updatePaletteCustomizerUi();
+  initPaletteCustomizerDrag();
+  document.addEventListener('pointerdown', event => {
+    const panel = document.getElementById('paletteCustomizer');
+    const trigger = document.getElementById('paletteTrigger');
+    if (!panel || panel.hidden || panel.contains(event.target) || trigger?.contains(event.target)) return;
+    togglePaletteCustomizer(false);
+  });
+}
+
+function togglePaletteCustomizer(forceOpen) {
+  const panel = document.getElementById('paletteCustomizer');
+  const trigger = document.getElementById('paletteTrigger');
+  if (!panel) return;
+  const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : panel.hidden;
+  panel.hidden = !shouldOpen;
+  trigger?.setAttribute('aria-expanded', String(shouldOpen));
+  if (shouldOpen) {
+    updatePaletteCustomizerUi();
+    requestAnimationFrame(restorePaletteCustomizerPosition);
+  }
+}
+
+function applyPaletteCustomizerTheme(preset, mode) {
+  if (!window.ThemeEngine?.applyGlobalTheme) return;
+  window.ThemeEngine.applyGlobalTheme(preset, mode);
+  updateThemeUI(mode);
+  updatePaletteCustomizerUi();
+  window.dispatchEvent(new CustomEvent('hadiwa-theme-change', { detail: { preset, mode } }));
+}
+
+function selectPaletteCustomizerPreset(preset) {
+  const mode = localStorage.getItem('ioc_theme') || 'light';
+  applyPaletteCustomizerTheme(preset, mode);
+}
+
+function previewCustomPalette(color, brightness) {
+  if (!window.ThemeEngine?.setCustomPaletteConfig) return;
+  const current = getPaletteCustomizerConfig();
+  const colorField = document.getElementById('paletteColor');
+  const hexField = document.getElementById('paletteHex');
+  const nextColor = color == null ? current.primary : window.ThemeEngine.normalizeThemeHex(color, current.primary);
+  const nextBrightness = brightness == null ? current.darkBrightness : Number(brightness);
+  const next = window.ThemeEngine.setCustomPaletteConfig({ primary: nextColor, darkBrightness: nextBrightness });
+  if (colorField) colorField.value = next.primary;
+  if (hexField) hexField.value = next.primary;
+  applyPaletteCustomizerTheme('custom-brand', localStorage.getItem('ioc_theme') || 'light');
+}
+
+function previewCustomPaletteToken(key, color, input) {
+  if (key === 'primary') {
+    previewCustomPalette(color);
+    return;
+  }
+  if (!window.ThemeEngine?.setCustomPaletteConfig) return;
+  const next = window.ThemeEngine.setCustomPaletteConfig({ [key]: color });
+  const normalizedColor = next[key] || color;
+  input?.closest('.palette-swatch')?.style.setProperty('--swatch-color', normalizedColor);
+
+  // Do not rebuild the swatch DOM while the native color picker is dragging.
+  // Replacing its input element interrupts continuous pointer updates.
+  const mode = localStorage.getItem('ioc_theme') || 'light';
+  window.ThemeEngine.applyGlobalTheme('custom-brand', mode);
+  updateThemeUI(mode);
+  window.dispatchEvent(new CustomEvent('hadiwa-theme-change', {
+    detail: { preset: 'custom-brand', mode, token: key, color: normalizedColor }
+  }));
+}
+
+function setPaletteCustomizerMode(mode) {
+  const preset = localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
+  applyPaletteCustomizerTheme(preset, mode === 'dark' ? 'dark' : 'light');
+}
+
+function resetPaletteCustomizer() {
+  window.ThemeEngine?.setCustomPaletteConfig({
+    primary: '#30BD6F',
+    darkBrightness: 32,
+    sidebarTop: null,
+    sidebarBottom: null,
+    backgroundDark: null,
+    cardDark: null,
+    elevatedDark: null
+  });
+  applyPaletteCustomizerTheme('evg-emerald', 'light');
+  showToast('Đã khôi phục bảng màu EVG xanh chuẩn.');
+}
+
 function initBrandPreset(presetId) {
   const t = localStorage.getItem('ioc_theme') || 'light';
   if (window.ThemeEngine && typeof window.ThemeEngine.applyGlobalTheme === 'function') {
@@ -1423,6 +1620,8 @@ function updateThemeUI(t) {
       <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
       <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`; // sun
   }
+  const modeInput = document.getElementById('paletteMode');
+  if (modeInput) modeInput.value = t;
 }
 
 // ── MOCK WEBSOCKET SERVICE (Real-time Readiness) ───────────────────
@@ -1478,6 +1677,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Core Services
     initRbac();
     initTheme();
+    initPaletteCustomizer();
     console.log('[Hadiwa] Services ready');
 
     // 2. UI Components
@@ -1645,14 +1845,24 @@ function renderSettingsUi() {
     {
       id: 'evg-emerald',
       label: 'EVG Hadiwa tương thích',
-      description: 'Sidebar teal xanh, hành động EVG green, trạng thái giữ màu ngữ nghĩa.',
-      colors: ['#0F5B55', '#123D42', '#30BD6F']
+      description: 'Sidebar xanh lá theo đúng EVG primary, trạng thái giữ màu ngữ nghĩa.',
+      colors: ['#137A43', '#0B5034', '#30BD6F']
     },
     {
       id: 'evg-classic-navy',
       label: 'EVG Classic Navy (Backup)',
       description: 'Bản navy đã dùng trước đây, được giữ nguyên để có thể khôi phục.',
       colors: ['#1E3883', '#192B54', '#41A7FF']
+    },
+    {
+      id: 'custom-brand',
+      label: 'Màu thương hiệu tùy chỉnh',
+      description: 'Tự chọn màu và độ sáng bề mặt bằng bảng màu trên thanh tiêu đề.',
+      colors: (() => {
+        const cfg = getPaletteCustomizerConfig();
+        const seed = window.ThemeEngine?.createCustomBrandSeed?.(cfg.primary, cfg.darkBrightness);
+        return seed ? [seed.brandGreen, seed.sidebarTop, seed.cardDark] : ['#30BD6F', '#137A43', '#176348'];
+      })()
     }
   ];
 
@@ -2099,7 +2309,13 @@ function selectBrandThemePreset(presetId) {
   window.ThemeEngine.applyGlobalTheme(presetId, mode);
   const settingsContent = document.getElementById('settingsContent');
   if (settingsContent) settingsContent.innerHTML = getSettingsTabContent();
-  showToast(presetId === 'evg-classic-navy' ? 'Đã khôi phục EVG Classic Navy.' : 'Đã áp dụng EVG Hadiwa tương thích.');
+  updatePaletteCustomizerUi();
+  const message = presetId === 'evg-classic-navy'
+    ? 'Đã khôi phục EVG Classic Navy.'
+    : presetId === 'custom-brand'
+      ? 'Đã áp dụng màu thương hiệu tùy chỉnh.'
+      : 'Đã áp dụng EVG Hadiwa tương thích.';
+  showToast(message);
 }
 
 function setTickerSpeed(speed, btn) {

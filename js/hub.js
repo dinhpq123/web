@@ -59,8 +59,8 @@ const HUB_GROUPS = [
     page: 'dieuhanh',
     fallback: 'dashboard',
     features: ['dieuhanh', 'videowall', 'camera', 'pcttOperations', 'gis'],
-    color: '#7c3aed',
-    glow: 'rgba(124,58,237,.55)',
+    color: 'var(--hub-module-command)',
+    glow: 'var(--hub-module-command-soft)',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
       <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
     </svg>`,
@@ -71,8 +71,8 @@ const HUB_GROUPS = [
     page: 'irrigationAssets',
     fallback: 'dashboard',
     features: ['irrigationAssets', 'irrigationDataEntry', 'hydrologicalData', 'dikeManagement', 'dikeInspection', 'dikePermit', 'reservoirMonitor'],
-    color: '#0891b2',
-    glow: 'rgba(8,145,178,.55)',
+    color: 'var(--hub-module-hydraulic)',
+    glow: 'var(--hub-module-hydraulic-soft)',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
       <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>
     </svg>`,
@@ -83,8 +83,8 @@ const HUB_GROUPS = [
     page: 'pcttCommand',
     fallback: 'dashboard',
     features: ['pcttCommand', 'pcttDocuments', 'fourOnSite', 'pcttFund', 'pcttDamageReport', 'communeReporting', 'communityReports'],
-    color: '#dc2626',
-    glow: 'rgba(220,38,38,.55)',
+    color: 'var(--hub-module-pctt)',
+    glow: 'var(--hub-module-pctt-soft)',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
       <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
       <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
@@ -96,8 +96,8 @@ const HUB_GROUPS = [
     page: 'iotMonitor',
     fallback: 'dashboard',
     features: ['iotMonitor', 'earlyWarning', 'weatherBulletin', 'commsDevices', 'scheduler'],
-    color: '#059669',
-    glow: 'rgba(5,150,105,.55)',
+    color: 'var(--hub-module-iot)',
+    glow: 'var(--hub-module-iot-soft)',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
       <path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/>
       <path d="M8.53 16.11a6 6 0 016.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/>
@@ -109,8 +109,8 @@ const HUB_GROUPS = [
     page: 'reports',
     fallback: 'dashboard',
     features: ['reports', 'pcttMedia'],
-    color: '#d97706',
-    glow: 'rgba(217,119,6,.55)',
+    color: 'var(--hub-module-reports)',
+    glow: 'var(--hub-module-reports-soft)',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
       <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
       <line x1="6" y1="20" x2="6" y2="14"/>
@@ -122,8 +122,8 @@ const HUB_GROUPS = [
     page: 'aiagent',
     fallback: 'chatbot',
     features: ['aiagent', 'chatbot', 'datahub'],
-    color: '#a78bfa',
-    glow: 'rgba(167,139,250,.55)',
+    color: 'var(--hub-module-ai)',
+    glow: 'var(--hub-module-ai-soft)',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
       <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
       <polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/>
@@ -135,8 +135,8 @@ const HUB_GROUPS = [
     page: 'settings',
     fallback: 'log',
     features: ['workflows', 'hrm', 'log', 'settings'],
-    color: '#64748b',
-    glow: 'rgba(100,116,139,.55)',
+    color: 'var(--hub-module-settings)',
+    glow: 'var(--hub-module-settings-soft)',
     icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
       <circle cx="12" cy="12" r="3"/>
       <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/>
@@ -147,27 +147,50 @@ const HUB_GROUPS = [
 // ── CSS ────────────────────────────────────────────────────────────
 const HUB_CSS = `
 #moduleHub {
-  --hub-surface: #142D52;
-  --hub-elevated: #20457E;
-  --hub-text: #F8FBFF;
-  --hub-text-secondary: #D1E2F4;
-  --hub-muted: #A4B8CD;
-  --hub-border: rgba(91,169,255,.24);
-  --hub-primary: #5BA9FF;
-  --hub-primary-soft: rgba(91,169,255,.14);
+  --hub-surface: var(--color-card-background);
+  --hub-elevated: var(--color-surface-elevated);
+  --hub-text: var(--color-text-primary);
+  --hub-text-secondary: var(--color-text-secondary);
+  --hub-muted: var(--color-text-muted);
+  --hub-border: var(--color-card-border);
+  --hub-primary: var(--primary);
+  --hub-primary-soft: var(--primary-soft);
+  --hub-module-command: #2984EE;
+  --hub-module-command-soft: rgba(41, 132, 238, 0.16);
+  --hub-module-hydraulic: #1596AD;
+  --hub-module-hydraulic-soft: rgba(21, 150, 173, 0.16);
+  --hub-module-pctt: var(--danger);
+  --hub-module-pctt-soft: color-mix(in srgb, var(--danger) 16%, transparent);
+  --hub-module-iot: var(--success);
+  --hub-module-iot-soft: color-mix(in srgb, var(--success) 16%, transparent);
+  --hub-module-reports: var(--alert-bd2);
+  --hub-module-reports-soft: color-mix(in srgb, var(--alert-bd2) 16%, transparent);
+  --hub-module-ai: #7656C9;
+  --hub-module-ai-soft: rgba(118, 86, 201, 0.16);
+  --hub-module-settings: var(--text-muted);
+  --hub-module-settings-soft: color-mix(in srgb, var(--text-muted) 14%, transparent);
   position: fixed; inset: 0; z-index: 9999;
-  background: rgba(7, 18, 38, .94);
+  background: color-mix(in srgb, var(--color-background) 94%, var(--primary) 6%);
   backdrop-filter: blur(8px);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   opacity: 0; transition: opacity .5s ease;
   overflow: hidden;
+}
+body.dark #moduleHub {
+  --hub-module-command: #65ACFF;
+  --hub-module-hydraulic: #43D4E5;
+  --hub-module-pctt: #FF7379;
+  --hub-module-iot: #55DE91;
+  --hub-module-reports: #FFAA55;
+  --hub-module-ai: #B59AF2;
+  --hub-module-settings: #B7C9D7;
 }
 #moduleHub.visible { opacity: 1; }
 #moduleHub.hiding  { opacity: 0; pointer-events: none; }
 
 #moduleHub::before {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(30,56,131,.12), rgba(25,43,84,.06));
+  background: none;
 }
 
 .hub-header {
@@ -179,13 +202,13 @@ const HUB_CSS = `
   margin: 0 0 6px;
 }
 .hub-header p {
-  font-size: 13px; color: rgba(255,255,255,.45); margin: 0;
+  font-size: 13px; color: var(--hub-muted); margin: 0;
 }
 .hub-header .hub-user-badge {
   display: inline-flex; align-items: center; gap: 7px;
   padding: 5px 14px; border-radius: 20px;
-  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
-  font-size: 12px; color: rgba(255,255,255,.7);
+  background: var(--hub-primary-soft); border: 1px solid var(--hub-border);
+  font-size: 12px; color: var(--hub-text-secondary);
   margin-top: 10px;
 }
 
@@ -219,7 +242,7 @@ const HUB_CSS = `
 .hub-center-logo svg { width: 38px; height: 38px; color: var(--hub-primary); }
 .hub-center-label {
   font-size: 10px; font-weight: 700; letter-spacing: .12em;
-  text-transform: uppercase; color: rgba(255,255,255,.35);
+  text-transform: uppercase; color: var(--hub-muted);
 }
 
 /* Module node items — scale/border driven by HUB_CONFIG at runtime via JS */
@@ -257,7 +280,7 @@ const HUB_CSS = `
 .hub-icon-btn .hub-node-label {
   position: absolute; bottom: -38px; left: 50%; transform: translateX(-50%);
   font-size: clamp(9px, 1.1vw, 11px); font-weight: 700; text-align: center; white-space: pre;
-  color: rgba(255,255,255,.5); line-height: 1.3; pointer-events: none;
+  color: var(--hub-muted); line-height: 1.3; pointer-events: none;
   transition: color .3s, text-shadow .3s;
 }
 /* hover scale is applied via JS using HUB_CONFIG.hoverScale */
@@ -271,13 +294,13 @@ const HUB_CSS = `
   position: relative; z-index: 2; margin-top: 40px;
   padding: 8px 24px; border-radius: 20px;
   font-size: 12px; font-weight: 600; cursor: pointer;
-  background: transparent; border: 1px solid rgba(255,255,255,.15);
-  color: rgba(255,255,255,.4); letter-spacing: .05em;
+  background: transparent; border: 1px solid var(--hub-border);
+  color: var(--hub-muted); letter-spacing: .05em;
   transition: all .2s;
 }
 .hub-skip:hover {
-  background: rgba(255,255,255,.05); color: rgba(255,255,255,.7);
-  border-color: rgba(255,255,255,.3);
+  background: var(--hub-primary-soft); color: var(--hub-primary);
+  border-color: var(--hub-primary);
 }
 
 /* ── Grid layout ──────────────────────────────────────────────── */
@@ -411,8 +434,8 @@ window.showModuleHub = function(onSelect) {
               width:${iconPx}px; height:${iconPx}px;
               border-radius:${iconBorderRadius};
               border-width:${HUB_CONFIG.borderWidth}px;
-              border-color:${accessible ? g.color : 'var(--hub-border)'};
-              ${isSquare ? `background:color-mix(in srgb, var(--hub-surface) 94%, ${g.color} 6%);` : ''}
+              border-color:${accessible ? 'var(--hub-item-color)' : 'var(--hub-border)'};
+              ${isSquare ? 'background:color-mix(in srgb, var(--hub-surface) 94%, var(--hub-item-color) 6%);' : ''}
               ${lockedStyle}
             "
             onclick="window._hubSelect('${g.id}')"
@@ -455,9 +478,9 @@ window.showModuleHub = function(onSelect) {
             --hub-item-glow:${accessible ? g.glow : 'transparent'};
             border-radius: ${iconBorderRadius};
             border-width: ${HUB_CONFIG.borderWidth}px;
-            border-color: ${accessible ? g.color : 'var(--hub-border)'};
-            box-shadow: 0 0 0 0 ${g.glow};
-            ${isSquare ? `background:color-mix(in srgb, var(--hub-surface) 94%, ${g.color} 6%);` : ''}
+            border-color: ${accessible ? 'var(--hub-item-color)' : 'var(--hub-border)'};
+            box-shadow: 0 0 0 0 var(--hub-item-glow);
+            ${isSquare ? 'background:color-mix(in srgb, var(--hub-surface) 94%, var(--hub-item-color) 6%);' : ''}
             ${lockedStyle}
           "
           onclick="window._hubSelect('${g.id}')"
@@ -540,21 +563,21 @@ window.showModuleHub = function(onSelect) {
       btn.style.transform = isGridBtn
         ? `scale(${scale})`
         : `translate(-50%, -50%) scale(${scale})`;
-      btn.style.boxShadow = `0 8px 24px ${g.glow}`;
-      btn.style.borderColor = g.color;
+      btn.style.boxShadow = '0 8px 24px var(--hub-item-glow)';
+      btn.style.borderColor = 'var(--hub-item-color)';
       btn.style.borderWidth  = '1px';
       if (isSquare) {
-        btn.style.background = `color-mix(in srgb, var(--hub-elevated) 88%, ${g.color} 12%)`;
+        btn.style.background = 'color-mix(in srgb, var(--hub-elevated) 88%, var(--hub-item-color) 12%)';
       } else {
-        btn.style.background = `color-mix(in srgb, var(--hub-elevated) 88%, ${g.color} 12%)`;
+        btn.style.background = 'color-mix(in srgb, var(--hub-elevated) 88%, var(--hub-item-color) 12%)';
       }
       _hubSpeak(g.label);
     } else {
       btn.style.transform   = isGridBtn ? 'scale(1)' : 'translate(-50%, -50%) scale(1)';
       btn.style.boxShadow   = '';
-      btn.style.borderColor = g.color;
+      btn.style.borderColor = 'var(--hub-item-color)';
       btn.style.borderWidth = '1px';
-      btn.style.background  = `color-mix(in srgb, var(--hub-surface) 94%, ${g.color} 6%)`;
+      btn.style.background  = 'color-mix(in srgb, var(--hub-surface) 94%, var(--hub-item-color) 6%)';
       if (HUB_CONFIG.sound.enabled && window.speechSynthesis) window.speechSynthesis.cancel();
     }
   };
@@ -564,7 +587,7 @@ window.showModuleHub = function(onSelect) {
     if (typeof showToast === 'function') { showToast(msg, type || 'warning'); return; }
     // Inline fallback toast
     const t = document.createElement('div');
-    t.style.cssText = 'position:fixed;top:70px;right:20px;z-index:99999;padding:12px 18px;border-radius:12px;font-size:13px;font-weight:600;background:#1e293b;border:1px solid #f59e0b;color:#fbbf24;box-shadow:0 8px 24px rgba(0,0,0,.5);max-width:340px;transition:opacity .4s';
+    t.style.cssText = 'position:fixed;top:70px;right:20px;z-index:99999;padding:12px 18px;border-radius:12px;font-size:13px;font-weight:600;background:var(--bg-elevated);border:1px solid var(--warning);color:var(--warning-text);box-shadow:var(--shadow-dropdown);max-width:340px;transition:opacity .4s';
     t.textContent = msg;
     document.body.appendChild(t);
     setTimeout(() => { t.style.opacity = '0'; setTimeout(() => t.remove(), 400); }, 3500);

@@ -8,24 +8,34 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap"
     rel="stylesheet">
-  <script src="js/themeEngine.js?v=20260808-evg-shell-31"></script>
+  <script src="js/themeEngine.js?v=20260808-surface-picker-40"></script>
   <script>
-    // Only brand-identity colors flow onto this screen (multi-brand support);
-    // --text/--bg/--surface stay fixed for the dark-glass splash design below.
     (function initLoginBrand() {
       const presetId = localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
-      const seed = (window.BRAND_SEEDS && (window.BRAND_SEEDS[presetId] || window.BRAND_SEEDS['evg-emerald']));
-      if (!seed) return;
+      const mode = localStorage.getItem('ioc_theme') || 'light';
+      const tokens = window.ThemeEngine?.resolveSemanticTokens?.(presetId, mode === 'dark');
+      if (!tokens) return;
       const root = document.documentElement;
-      root.style.setProperty('--primary', seed.brandGreen || '#30BD6F');
-      root.style.setProperty('--primary-hover', seed.brandGreenHover || '#1BA05C');
-      root.style.setProperty('--info', seed.activeBlue || '#2984EE');
-      root.style.setProperty('--cyan', seed.sidebarCyan || '#8BE7B5');
-      root.style.setProperty(
-        '--login-background',
-        `linear-gradient(180deg, ${seed.sidebarTop || seed.sidebarNavy} 0%, ${seed.sidebarBottom || seed.sidebarNavy} 100%)`
-      );
-      root.style.setProperty('--login-surface', seed.surfaceDark || '#142D52');
+      const aliases = {
+        '--login-background': '--color-background',
+        '--login-surface': '--color-card-background',
+        '--login-input': '--color-input-background',
+        '--login-input-focus': '--color-surface-selected',
+        '--login-border': '--color-card-border',
+        '--text': '--color-text-primary',
+        '--muted': '--color-text-muted',
+        '--primary': '--color-primary',
+        '--primary-hover': '--color-primary-hover',
+        '--on-primary': '--color-button-primary-text',
+        '--info': '--color-info',
+        '--success': '--color-success',
+        '--warning': '--color-warning',
+        '--danger': '--color-danger'
+      };
+      Object.entries(tokens).forEach(([name, value]) => root.style.setProperty(name, value));
+      Object.entries(aliases).forEach(([alias, token]) => root.style.setProperty(alias, tokens[token]));
+      root.dataset.theme = mode;
+      root.dataset.brandPreset = presetId;
     })();
   </script>
   <style>
@@ -37,24 +47,24 @@
       padding: 0
     }
 
-    /* Login remains dark for stable authentication contrast while its
-       navigation background and primary action follow the active preset. */
     :root {
-      --bg: #0B1D33;
-      --surface: #193A6D;
-      --login-background: linear-gradient(180deg, #0F5B55 0%, #123D42 100%);
-      --login-surface: #142D52;
+      --login-background: #F3F6F9;
+      --login-surface: #FFFFFF;
+      --login-input: #FFFFFF;
+      --login-input-focus: rgba(48, 189, 111, .10);
+      --login-border: #DBDFF1;
       --primary: #30BD6F;
       --primary-hover: #1BA05C;
+      --on-primary: #06101F;
       --info: #2984EE;
       --success: #5BA9FF;
       --status-online: #45D483;
       --status-online-glow: rgba(69, 212, 131, .52);
       --warning: #F6C000;
       --danger: #E14E54;
-      --text: #F8FBFF;
-      --muted: #A4B8CD;
-      --cyan: #8BE7B5;
+      --text: #18183E;
+      --muted: #5F6678;
+      --cyan: #8FDEB1;
     }
 
     body {
@@ -79,8 +89,7 @@
       position: fixed;
       inset: 0;
       z-index: 1;
-      background-image: linear-gradient(rgba(0, 200, 255, .03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 200, 255, .03) 1px, transparent 1px);
-      background-size: 50px 50px;
+      display: none;
     }
 
     .orb {
@@ -130,12 +139,12 @@
     }
 
     .card {
-      background: color-mix(in srgb, var(--login-surface) 96%, transparent);
-      border: 1px solid rgba(91, 169, 255, .24);
+      background: var(--login-surface);
+      border: 1px solid var(--login-border);
       border-radius: 12px;
       padding: 44px 38px;
       backdrop-filter: blur(20px);
-      box-shadow: 0 16px 40px rgba(2, 10, 24, .28);
+      box-shadow: var(--color-card-shadow);
       animation: ca .6s ease-out;
     }
 
@@ -193,7 +202,7 @@
       font-size: 24px;
       font-weight: 700;
       letter-spacing: 3px;
-      color: #FFFFFF;
+      color: var(--text);
     }
 
     .logo-text span {
@@ -206,7 +215,7 @@
 
     .divider {
       height: 1px;
-      background: rgba(91, 169, 255, .24);
+      background: var(--login-border);
       margin: 18px 0 26px;
       opacity: .35
     }
@@ -248,8 +257,8 @@
     input.inp {
       width: 100%;
       padding: 13px 13px 13px 42px;
-      background: #18355F;
-      border: 1px solid rgba(91, 169, 255, .24);
+      background: var(--login-input);
+      border: 1px solid var(--login-border);
       border-radius: 9px;
       color: var(--text);
       font-family: 'Inter', sans-serif;
@@ -262,11 +271,11 @@
     input.inp:focus {
       border-color: var(--primary);
       box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 22%, transparent);
-      background: #1D4076;
+      background: var(--login-input-focus);
     }
 
     input.inp::placeholder {
-      color: #71849A
+      color: var(--color-input-placeholder)
     }
 
     .extras {
@@ -301,7 +310,7 @@
       background: var(--primary);
       border: none;
       border-radius: 9px;
-      color: #fff;
+      color: var(--on-primary);
       font-family: 'Inter', sans-serif;
       font-size: 13px;
       font-weight: 600;
@@ -322,7 +331,7 @@
       width: 100%;
       padding: 11px;
       background: none;
-      border: 1px solid rgba(0, 200, 255, .2);
+      border: 1px solid var(--login-border);
       border-radius: 9px;
       color: var(--muted);
       font-family: 'Inter', sans-serif;
@@ -333,7 +342,7 @@
     }
 
     .btn-ghost:hover {
-      border-color: rgba(0, 200, 255, .4);
+      border-color: var(--primary);
       color: var(--primary)
     }
 
@@ -374,26 +383,26 @@
       justify-content: space-between;
       margin-top: 28px;
       padding-top: 18px;
-      border-top: 1px solid rgba(0, 200, 255, .1);
+      border-top: 1px solid var(--login-border);
       font-size: 11px;
       color: var(--muted);
       font-family: 'Roboto Mono', monospace
     }
 
     .err {
-      background: rgba(255, 23, 68, .1);
-      border: 1px solid rgba(255, 23, 68, .3);
+      background: var(--color-danger-soft);
+      border: 1px solid var(--danger);
       border-radius: 8px;
       padding: 9px 13px;
       font-size: 13px;
-      color: #ff6b6b;
+      color: var(--danger);
       margin-bottom: 14px;
       display: none
     }
 
     .info-box {
-      background: rgba(0, 200, 255, .07);
-      border: 1px solid rgba(0, 200, 255, .2);
+      background: var(--color-info-soft);
+      border: 1px solid var(--info);
       border-radius: 8px;
       padding: 11px 14px;
       font-size: 13px;
@@ -427,18 +436,18 @@
 
     .tfa-m {
       padding: 14px 10px;
-      border: 1px solid rgba(0, 200, 255, .14);
+      border: 1px solid var(--login-border);
       border-radius: 10px;
       cursor: pointer;
       text-align: center;
       transition: all .2s;
-      background: #18355F
+      background: var(--login-input)
     }
 
     .tfa-m:hover,
     .tfa-m.sel {
       border-color: var(--primary);
-      background: #1D4076;
+      background: var(--login-input-focus);
       outline: none
     }
 
@@ -470,8 +479,8 @@
     .otp-d {
       width: 46px;
       height: 54px;
-      background: rgba(0, 200, 255, .04);
-      border: 1.5px solid rgba(0, 200, 255, .2);
+      background: var(--login-input);
+      border: 1.5px solid var(--login-border);
       border-radius: 10px;
       text-align: center;
       font-size: 22px;
@@ -484,8 +493,8 @@
 
     .otp-d:focus {
       border-color: var(--primary);
-      background: rgba(0, 200, 255, .08);
-      box-shadow: 0 0 0 3px rgba(0, 200, 255, .12)
+      background: var(--login-input-focus);
+      box-shadow: 0 0 0 3px var(--primary-soft)
     }
 
     .otp-timer {
@@ -528,20 +537,20 @@
       cursor: pointer;
       padding: 6px 10px;
       border-radius: 7px;
-      border: 1px solid color-mix(in srgb, var(--quick-color) 28%, transparent);
-      background: color-mix(in srgb, #18355F 94%, var(--quick-color) 6%);
+      border: 1px solid var(--login-border);
+      background: var(--login-input);
       font-size: 11px;
       transition: background .2s, border-color .2s, box-shadow .2s;
     }
 
     .quick-user:hover {
       border-color: color-mix(in srgb, var(--quick-color) 70%, transparent);
-      background: color-mix(in srgb, #1D4076 88%, var(--quick-color) 12%);
+      background: color-mix(in srgb, var(--login-input) 88%, var(--quick-color) 12%);
     }
 
     .quick-user.selected {
       border-color: var(--quick-color);
-      background: color-mix(in srgb, #1D4076 82%, var(--quick-color) 18%);
+      background: color-mix(in srgb, var(--login-input) 82%, var(--quick-color) 18%);
       box-shadow: 0 0 0 2px color-mix(in srgb, var(--quick-color) 18%, transparent);
     }
 
@@ -554,12 +563,32 @@
 
     .quick-role {
       margin-left: 4px;
-      color: #fff;
+      color: var(--on-primary);
       background: var(--quick-color);
       border: 1px solid color-mix(in srgb, var(--quick-color) 82%, #fff 18%);
       border-radius: 4px;
       padding: 1px 5px;
       font-size: 9px;
+    }
+
+    @media (max-width: 600px), (max-height: 760px) {
+      body {
+        align-items: flex-start;
+        overflow-x: hidden;
+        overflow-y: auto;
+      }
+
+      .wrap {
+        padding: 12px;
+      }
+
+      .card {
+        padding: 28px 20px;
+      }
+
+      .foot {
+        gap: 16px;
+      }
     }
   </style>
 </head>
@@ -867,18 +896,8 @@
     // Build quick-select user cards
     let selectedUser = MOCK_USERS[0];
     (function buildQuickUsers() {
-      const roleColors = {
-        SUPERADMIN: '#ff1744',
-        SYSADMIN: '#ff1744',
-        CHI_CUC_TRUONG: '#7c3aed',
-        DIEU_HANH: '#f59e0b',
-        KY_THUAT: '#0066cc',
-        QUAN_LY_DE: '#00b4d8',
-        HR: '#00a86b',
-        VIEWER: '#718096'
-      };
       const html = MOCK_USERS.map(u => `
-        <div id="qu-${u.id}" class="quick-user" style="--quick-color:${roleColors[u.role]}" onclick="selectUser(${u.id})">
+        <div id="qu-${u.id}" class="quick-user" style="--quick-color:var(--primary)" onclick="selectUser(${u.id})">
           <span class="quick-avatar">${u.avatar}</span>
           <span style="color:var(--text)">${u.name.split(' ').pop()}</span>
           <span class="quick-role">${ROLE_LABELS[u.role]}</span>
