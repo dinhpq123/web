@@ -4,12 +4,26 @@
   const modal = document.getElementById('labModal');
   const drawer = document.getElementById('labDrawer');
   const toastHost = document.getElementById('toastHost');
+  const query = new URLSearchParams(window.location.search);
+  let activePreset = query.get('preset') || localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
+
+  function updatePresetUi() {
+    document.querySelectorAll('[data-action="preset"]').forEach(function (button) {
+      const isActive = button.dataset.preset === activePreset;
+      button.classList.toggle('is-active', isActive);
+      button.setAttribute('aria-pressed', String(isActive));
+    });
+    const seed = window.BRAND_SEEDS?.[activePreset];
+    const tokenValue = document.getElementById('sidebarTokenValue');
+    if (seed && tokenValue) tokenValue.textContent = `${seed.sidebarTop} → ${seed.sidebarBottom}`;
+  }
 
   function setTheme(mode) {
     body.classList.toggle('dark', mode === 'dark');
     body.classList.toggle('light', mode !== 'dark');
     localStorage.setItem('ioc_theme', mode);
-    if (window.ThemeEngine) window.ThemeEngine.applyGlobalTheme('evg-emerald', mode);
+    if (window.ThemeEngine) window.ThemeEngine.applyGlobalTheme(activePreset, mode);
+    updatePresetUi();
     const button = document.querySelector('[data-action="theme"]');
     if (button) button.textContent = mode === 'dark' ? 'Sáng' : 'Tối';
   }
@@ -23,6 +37,10 @@
     const action = trigger.dataset.action;
     if (action === 'collapse') shell.classList.toggle('is-collapsed');
     if (action === 'theme') setTheme(body.classList.contains('dark') ? 'light' : 'dark');
+    if (action === 'preset') {
+      activePreset = trigger.dataset.preset;
+      setTheme(body.classList.contains('dark') ? 'dark' : 'light');
+    }
     if (action === 'dropdown') trigger.closest('.tl-dropdown').classList.toggle('open');
     if (action === 'modal') modal.hidden = false;
     if (action === 'close-modal') modal.hidden = true;
@@ -39,6 +57,6 @@
 
   modal.addEventListener('click', function (event) { if (event.target === modal) modal.hidden = true; });
   document.addEventListener('keydown', function (event) { if (event.key === 'Escape') { modal.hidden = true; drawer.hidden = true; } });
-  const requestedTheme = new URLSearchParams(window.location.search).get('theme');
+  const requestedTheme = query.get('theme');
   setTheme(requestedTheme === 'dark' || (!requestedTheme && localStorage.getItem('ioc_theme') === 'dark') ? 'dark' : 'light');
 })();

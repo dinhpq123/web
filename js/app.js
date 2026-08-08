@@ -1641,18 +1641,24 @@ function renderSettingsUi() {
   ];
 
   const FONTS = ['Inter', 'Roboto', 'Open Sans', 'Nunito', 'IBM Plex Sans', 'DM Sans'];
-  const PALETTES = [
-    { label: 'Ocean Blue (Mặc định)', accent: '#00c8ff', primary: '#0050cc' },
-    { label: 'Emerald Green', accent: '#00e676', primary: '#00897b' },
-    { label: 'Blue Intelligence', accent: '#3699FF', primary: 'var(--purple)' },
-    { label: 'Sunset Orange', accent: '#ff6d00', primary: '#f59e0b' },
-    { label: 'Crimson Red', accent: '#ff1744', primary: '#c62828' },
-    { label: 'Monochrome', accent: '#b0bec5', primary: 'var(--muted)' },
+  const BRAND_THEME_PRESETS = [
+    {
+      id: 'evg-emerald',
+      label: 'EVG Hadiwa tương thích',
+      description: 'Sidebar teal xanh, hành động EVG green, trạng thái giữ màu ngữ nghĩa.',
+      colors: ['#0F5B55', '#123D42', '#30BD6F']
+    },
+    {
+      id: 'evg-classic-navy',
+      label: 'EVG Classic Navy (Backup)',
+      description: 'Bản navy đã dùng trước đây, được giữ nguyên để có thể khôi phục.',
+      colors: ['#1E3883', '#192B54', '#41A7FF']
+    }
   ];
 
   const curFont = uiCfg.font || 'Inter';
   const curFontSize = uiCfg.fontSize || 14;
-  const curPalette = uiCfg.palette || 0;
+  const currentBrandPreset = localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
   const sidebarOpacity = uiCfg.sidebarOpacity || 100;
   const showWsBar = uiCfg.showWsBar !== false;
   const borderRadius = uiCfg.borderRadius || 10;
@@ -1684,29 +1690,27 @@ function renderSettingsUi() {
     </div>
   </div>
 
-  <!-- 2. Color Palette (mock demo) -->
+  <!-- 2. Functional brand theme presets -->
   <div class="card" style="margin-bottom:16px">
     <div class="card-header">
       <span class="card-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:5px"><circle cx="13.5" cy="6.5" r="2.5"/><path d="M17.89 17.707A7.5 7.5 0 016.5 9c0-.818.132-1.604.373-2.34M22 22l-6-6"/><path d="M2 2l20 20"/></svg> Màu sắc chủ đề</span>
-      <span class="badge badge-blue" style="font-size:10px">Demo UI</span>
+      <span class="badge badge-green" style="font-size:10px">Áp dụng ngay</span>
     </div>
     <div class="card-body">
-      <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Chọn bộ màu để thay đổi giao diện toàn bộ ứng dụng. Áp dụng sau khi nhấn Lưu thay đổi.</p>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
-        ${PALETTES.map((p, i) => `
-        <div onclick="selectUiPalette(${i})" id="uiPalette${i}" style="padding:12px;border-radius:10px;border:2px solid ${i === curPalette ? p.accent : 'var(--border)'};background:rgba(0,0,0,.2);cursor:pointer;transition:.2s">
-          <div style="display:flex;gap:8px;margin-bottom:8px">
-            <div style="width:20px;height:20px;border-radius:50%;background:${p.primary}"></div>
-            <div style="width:20px;height:20px;border-radius:50%;background:${p.accent}"></div>
-            <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,${p.primary},${p.accent})"></div>
-          </div>
-          <div style="font-size:11px;color:var(--text)">${p.label}</div>
-          ${i === curPalette ? '<div style="font-size:10px;color:var(--primary);margin-top:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="3" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đang dùng</div>' : ''}
-        </div>`).join('')}
-      </div>
-      <div class="grid-2">
-        <div class="form-group"><label class="form-label">Màu Primary (Accent)</label><div style="display:flex;gap:8px;align-items:center"><input type="color" value="${PALETTES[curPalette].accent}" class="form-control" style="width:60px;height:38px;padding:2px;cursor:pointer" onchange="showToast('Demo: Màu accent đã thay đổi!')"><span style="font-size:12px;color:var(--muted)">${PALETTES[curPalette].accent}</span></div></div>
-        <div class="form-group"><label class="form-label">Màu Sidebar</label><div style="display:flex;gap:8px;align-items:center"><input type="color" value="#040e24" class="form-control" style="width:60px;height:38px;padding:2px;cursor:pointer" onchange="showToast('Demo: Màu sidebar đã thay đổi!')"><span style="font-size:12px;color:var(--muted)">#040e24</span></div></div>
+      <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Preset được áp dụng ngay và lưu trên trình duyệt. Bản navy cũ luôn có thể khôi phục tại đây.</p>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
+        ${BRAND_THEME_PRESETS.map(p => {
+          const isCurrent = p.id === currentBrandPreset;
+          return `
+          <button type="button" onclick="selectBrandThemePreset('${p.id}')" aria-pressed="${isCurrent}" style="padding:14px;text-align:left;border-radius:8px;border:1px solid ${isCurrent ? 'var(--primary)' : 'var(--border)'};background:${isCurrent ? 'var(--primary-soft)' : 'var(--bg-card)'};color:var(--text);cursor:pointer;transition:.2s">
+            <span style="display:flex;gap:7px;margin-bottom:10px" aria-hidden="true">
+              ${p.colors.map(color => `<i style="display:block;width:28px;height:18px;border-radius:4px;background:${color};border:1px solid color-mix(in srgb, ${color} 72%, white 28%)"></i>`).join('')}
+            </span>
+            <strong style="display:block;font-size:12px;margin-bottom:4px">${p.label}</strong>
+            <span style="display:block;font-size:11px;line-height:1.45;color:var(--muted)">${p.description}</span>
+            ${isCurrent ? '<span style="display:block;font-size:10px;color:var(--primary-text);margin-top:8px">✓ Đang sử dụng</span>' : ''}
+          </button>`;
+        }).join('')}
       </div>
     </div>
   </div>
@@ -2089,12 +2093,13 @@ function previewFont(fontName) {
   showToast(`Demo: Font đang xem trước — ${fontName}`);
 }
 
-function selectUiPalette(idx) {
-  document.querySelectorAll('[id^="uiPalette"]').forEach((el, i) => {
-    el.style.borderColor = i === idx ? 'var(--primary)' : 'var(--border)';
-  });
-  saveUiSetting('palette', idx);
-  showToast('Demo: Bộ màu đã chọn. Nhấn Lưu để áp dụng.');
+function selectBrandThemePreset(presetId) {
+  if (!window.ThemeEngine || !window.BRAND_SEEDS?.[presetId]) return;
+  const mode = localStorage.getItem('ioc_theme') || 'light';
+  window.ThemeEngine.applyGlobalTheme(presetId, mode);
+  const settingsContent = document.getElementById('settingsContent');
+  if (settingsContent) settingsContent.innerHTML = getSettingsTabContent();
+  showToast(presetId === 'evg-classic-navy' ? 'Đã khôi phục EVG Classic Navy.' : 'Đã áp dụng EVG Hadiwa tương thích.');
 }
 
 function setTickerSpeed(speed, btn) {

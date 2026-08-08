@@ -6,11 +6,43 @@
 const BRAND_SEEDS = {
   'evg-emerald': {
     id: 'evg-emerald',
-    name: 'EVG CMS / Clean Energy',
+    name: 'EVG Hadiwa / Teal Green',
+    sidebarNavy: '#123D42',
+    sidebarTop: '#0F5B55',
+    sidebarBottom: '#123D42',
+    sidebarCyan: '#8BE7B5',
+    sidebarBorder: 'rgba(139, 231, 181, 0.22)',
+    successLight: '#30BD6F',
+    successDark: '#45D483',
+    successTextLight: '#137A43',
+    successTextDark: '#83E8AD',
+    activeBlue: '#2984EE',
+    activeBlueHover: '#1877E7',
+    primaryDark: '#45D483',
+    primaryDarkHover: '#62DE97',
+    navActiveStart: 'rgba(48,189,111,0.12)',
+    navActiveEnd: 'rgba(48,189,111,0.30)',
+    navActiveBorder: '#58CB89',
+    navActiveShadow: '0 0 22px rgba(48,189,111,0.28) inset',
+    headerDark: '#192B54',
+    workspaceDark: 'linear-gradient(180deg, #0B1D33 0%, #142D52 100%)',
+    brandGreen: '#30BD6F',
+    brandGreenHover: '#1BA05C',
+    brandGreenActive: '#168B50',
+    appBgLight: '#F3F6F9',
+    appBgDark: '#0B1D33',
+    surfaceDark: '#142D52',
+    cardDark: '#193A6D',
+    elevatedDark: '#20457E'
+  },
+  'evg-classic-navy': {
+    id: 'evg-classic-navy',
+    name: 'EVG Classic Navy (Backup)',
     sidebarNavy: '#192B54',
     sidebarTop: '#1E3883',
     sidebarBottom: '#192B54',
     sidebarCyan: '#1EF5DF',
+    sidebarBorder: 'rgba(113, 166, 255, 0.28)',
     successLight: '#30BD6F',
     successDark: '#45D483',
     successTextLight: '#137A43',
@@ -21,6 +53,10 @@ const BRAND_SEEDS = {
     primaryDarkHover: '#62DE97',
     navActiveStart: 'rgba(77,191,252,0.05)',
     navActiveEnd: 'rgba(77,179,252,0.50)',
+    navActiveBorder: '#41A7FF',
+    navActiveShadow: '0 0 25px #4C76D6B2 inset',
+    headerDark: '#192B54',
+    workspaceDark: 'linear-gradient(180deg, #1E3883 0%, #192B54 100%)',
     brandGreen: '#30BD6F',
     brandGreenHover: '#1BA05C',
     brandGreenActive: '#168B50',
@@ -149,6 +185,9 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
   const seed = BRAND_SEEDS[presetId] || BRAND_SEEDS['evg-emerald'];
   const sidebarBg = `linear-gradient(180deg, ${seed.sidebarTop || seed.sidebarNavy} 0%, ${seed.sidebarBottom || seed.sidebarNavy} 100%)`;
   const sidebarActive = `linear-gradient(180deg, ${seed.navActiveStart || seed.activeBlue} 0%, ${seed.navActiveEnd || seed.activeBlueEnd || seed.activeBlue} 100%)`;
+  const sidebarBorder = seed.sidebarBorder || 'rgba(255, 255, 255, 0.16)';
+  const sidebarActiveBorder = seed.navActiveBorder || seed.activeBlue || '#2984EE';
+  const sidebarActiveShadow = seed.navActiveShadow || `0 0 22px ${themeHexToRgba(seed.activeBlue || '#2984EE', 0.28)} inset`;
 
   if (!isDark) {
     // ── LIGHT MODE VISUAL HIERARCHY ──
@@ -204,7 +243,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--color-header-text-secondary': textSecondary,
 
       '--color-sidebar-background': sidebarBg,
-      '--color-sidebar-border': 'rgba(255, 255, 255, 0.10)',
+      '--color-sidebar-border': sidebarBorder,
       '--color-sidebar-item-hover': sidebarActive,
       '--color-sidebar-item-active': sidebarItemActive,
       '--color-sidebar-text': sidebarText,
@@ -285,8 +324,11 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--bg-dropdown': '#FFFFFF',
       '--bg-dropdown2': '#F9F9F9',
       '--sidebar-background': sidebarBg,
+      '--sidebar-border': sidebarBorder,
       '--sidebar-item-hover': sidebarActive,
       '--sidebar-item-active': sidebarItemActive,
+      '--sidebar-active-border': sidebarActiveBorder,
+      '--sidebar-active-shadow': sidebarActiveShadow,
       '--sidebar-text': sidebarText,
       '--sidebar-text-active': sidebarTextActive,
       '--sidebar-section-accent': sidebarGroupLabel,
@@ -343,9 +385,10 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
     const buttonPrimaryHover = seed.brandGreenHover || '#1BA05C';
     const buttonPrimaryText = ensureContrast('#FFFFFF', buttonPrimaryBackground, 4.5);
     const primaryText = seed.successTextDark || ensureContrast(brandPrimary, surface, 4.5);
-    const navigationBase = seed.sidebarBottom || seed.sidebarNavy;
+    const navigationBase = seed.headerDark || seed.sidebarBottom || seed.sidebarNavy;
     const headerBackground = `linear-gradient(90deg, ${navigationBase} 0%, ${surface} 100%)`;
     const tickerBackground = `linear-gradient(90deg, ${surface} 0%, ${navigationBase} 50%, ${surface} 100%)`;
+    const workspaceBackground = seed.workspaceDark || `linear-gradient(180deg, ${appBg} 0%, ${surface} 100%)`;
 
     return {
       '--color-background': appBg,
@@ -370,7 +413,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--color-header-text-secondary': textSecondary,
 
       '--color-sidebar-background': sidebarBg,
-      '--color-sidebar-border': 'rgba(113, 166, 255, 0.28)',
+      '--color-sidebar-border': sidebarBorder,
       '--color-sidebar-item-hover': sidebarActive,
       '--color-sidebar-item-active': sidebarItemActive,
       '--color-sidebar-text': textPrimary,
@@ -434,7 +477,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       // Backward compatibility aliases
       '--bg-app': appBg,
       '--bg-base': appBg,
-      '--workspace-background': sidebarBg,
+      '--workspace-background': workspaceBackground,
       '--bg-surface': surface,
       '--bg-card': cardBg,
       '--bg-elevated': elevated,
@@ -451,8 +494,11 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--bg-dropdown': elevated,
       '--bg-dropdown2': '#18355F',
       '--sidebar-background': sidebarBg,
+      '--sidebar-border': sidebarBorder,
       '--sidebar-item-hover': sidebarActive,
       '--sidebar-item-active': sidebarItemActive,
+      '--sidebar-active-border': sidebarActiveBorder,
+      '--sidebar-active-shadow': sidebarActiveShadow,
       '--sidebar-text': textPrimary,
       '--sidebar-text-active': '#FFFFFF',
       '--sidebar-section-accent': sidebarGroupLabel,
@@ -507,15 +553,11 @@ function applyGlobalTheme(presetId = null, mode = null) {
 
   for (const [prop, val] of Object.entries(tokens)) {
     root.style.setProperty(prop, val);
+    document.body.style.setProperty(prop, val);
   }
 
-  // The mode classes provide static fallbacks on body; keep the adaptive
-  // workspace token authoritative when a runtime preset is resolved.
-  document.body.style.setProperty('--workspace-background', tokens['--workspace-background']);
-  document.body.style.setProperty('--header-background', tokens['--header-background']);
-  document.body.style.setProperty('--ticker-background', tokens['--ticker-background']);
-  document.body.style.setProperty('--ticker-border', tokens['--ticker-border']);
-  document.body.style.setProperty('--ticker-text', tokens['--ticker-text']);
+  // Mode classes on body are static no-JS fallbacks. Runtime tokens must also
+  // live on body so descendants do not inherit stale fallback values.
 
   console.log(`[ThemeEngine] Applied Preset: ${currentPreset} | Mode: ${currentMode}`);
 }

@@ -21,18 +21,20 @@ body.light {
   --cyan-soft: rgba(8, 127, 140, 0.12);
   --accent-soft: #D9FBF6;
 
-  --sidebar-background: linear-gradient(180deg, #1E3883 0%, #192B54 100%);
+  --sidebar-background: linear-gradient(180deg, #0F5B55 0%, #123D42 100%);
   --workspace-background: var(--bg-app);
   --header-background: var(--bg-header);
   --ticker-background: var(--bg-secondary);
   --ticker-border: var(--border);
   --ticker-text: var(--text-secondary);
-  --sidebar-item-hover: linear-gradient(180deg, rgba(77, 191, 252, 0.05) 0%, rgba(77, 179, 252, 0.50) 100%);
-  --sidebar-item-active: linear-gradient(180deg, rgba(77, 191, 252, 0.05) 0%, rgba(77, 179, 252, 0.50) 100%);
+  --sidebar-item-hover: linear-gradient(180deg, rgba(48, 189, 111, 0.12) 0%, rgba(48, 189, 111, 0.30) 100%);
+  --sidebar-item-active: linear-gradient(180deg, rgba(48, 189, 111, 0.12) 0%, rgba(48, 189, 111, 0.30) 100%);
+  --sidebar-active-border: #58CB89;
+  --sidebar-active-shadow: 0 0 22px rgba(48, 189, 111, 0.28) inset;
   --sidebar-text: #FFFFFF;
   --sidebar-text-active: #FFFFFF;
-  --sidebar-section-accent: #1EF5DF;
-  --sidebar-border: rgba(113, 166, 255, 0.28);
+  --sidebar-section-accent: #8BE7B5;
+  --sidebar-border: rgba(139, 231, 181, 0.22);
 
   /* ── SEMANTIC STATUS ─────────────────────────── */
   --success: #30BD6F;
@@ -152,18 +154,20 @@ body.dark {
   --cyan-soft: rgba(77, 233, 220, 0.14);
   --accent-soft: rgba(30, 245, 223, 0.15);
 
-  --sidebar-background: linear-gradient(180deg, #1E3883 0%, #192B54 100%);
-  --workspace-background: linear-gradient(180deg, #1E3883 0%, #192B54 100%);
+  --sidebar-background: linear-gradient(180deg, #0F5B55 0%, #123D42 100%);
+  --workspace-background: linear-gradient(180deg, #0B1D33 0%, #142D52 100%);
   --header-background: linear-gradient(90deg, #192B54 0%, #142D52 100%);
   --ticker-background: linear-gradient(90deg, #142D52 0%, #192B54 50%, #142D52 100%);
   --ticker-border: rgba(91, 169, 255, 0.28);
   --ticker-text: #D1E2F4;
-  --sidebar-item-hover: linear-gradient(180deg, rgba(77, 191, 252, 0.05) 0%, rgba(77, 179, 252, 0.50) 100%);
-  --sidebar-item-active: linear-gradient(180deg, rgba(77, 191, 252, 0.05) 0%, rgba(77, 179, 252, 0.50) 100%);
+  --sidebar-item-hover: linear-gradient(180deg, rgba(48, 189, 111, 0.12) 0%, rgba(48, 189, 111, 0.30) 100%);
+  --sidebar-item-active: linear-gradient(180deg, rgba(48, 189, 111, 0.12) 0%, rgba(48, 189, 111, 0.30) 100%);
+  --sidebar-active-border: #58CB89;
+  --sidebar-active-shadow: 0 0 22px rgba(48, 189, 111, 0.28) inset;
   --sidebar-text: #EAF2FF;
   --sidebar-text-active: #FFFFFF;
-  --sidebar-section-accent: #1EF5DF;
-  --sidebar-border: rgba(113, 166, 255, 0.28);
+  --sidebar-section-accent: #8BE7B5;
+  --sidebar-border: rgba(139, 231, 181, 0.22);
 
   --success: #45D483;
   --success-hover: #62DE97;
@@ -439,8 +443,8 @@ body {
 .nav-item.active {
   background: var(--sidebar-item-active);
   color: var(--sidebar-text-active);
-  border: 1px solid #41A7FF;
-  box-shadow: 0 0 25px #4C76D6B2 inset;
+  border: 1px solid var(--sidebar-active-border);
+  box-shadow: var(--sidebar-active-shadow);
 }
 
 .nav-item.active::before {

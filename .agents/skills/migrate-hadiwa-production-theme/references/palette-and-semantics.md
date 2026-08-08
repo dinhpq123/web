@@ -11,14 +11,14 @@
 
 ## 1. Brand Seed
 
-Treat these values as canonical for the approved `evg-emerald` preset. EVG uses green for brand actions and selected controls, blue/navy for navigation and information, and semantic colors for operational state.
+Treat these values as canonical for the approved Hadiwa `evg-emerald` preset. It adapts EVG green into a restrained teal navigation shell while preserving blue for information and semantic colors for operational state.
 
 ```text
-Sidebar top          #1E3883
-Sidebar bottom       #192B54
-Sidebar section      #1EF5DF
-Sidebar active       rgba(77,191,252,.05) → rgba(77,179,252,.50)
-Sidebar active edge  #41A7FF
+Sidebar top          #0F5B55
+Sidebar bottom       #123D42
+Sidebar section      #8BE7B5
+Sidebar active       rgba(48,189,111,.12) → rgba(48,189,111,.30)
+Sidebar active edge  #58CB89
 Light primary        #30BD6F
 Light hover          #1BA05C
 Light active         #168B50
@@ -30,12 +30,26 @@ Dark primary         #45D483 (Hadiwa extension; EVG has no dark mode)
 Use exactly:
 
 ```css
+--sidebar-background: linear-gradient(180deg, #0F5B55 0%, #123D42 100%);
+--sidebar-item-active: linear-gradient(180deg, rgba(48,189,111,.12) 0%, rgba(48,189,111,.30) 100%);
+--sidebar-section-accent: #8BE7B5;
+--sidebar-active-border: #58CB89;
+--sidebar-active-shadow: 0 0 22px rgba(48,189,111,.28) inset;
+```
+
+Do not extend the teal navigation palette into workspace cards, charts, tables, or semantic statuses. It is a shell identity, not a coat of paint.
+
+### Exact EVG navy backup
+
+The extracted EVG source values remain available as `evg-classic-navy`. This is a faithful backup preset, not the approved Hadiwa default:
+
+```css
 --sidebar-background: linear-gradient(180deg, #1E3883 0%, #192B54 100%);
 --sidebar-item-active: linear-gradient(180deg, rgba(77,191,252,.05) 0%, rgba(77,179,252,.5) 100%);
 --sidebar-section-accent: #1EF5DF;
+--sidebar-active-border: #41A7FF;
+--sidebar-active-shadow: 0 0 25px #4C76D6B2 inset;
 ```
-
-Do not substitute a near-blue, purple navy, green sidebar active state, or solid sidebar fill.
 
 ## 2. Light Matrix
 
@@ -145,7 +159,8 @@ body.dark {
 Approved dark shell:
 
 ```css
---workspace-background: linear-gradient(180deg, #1E3883 0%, #192B54 100%);
+--sidebar-background: linear-gradient(180deg, #0F5B55 0%, #123D42 100%);
+--workspace-background: linear-gradient(180deg, #0B1D33 0%, #142D52 100%);
 --header-background: linear-gradient(90deg, #192B54 0%, #142D52 100%);
 --ticker-background: linear-gradient(90deg, #142D52 0%, #192B54 50%, #142D52 100%);
 --shadow-card: 0 10px 28px rgba(2, 10, 24, .28);
@@ -160,9 +175,9 @@ Do not introduce `#030...` black panels or gray overlays as normal surfaces. Use
 Sidebar parent background  sidebar gradient
 Sidebar default text       #EAF2FF
 Sidebar active text        #FFFFFF
-Sidebar section heading    #1EF5DF
-Sidebar border             rgba(113,166,255,.28)
-Sidebar item hover         rgba(30,245,223,.10)
+Sidebar section heading    #8BE7B5
+Sidebar border             rgba(139,231,181,.22)
+Sidebar item hover         rgba(48,189,111,.12) → rgba(48,189,111,.30)
 Sidebar item active        active gradient
 Header light               #FFFFFF
 Header dark                approved header gradient

@@ -31,9 +31,9 @@ Find production equivalents by ownership and behavior. Do not assume identical f
 
 ## 2. Global Shell
 
-- Sidebar parent uses the exact `#1E3883 -> #192B54` vertical gradient.
+- The approved default sidebar uses the compatible teal `#0F5B55 -> #123D42` vertical gradient. The exact source `#1E3883 -> #192B54` gradient remains available only in the `evg-classic-navy` backup preset.
 - Active navigation uses the separate `#3371C6 -> #285CAA` gradient.
-- Section labels are cyan `#1EF5DF`; normal sidebar text is cool white.
+- Default section labels are soft green `#8BE7B5`; the backup preset retains source cyan `#1EF5DF`. Normal sidebar text is cool white in both presets.
 - Header and ticker use approved light/dark surfaces, not purple or near-black substitutes.
 - Hamburger/collapse control sits inside the sidebar logo row.
 - Logo opens the module launcher; no faint “click logo” instruction strip wastes space below it.
