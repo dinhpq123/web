@@ -31,17 +31,17 @@ function renderIncidents() {
     <div class="page-actions">
       <!-- View toggle (Only for Incidents Table) -->
       ${incidentTab === 'incidents' ? `
-      <div style="display:flex;gap:4px;background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:8px;padding:3px">
+      <div style="display:flex;gap:4px;background:var(--segmented-bg);border:1px solid var(--border);border-radius:8px;padding:3px">
         <button onclick="switchIncidentView('table')" id="incBtn_table"
           style="display:flex;align-items:center;gap:5px;font-size:12px;padding:4px 12px;border-radius:6px;border:none;cursor:pointer;transition:all .2s;
-          background:${incidentsViewMode === 'table' ? 'var(--cyan)' : 'transparent'};
-          color:${incidentsViewMode === 'table' ? '#071629' : 'var(--muted)'}">
+          background:${incidentsViewMode === 'table' ? 'var(--segmented-active-bg)' : 'transparent'};
+          color:${incidentsViewMode === 'table' ? 'var(--primary-text)' : 'var(--muted)'}">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg> Bảng
         </button>
         <button onclick="switchIncidentView('kanban')" id="incBtn_kanban"
           style="display:flex;align-items:center;gap:5px;font-size:12px;padding:4px 12px;border-radius:6px;border:none;cursor:pointer;transition:all .2s;
-          background:${incidentsViewMode === 'kanban' ? 'var(--cyan)' : 'transparent'};
-          color:${incidentsViewMode === 'kanban' ? '#071629' : 'var(--muted)'}">
+          background:${incidentsViewMode === 'kanban' ? 'var(--segmented-active-bg)' : 'transparent'};
+          color:${incidentsViewMode === 'kanban' ? 'var(--primary-text)' : 'var(--muted)'}">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="18" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg> Kanban
         </button>
       </div>` : ''}
@@ -53,12 +53,12 @@ function renderIncidents() {
 
   <!-- Summary KPI -->
   <div class="kpi-grid" style="margin-bottom:16px">
-    <div class="kpi-card" style="--accent-color:var(--cyan)"><div class="kpi-label">Tổng sự cố</div><div class="kpi-value">${DATA.incidents.length}</div><div class="kpi-sub">Sự vụ</div></div>
-    <div class="kpi-card" style="--accent-color:var(--blue)"><div class="kpi-label">Mới</div><div class="kpi-value">${DATA.incidents.filter(i => i.status === 'new').length}</div><div class="kpi-sub">Chờ phân công</div></div>
-    <div class="kpi-card" style="--accent-color:var(--yellow)"><div class="kpi-label">Đang xử lý</div><div class="kpi-value">${DATA.incidents.filter(i => i.status === 'processing').length}</div><div class="kpi-sub">Đang xử lý</div></div>
-    <div class="kpi-card" style="--accent-color:var(--green)"><div class="kpi-label">Hoàn thành</div><div class="kpi-value">${DATA.incidents.filter(i => i.status === 'done').length}</div><div class="kpi-sub">Đã đóng</div></div>
+    <div class="kpi-card" style="--accent-color:var(--primary)"><div class="kpi-label">Tổng sự cố</div><div class="kpi-value">${DATA.incidents.length}</div><div class="kpi-sub">Sự vụ</div></div>
+    <div class="kpi-card" style="--accent-color:var(--info)"><div class="kpi-label">Mới</div><div class="kpi-value">${DATA.incidents.filter(i => i.status === 'new').length}</div><div class="kpi-sub">Chờ phân công</div></div>
+    <div class="kpi-card" style="--accent-color:var(--warning)"><div class="kpi-label">Đang xử lý</div><div class="kpi-value">${DATA.incidents.filter(i => i.status === 'processing').length}</div><div class="kpi-sub">Đang xử lý</div></div>
+    <div class="kpi-card" style="--accent-color:var(--success)"><div class="kpi-label">Hoàn thành</div><div class="kpi-value">${DATA.incidents.filter(i => i.status === 'done').length}</div><div class="kpi-sub">Đã đóng</div></div>
     <div class="kpi-card" style="--accent-color:var(--purple)"><div class="kpi-label">Thời gian xử lý TB</div><div class="kpi-value">${avgHours}<span style="font-size:16px;color:var(--muted)">h</span></div><div class="kpi-sub">Mỗi sự vụ</div></div>
-    <div class="kpi-card" style="--accent-color:var(--cyan)"><div class="kpi-label">Loại phổ biến</div><div class="kpi-value" style="font-size:18px;padding-top:10px">${commonType}</div><div class="kpi-sub">Nhiều nhất</div></div>
+    <div class="kpi-card" style="--accent-color:var(--primary)"><div class="kpi-label">Loại phổ biến</div><div class="kpi-value" style="font-size:18px;padding-top:10px">${commonType}</div><div class="kpi-sub">Nhiều nhất</div></div>
   </div>
 
   <div class="tabs">
@@ -183,7 +183,7 @@ function renderPagination(total, current, onPageChange) {
     <div class="pagination-btns">
       <button class="btn btn-ghost btn-sm" ${current === 1 ? 'disabled' : ''} onclick="${onPageChange}(${current - 1})">Trước</button>
       ${Array.from({ length: totalPages }, (_, i) => i + 1).map(p => `
-        <button class="btn btn-sm" style="min-width:32px;border:1px solid ${p === current ? 'var(--cyan)' : 'var(--border)'};background:${p === current ? 'rgba(0,200,255,.15)' : 'transparent'};color:${p === current ? 'var(--cyan)' : 'var(--muted)'}" onclick="${onPageChange}(${p})">${p}</button>
+        <button class="btn btn-sm" style="min-width:32px;border:1px solid ${p === current ? 'var(--primary)' : 'var(--border)'};background:${p === current ? 'rgba(0,200,255,.15)' : 'transparent'};color:${p === current ? 'var(--primary)' : 'var(--muted)'}" onclick="${onPageChange}(${p})">${p}</button>
       `).join('')}
       <button class="btn btn-ghost btn-sm" ${current === totalPages ? 'disabled' : ''} onclick="${onPageChange}(${current + 1})">Sau</button>
     </div>
@@ -201,9 +201,9 @@ function priorityBadge(p) {
 
 function renderIncidentKanban() {
   const columns = [
-    { id: 'new', label: 'Mới', color: '#0066ff', bg: 'rgba(0,102,255,.08)', border: 'rgba(0,102,255,.25)' },
-    { id: 'processing', label: 'Đang xử lý', color: '#ffca28', bg: 'rgba(255,202,40,.08)', border: 'rgba(255,202,40,.25)' },
-    { id: 'done', label: 'Hoàn thành', color: '#00e676', bg: 'rgba(0,230,118,.08)', border: 'rgba(0,230,118,.25)' },
+    { id: 'new', label: 'Mới', color: 'var(--info)', bg: 'var(--info-soft)', border: 'var(--border)' },
+    { id: 'processing', label: 'Đang xử lý', color: 'var(--warning)', bg: 'var(--warning-soft)', border: 'var(--border)' },
+    { id: 'done', label: 'Hoàn thành', color: 'var(--success)', bg: 'var(--success-soft)', border: 'var(--border)' },
   ];
   return `
   <div class="kanban-board">
@@ -215,7 +215,7 @@ function renderIncidentKanban() {
         style="border-color:${col.border};background:${col.bg}">
         <div class="kanban-col-header" style="border-bottom-color:${col.color}">
           <span style="font-size:14px;font-weight:700;color:${col.color}">${col.label}</span>
-          <span style="background:${col.color};color:#071629;font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px" id="kanban_count_${col.id}">${cards.length}</span>
+          <span style="background:${col.color};color:var(--bg-surface);font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px" id="kanban_count_${col.id}">${cards.length}</span>
         </div>
         <div class="kanban-cards" id="kanban_col_${col.id}">
           ${cards.map(i => renderKanbanCard(i, col.color)).join('')}
@@ -227,7 +227,7 @@ function renderIncidentKanban() {
 }
 
 function renderKanbanCard(i, accentColor) {
-  const sevColor = i.severity === 'critical' ? 'var(--red)' : 'var(--yellow)';
+  const sevColor = i.severity === 'critical' ? 'var(--danger)' : 'var(--warning)';
   const slaBar = typeof incSlaBar === 'function' && i.status !== 'done' ? incSlaBar(i) : '';
   return `
   <div class="kanban-card" draggable="true" data-incid="${i.id}"
@@ -235,7 +235,7 @@ function renderKanbanCard(i, accentColor) {
     style="border-left-color:${sevColor}"
     onclick="viewIncident('${i.id}')">
     <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-      <span style="font-family:'Roboto Mono',monospace;font-size:11px;color:var(--cyan);font-weight:700">${i.id}</span>
+      <span style="font-family:'Roboto Mono',monospace;font-size:11px;color:var(--primary);font-weight:700">${i.id}</span>
       ${severityBadge(i.severity)}
     </div>
     <div style="font-size:13px;font-weight:600;margin-bottom:4px">${i.type}</div>
@@ -244,8 +244,8 @@ function renderKanbanCard(i, accentColor) {
     <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
       <span style="font-size:10px;color:var(--muted)">${i.report.split(' ')[0]}</span>
       ${i.assignedTo
-      ? `<span style="font-size:10px;background:rgba(0,200,255,.1);color:var(--cyan);padding:2px 8px;border-radius:4px">${i.assignedTo.substring(0, 15)}</span>`
-      : `<span style="font-size:10px;color:var(--red)">Chưa phân công</span>`}
+      ? `<span style="font-size:10px;background:rgba(0,200,255,.1);color:var(--primary);padding:2px 8px;border-radius:4px">${i.assignedTo.substring(0, 15)}</span>`
+      : `<span style="font-size:10px;color:var(--danger)">Chưa phân công</span>`}
     </div>
   </div>`;
 }
@@ -277,7 +277,7 @@ function kanbanDrop(event, newStatus) {
 
   // Refresh kanban view
   document.getElementById('incidentViewContainer').innerHTML = renderIncidentKanban();
-  showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> ${inc.id} đã chuyển sang "${newStatus === 'new' ? 'Mới' : newStatus === 'processing' ? 'Đang xử lý' : 'Hoàn thành'}"`);
+  showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> ${inc.id} đã chuyển sang "${newStatus === 'new' ? 'Mới' : newStatus === 'processing' ? 'Đang xử lý' : 'Hoàn thành'}"`);
 }
 
 function switchIncidentView(mode) {
@@ -291,9 +291,9 @@ function renderIncidentRow(i) {
     <td style="font-weight:500">${i.type}</td>
     <td style="color:var(--text-2);font-size:12px">${i.location}</td>
     <td>${severityBadge(i.severity)}</td>
-    <td>${statusBadge(i.status)}${typeof incSlaInfo==='function'&&i.status!=='done'?`<div style="font-size:9px;color:${incSlaInfo(i).overdue?'#f87171':incSlaInfo(i).pct>=80?'#fbbf24':'#34d399'};font-weight:700;margin-top:2px">${incSlaInfo(i).overdue?'QUÁ HẠN':'SLA OK'}</div>`:''}</td>
+    <td>${statusBadge(i.status)}${typeof incSlaInfo==='function'&&i.status!=='done'?`<div style="font-size:9px;color:${incSlaInfo(i).overdue?'#f87171':incSlaInfo(i).pct>=80?'#fbbf24':'var(--success-text)'};font-weight:700;margin-top:2px">${incSlaInfo(i).overdue?'QUÁ HẠN':'SLA OK'}</div>`:''}</td>
     <td class="mono" style="font-size:12px;color:var(--muted)">${i.report}</td>
-    <td style="font-size:12px;color:var(--muted)">${i.assignedTo || '<span style="color:var(--red)">Chưa phân công</span>'}</td>
+    <td style="font-size:12px;color:var(--muted)">${i.assignedTo || '<span style="color:var(--danger)">Chưa phân công</span>'}</td>
     <td style="display:flex;gap:6px">
       <button class="btn btn-ghost btn-sm" onclick="viewIncident('${i.id}')" style="display:flex;align-items:center;gap:4px">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -313,7 +313,7 @@ function openNewIncident() {
         <select class="form-control"><option>Vỡ ống</option><option>Tụt áp</option><option>Máy bơm sự cố</option><option>Chất lượng nước</option><option>Mất điện</option></select>
       </div>
       <div class="form-group"><label class="form-label">Mức độ</label>
-        <select class="form-control"><option value="critical"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> Nghiêm trọng</option><option value="warning"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);vertical-align:middle"></span> Cảnh báo</option></select>
+        <select class="form-control"><option value="critical"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> Nghiêm trọng</option><option value="warning"><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warning);vertical-align:middle"></span> Cảnh báo</option></select>
       </div>
     </div>
     <div class="form-group" style="margin-bottom:16px"><label class="form-label">Địa điểm</label>
@@ -384,7 +384,7 @@ function openNewTask(prefill) {
 function saveNewTask() {
   const title = document.getElementById('taskTitle')?.value || 'Lệnh CT mới';
   closeModal();
-  showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã tạo lệnh công tác: ${title}`);
+  showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã tạo lệnh công tác: ${title}`);
 }
 
 function saveNewIncident() {
@@ -440,7 +440,7 @@ function viewWorkOrder(id) {
     
     <div style="margin-top:16px">
       <div style="font-size:12px;color:var(--muted);margin-bottom:6px">Ghi chú / Mô tả:</div>
-      <div style="font-size:13px;color:#cfd8e3;line-height:1.6;background:rgba(0,0,0,.15);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,.05)">
+      <div style="font-size:13px;color:var(--text-2);line-height:1.6;background:var(--bg-secondary);padding:12px;border-radius:8px;border:1px solid var(--border)">
         ${t.note || 'Không có ghi chú thêm.'}
       </div>
     </div>
@@ -449,10 +449,10 @@ function viewWorkOrder(id) {
       <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Tiến độ thực hiện</div>
       ${(t.timeline || []).map(x => `
       <div style="display:flex;gap:12px;padding:8px 0;align-items:flex-start">
-        <div style="width:8px;height:8px;border-radius:50%;background:var(--cyan);margin-top:5px;flex-shrink:0;box-shadow:0 0 6px var(--cyan)"></div>
+        <div style="width:8px;height:8px;border-radius:50%;background:var(--primary);margin-top:5px;flex-shrink:0;box-shadow:0 0 6px var(--primary)"></div>
         <div>
           <div style="font-size:13px;font-weight:600">${x.event}</div>
-          <div style="font-size:11px;color:var(--muted)">${x.time} — Thực hiện bởi: <span style="color:var(--cyan)">${x.user}</span></div>
+          <div style="font-size:11px;color:var(--muted)">${x.time} — Thực hiện bởi: <span style="color:var(--primary)">${x.user}</span></div>
         </div>
       </div>`).join('')}
       ${t.status !== 'done' ? `

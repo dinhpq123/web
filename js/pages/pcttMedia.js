@@ -22,7 +22,7 @@ const MEDIA_TYPE_ICONS = {
   'Infographic':'<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/>',
 };
 const MEDIA_TYPE_COLOR = {
-  'Video':'var(--red)','Phim':'var(--red)','Tài liệu':'var(--cyan)','Bản đồ':'var(--green)','Infographic':'var(--yellow)',
+  'Video':'var(--danger)','Phim':'var(--danger)','Tài liệu':'var(--primary)','Bản đồ':'var(--success)','Infographic':'var(--warning)',
 };
 
 let _mediaState = { filter:'', typeFilter:'all', sort:'date', view:'grid', page:1 };
@@ -50,7 +50,7 @@ function renderPcttMedia() {
 
   const gridItems = paged.map(item => {
     const iconPath = MEDIA_TYPE_ICONS[item.type] || MEDIA_TYPE_ICONS['Tài liệu'];
-    const color = MEDIA_TYPE_COLOR[item.type] || 'var(--cyan)';
+    const color = MEDIA_TYPE_COLOR[item.type] || 'var(--primary)';
     const isVideo = item.type === 'Video' || item.type === 'Phim';
     const rgba = color.replace('var(','rgba(').replace(')','');
     return `
@@ -59,7 +59,7 @@ function renderPcttMedia() {
       onmouseout="this.style.transform='';this.style.borderColor='${item.featured?'rgba(0,200,255,.3)':'var(--border)'}'"
       onclick="openMediaDetail('${item.id}')">
       <div style="height:140px;background:linear-gradient(135deg,${rgba},.08),rgba(0,0,0,.2));border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative">
-        ${item.featured ? '<div style="position:absolute;top:8px;left:10px;background:rgba(0,200,255,.2);border:1px solid rgba(0,200,255,.35);border-radius:4px;padding:2px 7px;font-size:9px;color:var(--cyan);font-weight:700">⭐ NỔI BẬT</div>' : ''}
+        ${item.featured ? '<div style="position:absolute;top:8px;left:10px;background:rgba(0,200,255,.2);border:1px solid rgba(0,200,255,.35);border-radius:4px;padding:2px 7px;font-size:9px;color:var(--primary);font-weight:700">⭐ NỔI BẬT</div>' : ''}
         <div style="width:48px;height:48px;border-radius:12px;background:${rgba},.15);border:1px solid ${rgba},.3);display:flex;align-items:center;justify-content:center">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${color}" stroke-width="1.8">${iconPath}</svg>
         </div>
@@ -85,7 +85,7 @@ function renderPcttMedia() {
   }).join('');
 
   const listItems = paged.map(item => {
-    const color = MEDIA_TYPE_COLOR[item.type] || 'var(--cyan)';
+    const color = MEDIA_TYPE_COLOR[item.type] || 'var(--primary)';
     const rgba = color.replace('var(','rgba(').replace(')','');
     const iconPath = MEDIA_TYPE_ICONS[item.type] || MEDIA_TYPE_ICONS['Tài liệu'];
     return `
@@ -106,7 +106,7 @@ function renderPcttMedia() {
   }).join('');
 
   const paginationBtns = Array.from({length:totalPages},(_,i) => i+1).map(p =>
-    `<button onclick="window._mediaGoPage(${p})" style="width:32px;height:32px;border-radius:7px;border:1px solid ${p===_mediaState.page?'var(--cyan)':'var(--border)'};background:${p===_mediaState.page?'rgba(0,200,255,.12)':'transparent'};color:${p===_mediaState.page?'var(--cyan)':'var(--text)'};font-size:12px;cursor:pointer">${p}</button>`
+    `<button onclick="window._mediaGoPage(${p})" style="width:32px;height:32px;border-radius:7px;border:1px solid ${p===_mediaState.page?'var(--primary)':'var(--border)'};background:${p===_mediaState.page?'rgba(0,200,255,.12)':'transparent'};color:${p===_mediaState.page?'var(--primary)':'var(--text)'};font-size:12px;cursor:pointer">${p}</button>`
   ).join('');
 
   return `
@@ -144,10 +144,10 @@ function renderPcttMedia() {
 
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
     ${[
-      {l:'Tổng lượt xem', v:totalViews.toFixed(1)+'k', c:'var(--cyan)'},
-      {l:'Tài liệu', v:MEDIA_ITEMS_ALL.filter(m=>m.type==='Tài liệu').length, c:'var(--cyan)'},
-      {l:'Video / Phim', v:MEDIA_ITEMS_ALL.filter(m=>m.type==='Video'||m.type==='Phim').length, c:'var(--red)'},
-      {l:'Bản đồ & Infographic', v:MEDIA_ITEMS_ALL.filter(m=>m.type==='Bản đồ'||m.type==='Infographic').length, c:'var(--green)'},
+      {l:'Tổng lượt xem', v:totalViews.toFixed(1)+'k', c:'var(--primary)'},
+      {l:'Tài liệu', v:MEDIA_ITEMS_ALL.filter(m=>m.type==='Tài liệu').length, c:'var(--primary)'},
+      {l:'Video / Phim', v:MEDIA_ITEMS_ALL.filter(m=>m.type==='Video'||m.type==='Phim').length, c:'var(--danger)'},
+      {l:'Bản đồ & Infographic', v:MEDIA_ITEMS_ALL.filter(m=>m.type==='Bản đồ'||m.type==='Infographic').length, c:'var(--success)'},
     ].map(s=>`<div class="card kpi-card" style="border-top:2px solid ${s.c}"><div class="kpi-label">${s.l}</div><div class="kpi-value" style="color:${s.c}">${s.v}</div></div>`).join('')}
   </div>
 
@@ -159,18 +159,18 @@ function renderPcttMedia() {
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" style="position:absolute;left:11px;top:13px"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     </div>
     ${['all','Video','Tài liệu','Bản đồ','Infographic'].map(t=>`
-    <button class="btn btn-${_mediaState.typeFilter===t?'outline':'ghost'} btn-sm" style="font-size:11px${_mediaState.typeFilter===t?';color:var(--cyan)':''}" onclick="window._mediaState.typeFilter='${t}';window._mediaState.page=1;window._rerenderMedia()">${t==='all'?'Tất cả':t}</button>`).join('')}
+    <button class="btn btn-${_mediaState.typeFilter===t?'outline':'ghost'} btn-sm" style="font-size:11px${_mediaState.typeFilter===t?';color:var(--primary)':''}" onclick="window._mediaState.typeFilter='${t}';window._mediaState.page=1;window._rerenderMedia()">${t==='all'?'Tất cả':t}</button>`).join('')}
     <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
       <select class="form-control" style="width:140px;font-size:12px" onchange="window._mediaState.sort=this.value;window._rerenderMedia()">
         <option value="date" ${_mediaState.sort==='date'?'selected':''}>Mới nhất</option>
         <option value="views" ${_mediaState.sort==='views'?'selected':''}>Lượt xem</option>
         <option value="title" ${_mediaState.sort==='title'?'selected':''}>A-Z tiêu đề</option>
       </select>
-      <button title="Lưới" onclick="window._mediaState.view='grid';window._rerenderMedia()" style="width:34px;height:34px;border-radius:7px;border:1px solid ${_mediaState.view==='grid'?'var(--cyan)':'var(--border)'};background:${_mediaState.view==='grid'?'rgba(0,200,255,.1)':'transparent'};cursor:pointer;display:flex;align-items:center;justify-content:center">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${_mediaState.view==='grid'?'var(--cyan)':'var(--muted)'}" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      <button title="Lưới" onclick="window._mediaState.view='grid';window._rerenderMedia()" style="width:34px;height:34px;border-radius:7px;border:1px solid ${_mediaState.view==='grid'?'var(--primary)':'var(--border)'};background:${_mediaState.view==='grid'?'rgba(0,200,255,.1)':'transparent'};cursor:pointer;display:flex;align-items:center;justify-content:center">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${_mediaState.view==='grid'?'var(--primary)':'var(--muted)'}" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
       </button>
-      <button title="Danh sách" onclick="window._mediaState.view='list';window._rerenderMedia()" style="width:34px;height:34px;border-radius:7px;border:1px solid ${_mediaState.view==='list'?'var(--cyan)':'var(--border)'};background:${_mediaState.view==='list'?'rgba(0,200,255,.1)':'transparent'};cursor:pointer;display:flex;align-items:center;justify-content:center">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${_mediaState.view==='list'?'var(--cyan)':'var(--muted)'}" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      <button title="Danh sách" onclick="window._mediaState.view='list';window._rerenderMedia()" style="width:34px;height:34px;border-radius:7px;border:1px solid ${_mediaState.view==='list'?'var(--primary)':'var(--border)'};background:${_mediaState.view==='list'?'rgba(0,200,255,.1)':'transparent'};cursor:pointer;display:flex;align-items:center;justify-content:center">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${_mediaState.view==='list'?'var(--primary)':'var(--muted)'}" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
       </button>
     </div>
   </div>
@@ -231,7 +231,7 @@ window._mediaFiltered = _mediaFiltered;
 window.openMediaDetail = function(id) {
   const item = MEDIA_ITEMS_ALL.find(m => m.id === id); if (!item) return;
   const isVideo = item.type === 'Video' || item.type === 'Phim';
-  const color = MEDIA_TYPE_COLOR[item.type] || 'var(--cyan)';
+  const color = MEDIA_TYPE_COLOR[item.type] || 'var(--primary)';
   const rgba = color.replace('var(','rgba(').replace(')','');
   const iconPath = MEDIA_TYPE_ICONS[item.type] || MEDIA_TYPE_ICONS['Tài liệu'];
   openModal(`
@@ -280,7 +280,7 @@ window.openAddMediaModal = function() {
   </div>
   <div class="modal-body">
     <div style="border:2px dashed rgba(0,200,255,.3);border-radius:10px;padding:24px;text-align:center;margin-bottom:16px;cursor:pointer" onclick="showToast('Chọn file media...')">
-      <div style="font-size:13px;font-weight:600;color:var(--cyan)">Kéo thả hoặc click để chọn file</div>
+      <div style="font-size:13px;font-weight:600;color:var(--primary)">Kéo thả hoặc click để chọn file</div>
       <div style="font-size:11px;color:var(--muted);margin-top:5px">MP4, PDF, DOCX, PNG (tối đa 100MB)</div>
     </div>
     <div class="form-row">
@@ -304,7 +304,7 @@ window.openAiContentModal = function() {
   openModal(`
   <div class="modal-header">
     <span class="modal-title" style="display:flex;align-items:center;gap:8px">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
       Tạo nội dung truyền thông bằng AI
     </span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
@@ -324,7 +324,7 @@ window.openAiContentModal = function() {
     <div style="font-size:11px;color:var(--muted);margin-bottom:8px;font-weight:600">Gợi ý nhanh:</div>
     <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
       ${['Thông báo khẩn cấp lũ lụt','Hướng dẫn 4 tại chỗ cho dân','Nội dung mạng xã hội về bão','Script infographic phòng tránh lũ','Kịch bản video hướng dẫn ứng phó'].map(p=>
-        `<button style="padding:5px 10px;border-radius:6px;border:1px solid rgba(0,200,255,.25);background:rgba(0,200,255,.06);color:var(--cyan);font-size:11px;cursor:pointer;transition:.15s" onmouseover="this.style.background='rgba(0,200,255,.12)'" onmouseout="this.style.background='rgba(0,200,255,.06)'" onclick="document.getElementById('aiMediaPrompt').value='${p}'">${p}</button>`
+        `<button style="padding:5px 10px;border-radius:6px;border:1px solid rgba(0,200,255,.25);background:rgba(0,200,255,.06);color:var(--primary);font-size:11px;cursor:pointer;transition:.15s" onmouseover="this.style.background='rgba(0,200,255,.12)'" onmouseout="this.style.background='rgba(0,200,255,.06)'" onclick="document.getElementById('aiMediaPrompt').value='${p}'">${p}</button>`
       ).join('')}
     </div>
     <div class="form-row" style="margin-bottom:12px">
@@ -427,7 +427,7 @@ function renderSocialMedia() {
   const platformLabel = { fb: 'Facebook', zalo: 'Zalo OA', yt: 'YouTube', tiktok: 'TikTok' };
   const platformColor = { fb: '#1877f2', zalo: '#0068ff', yt: '#ff0000', tiktok: '#010101' };
   const statusBadge = { scheduled: '<span class="badge badge-yellow">Đã lên lịch</span>', published: '<span class="badge badge-green">Đã đăng</span>', draft: '<span class="badge badge-gray">Nháp</span>' };
-  const typeColor = { alert: 'var(--red)', guide: 'var(--cyan)', video: 'var(--red)', report: 'var(--green)', info: 'var(--blue)' };
+  const typeColor = { alert: 'var(--danger)', guide: 'var(--primary)', video: 'var(--danger)', report: 'var(--success)', info: 'var(--info)' };
 
   return `
   <!-- Connected Accounts -->
@@ -443,7 +443,7 @@ function renderSocialMedia() {
       ${ACCOUNTS.map(acc => `
       <div class="card" style="padding:16px;border-top:3px solid ${acc.color};position:relative">
         ${acc.status === 'connected'
-          ? '<div style="position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--green)"></div>'
+          ? '<div style="position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--success)"></div>'
           : '<div style="position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%;background:var(--muted)"></div>'}
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
           <div style="width:34px;height:34px;border-radius:8px;background:${acc.color}22;border:1px solid ${acc.color}44;display:flex;align-items:center;justify-content:center">
@@ -457,7 +457,7 @@ function renderSocialMedia() {
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:12px">
           ${[{l:'Followers',v:acc.followers},{l:'Bài đăng',v:acc.posts},{l:'Reach',v:acc.reach}].map(s => `
           <div style="text-align:center;padding:6px 4px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:6px">
-            <div style="font-size:12px;font-weight:700;color:var(--cyan)">${s.v}</div>
+            <div style="font-size:12px;font-weight:700;color:var(--primary)">${s.v}</div>
             <div style="font-size:9px;color:var(--muted)">${s.l}</div>
           </div>`).join('')}
         </div>
@@ -503,7 +503,7 @@ function renderSocialMedia() {
         <!-- Quick tags -->
         <div style="margin-bottom:10px;display:flex;gap:6px;flex-wrap:wrap">
           ${['#PCTTHaNoi','#ThienTai','#AnToanMuaLu','#DeDieu','#ThuyLoi'].map(t =>
-            `<span style="padding:3px 8px;border-radius:4px;background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);font-size:10px;color:var(--cyan);cursor:pointer" onclick="document.getElementById('composeText').value+=(' ${t}')">${t}</span>`
+            `<span style="padding:3px 8px;border-radius:4px;background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);font-size:10px;color:var(--primary);cursor:pointer" onclick="document.getElementById('composeText').value+=(' ${t}')">${t}</span>`
           ).join('')}
         </div>
         <!-- Attachments row -->
@@ -582,7 +582,7 @@ function renderSocialMedia() {
             <button class="btn btn-ghost btn-sm" style="padding:4px 7px" onclick="event.stopPropagation();showToast('Chỉnh sửa bài đăng ${post.id}')">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
             </button>
-            ${post.status !== 'published' ? `<button class="btn btn-ghost btn-sm" style="padding:4px 7px;color:var(--red)" onclick="event.stopPropagation();showToast('Đã xóa lịch đăng bài!')">
+            ${post.status !== 'published' ? `<button class="btn btn-ghost btn-sm" style="padding:4px 7px;color:var(--danger)" onclick="event.stopPropagation();showToast('Đã xóa lịch đăng bài!')">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/></svg>
             </button>` : ''}
           </div>
@@ -670,12 +670,12 @@ function renderTtsStudio() {
         <div style="display:flex;flex-direction:column;gap:4px;max-height:340px;overflow-y:auto;padding-right:2px">
           ${TTS_VOICES.map(v => `
           <div onclick="window._ttsSelectVoice('${v.id}')"
-               style="display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:9px;cursor:pointer;border:1.5px solid ${_ttsVoice===v.id?'var(--cyan)':'transparent'};background:${_ttsVoice===v.id?'rgba(0,200,255,.08)':'rgba(255,255,255,.02)'};transition:.15s">
-            <div style="width:34px;height:34px;border-radius:50%;background:${v.cloned?'linear-gradient(135deg,#7c3aed,#4f46e5)':'linear-gradient(135deg,var(--cyan),var(--blue))'};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">${v.avatar}</div>
+               style="display:flex;align-items:center;gap:9px;padding:8px 9px;border-radius:9px;cursor:pointer;border:1.5px solid ${_ttsVoice===v.id?'var(--primary)':'transparent'};background:${_ttsVoice===v.id?'rgba(0,200,255,.08)':'rgba(255,255,255,.02)'};transition:.15s">
+            <div style="width:34px;height:34px;border-radius:50%;background:${v.cloned?'linear-gradient(135deg,var(--info),#285CAA)':'linear-gradient(135deg,var(--primary),var(--info))'};display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">${v.avatar}</div>
             <div style="flex:1;min-width:0">
               <div style="font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px">
                 ${v.name}
-                ${v.cloned?'<span style="font-size:9px;padding:1px 5px;border-radius:4px;background:rgba(124,58,237,.2);color:#a78bfa">CLONE</span>':''}
+                ${v.cloned?'<span style="font-size:9px;padding:1px 5px;border-radius:4px;background:rgba(41,132,238,.2);color:#5BA9FF">CLONE</span>':''}
               </div>
               <div style="font-size:10px;color:var(--muted);margin-top:1px">${v.accent} · ${v.style}</div>
             </div>
@@ -699,26 +699,26 @@ function renderTtsStudio() {
         <div class="form-group" style="margin-bottom:10px">
           <label class="form-label" style="font-size:11px">Tốc độ đọc</label>
           <div style="display:flex;align-items:center;gap:8px">
-            <input type="range" min="0.5" max="2.0" step="0.1" value="${_ttsSpeed}" style="flex:1;accent-color:var(--cyan)"
+            <input type="range" min="0.5" max="2.0" step="0.1" value="${_ttsSpeed}" style="flex:1;accent-color:var(--primary)"
               oninput="document.getElementById('ttsSpeedVal').textContent=parseFloat(this.value).toFixed(1)+'x';window._ttsSpeed=parseFloat(this.value)">
-            <span id="ttsSpeedVal" style="font-size:11px;color:var(--cyan);min-width:30px">${_ttsSpeed}x</span>
+            <span id="ttsSpeedVal" style="font-size:11px;color:var(--primary);min-width:30px">${_ttsSpeed}x</span>
           </div>
         </div>
         <div class="form-group" style="margin-bottom:10px">
           <label class="form-label" style="font-size:11px">Cao độ giọng</label>
           <div style="display:flex;align-items:center;gap:8px">
-            <input type="range" min="-10" max="10" step="1" value="${_ttsPitch}" style="flex:1;accent-color:var(--cyan)"
+            <input type="range" min="-10" max="10" step="1" value="${_ttsPitch}" style="flex:1;accent-color:var(--primary)"
               oninput="document.getElementById('ttsPitchVal').textContent=(this.value>0?'+':'')+this.value;window._ttsPitch=parseInt(this.value)">
-            <span id="ttsPitchVal" style="font-size:11px;color:var(--cyan);min-width:28px">${_ttsPitch>0?'+':''}${_ttsPitch}</span>
+            <span id="ttsPitchVal" style="font-size:11px;color:var(--primary);min-width:28px">${_ttsPitch>0?'+':''}${_ttsPitch}</span>
           </div>
         </div>
         <div class="form-group" style="margin-bottom:0">
           <label class="form-label" style="font-size:11px">Định dạng xuất</label>
           <div style="display:flex;gap:6px">
             ${['mp3','wav','ogg'].map(f=>`
-            <label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid ${_ttsFormat===f?'var(--cyan)':'var(--border)'};border-radius:6px;font-size:11px;cursor:pointer;color:${_ttsFormat===f?'var(--cyan)':'var(--muted)'}">
+            <label style="display:flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid ${_ttsFormat===f?'var(--primary)':'var(--border)'};border-radius:6px;font-size:11px;cursor:pointer;color:${_ttsFormat===f?'var(--primary)':'var(--muted)'}">
               <input type="radio" name="ttsFormat" value="${f}" ${_ttsFormat===f?'checked':''} style="display:none"
-                onchange="window._ttsFormat='${f}';this.closest('div').querySelectorAll('label').forEach(l=>{const v=l.querySelector('input').value;l.style.borderColor=v===window._ttsFormat?'var(--cyan)':'var(--border)';l.style.color=v===window._ttsFormat?'var(--cyan)':'var(--muted)'})">
+                onchange="window._ttsFormat='${f}';this.closest('div').querySelectorAll('label').forEach(l=>{const v=l.querySelector('input').value;l.style.borderColor=v===window._ttsFormat?'var(--primary)':'var(--border)';l.style.color=v===window._ttsFormat?'var(--primary)':'var(--muted)'})">
               .${f.toUpperCase()}
             </label>`).join('')}
           </div>
@@ -730,11 +730,11 @@ function renderTtsStudio() {
     <div style="display:flex;flex-direction:column;gap:14px">
 
       <!-- Active voice banner -->
-      <div class="card" style="padding:13px;border-left:3px solid var(--cyan)">
+      <div class="card" style="padding:13px;border-left:3px solid var(--primary)">
         <div style="display:flex;align-items:center;gap:12px">
-          <div style="width:40px;height:40px;border-radius:50%;background:${sv.cloned?'linear-gradient(135deg,#7c3aed,#4f46e5)':'linear-gradient(135deg,var(--cyan),var(--blue))'};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0">${sv.avatar}</div>
+          <div style="width:40px;height:40px;border-radius:50%;background:${sv.cloned?'linear-gradient(135deg,var(--info),#285CAA)':'linear-gradient(135deg,var(--primary),var(--info))'};display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0">${sv.avatar}</div>
           <div>
-            <div style="font-size:13px;font-weight:700">${sv.name} ${sv.cloned?'<span style="font-size:10px;padding:1px 6px;border-radius:4px;background:rgba(124,58,237,.2);color:#a78bfa">CLONE</span>':''}</div>
+            <div style="font-size:13px;font-weight:700">${sv.name} ${sv.cloned?'<span style="font-size:10px;padding:1px 6px;border-radius:4px;background:rgba(41,132,238,.2);color:#5BA9FF">CLONE</span>':''}</div>
             <div style="font-size:11px;color:var(--muted);margin-top:2px">${sv.accent} · ${sv.style} · Tốc độ ${_ttsSpeed}x · Cao độ ${_ttsPitch>0?'+':''}${_ttsPitch}</div>
           </div>
           <button onclick="window._ttsPreviewVoice('${sv.id}')" class="btn btn-ghost btn-sm" style="margin-left:auto">
@@ -788,9 +788,9 @@ function renderTtsStudio() {
       <!-- Progress bar (hidden) -->
       <div id="ttsProgress" style="display:none">
         <div class="card" style="padding:14px">
-          <div style="font-size:12px;font-weight:600;margin-bottom:10px;color:var(--cyan)">Đang tạo file âm thanh...</div>
+          <div style="font-size:12px;font-weight:600;margin-bottom:10px;color:var(--primary)">Đang tạo file âm thanh...</div>
           <div style="background:rgba(255,255,255,.07);border-radius:6px;height:8px;overflow:hidden">
-            <div id="ttsProgressBar" style="width:0%;height:100%;background:linear-gradient(90deg,var(--cyan),var(--blue));border-radius:6px;transition:width .3s"></div>
+            <div id="ttsProgressBar" style="width:0%;height:100%;background:linear-gradient(90deg,var(--primary),var(--info));border-radius:6px;transition:width .3s"></div>
           </div>
           <div id="ttsProgressMsg" style="font-size:11px;color:var(--muted);margin-top:8px">Khởi tạo...</div>
         </div>
@@ -813,7 +813,7 @@ function renderTtsStudio() {
                   <div style="font-size:10px;color:var(--muted);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${h.text}</div>
                 </td>
                 <td style="font-size:12px">${h.voice}</td>
-                <td style="font-size:12px;color:var(--cyan)">${h.duration}</td>
+                <td style="font-size:12px;color:var(--primary)">${h.duration}</td>
                 <td style="font-size:12px;color:var(--muted)">${h.size}</td>
                 <td style="font-size:11px;color:var(--muted)">${h.date}</td>
                 <td>
@@ -821,7 +821,7 @@ function renderTtsStudio() {
                     <button class="btn btn-ghost btn-xs" title="Phát" onclick="showToast('Đang phát: ${h.name}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" stroke="none">${svgPlay}</svg></button>
                     <button class="btn btn-ghost btn-xs" title="Tải xuống" onclick="showToast('Đang tải: ${h.name}...')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${svgDl}</svg></button>
                     <button class="btn btn-ghost btn-xs" title="Phát qua loa" onclick="openBroadcastWithAudio('${h.id}','${h.name}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14"/></svg></button>
-                    <button class="btn btn-ghost btn-xs" style="color:var(--red)" title="Xoá" onclick="showToast('Đã xoá: ${h.name}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6M9 6V4h6v2"/></svg></button>
+                    <button class="btn btn-ghost btn-xs" style="color:var(--danger)" title="Xoá" onclick="showToast('Đã xoá: ${h.name}')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6M9 6V4h6v2"/></svg></button>
                   </div>
                 </td>
               </tr>`).join('')}
@@ -904,8 +904,8 @@ window._ttsBroadcastDirect = function() {
         <label class="form-label">Chọn cụm loa phát</label>
         <div style="display:flex;flex-direction:column;gap:5px;max-height:200px;overflow-y:auto">
           ${speakers.map(s=>`<label style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;cursor:pointer;border:1px solid var(--border)">
-            <input type="checkbox" ${s.status==='online'?'checked':'disabled'} style="accent-color:var(--cyan)">
-            <div style="width:7px;height:7px;border-radius:50%;background:${s.status==='online'?'var(--green)':'var(--muted)'}"></div>
+            <input type="checkbox" ${s.status==='online'?'checked':'disabled'} style="accent-color:var(--primary)">
+            <div style="width:7px;height:7px;border-radius:50%;background:${s.status==='online'?'var(--success)':'var(--muted)'}"></div>
             <span style="font-size:12px;flex:1">${s.name}</span>
             <span style="font-size:10px;color:var(--muted)">${s.status==='online'?'Online':'Offline'}</span>
           </label>`).join('')}
@@ -931,8 +931,8 @@ window.openBroadcastWithAudio = function(id, name) {
         <label class="form-label">Chọn cụm loa</label>
         <div style="display:flex;flex-direction:column;gap:5px;max-height:200px;overflow-y:auto">
           ${(window.NOTIFY_SPEAKERS||[]).map(s=>`<label style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;cursor:pointer;border:1px solid var(--border)">
-            <input type="checkbox" ${s.status==='online'?'checked':'disabled'} style="accent-color:var(--cyan)">
-            <div style="width:7px;height:7px;border-radius:50%;background:${s.status==='online'?'var(--green)':'var(--muted)'}"></div>
+            <input type="checkbox" ${s.status==='online'?'checked':'disabled'} style="accent-color:var(--primary)">
+            <div style="width:7px;height:7px;border-radius:50%;background:${s.status==='online'?'var(--success)':'var(--muted)'}"></div>
             <span style="font-size:12px;flex:1">${s.name}</span>
           </label>`).join('')}
         </div>
@@ -958,7 +958,7 @@ function openVoiceCloneWizard() {
   function render() {
     const body = step === 1 ? `
       <div style="text-align:center;padding:10px 0 20px">
-        <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#4f46e5);margin:0 auto 16px;display:flex;align-items:center;justify-content:center">
+        <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--info),#285CAA);margin:0 auto 16px;display:flex;align-items:center;justify-content:center">
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.8"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
         </div>
         <h3 style="font-size:15px;font-weight:700;margin-bottom:8px">Clone giọng đọc bằng AI</h3>
@@ -978,21 +978,21 @@ function openVoiceCloneWizard() {
         </div>
       </div>` : step === 2 ? `
       <div style="padding:10px 0">
-        <div style="font-size:13px;font-weight:600;text-align:center;margin-bottom:16px;color:var(--cyan)">Đang phân tích và clone giọng đọc...</div>
+        <div style="font-size:13px;font-weight:600;text-align:center;margin-bottom:16px;color:var(--primary)">Đang phân tích và clone giọng đọc...</div>
         ${['Thu thập đặc trưng giọng nói','Huấn luyện mô hình AI voice cloning','Tổng hợp giọng thử nghiệm','Tinh chỉnh & xác thực chất lượng'].map((s,i)=>`
         <div style="display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:8px;background:rgba(255,255,255,.03);margin-bottom:6px">
-          <div style="width:22px;height:22px;border-radius:50%;background:${i<3?'rgba(22,163,74,.2)':'rgba(0,200,255,.15)'};border:1.5px solid ${i<3?'var(--green)':'var(--cyan)'};display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            ${i<3?'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>':'<div style="width:7px;height:7px;border-radius:50%;background:var(--cyan)"></div>'}
+          <div style="width:22px;height:22px;border-radius:50%;background:${i<3?'rgba(22,163,74,.2)':'rgba(0,200,255,.15)'};border:1.5px solid ${i<3?'var(--success)':'var(--primary)'};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            ${i<3?'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>':'<div style="width:7px;height:7px;border-radius:50%;background:var(--primary)"></div>'}
           </div>
           <span style="font-size:12px;flex:1">${s}</span>
-          <span style="font-size:10px;color:${i<3?'var(--green)':'var(--cyan)'}">${i<3?'Hoàn thành':'Đang xử lý...'}</span>
+          <span style="font-size:10px;color:${i<3?'var(--success)':'var(--primary)'}">${i<3?'Hoàn thành':'Đang xử lý...'}</span>
         </div>`).join('')}
       </div>` : `
       <div style="text-align:center;padding:20px 0">
-        <div style="width:60px;height:60px;border-radius:50%;background:rgba(22,163,74,.12);border:2px solid var(--green);margin:0 auto 14px;display:flex;align-items:center;justify-content:center">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <div style="width:60px;height:60px;border-radius:50%;background:rgba(22,163,74,.12);border:2px solid var(--success);margin:0 auto 14px;display:flex;align-items:center;justify-content:center">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
-        <h3 style="font-size:16px;font-weight:700;color:var(--green);margin-bottom:8px">Clone thành công!</h3>
+        <h3 style="font-size:16px;font-weight:700;color:var(--success);margin-bottom:8px">Clone thành công!</h3>
         <p style="font-size:12px;color:var(--muted)">Giọng đọc <strong style="color:white">"${cloneName}"</strong> đã được thêm vào thư viện và có thể dùng ngay.</p>
       </div>`;
 

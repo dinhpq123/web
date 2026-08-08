@@ -111,7 +111,7 @@ window.openProdHistory = function (id, name, type) {
             <td style="padding:12px 16px"><span class="badge ${typeColor[h.type] || 'badge-gray'}">${h.type}</span></td>
             ${!isEquip ? `<td style="padding:12px 16px; font-family:'Roboto Mono',monospace; font-size:13px; font-weight:600; white-space:nowrap">${h.qty} ${h.unit}</td>` : ''}
             <td style="padding:12px 16px; font-size:12px; color:var(--text)">${h.note}</td>
-            ${isEquip ? `<td style="padding:12px 16px; font-size:12px; color:var(--green); font-weight:500; white-space:nowrap">${h.result}</td>` : ''}
+            ${isEquip ? `<td style="padding:12px 16px; font-size:12px; color:var(--success); font-weight:500; white-space:nowrap">${h.result}</td>` : ''}
             <td style="padding:12px 16px; font-size:12px; color:var(--muted); white-space:nowrap">${h.user}</td>
           </tr>`).join('')}
         </tbody>
@@ -141,7 +141,7 @@ function renderMaterials() {
         <td class="mono text-cyan">${m.id}</td>
         <td style="font-weight:500">${m.name}</td>
         <td style="color:var(--muted)">${m.unit}</td>
-        <td class="mono" style="color:${m.stock <= m.minStock ? 'var(--red)' : 'var(--green)'}">${formatNum(m.stock)}</td>
+        <td class="mono" style="color:${m.stock <= m.minStock ? 'var(--danger)' : 'var(--success)'}">${formatNum(m.stock)}</td>
         <td class="mono" style="color:var(--muted)">${formatNum(m.minStock)}</td>
         <td class="mono" style="color:var(--muted)">${formatNum(m.used)}</td>
         <td>${m.stock <= m.minStock ? '<span class="badge badge-red">Dưới mức tối thiểu</span>' : '<span class="badge badge-green">Đủ</span>'}</td>
@@ -169,9 +169,9 @@ function renderChemicals() {
           <td style="font-weight:500">${c.name}</td>
           <td><span class="badge badge-blue">${c.category}</span></td>
           <td style="color:var(--muted)">${c.unit}</td>
-          <td class="mono" style="color:${ok ? 'var(--green)' : 'var(--red)'}">${formatNum(c.stock)}</td>
+          <td class="mono" style="color:${ok ? 'var(--success)' : 'var(--danger)'}">${formatNum(c.stock)}</td>
           <td class="mono" style="color:var(--muted)">${c.dailyUsage} ${c.unit}/ng</td>
-          <td class="mono" style="color:${days > 7 ? 'var(--green)' : days > 3 ? 'var(--yellow)' : 'var(--red)'}">${days} ngày</td>
+          <td class="mono" style="color:${days > 7 ? 'var(--success)' : days > 3 ? 'var(--warning)' : 'var(--danger)'}">${days} ngày</td>
           <td>${ok ? '<span class="badge badge-green">Đủ</span>' : '<span class="badge badge-red">Thiếu</span>'}</td>
           <td style="text-align:center"><button class="btn btn-ghost btn-sm" style="display:inline-flex;align-items:center;gap:4px;font-size:12px" onclick="openProdHistory('${c.id}','${c.name}','chemical')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/><polyline points="12 7 12 12 15 15"/></svg> Lịch sử</button></td>
         </tr>`;
@@ -197,7 +197,7 @@ function renderEquipment() {
         <td style="font-size:12px;color:var(--muted)">${e.model}</td>
         <td>${statusBadge(e.status)}</td>
         <td class="mono" style="font-size:12px;color:var(--muted)">${e.lastMaint}</td>
-        <td class="mono" style="font-size:12px;color:${e.status === 'fault' ? 'var(--red)' : 'var(--yellow)'}">${e.nextMaint}</td>
+        <td class="mono" style="font-size:12px;color:${e.status === 'fault' ? 'var(--danger)' : 'var(--warning)'}">${e.nextMaint}</td>
         <td class="mono" style="color:var(--muted)">${formatNum(e.hoursRun)} h</td>
         <td style="text-align:center"><button class="btn btn-ghost btn-sm" style="display:inline-flex;align-items:center;gap:4px;font-size:12px" onclick="openProdHistory('${e.id}','${e.name}','equipment')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/><polyline points="12 7 12 12 15 15"/></svg> Lịch sử</button></td>
       </tr>`).join('')}
@@ -240,13 +240,13 @@ function renderAiPredict() {
       <div style="font-size:12px; color:var(--muted)">Phân tích rủi ro bằng AI &amp; dữ liệu cảm biến thời gian thực</div>
     </div>
     <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap">
-      <div style="display:flex; align-items:center; gap:6px; padding:6px 12px; border-radius:20px; background:rgba(255,71,87,.12); border:1px solid rgba(255,71,87,.3); color:var(--red)">
+      <div style="display:flex; align-items:center; gap:6px; padding:6px 12px; border-radius:20px; background:rgba(255,71,87,.12); border:1px solid rgba(255,71,87,.3); color:var(--danger)">
         ${SVGI.danger}<span style="font-size:12px; font-weight:600">${highC} Rủi ro cao</span>
       </div>
-      <div style="display:flex; align-items:center; gap:6px; padding:6px 12px; border-radius:20px; background:rgba(255,190,0,.1); border:1px solid rgba(255,190,0,.3); color:var(--yellow)">
+      <div style="display:flex; align-items:center; gap:6px; padding:6px 12px; border-radius:20px; background:rgba(255,190,0,.1); border:1px solid rgba(255,190,0,.3); color:var(--warning)">
         ${SVGI.alert}<span style="font-size:12px; font-weight:600">${medC} Theo dõi</span>
       </div>
-      <div style="display:flex; align-items:center; gap:6px; padding:6px 12px; border-radius:20px; background:rgba(0,200,100,.08); border:1px solid rgba(0,200,100,.25); color:var(--green)">
+      <div style="display:flex; align-items:center; gap:6px; padding:6px 12px; border-radius:20px; background:var(--success-soft); border:1px solid var(--border-active); color:var(--success-text)">
         ${SVGI.shieldOk}<span style="font-size:12px; font-weight:600">${lowC} Bình thường</span>
       </div>
       <button class="btn btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:6px" onclick="showToast('Đang phân tích lại dữ liệu...')">
@@ -257,10 +257,10 @@ function renderAiPredict() {
 
   <div style="display:flex; flex-direction:column; gap:16px">
     ${AI_PREDICTIONS.map(p => {
-    const rc = p.risk === 'high' ? 'var(--red)' : p.risk === 'medium' ? 'var(--yellow)' : 'var(--green)';
-    const rAlpha = p.risk === 'high' ? 'rgba(255,71,87,' : p.risk === 'medium' ? 'rgba(255,190,0,' : 'rgba(0,200,100,';
-    const sc = p.score >= 75 ? 'var(--red)' : p.score >= 50 ? 'var(--yellow)' : 'var(--green)';
-    const sAlpha = p.score >= 75 ? 'rgba(255,71,87,' : p.score >= 50 ? 'rgba(255,190,0,' : 'rgba(0,200,100,';
+    const rc = p.risk === 'high' ? 'var(--danger)' : p.risk === 'medium' ? 'var(--warning)' : 'var(--success)';
+    const rAlpha = p.risk === 'high' ? 'rgba(255,71,87,' : p.risk === 'medium' ? 'rgba(255,190,0,' : 'rgba(41,132,238,';
+    const sc = p.score >= 75 ? 'var(--danger)' : p.score >= 50 ? 'var(--warning)' : 'var(--success)';
+    const sAlpha = p.score >= 75 ? 'rgba(255,71,87,' : p.score >= 50 ? 'rgba(255,190,0,' : 'rgba(41,132,238,';
     const rIcon = p.risk === 'high' ? SVGI.danger : p.risk === 'medium' ? SVGI.alert : SVGI.shieldOk;
     const rLabel = p.risk === 'high' ? 'Rủi ro cao' : p.risk === 'medium' ? 'Cần theo dõi' : 'Bình thường';
 
@@ -322,7 +322,7 @@ function renderAiPredict() {
             <!-- Sparkline -->
             <div style="width:100%">
               <div style="font-size:10px; color:var(--muted); display:inline-flex; align-items:center; gap:4px; margin-bottom:4px">${SVGI.trending} Xu hướng</div>
-              <div style="display:flex; height:40px; gap:3px; align-items:flex-end; background:rgba(0,0,0,.2); border-radius:6px; padding:4px 6px">${sparks}</div>
+              <div style="display:flex; height:40px; gap:3px; align-items:flex-end; background:var(--bg-secondary); border-radius:6px; padding:4px 6px">${sparks}</div>
             </div>
             <!-- Hours left bar -->
             <div style="width:100%">
@@ -337,8 +337,8 @@ function renderAiPredict() {
           </div>
 
           <!-- MIDDLE: AI Analysis -->
-          <div style="background:rgba(0,0,0,.18); border-radius:10px; padding:14px; border:1px solid var(--border); height:100%; box-sizing:border-box">
-            <div style="display:inline-flex; align-items:center; gap:6px; font-size:10px; font-weight:700; letter-spacing:.08em; color:var(--cyan); text-transform:uppercase; margin-bottom:10px">
+          <div style="background:var(--bg-secondary); border-radius:10px; padding:14px; border:1px solid var(--border); height:100%; box-sizing:border-box">
+            <div style="display:inline-flex; align-items:center; gap:6px; font-size:10px; font-weight:700; letter-spacing:.08em; color:var(--primary); text-transform:uppercase; margin-bottom:10px">
               ${SVGI.cpu} Phân tích AI
             </div>
             <p style="font-size:13px; line-height:1.7; color:var(--text); margin:0">${p.reason}</p>
@@ -357,7 +357,7 @@ function renderAiPredict() {
               <button class="btn btn-outline btn-sm" style="display:inline-flex; align-items:center; gap:5px; font-size:12px" onclick="showToast('Đã tạo lịch bảo dưỡng!')">
                 ${SVGI.calendar} Lên lịch BT
               </button>
-              ${p.risk === 'high' ? `<button class="btn btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:5px; font-size:12px; background:var(--red); border-color:var(--red)" onclick="showToast('Đã gửi yêu cầu bảo dưỡng khẩn!')">
+              ${p.risk === 'high' ? `<button class="btn btn-primary btn-sm" style="display:inline-flex; align-items:center; gap:5px; font-size:12px; background:var(--danger); border-color:var(--danger)" onclick="showToast('Đã gửi yêu cầu bảo dưỡng khẩn!')">
                 ${SVGI.bell} BT Khẩn cấp
               </button>` : ''}
             </div>

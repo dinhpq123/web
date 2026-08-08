@@ -1,0 +1,4 @@
+interface:
+  display_name: "Hadiwa Production Theme Migration"
+  short_description: "Migrate production UI to the approved Hadiwa theme"
+  default_prompt: "Use $migrate-hadiwa-production-theme to migrate this production web app to the approved Hadiwa EVG visual system without changing business behavior."

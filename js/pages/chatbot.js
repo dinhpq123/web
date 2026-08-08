@@ -20,7 +20,7 @@ function renderChatbot() {
       <p>Tra cứu đê điều, thủy văn, hồ chứa, PCTT và dữ liệu vận hành · Hỗ trợ giọng nói</p>
     </div>
     <div class="page-actions">
-      <div id="ttsToggle" title="Bật/tắt đọc to phản hồi AI" style="display:flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.18);border-radius:8px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .2s" onclick="toggleTts(this)">
+      <div id="ttsToggle" title="Bật/tắt đọc to phản hồi AI" style="display:flex;align-items:center;gap:6px;padding:6px 12px;background:var(--cyan-soft);border:1px solid var(--cyan-soft);border-radius:8px;cursor:pointer;font-size:12px;color:var(--muted);transition:all .2s" onclick="toggleTts(this)">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg>
         TTS: <span id="ttsState">Tắt</span>
       </div>
@@ -36,23 +36,23 @@ function renderChatbot() {
     </div>
 
     <!-- Voice recording indicator -->
-    <div id="voiceBar" style="display:none;align-items:center;gap:10px;padding:10px 16px;background:rgba(255,23,68,.07);border-top:1px solid rgba(255,23,68,.2)">
+    <div id="voiceBar" style="display:none;align-items:center;gap:10px;padding:10px 16px;background:var(--danger-soft);border-top:1px solid var(--danger-soft)">
       <div style="display:flex;gap:3px;align-items:center">
         ${Array(7).fill(0).map((_, i) => `<div class="voice-bar-dot" style="animation-delay:${i * 0.1}s"></div>`).join('')}
       </div>
-      <span style="font-size:13px;color:var(--red)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Đang nghe... Hãy nói câu hỏi của bạn</span>
-      <button onclick="stopVoice()" style="margin-left:auto;font-size:12px;color:var(--muted);background:none;border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:4px 10px;cursor:pointer">Dừng</button>
+      <span style="font-size:13px;color:var(--danger)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg> Đang nghe... Hãy nói câu hỏi của bạn</span>
+      <button onclick="stopVoice()" style="margin-left:auto;font-size:12px;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:4px 10px;cursor:pointer">Dừng</button>
     </div>
 
     <!-- Output Format Bar — chips generated inline so they appear on first render -->
-    <div id="chatFormatBar" style="display:flex;align-items:center;gap:5px;padding:8px 16px 4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;border-top:1px solid rgba(255,255,255,.04);flex-shrink:0">
+    <div id="chatFormatBar" style="display:flex;align-items:center;gap:5px;padding:8px 16px 4px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;border-top:1px solid var(--border);flex-shrink:0">
       <span style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.06em;white-space:nowrap;flex-shrink:0">Trả lời dạng:</span>
       ${(typeof OUTPUT_FORMATS !== 'undefined' ? OUTPUT_FORMATS : []).map(f => `<button
         onclick="cbApplyOutputFormat('${f.id}','${f.text}')"
         title="${f.label}"
-        style="display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:20px;border:1px solid ${f.color}40;background:transparent;color:rgba(255,255,255,.45);font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .2s;font-family:'Inter',sans-serif;flex-shrink:0"
+        style="display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:20px;border:1px solid ${f.color}40;background:transparent;color:var(--text-2);font-size:11px;font-weight:500;cursor:pointer;white-space:nowrap;transition:all .2s;font-family:'Inter',sans-serif;flex-shrink:0"
         onmouseover="this.style.borderColor='${f.color}';this.style.color='${f.color}';this.style.background='${f.color}18'"
-        onmouseout="this.style.borderColor='${f.color}40';this.style.color='rgba(255,255,255,.45)';this.style.background='transparent'">
+        onmouseout="this.style.borderColor='${f.color}40';this.style.color='var(--text-2)';this.style.background='transparent'">
         ${f.icon}&nbsp;${f.label}
       </button>`).join('')}
     </div>
@@ -64,17 +64,17 @@ function renderChatbot() {
     </div>
 
     <!-- Uploaded File Preview -->
-    <div id="mainFilePreview" style="display:none;padding:10px 16px;border-top:1px solid rgba(255,255,255,.05);background:rgba(0,0,0,.15);position:relative">
+    <div id="mainFilePreview" style="display:none;padding:10px 16px;border-top:1px solid var(--border);background:var(--bg-hover);position:relative">
       <div id="mainFilePreviewContent" style="display:flex;align-items:center;gap:12px"></div>
-      <button onclick="clearMainFile()" style="position:absolute;top:50%;right:12px;transform:translateY(-50%);background:rgba(255,23,68,.1);border:1px solid rgba(255,23,68,.3);color:#ff6b6b;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+      <button onclick="clearMainFile()" style="position:absolute;top:50%;right:12px;transform:translateY(-50%);background:var(--danger-soft);border:1px solid var(--danger);color:var(--danger);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
 
     <!-- Input Box (Row 1 & 2) -->
-    <div style="background:#131d36;padding:16px;border-radius:0 0 12px 12px;border-top:1px solid rgba(255,255,255,.05)">
+    <div style="background:var(--bg-card);padding:16px;border-radius:0 0 12px 12px;border-top:1px solid var(--border)">
       <!-- Row 1: Text Input & Send -->
       <div style="position:relative;margin-bottom:12px">
-        <input type="text" id="chatInput" placeholder="Hỏi Hadiwa AI ● đê, hồ, lũ lụt, thiên tai • • •" onkeydown="if(event.key==='Enter') sendChat()" style="width:100%;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:14px;font-family:'Inter',sans-serif;padding:12px 45px 12px 14px;outline:none;caret-color:var(--cyan);transition:border-color .2s" onfocus="this.style.borderColor='var(--cyan)'" onblur="this.style.borderColor='rgba(255,255,255,.1)'">
-        <button class="chat-send" onclick="sendChat()" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--cyan);color:#fff;border:none;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;padding:0">
+        <input type="text" id="chatInput" placeholder="Hỏi Hadiwa AI ● đê, hồ, lũ lụt, thiên tai • • •" onkeydown="if(event.key==='Enter') sendChat()" style="width:100%;background:var(--bg-hover);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;font-family:'Inter',sans-serif;padding:12px 45px 12px 14px;outline:none;caret-color:var(--primary);transition:border-color .2s" onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'">
+        <button class="chat-send" onclick="sendChat()" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--primary);color:var(--text-on-primary);border:none;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;padding:0">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
         </button>
       </div>
@@ -84,23 +84,23 @@ function renderChatbot() {
         <div style="display:flex;align-items:center;gap:20px">
           <!-- Attachment -->
           <input type="file" id="mainChatAttach" style="display:none" onchange="handleMainFileAttach(this)">
-          <button onclick="document.getElementById('mainChatAttach').click()" style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;padding:0;transition:.2s" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--muted)'" title="Đính kèm">
+          <button onclick="document.getElementById('mainChatAttach').click()" style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;padding:0;transition:.2s" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted)'" title="Đính kèm">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </button>
 
           <!-- Tools Dropdown -->
           <div style="position:relative;display:inline-block">
-            <button onclick="const m = document.getElementById('mainToolMenu'); window._mainCatClose?window._mainCatClose():null; m.style.display = m.style.display==='block'?'none':'block'; window._mainToolClose=()=>m.style.display='none'; event.stopPropagation();" style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;padding:2px 6px;border-radius:6px;transition:.2s" onmouseover="this.style.background='rgba(255,255,255,.05)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--muted)'">
+            <button onclick="const m = document.getElementById('mainToolMenu'); window._mainCatClose?window._mainCatClose():null; m.style.display = m.style.display==='block'?'none':'block'; window._mainToolClose=()=>m.style.display='none'; event.stopPropagation();" style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;padding:2px 6px;border-radius:6px;transition:.2s" onmouseover="this.style.background='var(--bg-hover)';this.style.color='var(--text)'" onmouseout="this.style.background='transparent';this.style.color='var(--muted)'">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
               <span id="mainToolLabel">Công cụ</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div id="mainToolMenu" style="display:none;position:absolute;bottom:calc(100% + 10px);left:-20px;background:#1e293b;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px;min-width:180px;box-shadow:0 4px 20px rgba(0,0,0,.5);z-index:100;animation:chatPop .2s ease">
-              <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainToolLabel').innerText='Phân tích mực nước'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Phân tích mực nước</div>
-              <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainToolLabel').innerText='Tra cứu sự cố Đê'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Tra cứu sự cố Đê</div>
-              <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainToolLabel').innerText='Viết báo cáo PCTT'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Viết báo cáo PCTT</div>
-              <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainToolLabel').innerText='Tìm kiếm văn bản'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg> Tìm kiếm văn bản</div>
-              <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainToolLabel').innerText='Phân tích ảnh hiện trường'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Phân tích ảnh hiện trường</div>
+            <div id="mainToolMenu" style="display:none;position:absolute;bottom:calc(100% + 10px);left:-20px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:6px;min-width:180px;box-shadow:0 4px 20px rgba(0,0,0,.5);z-index:100;animation:chatPop .2s ease">
+              <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainToolLabel').innerText='Phân tích mực nước'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg> Phân tích mực nước</div>
+              <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainToolLabel').innerText='Tra cứu sự cố Đê'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Tra cứu sự cố Đê</div>
+              <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainToolLabel').innerText='Viết báo cáo PCTT'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Viết báo cáo PCTT</div>
+              <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainToolLabel').innerText='Tìm kiếm văn bản'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg> Tìm kiếm văn bản</div>
+              <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainToolLabel').innerText='Phân tích ảnh hiện trường'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg> Phân tích ảnh hiện trường</div>
             </div>
           </div>
         </div>
@@ -108,23 +108,23 @@ function renderChatbot() {
         <div style="display:flex;align-items:center;gap:12px">
           <!-- Category Dropdown -->
           <div style="position:relative;display:inline-block">
-            <button onclick="const m = document.getElementById('mainCatMenu'); window._mainToolClose?window._mainToolClose():null; m.style.display = m.style.display==='block'?'none':'block'; window._mainCatClose=()=>m.style.display='none'; event.stopPropagation();" style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:4px;font-size:13px;font-weight:500;padding:4px 8px;border-radius:6px;transition:.2s" onmouseover="this.style.background='rgba(255,255,255,.05)';this.style.color='#fff'" onmouseout="this.style.background='transparent';this.style.color='var(--muted)'">
+            <button onclick="const m = document.getElementById('mainCatMenu'); window._mainToolClose?window._mainToolClose():null; m.style.display = m.style.display==='block'?'none':'block'; window._mainCatClose=()=>m.style.display='none'; event.stopPropagation();" style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:4px;font-size:13px;font-weight:500;padding:4px 8px;border-radius:6px;transition:.2s" onmouseover="this.style.background='var(--bg-hover)';this.style.color='var(--text)'" onmouseout="this.style.background='transparent';this.style.color='var(--muted)'">
               <span id="mainCatLabel" style="display:flex;align-items:center;gap:5px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> Tất cả chủ đề</span>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
             </button>
-            <div id="mainCatMenu" style="display:none;position:absolute;bottom:calc(100% + 5px);right:0;background:#1e293b;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px;min-width:160px;box-shadow:0 4px 20px rgba(0,0,0,.5);z-index:100;animation:chatPop .2s ease">
-              <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;background:rgba(255,255,255,.05);display:flex;align-items:center;gap:8px" onclick="document.getElementById('mainCatLabel').innerHTML='<svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; style=&quot;flex-shrink:0&quot;><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot;/><line x1=&quot;2&quot; y1=&quot;12&quot; x2=&quot;22&quot; y2=&quot;12&quot;/><path d=&quot;M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z&quot;/></svg> Tất cả chủ đề'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> Tất cả chủ đề</div>
-              <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainCatLabel').innerHTML='<svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; style=&quot;flex-shrink:0&quot;><path d=&quot;M3 7h18M3 12h18M3 17h12&quot;/></svg> Đê điều'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M3 7h18M3 12h18M3 17h12"/></svg> Đê điều</div>
-              <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainCatLabel').innerHTML='<svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; style=&quot;flex-shrink:0&quot;><path d=&quot;M2 12c2-4 4-6 10-6s8 2 10 6c-2 4-4 6-10 6S4 16 2 12z&quot;/><path d=&quot;M12 12v.01&quot;/></svg> Thủy văn &amp; Mưa lũ'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg> Thủy văn &amp; Mưa lũ</div>
-              <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainCatLabel').innerHTML='<svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; style=&quot;flex-shrink:0&quot;><rect x=&quot;2&quot; y=&quot;7&quot; width=&quot;20&quot; height=&quot;14&quot; rx=&quot;2&quot;/><path d=&quot;M16 7V5a2 2 0 00-4 0v2M8 7V5a2 2 0 00-4 0v2&quot;/></svg> Hồ chứa &amp; Trạm bơm'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2"/></svg> Hồ chứa &amp; Trạm bơm</div>
-              <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainCatLabel').innerHTML='<svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; style=&quot;flex-shrink:0&quot;><path d=&quot;M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z&quot;/><line x1=&quot;12&quot; y1=&quot;9&quot; x2=&quot;12&quot; y2=&quot;13&quot;/><line x1=&quot;12&quot; y1=&quot;17&quot; x2=&quot;12.01&quot; y2=&quot;17&quot;/></svg> Thiên tai &amp; Cứu nạn'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Thiên tai &amp; Cứu nạn</div>
-              <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='rgba(255,255,255,.1)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainCatLabel').innerHTML='<svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; style=&quot;flex-shrink:0&quot;><path d=&quot;M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z&quot;/><polyline points=&quot;14 2 14 8 20 8&quot;/></svg> Văn bản &amp; Kế hoạch'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Văn bản &amp; Kế hoạch</div>
+            <div id="mainCatMenu" style="display:none;position:absolute;bottom:calc(100% + 5px);right:0;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:6px;min-width:160px;box-shadow:0 4px 20px rgba(0,0,0,.5);z-index:100;animation:chatPop .2s ease">
+              <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;background:var(--bg-hover);display:flex;align-items:center;gap:8px" onclick="document.getElementById('mainCatLabel').innerHTML='<svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; style=&quot;flex-shrink:0&quot;><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot;/><line x1=&quot;2&quot; y1=&quot;12&quot; x2=&quot;22&quot; y2=&quot;12&quot;/><path d=&quot;M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z&quot;/></svg> Tất cả chủ đề'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> Tất cả chủ đề</div>
+              <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainCatLabel').innerHTML='<svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; style=&quot;flex-shrink:0&quot;><path d=&quot;M3 7h18M3 12h18M3 17h12&quot;/></svg> Đê điều'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M3 7h18M3 12h18M3 17h12"/></svg> Đê điều</div>
+              <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainCatLabel').innerHTML='<svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; style=&quot;flex-shrink:0&quot;><path d=&quot;M2 12c2-4 4-6 10-6s8 2 10 6c-2 4-4 6-10 6S4 16 2 12z&quot;/><path d=&quot;M12 12v.01&quot;/></svg> Thủy văn &amp; Mưa lũ'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z"/></svg> Thủy văn &amp; Mưa lũ</div>
+              <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainCatLabel').innerHTML='<svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; style=&quot;flex-shrink:0&quot;><rect x=&quot;2&quot; y=&quot;7&quot; width=&quot;20&quot; height=&quot;14&quot; rx=&quot;2&quot;/><path d=&quot;M16 7V5a2 2 0 00-4 0v2M8 7V5a2 2 0 00-4 0v2&quot;/></svg> Hồ chứa &amp; Trạm bơm'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-4 0v2"/></svg> Hồ chứa &amp; Trạm bơm</div>
+              <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainCatLabel').innerHTML='<svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; style=&quot;flex-shrink:0&quot;><path d=&quot;M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z&quot;/><line x1=&quot;12&quot; y1=&quot;9&quot; x2=&quot;12&quot; y2=&quot;13&quot;/><line x1=&quot;12&quot; y1=&quot;17&quot; x2=&quot;12.01&quot; y2=&quot;17&quot;/></svg> Thiên tai &amp; Cứu nạn'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Thiên tai &amp; Cứu nạn</div>
+              <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='transparent'" onclick="document.getElementById('mainCatLabel').innerHTML='<svg width=&quot;14&quot; height=&quot;14&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; style=&quot;flex-shrink:0&quot;><path d=&quot;M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z&quot;/><polyline points=&quot;14 2 14 8 20 8&quot;/></svg> Văn bản &amp; Kế hoạch'; this.parentElement.style.display='none'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Văn bản &amp; Kế hoạch</div>
             </div>
 
           </div>
 
           <!-- Micro Button -->
-          <button id="mainMicBtn" onclick="toggleVoice()" style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;padding:0;transition:.2s" onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--muted)'" title="Voice chat">
+          <button id="mainMicBtn" onclick="toggleVoice()" style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;padding:0;transition:.2s" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted)'" title="Voice chat">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/></svg>
           </button>
         </div>
@@ -143,11 +143,11 @@ function renderMsg(m) {
   // Voice message indicator (user spoke)
   const voiceTag = isVoice ? `
     <div class="audio-player" style="margin-top:8px;display:flex;align-items:center;gap:8px">
-      <button onclick="playAudio('${m.audioSrc}', this)" style="width:28px;height:28px;border-radius:50%;background:rgba(0,200,255,.15);border:1px solid rgba(0,200,255,.3);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="color:var(--cyan)"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <button onclick="playAudio('${m.audioSrc}', this)" style="width:28px;height:28px;border-radius:50%;background:var(--cyan-soft);border:1px solid var(--cyan);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="color:var(--primary)"><polygon points="5 3 19 12 5 21 5 3"/></svg>
       </button>
-      <div style="flex:1;height:3px;background:rgba(0,200,255,.12);border-radius:3px;position:relative">
-        <div class="audio-progress-bar" style="height:100%;width:0%;background:var(--cyan);border-radius:3px;transition:width .1s"></div>
+      <div style="flex:1;height:3px;background:var(--cyan-soft);border-radius:3px;position:relative">
+        <div class="audio-progress-bar" style="height:100%;width:0%;background:var(--primary);border-radius:3px;transition:width .1s"></div>
       </div>
       <span style="font-size:10px;color:var(--muted);font-family:'Roboto Mono',monospace">0:${Math.floor(Math.random() * 4 + 2).toString().padStart(2, '0')}</span>
     </div>` : '';
@@ -157,7 +157,7 @@ function renderMsg(m) {
 
   // TTS button for AI messages
   const ttsBtn = !isUser ? `
-  <button id="${ttsBtnId}" class="tts-speak-btn" onclick="speakText(this, '${encodedText}')" title="Đọc to phản hồi này" style="margin-top:7px;font-size:11px;color:var(--muted);background:none;border:1px solid rgba(0,200,255,.15);border-radius:6px;padding:3px 9px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .2s" onmouseover="this.style.borderColor='rgba(0,200,255,.4)'" onmouseout="if(!cbSpeaking||window._ttsActiveBtn!==this)this.style.borderColor='rgba(0,200,255,.15)'">
+  <button id="${ttsBtnId}" class="tts-speak-btn" onclick="speakText(this, '${encodedText}')" title="Đọc to phản hồi này" style="margin-top:7px;font-size:11px;color:var(--muted);background:none;border:1px solid var(--cyan-soft);border-radius:6px;padding:3px 9px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .2s" onmouseover="this.style.borderColor='var(--cyan)'" onmouseout="if(!cbSpeaking||window._ttsActiveBtn!==this)this.style.borderColor='var(--cyan-soft)'">
     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg> Đọc to
   </button>` : '';
 
@@ -167,7 +167,7 @@ function renderMsg(m) {
   return `<div class="chat-msg ${isUser ? 'user' : ''}">
     <div class="chat-avatar ${isUser ? 'user' : 'ai'}">${isUser ? 'AD' : '<img src="assets/mascot-hadiwa.svg?v=20260326" style="width:100%;height:100%;object-fit:contain">'}</div>
     <div class="chat-bubble ${isUser ? 'user' : 'ai'}">
-      ${isVoice ? `<div style="display:flex;align-items:center;gap:5px;margin-bottom:5px;font-size:11px;color:var(--cyan)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/></svg> Tin nhắn giọng nói</div>` : ''}
+      ${isVoice ? `<div style="display:flex;align-items:center;gap:5px;margin-bottom:5px;font-size:11px;color:var(--primary)"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/></svg> Tin nhắn giọng nói</div>` : ''}
       ${html}
       ${voiceTag}
       ${fileCard}
@@ -180,9 +180,9 @@ function renderMsg(m) {
 const AI_RESPONSES = {
   'thảm lậu': `**Quy trình xử lý đê thảm lậu / mạch sủi khẩn cấp:**\n\n1. **Báo cáo ngay** – Liên hệ Đội ưứng cứu sự cố (ƯCSC) gần nhất và Bộ phận Điều hành PCTT.\n2. **Cắm giọi khóa khu vực** – Cắm biển cảnh báo 500m hai phía, cấm người qua lại.\n3. **Sử dụng bao tải cát** – Đắp khẩn cấp ép mạch nước, không đào sâu vào đê.\n4. **Giám sát mục nước** – Khắc phục đồng thời theo dõi mực nước sông mỗi 15 phút.\n5. **Hỏ sơ thủy văn** – Theo dõi sông Hồng, nếu tiếp tục dâng cần sẵn sàng sơ tán.\n6. **Báo cáo về BCH PCTT** – Gửi báo cáo sự cố trong vòng 2h cho Ban Chỉ huy PCTT TP. Hà Nội.\n\n⚠️ Tham khảo: Quy trình ứng cứu QT-PCTT-004, Tiêu chuẩn TCVN 8636:2011.`,
   'mực nước': `**Mực nước các trạm dọc sông Hồng (hiện tại):**\n\n| Trạm | Sông | Mực nước | Báo động | Trạng thái |\n|---|---|---|---|---|\n| Hà Nội | S. Hồng | **4.82m** | BĐ1: 9.5m | [Bình thường] |\n| Sơn Tây | S. Hồng | **7.15m** | Bơ0: 11.0m | Bình thường |\n| Thượng Cát | S. Đuống | **5.38m** | Bơ0: 8.2m | Bình thường |\n| Ba Thá | S. Đáy | **3.95m** | Bơ0: 8.5m | Bình thường |\n| Lý Nhân | S. Hồng | **2.81m** | Bơ0: 9.0m | Bình thường |\n\nGhi chú: Mực nước cập nhật lúc 12:00 hôm nay. Độ chính xác ±0.05m.`,
-  'hồ tuy lai': `Theo dữ liệu hiện tại, **Hồ Tuy Lai** (Đồng Xuân – Mỹ Đức) đang: \n\n<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> **Mực nước: 19.2m** – tiệm cận cảnh báo 2 (19.5m)\n<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> **Tràn xả lũ:** đang mở 3 khoang (Q=28 m³/s)\n<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);vertical-align:middle"></span> **Thảm lượng hồ:** 31.2 triệu m³ / 35 triệu m³ (89%)\n\nĐề xuất: Tiếp tục xả kiểm soát, theo dõi hạ lưu sông Đáy, sẵn sàng phương án sơ tán khu vực Mỹ Đức.`,
+  'hồ tuy lai': `Theo dữ liệu hiện tại, **Hồ Tuy Lai** (Đồng Xuân – Mỹ Đức) đang: \n\n<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> **Mực nước: 19.2m** – tiệm cận cảnh báo 2 (19.5m)\n<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> **Tràn xả lũ:** đang mở 3 khoang (Q=28 m³/s)\n<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warning);vertical-align:middle"></span> **Thảm lượng hồ:** 31.2 triệu m³ / 35 triệu m³ (89%)\n\nĐề xuất: Tiếp tục xả kiểm soát, theo dõi hạ lưu sông Đáy, sẵn sàng phương án sơ tán khu vực Mỹ Đức.`,
   'suối hai': `**Hồ Suối Hai (Ba Vì):**\n\n - Mực nước: **20.8m** (MNDBT: 21.0m) ✅ An toàn\n - Dung tích: 47.6 triệu m³ / 51.6 triệu m³ (92%)\n - Đang tưới: 7.500 ha nông nghiệp Ba Vì\n - Trạng thái xả tràn: Đóng\n\nChú ý: dự báo mưa 25-50mm vào sáng mai, cần giám sát chặt mực hồ sau 06:00.`,
-  'đê hữu đáy': `Theo dữ liệu từ hệ thống IoT, **Đê Hữu Đáy K18+500** đang có:\n\n<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> **Sự cố SC-003** – Mạch sủi thảm lậu lưu lượng 3.2 l/s (11:45 hôm nay)\n<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> **Đội ƯCSC số 3** đang triển khai tại hiện trưỜng\n<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);vertical-align:middle"></span> **Cảnh báo** – Mực nước sông Đáy 3.95m (Bơ0: 8.5m)\n\nĐề xuất khẩn: Thêm tấm bút ép cát, cắm thêm 10 bao ở phương dáng, gọi bổ sung nhân lực.`,
+  'đê hữu đáy': `Theo dữ liệu từ hệ thống IoT, **Đê Hữu Đáy K18+500** đang có:\n\n<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> **Sự cố SC-003** – Mạch sủi thảm lậu lưu lượng 3.2 l/s (11:45 hôm nay)\n<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> **Đội ƯCSC số 3** đang triển khai tại hiện trưỜng\n<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warning);vertical-align:middle"></span> **Cảnh báo** – Mực nước sông Đáy 3.95m (Bơ0: 8.5m)\n\nĐề xuất khẩn: Thêm tấm bút ép cát, cắm thêm 10 bao ở phương dáng, gọi bổ sung nhân lực.`,
   'thiết bị': `**Danh sách thiết bị sắp đến hạn bảo dưỡng:**\n\n| Thiết bị | Địa điểm | Hạn BD | Mức ưu tiên |\n|---|---|---|---|\n| Máy bơm động lực #1 | Trạm Hà Nội | **15/04/2026** | Trung bình |\n| Cảm biến mực nước (IoT) | Đê Tả Hồng K35 | **20/03/2026** | ⚠️ Sắp đến hạn |\n| Máy bơm thoát lũ #2 | Trạm Bơm Phú Diễn | **Cần kiểm tra ngay** | 🚨 Khẩn cấp |\n\n⚠️ Máy bơm Trạm Bơm Phú Diễn còn 8 ngày đến hạn định kỳ.`,
   'cảnh báo': `**Danh sách cảnh báo lũ hiện tại:**\n\n| Mức | Địa điểm | Nguy cơ | Trạng thái |\n|---|---|---|---|\n| Bơ2 | Hồ Tuy Lai – Mỹ Đức | Xả tràn 3 khoang | [Đang xử lý] |\n| Bơ1 | Đê Ngọc Tảo K5+100 | Nứt dọc đỉnh 180m | [Ứng cứu] |\n| Bơ1 | Đê Hữu Đáy K18+500 | Mạch sủi + thảm lậu | [Ứng cứu] |\n| Bơ0 | Đê Hữu Hồng K22+300 | Sạt mái đê | [Theo dõi] |\n\nTổng 2 cảnh báo chưa xử lý xong, 2 đang theo dõi.`,
   'nhân lực': `**Lực lượng ứng trực (hiện tại):**\n\n- Tổng cán bộ on-call: **${BIZ_STATS?.onDutyStaff || 38} người**\n- Số đội hiện trường: **${BIZ_STATS?.fieldTeams || 7} đội** (mỗi đội 5-8 người)\n- Phương tiện sẵn sàng: 12 xe tải, 4 máy bơm dã chiến, 6 thiết bị lặn\n- Vật tư kho: 45.000 bao tải cát, 30.000 rọ đá, 4.000 cọ tre\n\nĐội ƯCSC số 3 đang triển khai tại Đê Hữu Đáy K18+500.`,
@@ -243,11 +243,11 @@ const FILE_RESPONSES = [
       size: '34 KB',
       preview: [
         ['Thiết bị', 'Nhà máy', 'Trạng thái', 'Hạn BDưỡng'],
-        ['Máy bơm ly tâm #1', 'Hồng Gai', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Hoạt động', '15/04/2026'],
+        ['Máy bơm ly tâm #1', 'Hồng Gai', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Hoạt động', '15/04/2026'],
         ['Máy bơm áp lực #1', 'Bãi Cháy', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Sắp đến hạn', '20/03/2026'],
-        ['Biến tần ABB ACS550', 'Cẩm Phả', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> Cần sửa ngay', '25/02/2026'],
-        ['Máy bơm ly tâm #2', 'Hồng Gai', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Hoạt động', '10/06/2026'],
-        ['Cảm biến áp suất', 'Uông Bí', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Hoạt động', '01/05/2026'],
+        ['Biến tần ABB ACS550', 'Cẩm Phả', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> Cần sửa ngay', '25/02/2026'],
+        ['Máy bơm ly tâm #2', 'Hồng Gai', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Hoạt động', '10/06/2026'],
+        ['Cảm biến áp suất', 'Uông Bí', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Hoạt động', '01/05/2026'],
       ],
     },
   },
@@ -302,11 +302,11 @@ const FILE_RESPONSES = [
       size: '48 KB',
       preview: [
         ['Nhà máy', 'pH', 'Clo dư', 'Độ đục (NTU)', 'Kết quả'],
-        ['Hồng Gai', '7.20', '0.35 mg/L', '0.8 NTU', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đạt'],
-        ['Bãi Cháy', '7.00', '0.42 mg/L', '1.1 NTU', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đạt'],
-        ['Cẩm Phả', '7.40', '0.61 mg/L <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>', '1.3 NTU', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2.5" style="vertical-align:middle"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Không đạt'],
-        ['Uông Bí', '7.15', '0.38 mg/L', '0.7 NTU', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đạt'],
-        ['Vân Đồn', '6.95', '0.30 mg/L', '0.9 NTU', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đạt'],
+        ['Hồng Gai', '7.20', '0.35 mg/L', '0.8 NTU', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đạt'],
+        ['Bãi Cháy', '7.00', '0.42 mg/L', '1.1 NTU', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đạt'],
+        ['Cẩm Phả', '7.40', '0.61 mg/L <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>', '1.3 NTU', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2.5" style="vertical-align:middle"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Không đạt'],
+        ['Uông Bí', '7.15', '0.38 mg/L', '0.7 NTU', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đạt'],
+        ['Vân Đồn', '6.95', '0.30 mg/L', '0.9 NTU', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đạt'],
       ],
     },
   },
@@ -319,11 +319,11 @@ const FILE_RESPONSES = [
       size: '22 KB',
       preview: [
         ['Mã SC', 'Loại sự cố', 'Địa điểm', 'Thời gian', 'Trạng thái'],
-        ['SC-001', 'Vỡ ống DN110', 'Hồng Gai – P3', '05/02 08:30', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đóng'],
-        ['SC-002', 'Tụt áp đột ngột', 'Bãi Cháy', '10/02 13:45', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đóng'],
-        ['SC-003', 'Motor Overload', 'Cẩm Phả – Bơm 2', '27/02 14:20', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> Mở'],
-        ['SC-004', 'Clo dư vượt QC', 'Cẩm Phả', '27/02 16:00', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> Mở'],
-        ['SC-005', 'Mất điện TBA', 'Uông Bí', '18/02 21:00', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đóng'],
+        ['SC-001', 'Vỡ ống DN110', 'Hồng Gai – P3', '05/02 08:30', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đóng'],
+        ['SC-002', 'Tụt áp đột ngột', 'Bãi Cháy', '10/02 13:45', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đóng'],
+        ['SC-003', 'Motor Overload', 'Cẩm Phả – Bơm 2', '27/02 14:20', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> Mở'],
+        ['SC-004', 'Clo dư vượt QC', 'Cẩm Phả', '27/02 16:00', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> Mở'],
+        ['SC-005', 'Mất điện TBA', 'Uông Bí', '18/02 21:00', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đóng'],
       ],
     },
   },
@@ -367,18 +367,18 @@ function renderFileCard(file, fileId) {
     word: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>',
     heatmap: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>',
   };
-  const colors = { excel: '#00e676', report: '#00c8ff', chart: '#ffca28', image: '#7c4dff', word: '#2196f3', heatmap: '#ff5722' };
-  const bgColors = { excel: 'rgba(0,230,118,.08)', report: 'rgba(0,200,255,.08)', chart: 'rgba(255,202,40,.08)', image: 'rgba(124,77,255,.08)', word: 'rgba(33,150,243,.08)', heatmap: 'rgba(255,87,34,.08)' };
+  const colors = { excel: 'var(--success)', report: 'var(--cyan)', chart: 'var(--warning)', image: '#2984EE', word: 'var(--info)', heatmap: '#ff5722' };
+  const bgColors = { excel: 'var(--success-soft)', report: 'var(--cyan-soft)', chart: 'var(--warning-soft)', image: 'rgba(41,132,238,.08)', word: 'var(--info-soft)', heatmap: 'rgba(255,87,34,.08)' };
   const typeLabels = { excel: 'Excel Spreadsheet', report: 'PDF Report', chart: 'PNG Chart', image: 'JPEG Image', word: 'Word Document', heatmap: 'Heat Map PNG' };
 
   let preview = '';
 
   if (file.type === 'excel' && file.preview) {
     // Mini spreadsheet preview
-    preview = `<div style="overflow:hidden;border-radius:6px;border:1px solid rgba(0,230,118,.2);margin-bottom:10px;max-height:140px;overflow-y:auto">
+    preview = `<div style="overflow:hidden;border-radius:6px;border:1px solid var(--success-soft);margin-bottom:10px;max-height:140px;overflow-y:auto">
       <table style="width:100%;border-collapse:collapse;font-size:10px;font-family:'Roboto Mono',monospace">
-        ${file.preview.map((row, ri) => `<tr style="background:${ri === 0 ? 'rgba(0,230,118,.12)' : 'rgba(0,0,0,.1)'}">
-          ${row.map(cell => `<td style="padding:4px 8px;border:1px solid rgba(0,230,118,.1);white-space:nowrap;font-weight:${ri === 0 ? 700 : 400};color:${ri === 0 ? 'var(--green)' : 'var(--text-2)'}">${cell}</td>`).join('')}
+        ${file.preview.map((row, ri) => `<tr style="background:${ri === 0 ? 'var(--success-soft)' : 'var(--bg-hover)'}">
+          ${row.map(cell => `<td style="padding:4px 8px;border:1px solid var(--success-soft);white-space:nowrap;font-weight:${ri === 0 ? 700 : 400};color:${ri === 0 ? 'var(--success)' : 'var(--text-2)'}">${cell}</td>`).join('')}
         </tr>`).join('')}
       </table>
     </div>`;
@@ -386,13 +386,13 @@ function renderFileCard(file, fileId) {
 
   if (file.type === 'report' && file.kpis) {
     // PDF report cover preview
-    preview = `<div style="background:linear-gradient(135deg,#071629,#0d2545);border-radius:8px;padding:14px;margin-bottom:10px;border:1px solid rgba(0,200,255,.15)">
-      <div style="font-size:11px;font-weight:700;color:var(--cyan);margin-bottom:2px;letter-spacing:.5px">${file.title}</div>
+    preview = `<div style="background:linear-gradient(135deg,var(--bg-surface),var(--bg-card));border-radius:8px;padding:14px;margin-bottom:10px;border:1px solid var(--cyan-soft)">
+      <div style="font-size:11px;font-weight:700;color:var(--primary);margin-bottom:2px;letter-spacing:.5px">${file.title}</div>
       <div style="font-size:10px;color:var(--muted);margin-bottom:10px">${file.subtitle}</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
-        ${(file.kpis || []).map(k => `<div style="background:rgba(0,0,0,.2);border-radius:5px;padding:6px 8px;border:1px solid ${k.ok ? 'rgba(0,230,118,.15)' : 'rgba(255,23,68,.15)'}">
+        ${(file.kpis || []).map(k => `<div style="background:var(--bg-hover);border-radius:5px;padding:6px 8px;border:1px solid ${k.ok ? 'var(--success-soft)' : 'var(--danger-soft)'}">
           <div style="font-size:9px;color:var(--muted)">${k.label}</div>
-          <div style="font-size:13px;font-weight:700;color:${k.ok ? 'var(--green)' : 'var(--yellow)'};font-family:'Roboto Mono',monospace">${k.value}</div>
+          <div style="font-size:13px;font-weight:700;color:${k.ok ? 'var(--success)' : 'var(--warning)'};font-family:'Roboto Mono',monospace">${k.value}</div>
           <div style="font-size:9px;color:var(--muted)">${k.trend}</div>
         </div>`).join('')}
       </div>
@@ -407,47 +407,47 @@ function renderFileCard(file, fileId) {
       const x = 10 + i * (barW + gap);
       const barH = Math.round((b.val / maxBar) * 60);
       const y = H - 20 - barH;
-      return `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" rx="3" fill="rgba(0,200,255,.45)" stroke="#00c8ff" stroke-width="1"/>
-              <text x="${x + barW / 2}" y="${H - 6}" text-anchor="middle" font-size="8" fill="#546e7a">${b.label}</text>
-              <text x="${x + barW / 2}" y="${y - 3}" text-anchor="middle" font-size="8" fill="#00c8ff">${b.val}</text>`;
+      return `<rect x="${x}" y="${y}" width="${barW}" height="${barH}" rx="3" fill="var(--cyan)" stroke="var(--cyan)" stroke-width="1"/>
+              <text x="${x + barW / 2}" y="${H - 6}" text-anchor="middle" font-size="8" fill="var(--muted)">${b.label}</text>
+              <text x="${x + barW / 2}" y="${y - 3}" text-anchor="middle" font-size="8" fill="var(--cyan)">${b.val}</text>`;
     }).join('');
     const linePoints = file.bars.map((b, i) => {
       const x = 10 + i * (barW + gap) + barW / 2;
       const y = H - 20 - Math.round((b.nrw / 20) * 60);
       return `${x},${y}`;
     }).join(' ');
-    preview = `<div style="background:#030e1c;border-radius:8px;padding:8px;margin-bottom:10px;border:1px solid rgba(0,200,255,.12)">
+    preview = `<div style="background:var(--bg-base);border-radius:8px;padding:8px;margin-bottom:10px;border:1px solid var(--cyan-soft)">
       <div style="font-size:10px;color:var(--muted);margin-bottom:4px">Sản lượng (triệu m³) vs NRW (%)</div>
       <svg width="${W}" height="${H}" style="overflow:visible">
         ${barsHtml}
-        <polyline points="${linePoints}" fill="none" stroke="#ffca28" stroke-width="1.5" stroke-dasharray="4 2"/>
+        <polyline points="${linePoints}" fill="none" stroke="var(--warning)" stroke-width="1.5" stroke-dasharray="4 2"/>
       </svg>
     </div>`;
   }
 
   if (file.type === 'image') {
     // Photo frame mock with location details
-    preview = `<div style="border-radius:8px;overflow:hidden;margin-bottom:10px;position:relative;background:#0a1a2e;border:1px solid rgba(124,77,255,.25)">
+    preview = `<div style="border-radius:8px;overflow:hidden;margin-bottom:10px;position:relative;background:#0a1a2e;border:1px solid rgba(41,132,238,.25)">
       <svg viewBox="0 0 300 170" width="100%" style="display:block">
         <rect width="300" height="170" fill="#0a1a2e"/>
         <!-- Sky -->
-        <rect width="300" height="90" fill="#071629"/>
+        <rect width="300" height="90" fill="var(--bg-surface)"/>
         <!-- Ground -->
         <rect y="90" width="300" height="80" fill="#0d1f35"/>
         <!-- Building outline -->
-        <rect x="40" y="30" width="220" height="100" rx="4" fill="#0d2545" stroke="#00c8ff" stroke-width="0.5"/>
-        <rect x="60" y="50" width="80" height="60" fill="#071629" stroke="rgba(0,200,255,.3)" stroke-width="0.5"/>
-        <rect x="160" y="50" width="80" height="60" fill="#071629" stroke="rgba(0,200,255,.3)" stroke-width="0.5"/>
+        <rect x="40" y="30" width="220" height="100" rx="4" fill="#0d2545" stroke="var(--cyan)" stroke-width="0.5"/>
+        <rect x="60" y="50" width="80" height="60" fill="var(--bg-surface)" stroke="var(--cyan)" stroke-width="0.5"/>
+        <rect x="160" y="50" width="80" height="60" fill="var(--bg-surface)" stroke="var(--cyan)" stroke-width="0.5"/>
         <!-- Windows -->
-        ${[65, 95, 125, 165, 195, 225].map(x => `<rect x="${x}" y="55" width="14" height="10" rx="1" fill="rgba(255,202,40,.7)"/><rect x="${x}" y="72" width="14" height="10" rx="1" fill="rgba(0,200,255,.5)"/>`).join('')}
+        ${[65, 95, 125, 165, 195, 225].map(x => `<rect x="${x}" y="55" width="14" height="10" rx="1" fill="var(--warning)"/><rect x="${x}" y="72" width="14" height="10" rx="1" fill="var(--cyan)"/>`).join('')}
         <!-- Pump equipment -->
-        <ellipse cx="150" cy="115" rx="20" ry="12" fill="#0d2545" stroke="#00c8ff" stroke-width="1"/>
+        <ellipse cx="150" cy="115" rx="20" ry="12" fill="#0d2545" stroke="var(--cyan)" stroke-width="1"/>
         <rect x="140" y="103" width="5" height="20" fill="#0d3060"/>
         <rect x="155" y="103" width="5" height="20" fill="#0d3060"/>
         <!-- Warning overlay -->
-        <rect x="100" y="60" width="100" height="40" rx="4" fill="rgba(255,23,68,.12)" stroke="rgba(255,23,68,.4)" stroke-width="1"/>
-        <text x="150" y="77" text-anchor="middle" font-size="11" fill="#ff1744" font-weight="bold"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> S.Cố SC-003</text>
-        <text x="150" y="92" text-anchor="middle" font-size="8" fill="#ff6b6b">Motor Overload - Bơm #2</text>
+        <rect x="100" y="60" width="100" height="40" rx="4" fill="var(--danger-soft)" stroke="var(--danger)" stroke-width="1"/>
+        <text x="150" y="77" text-anchor="middle" font-size="11" fill="var(--danger)" font-weight="bold"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> S.Cố SC-003</text>
+        <text x="150" y="92" text-anchor="middle" font-size="8" fill="var(--danger)">Motor Overload - Bơm #2</text>
         <!-- Timestamp bar -->
         <rect y="148" width="300" height="22" fill="rgba(0,0,0,.7)"/>
         <text x="8" y="162" font-size="9" fill="#7c90a0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> ${file.location}</text>
@@ -456,15 +456,15 @@ function renderFileCard(file, fileId) {
     </div>`;
   }
 
-  return `<div class="file-card" id="fc_${fileId}" style="margin-top:10px;border:1px solid ${colors[file.type] || 'var(--border)'};border-radius:10px;overflow:hidden;background:${bgColors[file.type] || 'rgba(0,0,0,.1)'}">
+  return `<div class="file-card" id="fc_${fileId}" style="margin-top:10px;border:1px solid ${colors[file.type] || 'var(--border)'};border-radius:10px;overflow:hidden;background:${bgColors[file.type] || 'var(--bg-hover)'}">
     ${preview}
-    <div style="padding:10px 12px;border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:10px">
+    <div style="padding:10px 12px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px">
       <span style="font-size:18px">${icons[file.type] || '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'}</span>
       <div style="flex:1;min-width:0">
         <div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${file.name}</div>
         <div style="font-size:10px;color:var(--muted);margin-top:1px">${typeLabels[file.type] || 'File'} · ${file.size}</div>
       </div>
-      <button onclick="downloadFile('${fileId}')" style="flex-shrink:0;display:flex;align-items:center;gap:5px;padding:6px 12px;background:${colors[file.type] || 'var(--cyan)'};color:#071629;border:none;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.3px;transition:opacity .2s" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+      <button onclick="downloadFile('${fileId}')" style="flex-shrink:0;display:flex;align-items:center;gap:5px;padding:6px 12px;background:${colors[file.type] || 'var(--primary)'};color:var(--bg-surface);border:none;border-radius:7px;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.3px;transition:opacity .2s" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Tải về
       </button>
@@ -493,12 +493,12 @@ function downloadFile(fileId) {
       ext = '.html';
     } else if (file.type === 'word') {
       // Word document preview
-      preview = `<div style="background:linear-gradient(135deg,#071d3a,#0d2f5f);border-radius:8px;padding:14px;margin-bottom:10px;border:1px solid rgba(33,150,243,.25)">
+      preview = `<div style="background:linear-gradient(135deg,#071d3a,#0d2f5f);border-radius:8px;padding:14px;margin-bottom:10px;border:1px solid var(--info)">
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-          <div style="width:36px;height:46px;background:#2196f3;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative">
-            <span style="font-size:10px;font-weight:900;color:#fff">W</span>
-            <div style="position:absolute;bottom:-4px;right:-4px;width:14px;height:14px;background:#1565c0;border-radius:2px;display:flex;align-items:center;justify-content:center">
-              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          <div style="width:36px;height:46px;background:var(--info);border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative">
+            <span style="font-size:10px;font-weight:900;color:var(--text-on-primary)">W</span>
+            <div style="position:absolute;bottom:-4px;right:-4px;width:14px;height:14px;background:var(--info);border-radius:2px;display:flex;align-items:center;justify-content:center">
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="var(--text-on-primary)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
           </div>
           <div>
@@ -507,34 +507,34 @@ function downloadFile(fileId) {
           </div>
         </div>
         <div style="display:flex;flex-direction:column;gap:4px">
-          ${(file.sections || []).map((s, i) => `<div style="display:flex;align-items:center;gap:8px;padding:5px 8px;background:rgba(33,150,243,.08);border-radius:4px;font-size:10px;color:rgba(255,255,255,.7)">
-            <span style="font-size:9px;font-weight:700;color:#2196f3;min-width:14px">${i + 1}.</span>${s}
+          ${(file.sections || []).map((s, i) => `<div style="display:flex;align-items:center;gap:8px;padding:5px 8px;background:var(--info-soft);border-radius:4px;font-size:10px;color:var(--text-2)">
+            <span style="font-size:9px;font-weight:700;color:var(--info);min-width:14px">${i + 1}.</span>${s}
           </div>`).join('')}
         </div>
       </div>`;
     } else if (file.type === 'heatmap') {
       // Heat map SVG preview
-      const riskColor = { high: '#ff3d57', medium: '#ff9500', low: '#00e676' };
+      const riskColor = { high: '#ff3d57', medium: '#ff9500', low: 'var(--success)' };
       const riskLabel = { high: 'Cao', medium: 'TB', low: 'Thấp' };
-      preview = `<div style="background:#030e1c;border-radius:8px;padding:8px;margin-bottom:10px;border:1px solid rgba(255,87,34,.2)">
+      preview = `<div style="background:var(--bg-base);border-radius:8px;padding:8px;margin-bottom:10px;border:1px solid rgba(255,87,34,.2)">
         <div style="font-size:10px;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:6px">
           Bản đồ nhiệt nguy cơ ngập lụt
           <span style="display:flex;gap:4px;margin-left:auto">
-            <span style="height:8px;width:16px;border-radius:2px;background:#ff3d57;display:inline-block"></span><span style="font-size:9px">Cao</span>
-            <span style="height:8px;width:16px;border-radius:2px;background:#ff9500;display:inline-block;margin-left:4px"></span><span style="font-size:9px">TB</span>
-            <span style="height:8px;width:16px;border-radius:2px;background:#00e676;display:inline-block;margin-left:4px"></span><span style="font-size:9px">Thấp</span>
+            <span style="height:8px;width:16px;border-radius:2px;background:var(--danger);display:inline-block"></span><span style="font-size:9px">Cao</span>
+            <span style="height:8px;width:16px;border-radius:2px;background:var(--warning);display:inline-block;margin-left:4px"></span><span style="font-size:9px">TB</span>
+            <span style="height:8px;width:16px;border-radius:2px;background:var(--success);display:inline-block;margin-left:4px"></span><span style="font-size:9px">Thấp</span>
           </span>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px">
           ${(file.zones || []).map(z => `<div style="border-radius:6px;padding:5px 8px;background:${riskColor[z.risk]}18;border:1px solid ${riskColor[z.risk]}40;text-align:center">
             <div style="font-size:9px;font-weight:700;color:${riskColor[z.risk]}">${riskLabel[z.risk]}</div>
-            <div style="font-size:10px;color:rgba(255,255,255,.7);margin-top:1px">${z.label}</div>
+            <div style="font-size:10px;color:var(--text-2);margin-top:1px">${z.label}</div>
           </div>`).join('')}
         </div>
       </div>`;
     } else {
       // For chart/image: generate an SVG placeholder
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="800" height="500" fill="#030e1c"/><text x="400" y="240" text-anchor="middle" font-size="24" font-family="Arial" fill="#00c8ff">${file.name}</text><text x="400" y="280" text-anchor="middle" font-size="14" fill="#546e7a">Hadiwa IOC · ${new Date().toLocaleDateString('vi-VN')}</text></svg>`;
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="800" height="500" fill="var(--bg-base)"/><text x="400" y="240" text-anchor="middle" font-size="24" font-family="Arial" fill="var(--cyan)">${file.name}</text><text x="400" y="280" text-anchor="middle" font-size="14" fill="var(--muted)">Hadiwa IOC · ${new Date().toLocaleDateString('vi-VN')}</text></svg>`;
       blob = new Blob([svg], { type: 'image/svg+xml' });
       ext = '.svg';
     }
@@ -543,7 +543,7 @@ function downloadFile(fileId) {
     a.href = url; a.download = file.name.replace(/\.(xlsx|pdf|png|jpg)$/, ext);
     a.click();
     setTimeout(() => URL.revokeObjectURL(url), 2000);
-    showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã tải về: ${file.name}`);
+    showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã tải về: ${file.name}`);
   } catch (e) { showToast('Lỗi tạo file. Vui lòng thử lại.'); }
 }
 
@@ -553,7 +553,7 @@ const OUTPUT_FORMATS = [
   {
     id: 'image',
     label: 'Ảnh',
-    color: '#7c4dff',
+    color: '#2984EE',
     icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>',
     text: 'Xuất ảnh hiện trường hoặc bản đồ',
   },
@@ -567,7 +567,7 @@ const OUTPUT_FORMATS = [
   {
     id: 'excel',
     label: 'Excel',
-    color: '#00e676',
+    color: 'var(--success)',
     icon: '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>',
     text: 'Xuất danh sách thiết bị excel',
   },
@@ -615,13 +615,13 @@ function _renderFormatChips(barId, sendFn, activeId) {
           display:inline-flex;align-items:center;gap:4px;padding:4px 9px;
           border-radius:20px;border:1px solid ${isActive ? f.color : f.color + '40'};
           background:${isActive ? f.color + '22' : 'transparent'};
-          color:${isActive ? f.color : 'rgba(255,255,255,.45)'};
+          color:${isActive ? f.color : 'var(--text-2)'};
           font-size:11px;font-weight:${isActive ? 700 : 500};cursor:pointer;
           white-space:nowrap;transition:all .2s;
           font-family:'Inter',sans-serif;
         "
         onmouseover="this.style.borderColor='${f.color}';this.style.color='${f.color}';this.style.background='${f.color}18'"
-        onmouseout="this.style.borderColor='${isActive ? f.color : f.color + '40'}';this.style.color='${isActive ? f.color : 'rgba(255,255,255,.45)'}';this.style.background='${isActive ? f.color + '22' : 'transparent'}'">
+        onmouseout="this.style.borderColor='${isActive ? f.color : f.color + '40'}';this.style.color='${isActive ? f.color : 'var(--text-2)'}';this.style.background='${isActive ? f.color + '22' : 'transparent'}'">
         ${f.icon}&nbsp;${f.label}
       </button>`;
     }).join('');
@@ -861,9 +861,9 @@ function handleMainFileAttach(input) {
   preview.style.display = 'block';
   if (file.type.startsWith('image/')) {
     const url = URL.createObjectURL(file);
-    content.innerHTML = `<img src="${url}" style="width:36px;height:36px;object-fit:cover;border-radius:6px;border:1px solid rgba(0,200,255,.3)"><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${file.name}</div><div style="font-size:10px;color:var(--muted)">${(file.size / 1024).toFixed(1)} KB</div></div>`;
+    content.innerHTML = `<img src="${url}" style="width:36px;height:36px;object-fit:cover;border-radius:6px;border:1px solid var(--cyan)"><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${file.name}</div><div style="font-size:10px;color:var(--muted)">${(file.size / 1024).toFixed(1)} KB</div></div>`;
   } else {
-    content.innerHTML = `<div style="width:36px;height:36px;background:rgba(0,200,255,.1);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${file.name}</div><div style="font-size:10px;color:var(--muted)">${(file.size / 1024).toFixed(1)} KB</div></div>`;
+    content.innerHTML = `<div style="width:36px;height:36px;background:var(--cyan-soft);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${file.name}</div><div style="font-size:10px;color:var(--muted)">${(file.size / 1024).toFixed(1)} KB</div></div>`;
   }
 }
 
@@ -894,7 +894,7 @@ function startVoice() {
   cbVoiceRecording = true;
   const micBtn = document.getElementById('micBtn');
   const voiceBar = document.getElementById('voiceBar');
-  if (micBtn) { micBtn.style.background = 'rgba(255,23,68,.2)'; micBtn.style.borderColor = 'var(--red)'; micBtn.style.color = 'var(--red)'; }
+  if (micBtn) { micBtn.style.background = 'var(--danger-soft)'; micBtn.style.borderColor = 'var(--danger)'; micBtn.style.color = 'var(--danger)'; }
   if (voiceBar) voiceBar.style.display = 'flex';
 
   // Try real browser STT first
@@ -978,8 +978,8 @@ function toggleTts(el) {
   ttsEnabled = !ttsEnabled;
   const state = document.getElementById('ttsState');
   if (state) state.textContent = ttsEnabled ? 'Bật' : 'Tắt';
-  el.style.borderColor = ttsEnabled ? 'rgba(0,200,255,.4)' : 'rgba(0,200,255,.18)';
-  el.style.color = ttsEnabled ? 'var(--cyan)' : 'var(--muted)';
+  el.style.borderColor = ttsEnabled ? 'var(--cyan)' : 'var(--cyan-soft)';
+  el.style.color = ttsEnabled ? 'var(--primary)' : 'var(--muted)';
   showToast(ttsEnabled ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg> TTS đã bật — AI sẽ đọc to phản hồi' : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg> TTS đã tắt');
 }
 
@@ -1008,8 +1008,8 @@ function speakText(btn, encodedText) {
   // Mark new active button as playing (pause icon)
   if (resolvedBtn) {
     resolvedBtn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> Dừng`;
-    resolvedBtn.style.borderColor = 'rgba(255,23,68,.4)';
-    resolvedBtn.style.color = 'var(--red)';
+    resolvedBtn.style.borderColor = 'var(--danger)';
+    resolvedBtn.style.color = 'var(--danger)';
   }
   window._ttsActiveBtn = resolvedBtn;
 
@@ -1040,7 +1040,7 @@ function speakText(btn, encodedText) {
 function _resetTtsBtn(btn) {
   if (!btn) return;
   btn.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg> Đọc to`;
-  btn.style.borderColor = 'rgba(0,200,255,.15)';
+  btn.style.borderColor = 'var(--cyan-soft)';
   btn.style.color = 'var(--muted)';
 }
 
@@ -1161,15 +1161,15 @@ function openChatHistoryModal() {
     <div style="position:relative;margin-bottom:14px">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input id="chatSearchInput" placeholder="Tìm kiếm cuộc trò chuyện..." oninput="_filterChatHistory(this.value)"
-        style="width:100%;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;color:#fff;font-size:13px;padding:8px 10px 8px 32px;outline:none;font-family:'Inter',sans-serif">
+        style="width:100%;background:var(--bg-hover);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:13px;padding:8px 10px 8px 32px;outline:none;font-family:'Inter',sans-serif">
     </div>
     <!-- Sessions -->
     <div id="chatHistoryList" style="display:flex;flex-direction:column;gap:10px">
       ${PAST_CHATS.map(c => `
-      <div class="_chatHistoryItem" data-title="${c.title.toLowerCase()}" style="background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px;display:flex;justify-content:space-between;align-items:center;transition:background .15s" onmouseover="this.style.background='rgba(0,200,255,.05)'" onmouseout="this.style.background='rgba(0,0,0,.15)'">
+      <div class="_chatHistoryItem" data-title="${c.title.toLowerCase()}" style="background:var(--bg-hover);border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;justify-content:space-between;align-items:center;transition:background .15s" onmouseover="this.style.background='var(--cyan-soft)'" onmouseout="this.style.background='var(--bg-hover)'">
         <div style="display:flex;align-items:center;gap:10px;min-width:0">
-          <div style="width:36px;height:36px;border-radius:8px;background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          <div style="width:36px;height:36px;border-radius:8px;background:var(--cyan-soft);border:1px solid var(--cyan-soft);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
           </div>
           <div style="min-width:0">
             <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px">${c.title}</div>
@@ -1185,7 +1185,7 @@ function openChatHistoryModal() {
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
             Xem lại
           </button>
-          <button class="btn btn-ghost btn-xs" style="color:rgba(255,70,70,.7)" title="Xóa phiên" onclick="_deletePastChat('${c.id}',this)">
+          <button class="btn btn-ghost btn-xs" style="color:var(--danger)" title="Xóa phiên" onclick="_deletePastChat('${c.id}',this)">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
           </button>
         </div>
@@ -1198,7 +1198,7 @@ function openChatHistoryModal() {
   </div>
   <div class="modal-footer">
     <button class="btn btn-ghost" onclick="closeModal()">Đóng</button>
-    <button class="btn btn-outline" onclick="_clearAllHistory()" style="color:rgba(255,70,70,.8);border-color:rgba(255,70,70,.3)">
+    <button class="btn btn-outline" onclick="_clearAllHistory()" style="color:var(--danger);border-color:var(--danger-soft)">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
       Xóa tất cả
     </button>
@@ -1223,7 +1223,7 @@ window._deletePastChat = function(id, btn) {
 window._clearAllHistory = function() {
   PAST_CHATS.length = 0;
   closeModal();
-  showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã xóa toàn bộ lịch sử trò chuyện.');
+  showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã xóa toàn bộ lịch sử trò chuyện.');
 };
 
 function shareChat(chatId) {
@@ -1270,9 +1270,9 @@ function handleStickyFileAttach(input) {
   preview.style.display = 'block';
   if (file.type.startsWith('image/')) {
     const url = URL.createObjectURL(file);
-    content.innerHTML = `<img src="${url}" style="width:36px;height:36px;object-fit:cover;border-radius:6px;border:1px solid rgba(0,200,255,.3)"><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${file.name}</div><div style="font-size:10px;color:var(--muted)">${(file.size / 1024).toFixed(1)} KB</div></div>`;
+    content.innerHTML = `<img src="${url}" style="width:36px;height:36px;object-fit:cover;border-radius:6px;border:1px solid var(--cyan)"><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${file.name}</div><div style="font-size:10px;color:var(--muted)">${(file.size / 1024).toFixed(1)} KB</div></div>`;
   } else {
-    content.innerHTML = `<div style="width:36px;height:36px;background:rgba(0,200,255,.1);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${file.name}</div><div style="font-size:10px;color:var(--muted)">${(file.size / 1024).toFixed(1)} KB</div></div>`;
+    content.innerHTML = `<div style="width:36px;height:36px;background:var(--cyan-soft);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${file.name}</div><div style="font-size:10px;color:var(--muted)">${(file.size / 1024).toFixed(1)} KB</div></div>`;
   }
 }
 
@@ -1372,7 +1372,7 @@ function startStickyVoice() {
   cbVoiceRecording = true;
   const micBtn = document.getElementById('stickyMicBtn');
   if (micBtn) {
-    micBtn.style.color = 'var(--red)';
+    micBtn.style.color = 'var(--danger)';
   }
   const voiceBar = document.getElementById('qwcVoiceBar');
   if (voiceBar) voiceBar.style.display = 'flex';
@@ -1455,9 +1455,9 @@ function toggleStickyTts(btn) {
   window._qwcTtsOn = !window._qwcTtsOn;
   const on = window._qwcTtsOn;
   if (btn) {
-    btn.style.background = on ? 'rgba(0,200,255,.15)' : 'rgba(255,255,255,.05)';
-    btn.style.borderColor = on ? 'rgba(0,200,255,.4)' : 'rgba(255,255,255,.1)';
-    btn.style.color = on ? 'var(--cyan)' : 'var(--muted)';
+    btn.style.background = on ? 'var(--cyan-soft)' : 'var(--bg-hover)';
+    btn.style.borderColor = on ? 'var(--cyan)' : 'var(--border)';
+    btn.style.color = on ? 'var(--primary)' : 'var(--muted)';
   }
   showToast(on
     ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07"/></svg> TTS bật — AI sẽ đọc to phản hồi'

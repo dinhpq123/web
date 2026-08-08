@@ -34,7 +34,7 @@ function renderPcttDamageReport() {
       <button class="btn btn-outline btn-sm" onclick="drDownloadTemplate()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="12" y2="18"/><line x1="15" y1="15" x2="12" y2="18"/></svg>Template CSV
       </button>
-      <button class="btn btn-outline btn-sm" style="border-color:rgba(0,200,255,.4);color:var(--cyan)" onclick="drImportExcel()">
+      <button class="btn btn-outline btn-sm" style="border-color:rgba(0,200,255,.4);color:var(--primary)" onclick="drImportExcel()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Nhập từ Excel
       </button>
       <button class="btn btn-primary btn-sm" onclick="drOpenForm()">
@@ -43,10 +43,10 @@ function renderPcttDamageReport() {
     </div>
   </div>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-    ${[['Thiệt hại về người',totalDead+' người',totalDead>0?'var(--red)':'var(--green)','tử vong năm 2026'],
-       ['Sơ tán',totalEvac,totalEvac>500?'var(--yellow)':'var(--cyan)','người đã sơ tán'],
-       ['Tổng thiệt hại',totalDmg+' tỷ','var(--yellow)','ước tính năm 2026'],
-       ['Vụ thiệt hại',DR_RECORDS.length,'var(--cyan)',`${DR_RECORDS.filter(r=>r.approved).length} đã duyệt`]].map(([l,v,c,s])=>`
+    ${[['Thiệt hại về người',totalDead+' người',totalDead>0?'var(--danger)':'var(--success)','tử vong năm 2026'],
+       ['Sơ tán',totalEvac,totalEvac>500?'var(--warning)':'var(--primary)','người đã sơ tán'],
+       ['Tổng thiệt hại',totalDmg+' tỷ','var(--warning)','ước tính năm 2026'],
+       ['Vụ thiệt hại',DR_RECORDS.length,'var(--primary)',`${DR_RECORDS.filter(r=>r.approved).length} đã duyệt`]].map(([l,v,c,s])=>`
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px 18px">
       <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">${l}</div>
       <div style="font-size:26px;font-weight:800;color:${c}">${v}</div>
@@ -73,7 +73,7 @@ function _drForm() {
   <div class="card">
     <!-- Import toolbar -->
     <div style="display:flex;align-items:center;gap:8px;padding:12px 20px;border-bottom:1px solid var(--border);background:rgba(0,200,255,.03)">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       <span style="font-size:12px;font-weight:600;color:var(--text);flex:1">Nhập liệu hàng loạt từ file Excel / CSV</span>
       <button class="btn btn-ghost btn-xs" onclick="drDownloadTemplate()"
         style="display:inline-flex;align-items:center;gap:5px">
@@ -90,7 +90,7 @@ function _drForm() {
     <div class="card-header"><span class="card-title">Form báo cáo thiệt hại — Chuẩn Bộ NN&amp;PTNT</span></div>
     <div style="padding:0 20px 20px">
 
-      <div style="font-size:11px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)">I. Thông tin chung</div>
+      <div style="font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)">I. Thông tin chung</div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Loại thiên tai / sự kiện *</label>
           <select id="drEvent" class="form-control">
@@ -111,28 +111,28 @@ function _drForm() {
           <input id="drReporter" class="form-control" placeholder="Phòng PCTT quận/huyện — tên người báo cáo"></div>
       </div>
 
-      <div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)">II. Thiệt hại về người</div>
+      <div style="font-size:11px;font-weight:700;color:var(--danger);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)">II. Thiệt hại về người</div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px">
         ${[['drDead','Chết (người)','0'],['drMissing','Mất tích (người)','0'],['drInjured','Bị thương (người)','0'],['drEvacuated','Di dời/sơ tán (người)','0']].map(([id,l,p])=>`
         <div class="form-group"><label class="form-label">${l}</label>
           <input id="${id}" class="form-control" type="number" min="0" placeholder="${p}" value="0"></div>`).join('')}
       </div>
 
-      <div style="font-size:11px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)">III. Nhà ở</div>
+      <div style="font-size:11px;font-weight:700;color:var(--warning);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)">III. Nhà ở</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
         ${[['drHouseC','Nhà sập hoàn toàn (cái)'],['drHouseD','Nhà bị hư hỏng (cái)'],['drHouseV','Ước giá trị thiệt hại (triệu đ)']].map(([id,l])=>`
         <div class="form-group"><label class="form-label">${l}</label>
           <input id="${id}" class="form-control" type="number" min="0" value="0"></div>`).join('')}
       </div>
 
-      <div style="font-size:11px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)">IV. Nông nghiệp</div>
+      <div style="font-size:11px;font-weight:700;color:var(--success);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)">IV. Nông nghiệp</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
         ${[['drRice','DT lúa ngập/hỏng (ha)'],['drCrop','DT hoa màu (ha)'],['drFish','Thủy sản (ha)']].map(([id,l])=>`
         <div class="form-group"><label class="form-label">${l}</label>
           <input id="${id}" class="form-control" type="number" min="0" step="0.1" value="0"></div>`).join('')}
       </div>
 
-      <div style="font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)">V. Đê điều</div>
+      <div style="font-size:11px;font-weight:700;color:var(--info);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)">V. Đê điều</div>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
         ${[['drDikeN','Số vị trí sự cố (điểm)'],['drDikeL','Chiều dài sạt trượt (m)'],['drDikeCost','Kinh phí xử lý (triệu đ)']].map(([id,l])=>`
         <div class="form-group"><label class="form-label">${l}</label>
@@ -146,7 +146,7 @@ function _drForm() {
           <input id="${id}" class="form-control" type="number" min="0" step="0.1" value="0"></div>`).join('')}
       </div>
 
-      <div style="font-size:11px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)">VII. Tổng hợp</div>
+      <div style="font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.06em;margin:16px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--border)">VII. Tổng hợp</div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Tổng thiệt hại ước tính (tỷ đồng) *</label>
           <input id="drTotal" class="form-control" type="number" step="0.01" min="0" placeholder="Tổng ước tính"></div>
@@ -169,15 +169,15 @@ function _drRecords() {
     <div class="table-wrap"><table>
       <thead><tr><th>Mã BC</th><th>Ngày</th><th>Loại TT</th><th>Địa bàn</th><th>Người (chết/sơ tán)</th><th>Nhà (sập/hỏng)</th><th>Lúa (ha)</th><th>Đê (điểm SC)</th><th>Tổng TH (tỷ)</th><th>Trạng thái</th><th></th></tr></thead>
       <tbody>${DR_RECORDS.map(r=>`<tr>
-        <td class="mono" style="color:var(--cyan);font-size:12px">${r.id}</td>
+        <td class="mono" style="color:var(--primary);font-size:12px">${r.id}</td>
         <td class="mono" style="font-size:11px;color:var(--muted)">${r.date}</td>
         <td style="font-size:12px;font-weight:600">${r.event}</td>
         <td style="font-size:12px">${r.district}</td>
-        <td><span style="color:${r.dead>0?'#f87171':'var(--muted)'}" class="mono">${r.dead}</span>/<span class="mono" style="color:var(--yellow)">${r.evacuated}</span></td>
+        <td><span style="color:${r.dead>0?'#f87171':'var(--muted)'}" class="mono">${r.dead}</span>/<span class="mono" style="color:var(--warning)">${r.evacuated}</span></td>
         <td class="mono">${r.houseCollapsed}/${r.houseDamaged}</td>
         <td class="mono">${r.riceDamaged}</td>
         <td class="mono">${r.dikeIncidents}</td>
-        <td><span style="font-size:14px;font-weight:700;color:${r.totalEstimate>2?'var(--yellow)':'var(--muted)'}">${r.totalEstimate.toFixed(2)}</span></td>
+        <td><span style="font-size:14px;font-weight:700;color:${r.totalEstimate>2?'var(--warning)':'var(--muted)'}">${r.totalEstimate.toFixed(2)}</span></td>
         <td><span class="badge ${r.approved?'badge-green':'badge-gray'}" style="font-size:10px">${r.approved?'Đã duyệt':'Chờ duyệt'}</span></td>
         <td><div style="display:flex;gap:4px">
           <button class="btn btn-ghost btn-xs" onclick="drViewRecord('${r.id}')">Xem</button>
@@ -225,10 +225,10 @@ function _drSummary() {
         <table style="width:100%;border-collapse:collapse">
           <tbody>
             ${rows.map(([label,val,unit])=>val===''?`
-            <tr><td colspan="3" style="padding:10px 0 4px;font-size:11px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.05em">${label}</td></tr>`:`
+            <tr><td colspan="3" style="padding:10px 0 4px;font-size:11px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.05em">${label}</td></tr>`:`
             <tr style="border-bottom:1px solid rgba(255,255,255,.05)">
               <td style="padding:7px 0;font-size:12px;padding-left:12px;color:rgba(255,255,255,.7)">${label}</td>
-              <td style="font-size:14px;font-weight:700;text-align:right;color:${Number(val)>0?'var(--yellow)':'var(--muted)'}">${val}</td>
+              <td style="font-size:14px;font-weight:700;text-align:right;color:${Number(val)>0?'var(--warning)':'var(--muted)'}">${val}</td>
               <td style="font-size:11px;color:var(--muted);padding-left:6px">${unit}</td>
             </tr>`).join('')}
           </tbody>
@@ -241,9 +241,9 @@ function _drSummary() {
         <div style="font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:14px">
           AI có thể tự động soạn thảo <strong style="color:var(--text)">báo cáo thiệt hại chính thức</strong> gửi Sở NN&amp;PTNT / UBND TP từ dữ liệu đã nhập, theo đúng mẫu quy định.
         </div>
-        ${[['Báo cáo nhanh (tóm tắt)','Gửi ngay trong ngày xảy ra sự cố','var(--cyan)'],
-           ['Báo cáo chi tiết','Đầy đủ theo mẫu Bộ NN&PTNT','var(--yellow)'],
-           ['Báo cáo tháng PCTT','Tổng hợp thiệt hại trong tháng','var(--green)']].map(([t,d,c])=>`
+        ${[['Báo cáo nhanh (tóm tắt)','Gửi ngay trong ngày xảy ra sự cố','var(--primary)'],
+           ['Báo cáo chi tiết','Đầy đủ theo mẫu Bộ NN&PTNT','var(--warning)'],
+           ['Báo cáo tháng PCTT','Tổng hợp thiệt hại trong tháng','var(--success)']].map(([t,d,c])=>`
         <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;margin-bottom:8px">
           <div>
             <div style="font-size:12px;font-weight:700;color:${c}">${t}</div>
@@ -321,7 +321,7 @@ window.drViewRecord = function(id) {
            ['Đường hỏng',r.roadDamaged,'km'],['Cầu/cống',r.bridgeDamaged,'cái']].map(([l,v,u])=>`
         <tr style="border-bottom:1px solid rgba(255,255,255,.05)">
           <td style="padding:6px 4px;color:var(--muted)">${l}</td>
-          <td style="font-weight:700;color:${Number(v)>0?'var(--yellow)':'var(--muted)'};text-align:right">${v}</td>
+          <td style="font-weight:700;color:${Number(v)>0?'var(--warning)':'var(--muted)'};text-align:right">${v}</td>
           <td style="color:var(--muted);padding-left:6px">${u}</td>
         </tr>`).join('')}
       </tbody>
@@ -355,7 +355,7 @@ window.drAIGenerateReport = function(type) {
   const totalEvac = DR_RECORDS.reduce((s,r)=>s+r.evacuated,0);
   const totalDmg = DR_RECORDS.reduce((s,r)=>s+r.totalEstimate,0).toFixed(2);
   openModal(`
-  <div class="modal-header"><span class="modal-title" style="color:#a78bfa">AI Soạn thảo — ${type}</span>
+  <div class="modal-header"><span class="modal-title" style="color:#5BA9FF">AI Soạn thảo — ${type}</span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div class="modal-body">
     <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:16px;font-size:12px;line-height:1.8;color:rgba(255,255,255,.75);white-space:pre-line">
@@ -371,7 +371,7 @@ Trong thời gian qua, trên địa bàn thành phố Hà Nội đã xảy ra ${
 - Chết: ${totalDead} người
 - Sơ tán/Di dời: ${totalEvac} người
 
-3. TỔNG THIỆT HẠI ƯỚC TÍNH: <strong style="color:var(--yellow)">${totalDmg} tỷ đồng</strong>
+3. TỔNG THIỆT HẠI ƯỚC TÍNH: <strong style="color:var(--warning)">${totalDmg} tỷ đồng</strong>
 
 4. CÁC BIỆN PHÁP ĐÃ THỰC HIỆN:
 Chi cục đã chỉ đạo các đơn vị triển khai phương án ứng phó, huy động lực lượng 4 tại chỗ, xử lý các điểm sự cố đê điều.
@@ -415,7 +415,7 @@ window.drExportRecord = function(id) {
     </div>
 
     <!-- Damage breakdown table -->
-    <div style="font-size:11px;font-weight:700;color:var(--cyan);margin-bottom:8px">BẢNG TỔNG HỢP THIỆT HẠI:</div>
+    <div style="font-size:11px;font-weight:700;color:var(--primary);margin-bottom:8px">BẢNG TỔNG HỢP THIỆT HẠI:</div>
     <table style="width:100%;border-collapse:collapse;font-size:12px">
       <thead><tr style="background:rgba(255,255,255,.04)">
         <th style="padding:7px 10px;text-align:left;border:1px solid var(--border)">Hạng mục</th>
@@ -435,10 +435,10 @@ window.drExportRecord = function(id) {
            ['Đường hư hỏng',r.roadDamaged,'km'],['Cầu/cống hư',r.bridgeDamaged,'cái'],['Trạm điện sự cố',r.electricDamaged,'trạm'],
            ['VI. TỔNG THIỆT HẠI ƯỚC TÍNH',r.totalEstimate.toFixed(2),'tỷ đồng']
         ].map(([l,v,u])=>v===''?`
-        <tr style="background:rgba(0,200,255,.06)"><td colspan="3" style="padding:6px 10px;font-size:11px;font-weight:700;color:var(--cyan);border:1px solid var(--border)">${l}</td></tr>`:`
+        <tr style="background:rgba(0,200,255,.06)"><td colspan="3" style="padding:6px 10px;font-size:11px;font-weight:700;color:var(--primary);border:1px solid var(--border)">${l}</td></tr>`:`
         <tr style="border-bottom:1px solid rgba(255,255,255,.05)">
           <td style="padding:6px 10px;border:1px solid var(--border);padding-left:16px">${l}</td>
-          <td style="padding:6px 10px;text-align:right;font-weight:700;color:${Number(v)>0?'var(--yellow)':'var(--muted)'};border:1px solid var(--border)">${v}</td>
+          <td style="padding:6px 10px;text-align:right;font-weight:700;color:${Number(v)>0?'var(--warning)':'var(--muted)'};border:1px solid var(--border)">${v}</td>
           <td style="padding:6px 10px;color:var(--muted);font-size:11px;border:1px solid var(--border)">${u}</td>
         </tr>`).join('')}
       </tbody>
@@ -683,7 +683,7 @@ window.drApplyImportedRows = function(rows) {
   // Refresh view
   drSwitchTab('records');
   showToast(
-    `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>` +
+    `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>` +
     ` Đã nhập thành công <b>${added}</b> báo cáo thiệt hại từ file Excel!`
   );
 };

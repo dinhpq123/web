@@ -115,7 +115,7 @@ function renderDikeInspection() {
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Thêm biên bản kiểm tra
       </button>
-      <button class="btn btn-sm" style="background:rgba(139,92,246,.15);color:#a78bfa;border:1px solid rgba(139,92,246,.3)" onclick="diAIRiskAnalysis()">
+      <button class="btn btn-sm" style="background:rgba(41,132,238,.15);color:#5BA9FF;border:1px solid rgba(41,132,238,.3)" onclick="diAIRiskAnalysis()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         AI Phân tích Rủi ro
       </button>
@@ -125,10 +125,10 @@ function renderDikeInspection() {
   <!-- KPI Cards -->
   <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px">
     ${[
-      { label:'Loại A (Tốt)', val:gradeA, color:'var(--green)', sub:'Đảm bảo an toàn' },
-      { label:'Loại B (Khá)', val:gradeB, color:'var(--cyan)', sub:'Cần duy tu định kỳ' },
-      { label:'Loại C (Yếu)', val:gradeC, color:'var(--yellow)', sub:'Cần sửa chữa gấp' },
-      { label:'Nguy hiểm', val:danger, color:'var(--red)', sub:'Xử lý khẩn cấp' },
+      { label:'Loại A (Tốt)', val:gradeA, color:'var(--success)', sub:'Đảm bảo an toàn' },
+      { label:'Loại B (Khá)', val:gradeB, color:'var(--primary)', sub:'Cần duy tu định kỳ' },
+      { label:'Loại C (Yếu)', val:gradeC, color:'var(--warning)', sub:'Cần sửa chữa gấp' },
+      { label:'Nguy hiểm', val:danger, color:'var(--danger)', sub:'Xử lý khẩn cấp' },
       { label:'Tổng chiều dài', val:totalLen+'km', color:'var(--purple)', sub:`${total} tuyến` },
     ].map(k=>`
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px 18px">
@@ -156,10 +156,10 @@ function _renderDiTab() {
 
 function _renderDiOverview() {
   const gradeCfg = {
-    A:{color:'var(--green)',bg:'rgba(0,230,118,.12)',border:'rgba(0,230,118,.3)',label:'Loại A'},
-    B:{color:'var(--cyan)',bg:'rgba(0,200,255,.1)',border:'rgba(0,200,255,.25)',label:'Loại B'},
-    C:{color:'var(--yellow)',bg:'rgba(255,202,40,.1)',border:'rgba(255,202,40,.3)',label:'Loại C'},
-    D:{color:'var(--red)',bg:'rgba(255,68,68,.1)',border:'rgba(255,68,68,.3)',label:'Loại D'},
+    A:{color:'var(--success)',bg:'rgba(41,132,238,.12)',border:'rgba(41,132,238,.3)',label:'Loại A'},
+    B:{color:'var(--primary)',bg:'rgba(0,200,255,.1)',border:'rgba(0,200,255,.25)',label:'Loại B'},
+    C:{color:'var(--warning)',bg:'rgba(255,202,40,.1)',border:'rgba(255,202,40,.3)',label:'Loại C'},
+    D:{color:'var(--danger)',bg:'rgba(255,68,68,.1)',border:'rgba(255,68,68,.3)',label:'Loại D'},
   };
   const statusIcon = {ok:'✓',warning:'⚠',danger:'🔴'};
   return `
@@ -179,14 +179,14 @@ function _renderDiOverview() {
         <tbody>
           ${DIKE_INVENTORY.map(d=>{
             const g = gradeCfg[d.grade]||gradeCfg.C;
-            const pctColor = d.repairPct>=80?'var(--green)':d.repairPct>=50?'var(--yellow)':'var(--red)';
+            const pctColor = d.repairPct>=80?'var(--success)':d.repairPct>=50?'var(--warning)':'var(--danger)';
             return `<tr>
               <td style="font-weight:700;font-size:13px">${statusIcon[d.status]||''} ${d.name}</td>
               <td class="mono" style="font-size:11px">${d.from_km} – ${d.to_km}</td>
               <td class="mono">${d.length} km</td>
-              <td><span style="font-size:11px;font-weight:700;color:var(--cyan)">Cấp ${d.level}</span></td>
+              <td><span style="font-size:11px;font-weight:700;color:var(--primary)">Cấp ${d.level}</span></td>
               <td style="font-size:11px;color:var(--muted)">${d.unit}</td>
-              <td><span style="font-size:16px;font-weight:800;color:${d.score>=85?'var(--green)':d.score>=75?'var(--cyan)':d.score>=65?'var(--yellow)':'var(--red)'}">${d.score}</span>/100</td>
+              <td><span style="font-size:16px;font-weight:800;color:${d.score>=85?'var(--success)':d.score>=75?'var(--primary)':d.score>=65?'var(--warning)':'var(--danger)'}">${d.score}</span>/100</td>
               <td><span style="padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;background:${g.bg};color:${g.color};border:1px solid ${g.border}">${g.label}</span></td>
               <td>
                 <div style="display:flex;align-items:center;gap:8px">
@@ -214,15 +214,15 @@ function _renderDiMatrix() {
   const items = ['top','slope_up','slope_down','berm','revetment','culvert'];
   const itemLabels = { top:'Mặt đê', slope_up:'Mái thượng', slope_down:'Mái hạ lưu', berm:'Cơ đê', revetment:'Kè bảo vệ', culvert:'Cống qua đê' };
   const scoreMap = { 'Tốt':3, 'Trung bình':2, 'Kém':1 };
-  const colorMap = { 'Tốt':'rgba(0,230,118,.2)','Trung bình':'rgba(255,202,40,.18)','Kém':'rgba(239,68,68,.2)' };
-  const textMap  = { 'Tốt':'var(--green)','Trung bình':'var(--yellow)','Kém':'#f87171' };
+  const colorMap = { 'Tốt':'rgba(41,132,238,.2)','Trung bình':'rgba(255,202,40,.18)','Kém':'rgba(239,68,68,.2)' };
+  const textMap  = { 'Tốt':'var(--success)','Trung bình':'var(--warning)','Kém':'#f87171' };
 
   return `
   <div class="card" style="padding:0;overflow:hidden">
     <div class="card-header">
       <span class="card-title">Ma trận Phân loại hiện trạng đê — Năm 2025</span>
       <div style="display:flex;gap:10px;align-items:center;font-size:11px">
-        ${[['Tốt','var(--green)'],['Trung bình','var(--yellow)'],['Kém','#f87171']].map(([l,c])=>`
+        ${[['Tốt','var(--success)'],['Trung bình','var(--warning)'],['Kém','#f87171']].map(([l,c])=>`
         <span style="display:flex;align-items:center;gap:4px"><span style="width:10px;height:10px;border-radius:2px;background:${c};opacity:.5"></span>${l}</span>`).join('')}
       </div>
     </div>
@@ -240,8 +240,8 @@ function _renderDiMatrix() {
           ${DIKE_INVENTORY.map((d,i)=>`
           <tr style="border-bottom:1px solid rgba(255,255,255,.04);background:${i%2===0?'transparent':'rgba(255,255,255,.015)'}">
             <td style="padding:9px 14px;font-size:12px;font-weight:600;position:sticky;left:0;background:var(--bg-card)">${d.name}</td>
-            <td style="padding:9px 12px;text-align:center;font-weight:700;color:${d.score>=85?'var(--green)':d.score>=75?'var(--cyan)':d.score>=65?'var(--yellow)':'#f87171'};font-size:13px">${d.score}</td>
-            <td style="padding:9px 12px;text-align:center"><span style="padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;background:${{A:'rgba(0,230,118,.15)',B:'rgba(0,200,255,.12)',C:'rgba(255,202,40,.15)',D:'rgba(239,68,68,.15)'}[d.grade]};color:${{A:'var(--green)',B:'var(--cyan)',C:'var(--yellow)',D:'#f87171'}[d.grade]}">${d.grade}</span></td>
+            <td style="padding:9px 12px;text-align:center;font-weight:700;color:${d.score>=85?'var(--success)':d.score>=75?'var(--primary)':d.score>=65?'var(--warning)':'#f87171'};font-size:13px">${d.score}</td>
+            <td style="padding:9px 12px;text-align:center"><span style="padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700;background:${{A:'rgba(41,132,238,.15)',B:'rgba(0,200,255,.12)',C:'rgba(255,202,40,.15)',D:'rgba(239,68,68,.15)'}[d.grade]};color:${{A:'var(--success)',B:'var(--primary)',C:'var(--warning)',D:'#f87171'}[d.grade]}">${d.grade}</span></td>
             ${items.map(it=>`
             <td style="padding:9px 12px;text-align:center;background:${colorMap[d.items[it]]||'transparent'}">
               <span style="font-size:11px;font-weight:600;color:${textMap[d.items[it]]||'var(--muted)'}">${d.items[it]||'—'}</span>
@@ -276,11 +276,11 @@ function _renderDiHistory() {
           const dike = DIKE_INVENTORY.find(d=>d.id===ins.dikeId)||{name:'—'};
           const [urgClass,urgLabel] = urgCfg[ins.urgency]||urgCfg.normal;
           return `<tr>
-            <td class="mono" style="color:var(--cyan);font-size:12px">${ins.id}</td>
+            <td class="mono" style="color:var(--primary);font-size:12px">${ins.id}</td>
             <td style="font-weight:600;font-size:12px">${dike.name}</td>
             <td class="mono" style="font-size:11px;color:var(--muted)">${ins.date}</td>
             <td style="font-size:12px">${ins.inspector}</td>
-            <td><span style="font-size:16px;font-weight:800;color:${ins.score>=80?'var(--green)':'var(--yellow)'}">${ins.score}</span><span style="font-size:11px;color:var(--muted)"> / ${ins.grade}</span></td>
+            <td><span style="font-size:16px;font-weight:800;color:${ins.score>=80?'var(--success)':'var(--warning)'}">${ins.score}</span><span style="font-size:11px;color:var(--muted)"> / ${ins.grade}</span></td>
             <td style="font-size:11px;color:var(--muted);max-width:220px">${ins.findings.substring(0,80)}${ins.findings.length>80?'...':''}</td>
             <td><span class="badge ${urgClass}" style="font-size:10px">${urgLabel}</span></td>
             <td style="font-size:12px;color:var(--muted)">${ins.photos} ảnh</td>
@@ -321,7 +321,7 @@ window.diFilterTable = function(q) {
 window.diViewDike = function(id) {
   const d = DIKE_INVENTORY.find(x=>x.id===id); if(!d) return;
   const itemLabels = { top:'Mặt đê', slope_up:'Mái thượng', slope_down:'Mái hạ lưu', berm:'Cơ đê', revetment:'Kè bảo vệ', culvert:'Cống qua đê' };
-  const textMap = { 'Tốt':'var(--green)','Trung bình':'var(--yellow)','Kém':'#f87171' };
+  const textMap = { 'Tốt':'var(--success)','Trung bình':'var(--warning)','Kém':'#f87171' };
   openModal(`
   <div class="modal-header"><span class="modal-title">${d.name}</span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
@@ -366,9 +366,9 @@ window.diOpenInspectionForm = function(dikeId) {
       Biểu mẫu PLDGHT — Phân Loại Đê & Giám Sát Hiện Trạng (TT09/2021/TT-BNN&PTNT)
     </div>
 
-    <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">I. Thông tin chung</div>
+    <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">I. Thông tin chung</div>
     <div class="form-row">
-      <div class="form-group"><label class="form-label">Tuyến đê <span style="color:var(--red)">*</span></label>
+      <div class="form-group"><label class="form-label">Tuyến đê <span style="color:var(--danger)">*</span></label>
         <select id="diInsDike" class="form-control">
           ${DIKE_INVENTORY.map(x=>`<option value="${x.id}" ${x.id===dikeId?'selected':''}>${x.name}</option>`).join('')}
         </select></div>
@@ -382,13 +382,13 @@ window.diOpenInspectionForm = function(dikeId) {
         <input id="diInsToKm" class="form-control" placeholder="${d.to_km||'K0+000'}"></div>
     </div>
     <div class="form-row">
-      <div class="form-group"><label class="form-label">Cán bộ kiểm tra <span style="color:var(--red)">*</span></label>
+      <div class="form-group"><label class="form-label">Cán bộ kiểm tra <span style="color:var(--danger)">*</span></label>
         <input id="diInsInsp" class="form-control" placeholder="Họ tên cán bộ"></div>
       <div class="form-group"><label class="form-label">Chức vụ</label>
         <input id="diInsRole" class="form-control" placeholder="Kỹ sư / Cán bộ kỹ thuật"></div>
     </div>
 
-    <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.05em;margin:16px 0 10px">II. Đánh giá từng hạng mục</div>
+    <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.05em;margin:16px 0 10px">II. Đánh giá từng hạng mục</div>
     ${[
       ['diInsMat','Mặt đê','Bề mặt đê có bằng phẳng, thoát nước tốt? Có nứt nẻ, lún sụt?'],
       ['diInsMaiTren','Mái đê thượng lưu','Mái dốc ổn định? Có sạt, xói lở, rò rỉ?'],
@@ -406,14 +406,14 @@ window.diOpenInspectionForm = function(dikeId) {
         <div style="display:flex;gap:6px;flex-shrink:0">
           ${['Tốt','Trung bình','Kém'].map((v,i)=>`
           <label style="display:flex;align-items:center;gap:4px;cursor:pointer;font-size:11px">
-            <input type="radio" name="${id}" value="${v}" ${i===0?'checked':''} style="accent-color:${i===0?'var(--green)':i===1?'var(--yellow)':'#f87171'}">
-            <span style="color:${i===0?'var(--green)':i===1?'var(--yellow)':'#f87171'}">${v}</span>
+            <input type="radio" name="${id}" value="${v}" ${i===0?'checked':''} style="accent-color:${i===0?'var(--success)':i===1?'var(--warning)':'#f87171'}">
+            <span style="color:${i===0?'var(--success)':i===1?'var(--warning)':'#f87171'}">${v}</span>
           </label>`).join('')}
         </div>
       </div>
     </div>`).join('')}
 
-    <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:.05em;margin:16px 0 10px">III. Phát hiện & Kiến nghị</div>
+    <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.05em;margin:16px 0 10px">III. Phát hiện & Kiến nghị</div>
     <div class="form-group"><label class="form-label">Những phát hiện bất thường</label>
       <textarea id="diInsFindings" class="form-control" rows="3" placeholder="Mô tả cụ thể vị trí, tình trạng sự cố / bất thường phát hiện..."></textarea></div>
     <div class="form-group"><label class="form-label">Kiến nghị xử lý</label>
@@ -492,7 +492,7 @@ window.diViewInspection = function(id) {
     <div class="form-group"><label class="form-label">Phát hiện</label>
       <div style="padding:10px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;font-size:12px">${ins.findings}</div></div>
     <div class="form-group"><label class="form-label">Kiến nghị xử lý</label>
-      <div style="padding:10px;background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.15);border-radius:8px;font-size:12px;color:var(--cyan)">${ins.repairNeeded}</div></div>
+      <div style="padding:10px;background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.15);border-radius:8px;font-size:12px;color:var(--primary)">${ins.repairNeeded}</div></div>
   </div>
   <div class="modal-footer">
     <button class="btn btn-ghost" onclick="closeModal()">Đóng</button>
@@ -542,7 +542,7 @@ window.diAIRiskAnalysis = function() {
   const lowRepair = DIKE_INVENTORY.filter(d=>d.repairPct<50);
 
   openModal(`
-  <div class="modal-header"><span class="modal-title" style="color:#a78bfa">
+  <div class="modal-header"><span class="modal-title" style="color:#5BA9FF">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
     AI Phân tích Rủi ro Đê điều — Mùa lũ 2026
   </span>
@@ -552,10 +552,10 @@ window.diAIRiskAnalysis = function() {
     <!-- Risk Summary -->
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px">
       ${[
-        ['Nguy hiểm',danger.length,'var(--red)'],
-        ['Cần SC gấp',gradeC.length+gradeD.length,'var(--yellow)'],
+        ['Nguy hiểm',danger.length,'var(--danger)'],
+        ['Cần SC gấp',gradeC.length+gradeD.length,'var(--warning)'],
         ['Tiến độ chậm',lowRepair.length,'#f97316'],
-        ['Độ an toàn TB',`${Math.round(DIKE_INVENTORY.reduce((s,d)=>s+d.score,0)/DIKE_INVENTORY.length)}%`,'var(--cyan)'],
+        ['Độ an toàn TB',`${Math.round(DIKE_INVENTORY.reduce((s,d)=>s+d.score,0)/DIKE_INVENTORY.length)}%`,'var(--primary)'],
       ].map(([l,v,c])=>`
       <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:12px;text-align:center">
         <div style="font-size:22px;font-weight:800;color:${c}">${v}</div>
@@ -564,12 +564,12 @@ window.diAIRiskAnalysis = function() {
     </div>
 
     <!-- AI Analysis Text -->
-    <div style="padding:14px 16px;background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.2);border-radius:10px;margin-bottom:14px;border-left:3px solid #7c3aed">
-      <div style="font-size:12px;font-weight:700;color:#a78bfa;margin-bottom:8px">Phân tích AI — Đánh giá rủi ro mùa lũ 2026</div>
+    <div style="padding:14px 16px;background:rgba(41,132,238,.06);border:1px solid rgba(41,132,238,.2);border-radius:10px;margin-bottom:14px;border-left:3px solid var(--purple)">
+      <div style="font-size:12px;font-weight:700;color:#5BA9FF;margin-bottom:8px">Phân tích AI — Đánh giá rủi ro mùa lũ 2026</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.7">
         Dựa trên dữ liệu PLDGHT hiện tại, hệ thống AI xác định <strong style="color:#f87171">${danger.length} tuyến đê nguy hiểm</strong> cần xử lý khẩn cấp trước mùa lũ 2026.<br>
-        Tuyến đê <strong style="color:var(--yellow)">${gradeC.map(d=>d.name).join(', ')}</strong> có điểm đánh giá thấp (Loại C) và tiến độ sửa chữa dưới 50%, tiềm ẩn nguy cơ sự cố khi mực nước lên cao.<br>
-        AI dự báo với xác suất <strong style="color:var(--red)">72%</strong> rằng đê Hữu Đáy đoạn K32-K40 có thể xảy ra sạt lở mái nếu lũ đạt BĐ2 trở lên.
+        Tuyến đê <strong style="color:var(--warning)">${gradeC.map(d=>d.name).join(', ')}</strong> có điểm đánh giá thấp (Loại C) và tiến độ sửa chữa dưới 50%, tiềm ẩn nguy cơ sự cố khi mực nước lên cao.<br>
+        AI dự báo với xác suất <strong style="color:var(--danger)">72%</strong> rằng đê Hữu Đáy đoạn K32-K40 có thể xảy ra sạt lở mái nếu lũ đạt BĐ2 trở lên.
       </div>
     </div>
 
@@ -577,9 +577,9 @@ window.diAIRiskAnalysis = function() {
     <div style="font-size:12px;font-weight:700;margin-bottom:10px">Khuyến nghị ưu tiên:</div>
     ${[
       {priority:'Khẩn cấp', dike:'Đê La Khê (K0-K18)', action:'Gia cố mái thượng lưu, khơi thông thoát nước mặt đê. Hạn: trước 01/05/2026', color:'#f87171'},
-      {priority:'Ưu tiên cao', dike:'Đê Hữu Đáy (K32-K40)', action:'Xử lý sạt mái hạ lưu, lắp đặt cảm biến theo dõi dịch chuyển. Hạn: trước 15/05/2026', color:'var(--yellow)'},
-      {priority:'Ưu tiên cao', dike:'Đê Nhuệ (toàn tuyến)', action:'Kiểm tra và gia cố mái kè, thay thế cống cũ. Hạn: trước 30/04/2026', color:'var(--yellow)'},
-      {priority:'Theo dõi', dike:'Đê Tả Đáy (K15-K30)', action:'Tăng cường tuần tra 2 lần/ngày, lắp biển cảnh báo khu vực xung yếu', color:'var(--cyan)'},
+      {priority:'Ưu tiên cao', dike:'Đê Hữu Đáy (K32-K40)', action:'Xử lý sạt mái hạ lưu, lắp đặt cảm biến theo dõi dịch chuyển. Hạn: trước 15/05/2026', color:'var(--warning)'},
+      {priority:'Ưu tiên cao', dike:'Đê Nhuệ (toàn tuyến)', action:'Kiểm tra và gia cố mái kè, thay thế cống cũ. Hạn: trước 30/04/2026', color:'var(--warning)'},
+      {priority:'Theo dõi', dike:'Đê Tả Đáy (K15-K30)', action:'Tăng cường tuần tra 2 lần/ngày, lắp biển cảnh báo khu vực xung yếu', color:'var(--primary)'},
     ].map(r=>`
     <div style="display:flex;gap:12px;padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;margin-bottom:8px">
       <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;background:${r.color}18;color:${r.color};border:1px solid ${r.color}40;flex-shrink:0;height:fit-content;white-space:nowrap;margin-top:1px">${r.priority}</span>
@@ -653,9 +653,9 @@ window.diExportBienBan = function(id) {
   const ins = DIKE_INSPECTIONS.find(x=>x.id===id); if(!ins) return;
   const dike = DIKE_INVENTORY.find(d=>d.id===ins.dikeId)||{name:'—', level:'—', unit:'—'};
   const urgLabel = {critical:'Khẩn cấp', high:'Ưu tiên cao', normal:'Bình thường'}[ins.urgency]||'—';
-  const gradeColor = {A:'var(--green)',B:'var(--cyan)',C:'var(--yellow)',D:'#f87171'}[ins.grade]||'var(--muted)';
+  const gradeColor = {A:'var(--success)',B:'var(--primary)',C:'var(--warning)',D:'#f87171'}[ins.grade]||'var(--muted)';
   const itemLabels = {top:'Mặt đê',slope_up:'Mái thượng',slope_down:'Mái hạ lưu',berm:'Cơ đê',revetment:'Kè bảo vệ',culvert:'Cống qua đê'};
-  const textMap  = {'Tốt':'var(--green)','Trung bình':'var(--yellow)','Kém':'#f87171'};
+  const textMap  = {'Tốt':'var(--success)','Trung bình':'var(--warning)','Kém':'#f87171'};
 
   openModal(`
   <div class="modal-header">
@@ -691,7 +691,7 @@ window.diExportBienBan = function(id) {
 
     <!-- Hạng mục nếu có -->
     ${dike.items ? `
-    <div style="font-size:12px;font-weight:700;margin-bottom:8px;color:var(--cyan)">Đánh giá từng hạng mục:</div>
+    <div style="font-size:12px;font-weight:700;margin-bottom:8px;color:var(--primary)">Đánh giá từng hạng mục:</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px">
       ${Object.entries(dike.items).map(([k,v])=>`
       <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:6px">
@@ -702,12 +702,12 @@ window.diExportBienBan = function(id) {
 
     <!-- Phát hiện + kiến nghị -->
     <div style="margin-bottom:10px">
-      <div style="font-size:11px;font-weight:700;color:var(--cyan);margin-bottom:5px">PHÁT HIỆN BẤT THƯỜNG:</div>
+      <div style="font-size:11px;font-weight:700;color:var(--primary);margin-bottom:5px">PHÁT HIỆN BẤT THƯỜNG:</div>
       <div style="padding:10px;background:rgba(255,202,40,.05);border:1px solid rgba(255,202,40,.15);border-radius:6px;font-size:12px">${ins.findings||'Không có'}</div>
     </div>
     <div style="margin-bottom:10px">
-      <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:5px">KIẾN NGHỊ XỬ LÝ:</div>
-      <div style="padding:10px;background:rgba(0,230,118,.05);border:1px solid rgba(0,230,118,.15);border-radius:6px;font-size:12px">${ins.repairNeeded||'Không có'}</div>
+      <div style="font-size:11px;font-weight:700;color:var(--success);margin-bottom:5px">KIẾN NGHỊ XỬ LÝ:</div>
+      <div style="padding:10px;background:rgba(41,132,238,.05);border:1px solid rgba(41,132,238,.15);border-radius:6px;font-size:12px">${ins.repairNeeded||'Không có'}</div>
     </div>
 
     <!-- Ký tên -->

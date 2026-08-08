@@ -117,7 +117,7 @@ function _renderVanbanTab(filtered, categories, typeColors) {
             ? `<tr><td colspan="8" style="text-align:center;padding:40px;color:var(--muted)">Không tìm thấy văn bản phù hợp</td></tr>`
             : filtered.map(d => `
           <tr>
-            <td class="mono" style="color:var(--cyan);font-size:12px;white-space:nowrap">${d.id}</td>
+            <td class="mono" style="color:var(--primary);font-size:12px;white-space:nowrap">${d.id}</td>
             <td style="max-width:300px"><span style="font-size:13px;font-weight:600">${d.title}</span></td>
             <td><span class="badge ${typeColors[d.type]||'badge-gray'}" style="font-size:10px">${d.type}</span></td>
             <td style="font-size:12px;color:var(--muted)">${d.issuer}</td>
@@ -170,7 +170,7 @@ function _renderPakhTab() {
       </div>
       <div style="font-size:12px;color:rgba(255,255,255,.55);line-height:1.5;margin-bottom:10px">${p.summary}</div>
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <span class="mono" style="font-size:11px;color:var(--cyan)">${p.qdNum}</span>
+        <span class="mono" style="font-size:11px;color:var(--primary)">${p.qdNum}</span>
         <div style="display:flex;gap:6px">
           <button class="btn btn-ghost btn-sm" onclick="showToast('Xem ${p.qdNum}...')">Xem</button>
           <button class="btn btn-ghost btn-sm" onclick="showToast('Tải ${p.id}.pdf...')">Tải PDF</button>
@@ -240,8 +240,8 @@ window.openUploadDocModal = function() {
   </div>
   <div class="modal-body">
     <div style="border:2px dashed rgba(0,200,255,.3);border-radius:10px;padding:28px;text-align:center;margin-bottom:16px;background:rgba(0,200,255,.03);cursor:pointer" onclick="showToast('Chọn file PDF...')">
-      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5" style="margin-bottom:8px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      <div style="font-size:13px;font-weight:600;color:var(--cyan)">Kéo thả file hoặc click để chọn</div>
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" style="margin-bottom:8px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <div style="font-size:13px;font-weight:600;color:var(--primary)">Kéo thả file hoặc click để chọn</div>
       <div style="font-size:11px;color:var(--muted);margin-top:5px">PDF, DOCX, XLSX (tối đa 50MB)</div>
     </div>
     <div class="form-row">

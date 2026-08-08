@@ -51,10 +51,10 @@ function renderHydrologicalData() {
     </div>
   </div>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-    ${[['Trạm quan trắc', HYD_STATIONS.length, 'var(--cyan)', '8 trạm thủy văn'],
-       ['Đang vượt BĐ1', alertStations, 'var(--yellow)', 'Cần theo dõi'],
-       ['Có mưa hôm nay', totalRain, 'var(--blue)', `Max ${maxRain.toFixed(1)} mm`],
-       ['Đợt quan trắc', '06:00', 'var(--green)', 'Cập nhật sáng']].map(([l,v,c,s]) => `
+    ${[['Trạm quan trắc', HYD_STATIONS.length, 'var(--primary)', '8 trạm thủy văn'],
+       ['Đang vượt BĐ1', alertStations, 'var(--warning)', 'Cần theo dõi'],
+       ['Có mưa hôm nay', totalRain, 'var(--info)', `Max ${maxRain.toFixed(1)} mm`],
+       ['Đợt quan trắc', '06:00', 'var(--success)', 'Cập nhật sáng']].map(([l,v,c,s]) => `
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px 18px">
       <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">${l}</div>
       <div style="font-size:26px;font-weight:800;color:${c}">${v}</div>
@@ -95,7 +95,7 @@ function _hydRenderTab() {
 // ── TAB: MỰC NƯỚC ────────────────────────────────────────────────
 function _hydWaterLevel() {
   const trendIcon  = { up:'↑', down:'↓', stable:'→' };
-  const trendColor = { up:'var(--yellow)', down:'var(--cyan)', stable:'var(--muted)' };
+  const trendColor = { up:'var(--warning)', down:'var(--primary)', stable:'var(--muted)' };
   return `
   <div class="card" style="padding:0">
     <div class="card-header">
@@ -111,15 +111,15 @@ function _hydWaterLevel() {
         const overBĐ1 = s.morning >= s.BĐ1;
         const overBĐ2 = s.morning >= s.BĐ2;
         const overBĐ3 = s.morning >= s.BĐ3;
-        const hColor  = overBĐ3?'#f87171':overBĐ2?'var(--red)':overBĐ1?'var(--yellow)':'var(--green)';
+        const hColor  = overBĐ3?'#f87171':overBĐ2?'var(--danger)':overBĐ1?'var(--warning)':'var(--success)';
         const badge   = overBĐ3?['badge-red','Trên BĐ3']:overBĐ2?['badge-red','Trên BĐ2']:overBĐ1?['badge-yellow','Trên BĐ1']:['badge-green','Bình thường'];
         return `<tr>
           <td style="font-weight:700;font-size:12px">${s.name}</td>
           <td style="font-size:11px;color:var(--muted)">${s.river}</td>
           <td><span style="font-size:16px;font-weight:800;color:${hColor}">${s.morning.toFixed(2)}</span></td>
           <td class="mono" style="font-size:12px">${s.evening.toFixed(2)}</td>
-          <td class="mono" style="font-size:11px;color:var(--red)">${s.max.toFixed(2)}</td>
-          <td class="mono" style="font-size:11px;color:var(--cyan)">${s.min.toFixed(2)}</td>
+          <td class="mono" style="font-size:11px;color:var(--danger)">${s.max.toFixed(2)}</td>
+          <td class="mono" style="font-size:11px;color:var(--primary)">${s.min.toFixed(2)}</td>
           <td style="font-size:16px;color:${trendColor[s.trend]}">${trendIcon[s.trend]}</td>
           <td class="mono" style="font-size:11px;color:var(--muted)">${s.BĐ1}</td>
           <td><span class="badge ${badge[0]}" style="font-size:10px">${badge[1]}</span></td>
@@ -147,7 +147,7 @@ function _hydRain() {
       <tbody>${HYD_RAIN_STATIONS.map(r => {
         const level = r.h24>=100?['badge-red','Đặc biệt lớn']:r.h24>=50?['badge-yellow','Rất to']:r.h24>=25?['badge-blue','To']:r.h24>=10?['badge-gray','Vừa']:['badge-gray','Nhỏ/Không'];
         const barW  = Math.min(r.h24/150*100, 100);
-        const barC  = r.h24>=50?'#f87171':r.h24>=25?'var(--yellow)':'var(--cyan)';
+        const barC  = r.h24>=50?'#f87171':r.h24>=25?'var(--warning)':'var(--primary)';
         return `<tr>
           <td style="font-weight:700;font-size:12px">${r.name}</td>
           <td style="font-size:11px;color:var(--muted)">${r.district}</td>
@@ -179,11 +179,11 @@ function _hydReport() {
       <div class="card-header"><span class="card-title">Bản tin thủy văn — ${today}</span></div>
       <div style="padding:0 20px 16px">
         ${overBD1.length > 0 ? `
-        <div style="background:rgba(255,202,40,.08);border:1px solid rgba(255,202,40,.25);border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:12px;color:var(--yellow)">
+        <div style="background:rgba(255,202,40,.08);border:1px solid rgba(255,202,40,.25);border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:12px;color:var(--warning)">
           ⚠ <strong>${overBD1.length} trạm</strong> đang ở mực nước trên BĐ1: ${overBD1.map(s=>s.name).join(', ')}
         </div>` : ''}
         <div style="font-size:12px;line-height:1.8;color:rgba(255,255,255,.75)">
-          Mực nước sông Hồng tại Hà Nội hiện là <strong style="color:var(--cyan)">${HYD_STATIONS[0].morning.toFixed(2)} m</strong>, 
+          Mực nước sông Hồng tại Hà Nội hiện là <strong style="color:var(--primary)">${HYD_STATIONS[0].morning.toFixed(2)} m</strong>, 
           thấp hơn BĐ1 là ${(HYD_STATIONS[0].BĐ1 - HYD_STATIONS[0].morning).toFixed(2)} m.
           ${rainList.length > 0 ? `Lượng mưa trong ngày: ${rainList.slice(0,3).map(r=>`${r.name} (${r.h24.toFixed(1)}mm)`).join(', ')}.` : 'Không có mưa đáng kể.'}
         </div>
@@ -192,9 +192,9 @@ function _hydReport() {
     <div class="card">
       <div class="card-header"><span class="card-title">Xuất báo cáo quan trắc</span></div>
       <div style="padding:0 20px 16px;display:flex;flex-direction:column;gap:10px">
-        ${[['Báo cáo mực nước ngày','Tổng hợp H sáng-chiều, max/min, xu hướng','var(--cyan)'],
-           ['Báo cáo lượng mưa ngày','Lượng mưa 24h toàn bộ trạm đo','var(--blue)'],
-           ['Bản tin cảnh báo sớm','Tổng hợp tình hình + cảnh báo vùng ngập','var(--yellow)'],
+        ${[['Báo cáo mực nước ngày','Tổng hợp H sáng-chiều, max/min, xu hướng','var(--primary)'],
+           ['Báo cáo lượng mưa ngày','Lượng mưa 24h toàn bộ trạm đo','var(--info)'],
+           ['Bản tin cảnh báo sớm','Tổng hợp tình hình + cảnh báo vùng ngập','var(--warning)'],
            ['Báo cáo tháng tổng hợp','KPI thủy văn tháng + so sánh năm trước','var(--purple)']].map(([t,d,c]) => `
         <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;cursor:pointer" onclick="hydExportReport('${t}')">
           <div>
@@ -219,7 +219,7 @@ window.hydUpdateStation = function(id) {
       ${[['BĐ1',s.BĐ1],['BĐ2',s.BĐ2],['BĐ3',s.BĐ3]].map(([l,v]) => `
       <div style="background:rgba(255,202,40,.08);border:1px solid rgba(255,202,40,.2);border-radius:8px;padding:8px 10px;text-align:center">
         <div style="font-size:10px;color:var(--muted)">${l}</div>
-        <div style="font-size:14px;font-weight:700;color:var(--yellow)">${v} m</div>
+        <div style="font-size:14px;font-weight:700;color:var(--warning)">${v} m</div>
       </div>`).join('')}
     </div>
     <div class="form-row">
@@ -290,11 +290,11 @@ window.hydOpenEntryForm = function(type) {
           <th style="padding:8px 10px;font-size:11px;text-align:left">Xu hướng</th>
         </tr></thead>
         <tbody>${HYD_STATIONS.map(s => {
-          const hc = s.morning>=s.BĐ2?'#f87171':s.morning>=s.BĐ1?'var(--yellow)':'var(--green)';
+          const hc = s.morning>=s.BĐ2?'#f87171':s.morning>=s.BĐ1?'var(--warning)':'var(--success)';
           return `<tr style="border-bottom:1px solid rgba(255,255,255,.05)">
             <td style="padding:7px 10px;font-size:12px;font-weight:600">${s.name}</td>
             <td style="padding:7px 10px;font-size:11px;color:var(--muted)">${s.river}</td>
-            <td style="padding:7px 10px;font-size:11px;color:var(--yellow)">${s.BĐ1}m</td>
+            <td style="padding:7px 10px;font-size:11px;color:var(--warning)">${s.BĐ1}m</td>
             <td style="padding:7px 10px;font-size:13px;font-weight:700;color:${hc}">${s.morning.toFixed(2)}</td>
             <td style="padding:5px 10px"><input id="hwl_${s.id}" class="form-control" type="number" step="0.01" placeholder="${s.morning}" style="width:90px"></td>
             <td style="padding:5px 10px">

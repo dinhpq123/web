@@ -19,7 +19,7 @@ function renderBusinessHistory() {
       <td style="font-weight:600">${d.factory}</td>
       <td class="mono" style="text-align:right">${formatNum(d.revenue)}</td>
       <td class="mono" style="text-align:right">${formatNum(d.consumption)}</td>
-      <td style="text-align:center; color:var(--cyan)">+${d.newCustomers}</td>
+      <td style="text-align:center; color:var(--primary)">+${d.newCustomers}</td>
       <td style="text-align:center">${d.incidents}</td>
       <td>${statusBadge(d.status)}</td>
       <td>
@@ -145,7 +145,7 @@ function viewBizHistoryDetail(id) {
   const trendArrow = (val) => {
     if (val === null) return '';
     const v = parseFloat(val);
-    const color = v >= 0 ? 'var(--green)' : 'var(--red)';
+    const color = v >= 0 ? 'var(--success)' : 'var(--danger)';
     const icon = v >= 0
       ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>'
       : '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>';
@@ -153,10 +153,10 @@ function viewBizHistoryDetail(id) {
   };
 
   const kpiItem = (label, value, unit, trend) => `
-    <div style="background:rgba(0,0,0,.2);border-radius:10px;padding:14px 16px;border:1px solid rgba(255,255,255,.05)">
+    <div style="background:var(--bg-secondary);border-radius:10px;padding:14px 16px;border:1px solid var(--border)">
       <div style="font-size:11px;color:var(--muted);margin-bottom:6px">${label}</div>
       <div style="display:flex;align-items:baseline;justify-content:space-between;gap:6px">
-        <div style="font-family:'Roboto Mono',monospace;font-size:20px;font-weight:700;color:var(--cyan)">${formatNum(value)}<span style="font-size:12px;color:var(--muted);margin-left:4px">${unit}</span></div>
+        <div style="font-family:'Roboto Mono',monospace;font-size:20px;font-weight:700;color:var(--primary)">${formatNum(value)}<span style="font-size:12px;color:var(--muted);margin-left:4px">${unit}</span></div>
         ${trendArrow(trend)}
       </div>
       ${trend !== null ? `<div style="font-size:10px;color:var(--muted);margin-top:4px">So v\u1edbi k\u1ef3 tr\u01b0\u1edbc</div>` : ''}
@@ -183,7 +183,7 @@ function viewBizHistoryDetail(id) {
       </div>
       <div style="text-align:right">
         ${statusBadge(d.status)}
-        <div style="font-size:11px;color:var(--muted);margin-top:4px">M\u00e3: <span style="font-family:'Roboto Mono',monospace;color:var(--cyan)">${d.id}</span></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">M\u00e3: <span style="font-family:'Roboto Mono',monospace;color:var(--primary)">${d.id}</span></div>
       </div>
     </div>
 
@@ -192,9 +192,9 @@ function viewBizHistoryDetail(id) {
       ${kpiItem('Doanh thu', d.revenue, 'VND', revDiff)}
       ${kpiItem('S\u1ea3n l\u01b0\u1ee3ng', d.consumption, 'm\u00b3', conDiff)}
       ${kpiItem('Kh\u00e1ch h\u00e0ng m\u1edbi', d.newCustomers, 'KH', null)}
-      <div style="background:rgba(0,0,0,.2);border-radius:10px;padding:14px 16px;border:1px solid rgba(255,255,255,.05)">
+      <div style="background:var(--bg-secondary);border-radius:10px;padding:14px 16px;border:1px solid var(--border)">
         <div style="font-size:11px;color:var(--muted);margin-bottom:6px">S\u1ef1 c\u1ed1 ph\u00e1t sinh</div>
-        <div style="font-family:'Roboto Mono',monospace;font-size:20px;font-weight:700;color:${d.incidents > 0 ? 'var(--yellow)' : 'var(--green)'}">
+        <div style="font-family:'Roboto Mono',monospace;font-size:20px;font-weight:700;color:${d.incidents > 0 ? 'var(--warning)' : 'var(--success)'}">
           ${d.incidents}
           <span style="font-size:12px;color:var(--muted);margin-left:4px">s\u1ef1 v\u1ee5</span>
         </div>
@@ -211,14 +211,14 @@ function viewBizHistoryDetail(id) {
          ['S\u1ef1 c\u1ed1 ph\u00e1t sinh', d.incidents + ' s\u1ef1 v\u1ee5'],
          ['Tr\u1ea1ng th\u00e1i k\u1ef3', (d.status === 'ok' ? 'B\u00ecnh th\u01b0\u1eddng' : d.status === 'warning' ? 'C\u1ea3nh b\u00e1o' : 'Nghi\u00eam tr\u1ecdng')]]
         .map(([k, v], i) => `
-        <div style="display:flex;gap:12px;padding:10px 14px;${i % 2 === 0 ? '' : 'background:rgba(0,0,0,.1)'}">
+        <div style="display:flex;gap:12px;padding:10px 14px;${i % 2 === 0 ? '' : 'background:var(--bg-secondary)'}">
           <span style="min-width:160px;color:var(--muted);font-size:13px">${k}</span>
           <span style="font-size:13px;font-weight:500">${v}</span>
         </div>`).join('')}
     </div>
 
     ${d.status === 'warning' ? `
-    <div style="background:rgba(255,202,40,.08);border:1px solid rgba(255,202,40,.25);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--yellow)">
+    <div style="background:rgba(255,202,40,.08);border:1px solid rgba(255,202,40,.25);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--warning)">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       K\u1ef3 n\u00e0y c\u00f3 ch\u1ec9 s\u1ed1 c\u1ea7n ch\u00fa \u00fd. \u0110\u1ec1 ngh\u1ecb ki\u1ec3m tra chi ti\u1ebft b\u00e1o c\u00e1o v\u1eadn h\u00e0nh t\u01b0\u01a1ng \u1ee9ng.
     </div>` : ''}

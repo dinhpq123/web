@@ -54,9 +54,9 @@ window.ewDetailAlert = function(id) {
   const a = alerts.find(x => x.id === id);
   if (!a) return;
 
-  const sevColor = { critical:'#ef4444', high:'#f97316', medium:'#f59e0b', low:'#3b82f6' };
+  const sevColor = { critical:'var(--alert-critical)', high:'var(--alert-bd3)', medium:'var(--alert-bd2)', low:'var(--alert-bd1)' };
   const sevLabel = { critical:'Khẩn cấp', high:'Cao', medium:'Trung bình', low:'Thấp' };
-  const sc = sevColor[a.severity] || '#6b7280';
+  const sc = sevColor[a.severity] || 'var(--text-subtle)';
   const sl = sevLabel[a.severity] || a.severity;
 
   const steps = [
@@ -71,13 +71,13 @@ window.ewDetailAlert = function(id) {
 <div style="background:#0e1220;border:1px solid rgba(255,255,255,.1);border-radius:18px;width:720px;max-width:100%;max-height:90vh;overflow:hidden;display:flex;flex-direction:column">
   <!-- Header -->
   <div style="padding:20px 24px 16px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;gap:14px;align-items:flex-start">
-    <div style="width:44px;height:44px;border-radius:12px;background:${sc}18;border:1px solid ${sc}44;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+    <div style="width:44px;height:44px;border-radius:12px;background:color-mix(in srgb, ${sc} 18%, transparent);border:1px solid color-mix(in srgb, ${sc} 44%, transparent);display:flex;align-items:center;justify-content:center;flex-shrink:0">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${sc}" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
     </div>
     <div style="flex:1">
       <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap">
-        <span style="font-family:monospace;font-size:11px;color:#a78bfa">${a.id}</span>
-        <span style="padding:1px 8px;border-radius:20px;font-size:10px;font-weight:800;background:${sc}20;color:${sc};border:1px solid ${sc}44">${sl}</span>
+        <span style="font-family:monospace;font-size:11px;color:#5BA9FF">${a.id}</span>
+        <span style="padding:1px 8px;border-radius:20px;font-size:10px;font-weight:800;background:color-mix(in srgb, ${sc} 20%, transparent);color:${sc};border:1px solid color-mix(in srgb, ${sc} 44%, transparent)">${sl}</span>
         <span style="font-size:10px;color:rgba(255,255,255,.35)">${a.time}</span>
       </div>
       <h2 style="font-size:16px;font-weight:800;color:#fff;margin:0">${a.station}</h2>
@@ -110,7 +110,7 @@ window.ewDetailAlert = function(id) {
     <div style="display:flex;flex-direction:column;gap:8px">
       ${steps.map((s, i) => `
       <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;${s.done?'opacity:.5':''}">
-        <div style="width:28px;height:28px;border-radius:50%;${s.done?'background:#10b981':'background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.15)'};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:800;color:${s.done?'#fff':'rgba(255,255,255,.4)'}">
+        <div style="width:28px;height:28px;border-radius:50%;${s.done?'background:var(--success)':'background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.15)'};display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px;font-weight:800;color:${s.done?'#fff':'rgba(255,255,255,.4)'}">
           ${s.done ? `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>` : s.n}
         </div>
         <div>
@@ -124,7 +124,7 @@ window.ewDetailAlert = function(id) {
 
   <!-- Footer -->
   <div style="padding:14px 24px;border-top:1px solid rgba(255,255,255,.07);display:flex;gap:8px;justify-content:flex-end">
-    <button onclick="ewDispatch('${a.id}')" style="padding:7px 14px;border-radius:8px;border:none;background:#7c3aed;color:#fff;font-size:12px;font-weight:700;cursor:pointer">Điều phối xử lý</button>
+    <button onclick="ewDispatch('${a.id}')" style="padding:7px 14px;border-radius:8px;border:none;background:var(--purple);color:#fff;font-size:12px;font-weight:700;cursor:pointer">Điều phối xử lý</button>
     <button onclick="ewSendAlert('${a.id}')" style="padding:7px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:12px;font-weight:600;cursor:pointer">Gửi cảnh báo PA/Zalo</button>
     <button onclick="_ewClose()" style="padding:7px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:transparent;color:rgba(255,255,255,.45);font-size:12px;cursor:pointer">Đóng</button>
   </div>
@@ -152,7 +152,7 @@ window.ewOpenNewRule = function(id = null) {
 <div style="background:#0e1220;border:1px solid rgba(255,255,255,.1);border-radius:16px;width:560px;max-width:100%">
   <div style="padding:18px 22px 14px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between">
     <h3 style="font-size:15px;font-weight:800;color:#fff;margin:0;display:flex;align-items:center;gap:8px">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--warning-text)" stroke-width="2.5"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
       ${isEdit ? 'Chỉnh sửa quy tắc cảnh báo' : 'Thiết lập quy tắc cảnh báo mới'}
     </h3>
     <button onclick="_ewClose()" style="background:transparent;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:20px">✕</button>
@@ -209,7 +209,7 @@ window.ewOpenNewRule = function(id = null) {
     <div style="margin-bottom:12px">
       <label style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);display:block;margin-bottom:6px">Kênh thông báo khi kích hoạt</label>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        ${[['app','Push App','#7c3aed'],['zalo','Zalo OA','#06b6d4'],['sms','SMS','#10b981'],['pa','Loa PA','#f59e0b'],['email','Email','#6b7280']].map(([v,l,c]) => {
+        ${[['app','Push App','var(--purple)'],['zalo','Zalo OA','#06b6d4'],['sms','SMS','var(--success)'],['pa','Loa PA','#f59e0b'],['email','Email','var(--text-subtle)']].map(([v,l,c]) => {
           const isChecked = isEdit ? r.channels.includes(v) : true;
           return `<label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer;padding:4px 10px;border-radius:20px;border:1px solid ${c}44;background:${c}12;color:${c}">
             <input type="checkbox" name="ruleChan" value="${v}" ${isChecked ? 'checked' : ''} style="accent-color:${c}"/> ${l}
@@ -290,7 +290,7 @@ window.ewProcessAlert = function(id) {
 <div style="background:#0e1220;border:1px solid rgba(255,255,255,.1);border-radius:18px;width:540px;max-width:100%">
   <div style="padding:18px 22px 14px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between">
     <h3 style="font-size:15px;font-weight:800;color:#fff;margin:0;display:flex;align-items:center;gap:8px">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--warning-text)" stroke-width="2.5"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
       Xử lý Cảnh báo: ${a.id}
     </h3>
     <button onclick="_ewClose()" style="background:transparent;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:20px">✕</button>

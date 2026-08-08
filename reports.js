@@ -50,21 +50,21 @@ const RPT = {
         'Cấp phép Thủy lợi': { total:284, approved:198, pending:62, rejected:24, kpi:[{l:'Tổng hồ sơ',v:'284',c:'#00c8ff'},{l:'Đã cấp',v:'198',c:'#00e676'},{l:'Đang xử lý',v:'62',c:'#ffca28'},{l:'Từ chối',v:'24',c:'#ff5252'}] },
         'Vi phạm Thủy lợi':  { total:142, resolved:98, processing:32, unresolved:12, kpi:[{l:'Tổng vi phạm',v:'142',c:'#ff5252'},{l:'Đã xử lý',v:'98',c:'#00e676'},{l:'Đang xử lý',v:'32',c:'#ffca28'},{l:'Chưa xử lý',v:'12',c:'#ff5252'}] },
         'Kiểm định An toàn':  { total:42, ok:28, warning:8, overdue:6, kpi:[{l:'Tổng đập/hồ',v:'42',c:'#00c8ff'},{l:'An toàn',v:'28',c:'#00e676'},{l:'Cần theo dõi',v:'8',c:'#ffca28'},{l:'Quá hạn KĐ',v:'6',c:'#ff5252'}] },
-        'Đầu tư & Nâng cấp': { total:38, budget:'856 tỷ', completed:22, ongoing:12, planned:4, kpi:[{l:'Tổng dự án',v:'38',c:'#00c8ff'},{l:'Hoàn thành',v:'22',c:'#00e676'},{l:'Đang thi công',v:'12',c:'#ffca28'},{l:'Kế hoạch',v:'4',c:'#546e7a'}] },
+        'Đầu tư & Nâng cấp': { total:38, budget:'856 tỷ', completed:22, ongoing:12, planned:4, kpi:[{l:'Tổng dự án',v:'38',c:'#00c8ff'},{l:'Hoàn thành',v:'22',c:'#00e676'},{l:'Đang thi công',v:'12',c:'#ffca28'},{l:'Kế hoạch',v:'4',c:'var(--muted)'}] },
       },
       'Công ty Thủy lợi': {
         'Hiện trạng CTTL':   { total:312, good:228, degraded:72, critical:12, kpi:[{l:'Tổng CTTL quản lý',v:'312',c:'#00c8ff'},{l:'Trạng thái tốt',v:'228',c:'#00e676'},{l:'Xuống cấp',v:'72',c:'#ffca28'},{l:'Hư hỏng nặng',v:'12',c:'#ff5252'}] },
         'Cấp phép Thủy lợi': { total:71, approved:52, pending:14, rejected:5, kpi:[{l:'Tổng hồ sơ',v:'71',c:'#00c8ff'},{l:'Đã cấp',v:'52',c:'#00e676'},{l:'Đang xử lý',v:'14',c:'#ffca28'},{l:'Từ chối',v:'5',c:'#ff5252'}] },
         'Vi phạm Thủy lợi':  { total:36, resolved:25, processing:8, unresolved:3, kpi:[{l:'Tổng vi phạm',v:'36',c:'#ff5252'},{l:'Đã xử lý',v:'25',c:'#00e676'},{l:'Đang xử lý',v:'8',c:'#ffca28'},{l:'Chưa xử lý',v:'3',c:'#ff5252'}] },
         'Kiểm định An toàn':  { total:12, ok:8, warning:3, overdue:1, kpi:[{l:'Tổng đập/hồ',v:'12',c:'#00c8ff'},{l:'An toàn',v:'8',c:'#00e676'},{l:'Cần theo dõi',v:'3',c:'#ffca28'},{l:'Quá hạn KĐ',v:'1',c:'#ff5252'}] },
-        'Đầu tư & Nâng cấp': { total:10, budget:'215 tỷ', completed:6, ongoing:3, planned:1, kpi:[{l:'Tổng dự án',v:'10',c:'#00c8ff'},{l:'Hoàn thành',v:'6',c:'#00e676'},{l:'Đang thi công',v:'3',c:'#ffca28'},{l:'Kế hoạch',v:'1',c:'#546e7a'}] },
+        'Đầu tư & Nâng cấp': { total:10, budget:'215 tỷ', completed:6, ongoing:3, planned:1, kpi:[{l:'Tổng dự án',v:'10',c:'#00c8ff'},{l:'Hoàn thành',v:'6',c:'#00e676'},{l:'Đang thi công',v:'3',c:'#ffca28'},{l:'Kế hoạch',v:'1',c:'var(--muted)'}] },
       },
       'Xã / Huyện': {
         'Hiện trạng CTTL':   { total:52, good:38, degraded:11, critical:3, kpi:[{l:'Tổng CTTL xã/huyện',v:'52',c:'#00c8ff'},{l:'Trạng thái tốt',v:'38',c:'#00e676'},{l:'Xuống cấp',v:'11',c:'#ffca28'},{l:'Hư hỏng nặng',v:'3',c:'#ff5252'}] },
         'Cấp phép Thủy lợi': { total:18, approved:12, pending:4, rejected:2, kpi:[{l:'Tổng hồ sơ',v:'18',c:'#00c8ff'},{l:'Đã cấp',v:'12',c:'#00e676'},{l:'Đang xử lý',v:'4',c:'#ffca28'},{l:'Từ chối',v:'2',c:'#ff5252'}] },
         'Vi phạm Thủy lợi':  { total:8, resolved:5, processing:2, unresolved:1, kpi:[{l:'Tổng vi phạm',v:'8',c:'#ff5252'},{l:'Đã xử lý',v:'5',c:'#00e676'},{l:'Đang xử lý',v:'2',c:'#ffca28'},{l:'Chưa xử lý',v:'1',c:'#ff5252'}] },
-        'Kiểm định An toàn':  { total:3, ok:2, warning:1, overdue:0, kpi:[{l:'Tổng đập/hồ',v:'3',c:'#00c8ff'},{l:'An toàn',v:'2',c:'#00e676'},{l:'Cần theo dõi',v:'1',c:'#ffca28'},{l:'Quá hạn KĐ',v:'0',c:'#546e7a'}] },
-        'Đầu tư & Nâng cấp': { total:5, budget:'38 tỷ', completed:3, ongoing:2, planned:0, kpi:[{l:'Tổng dự án',v:'5',c:'#00c8ff'},{l:'Hoàn thành',v:'3',c:'#00e676'},{l:'Đang thi công',v:'2',c:'#ffca28'},{l:'Kế hoạch',v:'0',c:'#546e7a'}] },
+        'Kiểm định An toàn':  { total:3, ok:2, warning:1, overdue:0, kpi:[{l:'Tổng đập/hồ',v:'3',c:'#00c8ff'},{l:'An toàn',v:'2',c:'#00e676'},{l:'Cần theo dõi',v:'1',c:'#ffca28'},{l:'Quá hạn KĐ',v:'0',c:'var(--muted)'}] },
+        'Đầu tư & Nâng cấp': { total:5, budget:'38 tỷ', completed:3, ongoing:2, planned:0, kpi:[{l:'Tổng dự án',v:'5',c:'#00c8ff'},{l:'Hoàn thành',v:'3',c:'#00e676'},{l:'Đang thi công',v:'2',c:'#ffca28'},{l:'Kế hoạch',v:'0',c:'var(--muted)'}] },
       },
     },
     // Table rows phân theo cấp báo cáo: Thành phố / Công ty TL / Xã – Huyện
@@ -318,10 +318,10 @@ function getReportTabHtml() {
     <!-- KPIs row -->
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
       ${[
-        { label:'Tổng sự cố', val:d.total, color:'var(--cyan)', sub:'trong kỳ báo cáo' },
-        { label:'Đã xử lý', val:d.resolved, color:'var(--green)', sub:`Tỷ lệ: ${pct}%` },
-        { label:'Đang xử lý', val:d.total-d.resolved, color:'var(--yellow)', sub:'Cần theo dõi' },
-        { label:'Thiệt hại ước tính', val:`${d.dmg} tỷ`, color:'var(--red)', sub:'Giảm 15% so cùng kỳ' },
+        { label:'Tổng sự cố', val:d.total, color:'var(--primary)', sub:'trong kỳ báo cáo' },
+        { label:'Đã xử lý', val:d.resolved, color:'var(--success)', sub:`Tỷ lệ: ${pct}%` },
+        { label:'Đang xử lý', val:d.total-d.resolved, color:'var(--warning)', sub:'Cần theo dõi' },
+        { label:'Thiệt hại ước tính', val:`${d.dmg} tỷ`, color:'var(--danger)', sub:'Giảm 15% so cùng kỳ' },
       ].map(k=>`<div class="card kpi-card"><div class="kpi-label">${k.label}</div><div class="kpi-value" style="color:${k.color}">${k.val}</div><div class="kpi-sub">${k.sub}</div></div>`).join('')}
     </div>
 
@@ -358,7 +358,7 @@ function getReportTabHtml() {
               <td><span class="badge ${r.level.includes('3')?'badge-red':r.level.includes('2')?'badge-yellow':'badge-gray'}">${r.level}</span></td>
               <td style="font-size:12px">${r.date}</td>
               <td>${statusBadge(r.status)}</td>
-              <td class="mono" style="color:var(--red);font-size:13px">${r.dmg}</td>
+              <td class="mono" style="color:var(--danger);font-size:13px">${r.dmg}</td>
             </tr>`).join('')}
           </tbody>
         </table>
@@ -370,9 +370,9 @@ function getReportTabHtml() {
     return `
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px">
       ${[
-        { label:'Lượng mưa TB', val:`${rf.avg}mm`, color:'var(--cyan)', sub:`Kỳ: ${reportPeriod}` },
-        { label:'Lượng mưa cực đại', val:`${rf.max}mm`, color:'var(--yellow)', sub:'Trạm Chương Mỹ' },
-        { label:'Số trạm vượt ngưỡng', val:'3/8', color:'var(--red)', sub:'BĐ1: >100mm/24h' },
+        { label:'Lượng mưa TB', val:`${rf.avg}mm`, color:'var(--primary)', sub:`Kỳ: ${reportPeriod}` },
+        { label:'Lượng mưa cực đại', val:`${rf.max}mm`, color:'var(--warning)', sub:'Trạm Chương Mỹ' },
+        { label:'Số trạm vượt ngưỡng', val:'3/8', color:'var(--danger)', sub:'BĐ1: >100mm/24h' },
       ].map(k=>`<div class="card kpi-card"><div class="kpi-label">${k.label}</div><div class="kpi-value" style="color:${k.color}">${k.val}</div><div class="kpi-sub">${k.sub}</div></div>`).join('')}
     </div>
 
@@ -400,12 +400,12 @@ function getReportTabHtml() {
               const alertColor = v > rf.avg * 1.5 ? 'badge-red' : v > rf.avg * 1.2 ? 'badge-yellow' : 'badge-green';
               return `<tr>
                 <td style="font-weight:600">${s}</td>
-                <td class="mono" style="font-size:14px;font-weight:700;color:var(--cyan)">${v}</td>
-                <td style="font-size:12px;color:${pct>0?'var(--red)':'var(--green)'}">${pct>0?'+':''}${pct}%</td>
+                <td class="mono" style="font-size:14px;font-weight:700;color:var(--primary)">${v}</td>
+                <td style="font-size:12px;color:${pct>0?'var(--danger)':'var(--success)'}">${pct>0?'+':''}${pct}%</td>
                 <td><span class="badge ${alertColor}">${alert}</span></td>
                 <td>
                   <div class="progress-bar" style="max-width:120px">
-                    <div class="progress-fill" style="width:${Math.min(v/rf.max*100,100)}%;background:${v>rf.avg*1.5?'var(--red)':v>rf.avg*1.2?'var(--yellow)':'var(--cyan)'}"></div>
+                    <div class="progress-fill" style="width:${Math.min(v/rf.max*100,100)}%;background:${v>rf.avg*1.5?'var(--danger)':v>rf.avg*1.2?'var(--warning)':'var(--primary)'}"></div>
                   </div>
                 </td>
               </tr>`;
@@ -421,9 +421,9 @@ function getReportTabHtml() {
     return `
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:20px">
       ${[
-        { label:'Sông Hồng (tại Hà Nội)', val:`${wl.sHong[wl.sHong.length-1]}m`, bd:`BĐ1: ${wl.bd1}m / BĐ2: ${wl.bd2}m`, color:'var(--cyan)' },
-        { label:'Sông Đuống', val:`${wl.sDuong[wl.sDuong.length-1]}m`, bd:'BĐ1: 5.5m / BĐ2: 6.0m', color:'var(--yellow)' },
-        { label:'Sông Đáy', val:`${wl.sDay[wl.sDay.length-1]}m`, bd:'BĐ1: 4.5m / BĐ2: 5.0m', color:'var(--green)' },
+        { label:'Sông Hồng (tại Hà Nội)', val:`${wl.sHong[wl.sHong.length-1]}m`, bd:`BĐ1: ${wl.bd1}m / BĐ2: ${wl.bd2}m`, color:'var(--primary)' },
+        { label:'Sông Đuống', val:`${wl.sDuong[wl.sDuong.length-1]}m`, bd:'BĐ1: 5.5m / BĐ2: 6.0m', color:'var(--warning)' },
+        { label:'Sông Đáy', val:`${wl.sDay[wl.sDay.length-1]}m`, bd:'BĐ1: 4.5m / BĐ2: 5.0m', color:'var(--success)' },
       ].map(k=>`<div class="card kpi-card"><div class="kpi-label">${k.label}</div><div class="kpi-value" style="color:${k.color}">${k.val}</div><div class="kpi-sub">${k.bd}</div></div>`).join('')}
     </div>
 
@@ -446,7 +446,7 @@ function getReportTabHtml() {
             { level:'Lũ BĐ3 (11.5m)', areas:'195 xã/phường', hectares:'48,200ha', risk:'badge-red' },
           ].map(r=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border)">
             <div><div style="font-size:13px;font-weight:600">${r.level}</div><div style="font-size:11px;color:var(--muted)">${r.areas} bị ảnh hưởng</div></div>
-            <div style="text-align:right"><div style="font-size:14px;font-weight:700;color:var(--yellow)">${r.hectares}</div><span class="badge ${r.risk}" style="font-size:10px">Diện tích ngập</span></div>
+            <div style="text-align:right"><div style="font-size:14px;font-weight:700;color:var(--warning)">${r.hectares}</div><span class="badge ${r.risk}" style="font-size:10px">Diện tích ngập</span></div>
           </div>`).join('')}
         </div>
       </div>
@@ -458,9 +458,9 @@ function getReportTabHtml() {
     return `
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
       ${[
-        { label:'Trạm bơm hoạt động', val:'5/5', color:'var(--green)', sub:'Tất cả đang vận hành' },
-        { label:'Tổng giờ bơm', val:`${p.opHours.reduce((a,b)=>a+b,0)}h`, color:'var(--cyan)', sub:'Trong 24h' },
-        { label:'Điện tiêu thụ', val:`${p.energy.reduce((a,b)=>a+b,0).toFixed(1)} MWh`, color:'var(--yellow)', sub:'Chi phí ước tính' },
+        { label:'Trạm bơm hoạt động', val:'5/5', color:'var(--success)', sub:'Tất cả đang vận hành' },
+        { label:'Tổng giờ bơm', val:`${p.opHours.reduce((a,b)=>a+b,0)}h`, color:'var(--primary)', sub:'Trong 24h' },
+        { label:'Điện tiêu thụ', val:`${p.energy.reduce((a,b)=>a+b,0).toFixed(1)} MWh`, color:'var(--warning)', sub:'Chi phí ước tính' },
         { label:'Hiệu suất TB', val:`${Math.round(p.efficiency.reduce((a,b)=>a+b,0)/p.efficiency.length)}%`, color:'var(--purple)', sub:'Công suất thực/thiết kế' },
       ].map(k=>`<div class="card kpi-card"><div class="kpi-label">${k.label}</div><div class="kpi-value" style="color:${k.color}">${k.val}</div><div class="kpi-sub">${k.sub}</div></div>`).join('')}
     </div>
@@ -489,12 +489,12 @@ function getReportTabHtml() {
             ${p.stations.map((s,i)=>`<tr>
               <td style="font-weight:600">${s}</td>
               <td class="mono">${p.capacity[i]} m³/s</td>
-              <td class="mono" style="color:var(--cyan)">${p.opHours[i]}h</td>
+              <td class="mono" style="color:var(--primary)">${p.opHours[i]}h</td>
               <td class="mono">${(p.capacity[i]*p.opHours[i]*3600/10000).toFixed(1)}M m³</td>
-              <td class="mono" style="color:var(--yellow)">${p.energy[i].toFixed(1)} MWh</td>
+              <td class="mono" style="color:var(--warning)">${p.energy[i].toFixed(1)} MWh</td>
               <td>
                 <div style="display:flex;align-items:center;gap:8px">
-                  <div class="progress-bar" style="flex:1;max-width:80px"><div class="progress-fill" style="width:${p.efficiency[i]}%;background:${p.efficiency[i]>85?'var(--green)':p.efficiency[i]>70?'var(--yellow)':'var(--red)'}"></div></div>
+                  <div class="progress-bar" style="flex:1;max-width:80px"><div class="progress-fill" style="width:${p.efficiency[i]}%;background:${p.efficiency[i]>85?'var(--success)':p.efficiency[i]>70?'var(--warning)':'var(--danger)'}"></div></div>
                   <span style="font-size:12px;font-weight:700">${p.efficiency[i]}%</span>
                 </div>
               </td>
@@ -513,10 +513,10 @@ function getReportTabHtml() {
     return `
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:20px">
       ${[
-        { label:'Kế hoạch thu', val:`${b.total} tỷ`, color:'var(--cyan)', sub:'Năm 2026' },
-        { label:'Đã thu', val:`${b.collected_total} tỷ`, color:'var(--green)', sub:`Đạt ${pct}% kế hoạch` },
-        { label:'Còn thiếu', val:`${b.total - b.collected_total} tỷ`, color:'var(--red)', sub:`${100-pct}% cần hoàn thành` },
-        { label:'Số đơn vị đạt KH', val:`${b.collected.filter((c,i)=>c>=b.planned[i]).length}/${b.districts.length}`, color:'var(--yellow)', sub:'Quận/huyện' },
+        { label:'Kế hoạch thu', val:`${b.total} tỷ`, color:'var(--primary)', sub:'Năm 2026' },
+        { label:'Đã thu', val:`${b.collected_total} tỷ`, color:'var(--success)', sub:`Đạt ${pct}% kế hoạch` },
+        { label:'Còn thiếu', val:`${b.total - b.collected_total} tỷ`, color:'var(--danger)', sub:`${100-pct}% cần hoàn thành` },
+        { label:'Số đơn vị đạt KH', val:`${b.collected.filter((c,i)=>c>=b.planned[i]).length}/${b.districts.length}`, color:'var(--warning)', sub:'Quận/huyện' },
       ].map(k=>`<div class="card kpi-card"><div class="kpi-label">${k.label}</div><div class="kpi-value" style="color:${k.color}">${k.val}</div><div class="kpi-sub">${k.sub}</div></div>`).join('')}
     </div>
 
@@ -546,12 +546,12 @@ function getReportTabHtml() {
               return `<tr>
                 <td style="font-weight:600">${d}</td>
                 <td class="mono">${b.planned[i]}</td>
-                <td class="mono" style="font-weight:700;color:${pct2>=100?'var(--green)':pct2<60?'var(--red)':'var(--yellow)'}">${b.collected[i]}</td>
+                <td class="mono" style="font-weight:700;color:${pct2>=100?'var(--success)':pct2<60?'var(--danger)':'var(--warning)'}">${b.collected[i]}</td>
                 <td class="mono" style="color:var(--muted)">${b.year2024[i]}</td>
-                <td style="font-size:12px;color:${diff>=0?'var(--green)':'var(--red)'}">${diff>=0?'+':''}${diff.toFixed(1)} tỷ (${diff>=0?'+':''}${Math.round(diff/b.year2024[i]*100)}%)</td>
+                <td style="font-size:12px;color:${diff>=0?'var(--success)':'var(--danger)'}">${diff>=0?'+':''}${diff.toFixed(1)} tỷ (${diff>=0?'+':''}${Math.round(diff/b.year2024[i]*100)}%)</td>
                 <td style="min-width:140px">
                   <div style="display:flex;align-items:center;gap:8px">
-                    <div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${Math.min(pct2,100)}%;background:${pct2>=100?'var(--green)':pct2<60?'var(--red)':'var(--yellow)'}"></div></div>
+                    <div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${Math.min(pct2,100)}%;background:${pct2>=100?'var(--success)':pct2<60?'var(--danger)':'var(--warning)'}"></div></div>
                     <span style="font-size:12px;font-weight:700;width:32px;text-align:right">${pct2}%</span>
                   </div>
                 </td>
@@ -580,10 +580,10 @@ function getReportTabHtml() {
       if (isTP) {
         thead = '<tr><th>Đơn vị/Khu vực</th><th>Kênh tưới</th><th>Kênh tiêu</th><th>Hồ chứa</th><th>Trạm bơm</th><th>Cống ĐK</th><th>Tổng CTTL</th><th>Tốt (%)</th><th>Xuống cấp (%)</th><th>Hư hỏng (%)</th></tr>';
         tbody = rows.map(r => `<tr>
-          <td style="font-weight:600;color:var(--cyan)">${r.don_vi}</td>
+          <td style="font-weight:600;color:var(--primary)">${r.don_vi}</td>
           <td class="mono">${r.kenh_tuoi}</td><td class="mono">${r.kenh_tieu}</td>
           <td class="mono">${r.ho_chua}</td><td class="mono">${r.tram_bom}</td><td class="mono">${r.cong_dk}</td>
-          <td class="mono" style="font-weight:700;color:var(--cyan)">${r.tong}</td>
+          <td class="mono" style="font-weight:700;color:var(--primary)">${r.tong}</td>
           <td><span class="badge badge-green">${r.tot_pct}%</span></td>
           <td><span class="badge badge-yellow">${r.xuong_cap_pct}%</span></td>
           <td><span class="badge badge-red">${r.hu_hong_pct}%</span></td>
@@ -607,7 +607,7 @@ function getReportTabHtml() {
         tbody = rows.map(r => {
           const rate = parseFloat(r.ty_le_cap) || 0;
           const rc = rate >= 75 ? 'badge-green' : rate >= 50 ? 'badge-yellow' : 'badge-red';
-          return `<tr><td style="font-weight:600">${r.loai_hoat_dong}</td><td class="mono">${r.so_hs_nhan}</td><td class="mono" style="color:var(--green)">${r.da_cap}</td><td class="mono" style="color:var(--yellow)">${r.dang_xlý}</td><td class="mono" style="color:var(--red)">${r.tu_choi}</td><td><span class="badge ${rc}">${r.ty_le_cap}</span></td><td style="font-size:12px;color:var(--muted)">${r.ghi_chu||'—'}</td></tr>`;
+          return `<tr><td style="font-weight:600">${r.loai_hoat_dong}</td><td class="mono">${r.so_hs_nhan}</td><td class="mono" style="color:var(--success)">${r.da_cap}</td><td class="mono" style="color:var(--warning)">${r.dang_xlý}</td><td class="mono" style="color:var(--danger)">${r.tu_choi}</td><td><span class="badge ${rc}">${r.ty_le_cap}</span></td><td style="font-size:12px;color:var(--muted)">${r.ghi_chu||'—'}</td></tr>`;
         }).join('');
       } else if (isCty) {
         thead = '<tr><th>Mã HS</th><th>Chủ hồ sơ</th><th>Loại hoạt động</th><th>Phạm vi</th><th>Công ty XL</th><th>Ngày nộp</th><th>Ngày cấp</th><th>Hiệu lực</th><th>Trạng thái</th><th></th></tr>';
@@ -628,13 +628,13 @@ function getReportTabHtml() {
         tbody = rows.map(r => {
           const chua = r.chua_xlý || 0;
           const rc = chua === 0 ? 'badge-green' : chua <= 5 ? 'badge-yellow' : 'badge-red';
-          return `<tr><td style="font-weight:600">${r.loai_vp}</td><td><span class="badge badge-gray">Mức ${r.quy}</span></td><td class="mono" style="font-weight:700">${r.so_vu}</td><td class="mono" style="color:var(--green)">${r.da_xlý}</td><td><span class="badge ${rc}">${chua}</span></td><td class="mono" style="color:var(--red)">${r.tong_phat}</td><td style="font-size:12px;color:var(--muted)">${r.xu_huong}</td></tr>`;
+          return `<tr><td style="font-weight:600">${r.loai_vp}</td><td><span class="badge badge-gray">Mức ${r.quy}</span></td><td class="mono" style="font-weight:700">${r.so_vu}</td><td class="mono" style="color:var(--success)">${r.da_xlý}</td><td><span class="badge ${rc}">${chua}</span></td><td class="mono" style="color:var(--danger)">${r.tong_phat}</td><td style="font-size:12px;color:var(--muted)">${r.xu_huong}</td></tr>`;
         }).join('');
       } else if (isCty) {
         thead = '<tr><th>Mã VP</th><th>Đối tượng VP</th><th>Loại vi phạm</th><th>Vị trí</th><th>Cty TL</th><th>Ngày PH</th><th>Biên bản</th><th>Mức phạt</th><th>Trạng thái</th><th></th></tr>';
         tbody = rows.map(r => {
           const sc = r.trang_thai === 'Đã xử phạt' ? 'badge-green' : r.trang_thai === 'Đang khắc phục' ? 'badge-yellow' : 'badge-red';
-          return `<tr><td class="mono text-cyan">${r.id}</td><td style="font-weight:600">${r.doi_tuong}</td><td style="font-size:12px">${r.loai_vp}</td><td style="font-size:12px">${r.vi_tri}</td><td style="font-size:12px">${r.cty}</td><td style="font-size:12px">${r.ngay_ph}</td><td style="font-size:12px">${r.bien_ban}</td><td class="mono" style="color:var(--red)">${r.muc_phat}</td><td><span class="badge ${sc}">${r.trang_thai}</span></td><td><button class="btn btn-ghost btn-sm" style="font-size:11px;padding:3px 8px;white-space:nowrap" onclick='showIrrDetailReport("vi_pham",${JSON.stringify(r).replace(/'/g,"&#39;")})'><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Chi tiết</button></td></tr>`;
+          return `<tr><td class="mono text-cyan">${r.id}</td><td style="font-weight:600">${r.doi_tuong}</td><td style="font-size:12px">${r.loai_vp}</td><td style="font-size:12px">${r.vi_tri}</td><td style="font-size:12px">${r.cty}</td><td style="font-size:12px">${r.ngay_ph}</td><td style="font-size:12px">${r.bien_ban}</td><td class="mono" style="color:var(--danger)">${r.muc_phat}</td><td><span class="badge ${sc}">${r.trang_thai}</span></td><td><button class="btn btn-ghost btn-sm" style="font-size:11px;padding:3px 8px;white-space:nowrap" onclick='showIrrDetailReport("vi_pham",${JSON.stringify(r).replace(/'/g,"&#39;")})'><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Chi tiết</button></td></tr>`;
         }).join('');
       } else {
         thead = '<tr><th>Mã</th><th>Xã/Huyện</th><th>Đối tượng</th><th>Loại vi phạm</th><th>Ngày PH</th><th>Cơ quan XL</th><th>Kết quả</th><th>Trạng thái</th><th></th></tr>';
@@ -649,21 +649,21 @@ function getReportTabHtml() {
         tbody = rows.map(r => {
           const sc = r.status === 'ok' ? 'badge-green' : r.status === 'warning' ? 'badge-yellow' : 'badge-red';
           const sl = r.status === 'ok' ? 'An toàn' : r.status === 'warning' ? 'Cần theo dõi' : 'Quá hạn';
-          return `<tr><td class="mono text-cyan">${r.id}</td><td style="font-weight:600">${r.ten_ct}</td><td style="font-size:12px">${r.loai}</td><td style="font-size:12px">${r.cty}</td><td class="mono">${r.dung_tich}</td><td style="font-size:12px">${r.kd_gan_nhat}</td><td style="font-size:12px">${r.ket_qua}</td><td style="font-size:12px;color:${r.status==='overdue'?'var(--red)':'inherit'}">${r.kd_tiep}</td><td><span class="badge ${sc}">${sl}</span></td></tr>`;
+          return `<tr><td class="mono text-cyan">${r.id}</td><td style="font-weight:600">${r.ten_ct}</td><td style="font-size:12px">${r.loai}</td><td style="font-size:12px">${r.cty}</td><td class="mono">${r.dung_tich}</td><td style="font-size:12px">${r.kd_gan_nhat}</td><td style="font-size:12px">${r.ket_qua}</td><td style="font-size:12px;color:${r.status==='overdue'?'var(--danger)':'inherit'}">${r.kd_tiep}</td><td><span class="badge ${sc}">${sl}</span></td></tr>`;
         }).join('');
       } else if (isCty) {
         thead = '<tr><th>Mã</th><th>Công trình</th><th>Loại</th><th>Cty TL</th><th>Năm XD</th><th>Dung tích</th><th>KĐ lần 1</th><th>KĐ gần nhất</th><th>Kết quả</th><th>KĐ tiếp</th><th>TT</th><th></th></tr>';
         tbody = rows.map(r => {
           const sc = r.status === 'ok' ? 'badge-green' : r.status === 'warning' ? 'badge-yellow' : 'badge-red';
           const sl = r.status === 'ok' ? 'An toàn' : r.status === 'warning' ? 'Cần theo dõi' : 'Quá hạn';
-          return `<tr><td class="mono text-cyan">${r.id}</td><td style="font-weight:600">${r.ten_ct}</td><td style="font-size:12px">${r.loai}</td><td style="font-size:12px">${r.cty}</td><td class="mono">${r.nam_xd}</td><td class="mono">${r.dung_tich}</td><td style="font-size:12px">${r.kd_lan_1}</td><td style="font-size:12px">${r.kd_gan_nhat}</td><td style="font-size:12px">${r.ket_qua}</td><td style="font-size:12px;color:${r.status==='overdue'?'var(--red)':'inherit'}">${r.kd_tiep}</td><td><span class="badge ${sc}">${sl}</span></td><td><button class="btn btn-ghost btn-sm" style="font-size:11px;padding:3px 8px;white-space:nowrap" onclick='showIrrDetailReport("kiem_dinh",${JSON.stringify(r).replace(/'/g,"&#39;")})'><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Chi tiết</button></td></tr>`;
+          return `<tr><td class="mono text-cyan">${r.id}</td><td style="font-weight:600">${r.ten_ct}</td><td style="font-size:12px">${r.loai}</td><td style="font-size:12px">${r.cty}</td><td class="mono">${r.nam_xd}</td><td class="mono">${r.dung_tich}</td><td style="font-size:12px">${r.kd_lan_1}</td><td style="font-size:12px">${r.kd_gan_nhat}</td><td style="font-size:12px">${r.ket_qua}</td><td style="font-size:12px;color:${r.status==='overdue'?'var(--danger)':'inherit'}">${r.kd_tiep}</td><td><span class="badge ${sc}">${sl}</span></td><td><button class="btn btn-ghost btn-sm" style="font-size:11px;padding:3px 8px;white-space:nowrap" onclick='showIrrDetailReport("kiem_dinh",${JSON.stringify(r).replace(/'/g,"&#39;")})'><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Chi tiết</button></td></tr>`;
         }).join('');
       } else {
         thead = '<tr><th>Mã</th><th>Công trình</th><th>Xã</th><th>Huyện</th><th>Loại</th><th>Năm XD</th><th>KĐ gần nhất</th><th>Kết quả</th><th>KĐ tiếp</th><th>TT</th><th></th></tr>';
         tbody = rows.map(r => {
           const sc = r.status === 'ok' ? 'badge-green' : r.status === 'warning' ? 'badge-yellow' : 'badge-red';
           const sl = r.status === 'ok' ? 'An toàn' : r.status === 'warning' ? 'Cần theo dõi' : 'Quá hạn';
-          return `<tr><td class="mono text-cyan">${r.id}</td><td style="font-weight:600">${r.ten_ct}</td><td style="font-size:12px">${r.xa}</td><td style="font-size:12px">${r.huyen}</td><td style="font-size:12px">${r.loai}</td><td class="mono">${r.nam_xd}</td><td style="font-size:12px">${r.kd_gan_nhat}</td><td style="font-size:12px">${r.ket_qua}</td><td style="font-size:12px;color:${r.status==='overdue'?'var(--red)':'inherit'}">${r.kd_tiep}</td><td><span class="badge ${sc}">${sl}</span></td><td><button class="btn btn-ghost btn-sm" style="font-size:11px;padding:3px 8px;white-space:nowrap" onclick='showIrrDetailReport("kiem_dinh",${JSON.stringify(r).replace(/'/g,"&#39;")})'><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Chi tiết</button></td></tr>`;
+          return `<tr><td class="mono text-cyan">${r.id}</td><td style="font-weight:600">${r.ten_ct}</td><td style="font-size:12px">${r.xa}</td><td style="font-size:12px">${r.huyen}</td><td style="font-size:12px">${r.loai}</td><td class="mono">${r.nam_xd}</td><td style="font-size:12px">${r.kd_gan_nhat}</td><td style="font-size:12px">${r.ket_qua}</td><td style="font-size:12px;color:${r.status==='overdue'?'var(--danger)':'inherit'}">${r.kd_tiep}</td><td><span class="badge ${sc}">${sl}</span></td><td><button class="btn btn-ghost btn-sm" style="font-size:11px;padding:3px 8px;white-space:nowrap" onclick='showIrrDetailReport("kiem_dinh",${JSON.stringify(r).replace(/'/g,"&#39;")})'><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Chi tiết</button></td></tr>`;
         }).join('');
       }
     } else if (selType === 'Đầu tư & Nâng cấp') {
@@ -671,26 +671,26 @@ function getReportTabHtml() {
         thead = '<tr><th>Mã DA</th><th>Tên dự án</th><th>Loại CT</th><th>Cấp</th><th>Kinh phí</th><th>Chủ đầu tư</th><th>Tiến độ</th><th>Trạng thái</th></tr>';
         tbody = rows.map(r => {
           const pct = r.tien_do;
-          const bc = pct >= 100 ? 'var(--green)' : pct >= 50 ? 'var(--cyan)' : pct >= 20 ? 'var(--yellow)' : 'var(--muted)';
+          const bc = pct >= 100 ? 'var(--success)' : pct >= 50 ? 'var(--primary)' : pct >= 20 ? 'var(--warning)' : 'var(--muted)';
           const sc = pct >= 100 ? 'badge-green' : pct >= 50 ? 'badge-yellow' : pct > 0 ? 'badge-gray' : 'badge-gray';
           const sl = r.trang_thai;
-          return `<tr><td class="mono text-cyan">${r.id}</td><td style="font-weight:600">${r.ten}</td><td style="font-size:12px">${r.loai}</td><td><span class="badge badge-gray" style="font-size:10px">${r.cap}</span></td><td class="mono" style="color:var(--cyan)">${r.kp}</td><td style="font-size:12px">${r.chu_dau_tu}</td><td style="min-width:120px"><div style="display:flex;align-items:center;gap:8px"><div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${pct}%;background:${bc}"></div></div><span style="font-size:12px;font-weight:700">${pct}%</span></div></td><td><span class="badge ${sc}">${sl}</span></td></tr>`;
+          return `<tr><td class="mono text-cyan">${r.id}</td><td style="font-weight:600">${r.ten}</td><td style="font-size:12px">${r.loai}</td><td><span class="badge badge-gray" style="font-size:10px">${r.cap}</span></td><td class="mono" style="color:var(--primary)">${r.kp}</td><td style="font-size:12px">${r.chu_dau_tu}</td><td style="min-width:120px"><div style="display:flex;align-items:center;gap:8px"><div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${pct}%;background:${bc}"></div></div><span style="font-size:12px;font-weight:700">${pct}%</span></div></td><td><span class="badge ${sc}">${sl}</span></td></tr>`;
         }).join('');
       } else if (isCty) {
         thead = '<tr><th>Mã DA</th><th>Tên dự án</th><th>Loại CT</th><th>Công ty TL</th><th>Kinh phí</th><th>Nguồn vốn</th><th>Tiến độ</th><th>Trạng thái</th><th></th></tr>';
         tbody = rows.map(r => {
           const pct = r.tien_do;
-          const bc = pct >= 100 ? 'var(--green)' : pct >= 50 ? 'var(--cyan)' : pct >= 20 ? 'var(--yellow)' : 'var(--muted)';
+          const bc = pct >= 100 ? 'var(--success)' : pct >= 50 ? 'var(--primary)' : pct >= 20 ? 'var(--warning)' : 'var(--muted)';
           const sc = r.trang_thai === 'Hoàn thành' ? 'badge-green' : r.trang_thai === 'Đang thi công' || r.trang_thai === 'Sắp hoàn thành' ? 'badge-yellow' : 'badge-gray';
-          return `<tr><td class="mono text-cyan">${r.id}</td><td style="font-weight:600">${r.ten}</td><td style="font-size:12px">${r.loai}</td><td style="font-size:12px">${r.cty}</td><td class="mono" style="color:var(--cyan)">${r.kp}</td><td style="font-size:12px">${r.nguon}</td><td style="min-width:120px"><div style="display:flex;align-items:center;gap:8px"><div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${pct}%;background:${bc}"></div></div><span style="font-size:12px;font-weight:700">${pct}%</span></div></td><td><span class="badge ${sc}">${r.trang_thai}</span></td><td><button class="btn btn-ghost btn-sm" style="font-size:11px;padding:3px 8px;white-space:nowrap" onclick='showIrrDetailReport("dau_tu",${JSON.stringify(r).replace(/'/g,"&#39;")})'><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Chi tiết</button></td></tr>`;
+          return `<tr><td class="mono text-cyan">${r.id}</td><td style="font-weight:600">${r.ten}</td><td style="font-size:12px">${r.loai}</td><td style="font-size:12px">${r.cty}</td><td class="mono" style="color:var(--primary)">${r.kp}</td><td style="font-size:12px">${r.nguon}</td><td style="min-width:120px"><div style="display:flex;align-items:center;gap:8px"><div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${pct}%;background:${bc}"></div></div><span style="font-size:12px;font-weight:700">${pct}%</span></div></td><td><span class="badge ${sc}">${r.trang_thai}</span></td><td><button class="btn btn-ghost btn-sm" style="font-size:11px;padding:3px 8px;white-space:nowrap" onclick='showIrrDetailReport("dau_tu",${JSON.stringify(r).replace(/'/g,"&#39;")})'><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Chi tiết</button></td></tr>`;
         }).join('');
       } else {
         thead = '<tr><th>Mã DA</th><th>Tên dự án</th><th>Xã</th><th>Huyện</th><th>Loại CT</th><th>Kinh phí</th><th>Nguồn vốn</th><th>Tiến độ</th><th>Trạng thái</th><th></th></tr>';
         tbody = rows.map(r => {
           const pct = r.tien_do;
-          const bc = pct >= 100 ? 'var(--green)' : pct >= 50 ? 'var(--cyan)' : pct >= 20 ? 'var(--yellow)' : 'var(--muted)';
+          const bc = pct >= 100 ? 'var(--success)' : pct >= 50 ? 'var(--primary)' : pct >= 20 ? 'var(--warning)' : 'var(--muted)';
           const sc = r.trang_thai === 'Hoàn thành' ? 'badge-green' : r.trang_thai === 'Đang thi công' || r.trang_thai === 'Đang thực hiện' ? 'badge-yellow' : 'badge-gray';
-          return `<tr><td class="mono text-cyan">${r.id}</td><td style="font-weight:600">${r.ten}</td><td style="font-size:12px">${r.xa}</td><td style="font-size:12px">${r.huyen}</td><td style="font-size:12px">${r.loai}</td><td class="mono" style="color:var(--cyan)">${r.kp}</td><td style="font-size:12px">${r.nguon}</td><td style="min-width:110px"><div style="display:flex;align-items:center;gap:6px"><div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${pct}%;background:${bc}"></div></div><span style="font-size:12px;font-weight:700">${pct}%</span></div></td><td><span class="badge ${sc}">${r.trang_thai}</span></td><td><button class="btn btn-ghost btn-sm" style="font-size:11px;padding:3px 8px;white-space:nowrap" onclick='showIrrDetailReport("dau_tu",${JSON.stringify(r).replace(/'/g,"&#39;")})'><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Chi tiết</button></td></tr>`;
+          return `<tr><td class="mono text-cyan">${r.id}</td><td style="font-weight:600">${r.ten}</td><td style="font-size:12px">${r.xa}</td><td style="font-size:12px">${r.huyen}</td><td style="font-size:12px">${r.loai}</td><td class="mono" style="color:var(--primary)">${r.kp}</td><td style="font-size:12px">${r.nguon}</td><td style="min-width:110px"><div style="display:flex;align-items:center;gap:6px"><div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${pct}%;background:${bc}"></div></div><span style="font-size:12px;font-weight:700">${pct}%</span></div></td><td><span class="badge ${sc}">${r.trang_thai}</span></td><td><button class="btn btn-ghost btn-sm" style="font-size:11px;padding:3px 8px;white-space:nowrap" onclick='showIrrDetailReport("dau_tu",${JSON.stringify(r).replace(/'/g,"&#39;")})'><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Chi tiết</button></td></tr>`;
         }).join('');
       }
     }
@@ -743,7 +743,7 @@ function renderReportCharts() {
   const p = RPT.pump;
   const b = RPT.budget;
 
-  const PALETTE = { cyan:'#00c8ff', green:'#00e676', yellow:'#ffca28', red:'#ff3c50', purple:'#9c27b0', orange:'#ff9800', muted:'rgba(255,255,255,0.2)' };
+  const PALETTE = { cyan:'#00c8ff', green:'#00e676', yellow:'#ffca28', red:'#ff3c50', purple:'#2984EE', orange:'#ff9800', muted:'rgba(255,255,255,0.2)' };
   const defaults = { color: 'rgba(255,255,255,0.7)', grid: 'rgba(255,255,255,0.06)', font: "'Inter', sans-serif" };
 
   const mkAxis = () => ({
@@ -884,7 +884,7 @@ window.exportReportPdf = function() {
         td{padding:7px 10px;border-bottom:1px solid #e0e0e0;font-size:13px}
         tr:nth-child(even){background:#f5f5f5}
         .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
-        .kpi{background:#e3f2fd;border-radius:8px;padding:12px;text-align:center}
+        .kpi{background:var(--text);border-radius:8px;padding:12px;text-align:center}
         .kpi-val{font-size:20px;font-weight:700;color:#1a237e}
         .kpi-lbl{font-size:11px;color:#666;margin-top:4px}
         @media print{body{padding:15px}}

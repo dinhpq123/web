@@ -49,7 +49,7 @@ function renderLog() {
             </td>
             <td><span class="badge ${typeClass}" style="font-size:10px">${l.type || 'INFO'}</span></td>
             <td style="color:var(--text-2)">${l.action}</td>
-            <td style="font-size:12px;color:var(--cyan)">${l.target}</td>
+            <td style="font-size:12px;color:var(--primary)">${l.target}</td>
             <td class="mono" style="font-size:11px;color:var(--muted)">${l.ip}</td>
             <td style="text-align:right">
               <button class="btn btn-ghost btn-sm" onclick="openLogDetails(${l.id})" style="padding:4px 8px" title="Xem JSON Data">
@@ -76,12 +76,12 @@ function openLogDetails(id) {
       <div style="display:grid;grid-template-columns:100px 1fr;gap:12px;margin-bottom:16px;font-size:13px">
         <div style="color:var(--muted)">Tài khoản:</div><div style="font-weight:600">${l.user}</div>
         <div style="color:var(--muted)">Hành động:</div><div>${l.action}</div>
-        <div style="color:var(--muted)">Đối tượng:</div><div style="color:var(--cyan)">${l.target}</div>
+        <div style="color:var(--muted)">Đối tượng:</div><div style="color:var(--primary)">${l.target}</div>
         <div style="color:var(--muted)">Thời gian:</div><div class="mono">${l.time}</div>
         <div style="color:var(--muted)">IP Address:</div><div class="mono">${l.ip}</div>
       </div>
       <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--muted)">PAYLOAD (JSON)</div>
-      <pre style="background:var(--bg-card);padding:12px;border-radius:8px;border:1px solid var(--border);color:var(--green);font-family:'Roboto Mono',monospace;font-size:12px;margin:0;overflow-x:auto">${jsonStr}</pre>
+      <pre style="background:var(--bg-card);padding:12px;border-radius:8px;border:1px solid var(--border);color:var(--success);font-family:'Roboto Mono',monospace;font-size:12px;margin:0;overflow-x:auto">${jsonStr}</pre>
     </div>
   `);
 }

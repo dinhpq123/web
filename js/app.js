@@ -5,9 +5,9 @@
 var MENU_TO_RBAC = {
   dashboard: 'dashboard',
   dieuhanh: 'pcttCommand',
-  videowall: 'dashboard',
+  videowall: 'videowall',
   gis: 'gis',
-  camera: 'dashboard',
+  camera: 'camera',
   irrigationAssets: 'irrigationAssets',
   irrigationDataEntry: 'irrigationAssets',
   hydrologicalData: 'iotMonitor',
@@ -38,7 +38,7 @@ var MENU_TO_RBAC = {
 
 // [TDZ Fix]: Initialize state at the top
 let currentPage = 'dashboard';
-let currentTheme = localStorage.getItem('qwc_theme') || 'dark';
+let currentTheme = localStorage.getItem('ioc_theme') || 'light';
 
 const MENUS = [
   // Dashboard: standalone (always visible, above all groups – no group label)
@@ -144,7 +144,7 @@ const PAGE_RENDERS = {
 
 function renderDevPage(title, desc) {
   return `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:50vh;gap:16px;text-align:center">
-    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M10 16l4-4-4-4"/></svg>
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M10 16l4-4-4-4"/></svg>
     <div><div style="font-size:18px;font-weight:700;margin-bottom:8px">${title}</div>
     <div style="color:var(--muted);font-size:14px;max-width:400px">${desc}</div>
     <div style="margin-top:12px"><span class="badge badge-yellow">Đang phát triển</span></div></div>
@@ -359,7 +359,20 @@ function navigate(page) {
   // RBAC guard: check if current user can view this page
   const rbacKey = MENU_TO_RBAC[page];
   if (rbacKey && !canView(rbacKey)) {
-    showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg> Bạn không có quyền truy cập trang này', 'error');
+    showToast('Bạn không có quyền truy cập trang này', 'error');
+    const container = document.getElementById('pageContent') || document.getElementById('mainContent');
+    if (container) {
+      container.innerHTML = `
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:50vh;text-align:center;padding:32px 16px;">
+          <div style="width:64px;height:64px;border-radius:50%;background:var(--danger-soft, rgba(225,78,84,0.12));color:var(--danger, var(--danger));display:flex;align-items:center;justify-content:center;margin-bottom:16px;">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>
+          </div>
+          <h2 style="font-size:20px;font-weight:700;color:var(--text);margin-bottom:8px;">403 — Truy cập bị từ chối</h2>
+          <p style="font-size:14px;color:var(--muted);max-width:440px;margin-bottom:24px;line-height:1.6;">Tài khoản của bạn không có quyền xem phân hệ hoặc trang này. Vui lòng liên hệ Quản trị viên để được cấp quyền.</p>
+          <button onclick="navigate('dashboard')" style="padding:10px 24px;border-radius:8px;background:var(--primary);color:#fff;border:none;font-weight:600;cursor:pointer;box-shadow:var(--shadow);">Quay lại Dashboard</button>
+        </div>
+      `;
+    }
     return;
   }
   currentPage = page;
@@ -411,12 +424,16 @@ function navigate(page) {
   } catch (e) { }
 
   const area = document.getElementById('contentArea');
+  // A newly selected page must always open at its own beginning. Keeping the
+  // previous page's scroll position can hide headers and primary controls.
+  area.scrollTop = 0;
   area.innerHTML = '<div class="empty-state"><div class="spinner"></div><p>Đang tải...</p></div>';
   setTimeout(() => {
     const render = PAGE_RENDERS[page];
     const pageHtml = render ? render() : renderSettings();
     const filterBar = typeof renderFilterBar === 'function' ? renderFilterBar(page) : '';
-    area.innerHTML = `<div class="fade-in">${filterBar}${pageHtml}</div>`;
+    area.innerHTML = `<div class="fade-in page-view page-${page}">${filterBar}${pageHtml}</div>`;
+    area.scrollTop = 0;
     if (typeof window['afterRender_' + page] === 'function') window['afterRender_' + page]();
 
     // ── Onboarding: track visit count and auto-start tour on first visit ──
@@ -446,9 +463,18 @@ function initRbac() {
   const user = getCurrentUser();
   if (!user) { window.location.href = 'login.html'; return; }
 
-  const roleBadgeColors = { SYSADMIN: '#ff4757', DIRECTOR: '#7c3aed', DISPATCHER: '#f59e0b', TECHNICIAN: '#0066cc', BUSINESS: '#00b4d8', HR: '#00a86b', VIEWER: '#718096' };
+  const roleBadgeColors = {
+    SUPERADMIN: 'var(--danger)',
+    SYSADMIN: 'var(--danger)',
+    CHI_CUC_TRUONG: 'var(--purple)',
+    DIEU_HANH: '#f59e0b',
+    KY_THUAT: 'var(--info)',
+    QUAN_LY_DE: 'var(--primary)',
+    HR: 'var(--success)',
+    VIEWER: '#718096'
+  };
   const roleLabel = ROLE_LABELS[user.role] || user.role;
-  const color = roleBadgeColors[user.role] || '#546e7a';
+  const color = roleBadgeColors[user.role] || 'var(--muted)';
 
   // Sidebar user card
   const sAvatar = document.getElementById('sidebarAvatar');
@@ -518,7 +544,7 @@ function showAlarms() {
       <div class="alarm-dot ${a.severity}"></div>
       <div class="alarm-msg">
         <div>${a.msg}</div>
-        <div class="alarm-time">${a.time} — ${a.ack ? '<span style="color:var(--muted)">Đã xác nhận</span>' : '<span style="color:var(--cyan);cursor:pointer" onclick="ackAlarm(\'' + a.id + '\')">Xác nhận</span>'}</div>
+        <div class="alarm-time">${a.time} — ${a.ack ? '<span style="color:var(--muted)">Đã xác nhận</span>' : '<span style="color:var(--primary);cursor:pointer" onclick="ackAlarm(\'' + a.id + '\')">Xác nhận</span>'}</div>
       </div>
     </div>`).join('');
 }
@@ -556,8 +582,8 @@ function closeModal(e) {
 // Toast
 function showToast(msg, type = 'success') {
   const icon = type === 'success'
-    ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>'
-    : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ff5252" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
+    ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>'
+    : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
 
   const container = document.getElementById('toast-container') || (() => {
     const c = document.createElement('div');
@@ -674,7 +700,7 @@ function renderSettingsSystem() {
       <div><div style="font-size:13px;font-weight:500">${label}</div></div>
       <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer">
         <input type="checkbox" ${on ? 'checked' : ''} style="opacity:0;width:0;height:0" onchange="showToast('Cài đặt đã cập nhật!')">
-        <span style="position:absolute;inset:0;background:${on ? 'var(--cyan)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${on ? '21px' : '3px'};transition:.3s"></span></span>
+        <span style="position:absolute;inset:0;background:${on ? 'var(--primary)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${on ? '21px' : '3px'};transition:.3s"></span></span>
       </label>
     </div>`;
   return `
@@ -692,7 +718,7 @@ function renderSettingsSystem() {
     <div class="card">
       <div class="card-header"><span class="card-title" style="display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Hiệu suất realtime</span></div>
       <div class="card-body">
-        ${[['CPU Server', '34%', 'var(--green)'], ['RAM sử dụng', '2.1 / 8 GB', 'var(--cyan)'], ['Disk I/O', '12 MB/s', 'var(--cyan)'], ['Kết nối DB', '18 / 100', 'var(--green)'], ['Uptime', '99.94% (30 ngày)', 'var(--green)'], ['Latency API', '28 ms', 'var(--green)'], ['WebSocket clients', '7 kết nối', 'var(--cyan)'], ['Hàng đợi job', '0 pending', 'var(--green)']].map(([k, v, c]) => `
+        ${[['CPU Server', '34%', 'var(--success)'], ['RAM sử dụng', '2.1 / 8 GB', 'var(--primary)'], ['Disk I/O', '12 MB/s', 'var(--primary)'], ['Kết nối DB', '18 / 100', 'var(--success)'], ['Uptime', '99.94% (30 ngày)', 'var(--success)'], ['Latency API', '28 ms', 'var(--success)'], ['WebSocket clients', '7 kết nối', 'var(--primary)'], ['Hàng đợi job', '0 pending', 'var(--success)']].map(([k, v, c]) => `
         <div style="display:flex;align-items:center;padding:9px 0;border-bottom:1px solid var(--border)">
           <span style="min-width:160px;color:var(--muted);font-size:12px">${k}</span>
           <span style="font-size:13px;font-family:'Roboto Mono',monospace;color:${c}">${v}</span>
@@ -746,12 +772,12 @@ function renderSettingsSystem() {
   <div class="card">
     <div class="card-header"><span class="card-title" style="display:inline-flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Nhật ký hệ thống gần đây</span><button class="btn btn-ghost btn-sm" style="display:inline-flex;align-items:center;gap:5px" onclick="showToast('Đang tải file log...')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Tải xuống log</button></div>
     <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:12px 16px;margin:0 16px 16px;font-family:'Roboto Mono',monospace;font-size:11px;line-height:2;max-height:160px;overflow-y:auto">
-      <div><span style="color:var(--green)">[INFO]</span> <span style="color:var(--muted)">28/02 02:00:01</span> Database backup completed — 243 MB</div>
-      <div><span style="color:var(--cyan)">[INFO]</span> <span style="color:var(--muted)">28/02 01:45:12</span> SCADA sync: 12 stations refreshed OK</div>
-      <div><span style="color:var(--yellow)">[WARN]</span> <span style="color:var(--muted)">28/02 01:30:55</span> DMA-03 flow sensor packet timeout (retry OK)</div>
-      <div><span style="color:var(--cyan)">[INFO]</span> <span style="color:var(--muted)">28/02 00:00:00</span> System v1.1.2 deployed successfully — Hadiwa IOC</div>
-      <div><span style="color:var(--green)">[INFO]</span> <span style="color:var(--muted)">26/03 09:55:03</span> User admin@hadiwa.vn logged in (2FA: TOTP)</div>
-      <div><span style="color:var(--red)">[ERROR]</span> <span style="color:var(--muted)">27/02 22:10:18</span> SMS OTP gateway timeout for +84912xxx — retried OK</div>
+      <div><span style="color:var(--success)">[INFO]</span> <span style="color:var(--muted)">28/02 02:00:01</span> Database backup completed — 243 MB</div>
+      <div><span style="color:var(--primary)">[INFO]</span> <span style="color:var(--muted)">28/02 01:45:12</span> SCADA sync: 12 stations refreshed OK</div>
+      <div><span style="color:var(--warning)">[WARN]</span> <span style="color:var(--muted)">28/02 01:30:55</span> DMA-03 flow sensor packet timeout (retry OK)</div>
+      <div><span style="color:var(--primary)">[INFO]</span> <span style="color:var(--muted)">28/02 00:00:00</span> System v1.1.2 deployed successfully — Hadiwa IOC</div>
+      <div><span style="color:var(--success)">[INFO]</span> <span style="color:var(--muted)">26/03 09:55:03</span> User admin@hadiwa.vn logged in (2FA: TOTP)</div>
+      <div><span style="color:var(--danger)">[ERROR]</span> <span style="color:var(--muted)">27/02 22:10:18</span> SMS OTP gateway timeout for +84912xxx — retried OK</div>
     </div>
   </div>`;
 }
@@ -761,7 +787,7 @@ function renderSettingsSecurity() {
   const toggle = (id, on) => `
     <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer">
       <input type="checkbox" ${on ? 'checked' : ''} style="opacity:0;width:0;height:0" onchange="showToast('Cài đặt bảo mật đã cập nhật!')">
-      <span style="position:absolute;inset:0;background:${on ? 'var(--cyan)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${on ? '21px' : '3px'};transition:.3s"></span></span>
+      <span style="position:absolute;inset:0;background:${on ? 'var(--primary)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${on ? '21px' : '3px'};transition:.3s"></span></span>
     </label>`;
   return `
   <!-- 2FA header card -->
@@ -807,7 +833,7 @@ function renderSettingsSecurity() {
         <div style="padding:16px;border:1px solid var(--border);border-radius:10px">
           <div style="font-size:14px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Mã khôi phục dự phòng</div>
           <p style="font-size:12px;color:var(--muted);margin-bottom:10px">Dùng khi mất thiết bị 2FA. Mỗi mã chỉ dùng 1 lần.</p>
-          <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:10px;font-family:'Roboto Mono',monospace;font-size:11px;color:var(--cyan);margin-bottom:10px;line-height:2">8G4K-MXNQ<br>3JTW-PVHR<br>7CDB-LFAE<br>2YZS-KNQX<br>5RTU-WGJM</div>
+          <div style="background:rgba(0,0,0,.3);border-radius:8px;padding:10px;font-family:'Roboto Mono',monospace;font-size:11px;color:var(--primary);margin-bottom:10px;line-height:2">8G4K-MXNQ<br>3JTW-PVHR<br>7CDB-LFAE<br>2YZS-KNQX<br>5RTU-WGJM</div>
           <button class="btn btn-ghost btn-sm" style="display:inline-flex;align-items:center;gap:5px" onclick="showToast('Đã tạo bộ mã mới!')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg> Tạo bộ mã mới</button>
         </div>
         <div style="padding:16px;border:1px solid var(--border);border-radius:10px">
@@ -839,7 +865,7 @@ function renderSettingsSecurity() {
             <span style="font-size:13px">${l}</span>
             <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer">
               <input type="checkbox" ${on ? 'checked' : ''} style="opacity:0;width:0;height:0" onchange="showToast('Chính sách đã cập nhật!')">
-              <span style="position:absolute;inset:0;background:${on ? 'var(--cyan)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${on ? '21px' : '3px'};transition:.3s"></span></span>
+              <span style="position:absolute;inset:0;background:${on ? 'var(--primary)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${on ? '21px' : '3px'};transition:.3s"></span></span>
             </label>
           </div>`).join('')}
         </div>
@@ -858,7 +884,7 @@ function renderSettingsSecurity() {
         <span style="font-size:11px;color:var(--muted)">Bật tất cả</span>
         <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer" title="Bật 2FA cho toàn bộ action nguy hiểm">
           <input type="checkbox" checked style="opacity:0;width:0;height:0" onchange="showToast(this.checked?'Đã bật 2FA cho tất cả actions!':'Đã tắt 2FA tổng thể — không khuyến nghị!')">
-          <span style="position:absolute;inset:0;background:var(--cyan);border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:21px;transition:.3s"></span></span>
+          <span style="position:absolute;inset:0;background:var(--primary);border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:21px;transition:.3s"></span></span>
         </label>
       </div>
     </div>
@@ -878,7 +904,7 @@ function renderSettingsSecurity() {
       { id: 'alert_ack', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>', name: 'Xác nhận cảnh báo nghiêm trọng', 'desc': 'Đóng/xử lý alert mức CRITICAL', risk: 'low', on: false, roles: 'Admin, Operator' },
       { id: 'report_sign', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>', name: 'Ký duyệt báo cáo chính thức', desc: 'Phê duyệt báo cáo gửi cơ quan nhà nước', risk: 'med', on: false, roles: 'Lãnh đạo, Admin' },
     ].map(a => {
-      const riskColor = a.risk === 'high' ? '#ff4444' : a.risk === 'med' ? 'var(--yellow)' : 'var(--muted)';
+      const riskColor = a.risk === 'high' ? '#ff4444' : a.risk === 'med' ? 'var(--warning)' : 'var(--muted)';
       const riskLabel = a.risk === 'high' ? 'Rủi ro cao' : a.risk === 'med' ? 'Trung bình' : 'Thấp';
       return `<div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:14px">
           <div style="font-size:20px;flex-shrink:0;width:28px;text-align:center">${a.icon}</div>
@@ -900,7 +926,7 @@ function renderSettingsSecurity() {
             </select>
             <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer">
               <input type="checkbox" ${a.on ? 'checked' : ''} id="twofa_${a.id}" style="opacity:0;width:0;height:0" onchange="toggleTwofaAction('${a.id}',this)">
-              <span id="twofa_track_${a.id}" style="position:absolute;inset:0;background:${a.on ? 'var(--cyan)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s">
+              <span id="twofa_track_${a.id}" style="position:absolute;inset:0;background:${a.on ? 'var(--primary)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s">
                 <span id="twofa_thumb_${a.id}" style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${a.on ? '21px' : '3px'};transition:.3s"></span>
               </span>
             </label>
@@ -921,7 +947,7 @@ function renderSettingsSecurity() {
 function toggleTwofaAction(id, cb) {
   const track = document.getElementById('twofa_track_' + id);
   const thumb = document.getElementById('twofa_thumb_' + id);
-  if (track) track.style.background = cb.checked ? 'var(--cyan)' : 'rgba(255,255,255,.1)';
+  if (track) track.style.background = cb.checked ? 'var(--primary)' : 'rgba(255,255,255,.1)';
   if (thumb) thumb.style.left = cb.checked ? '21px' : '3px';
   showToast((cb.checked ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg> Đã bật' : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0"/></svg> Đã tắt') + ' xác thực 2FA cho action này!');
 }
@@ -964,7 +990,7 @@ function renderSettingsRoles() {
       <thead><tr><th>Tính năng</th><th style="text-align:center"><span class="badge badge-red">Admin</span></th><th style="text-align:center"><span class="badge badge-yellow">Dispatcher</span></th><th style="text-align:center"><span class="badge badge-blue">Operator</span></th><th style="text-align:center"><span class="badge badge-gray">Viewer</span></th></tr></thead>
       <tbody>${perms.map(p => `<tr>
         <td style="font-size:13px">${p.label}</td>
-        ${['admin', 'dispatcher', 'operator', 'viewer'].map(r => `<td style="text-align:center"><span style="font-size:16px;cursor:pointer" onclick="showToast('Quyền ${p.label} — ${r} đã cập nhật!')" title="Click để thay đổi">${p[r] ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>'}</span></td>`).join('')}
+        ${['admin', 'dispatcher', 'operator', 'viewer'].map(r => `<td style="text-align:center"><span style="font-size:16px;cursor:pointer" onclick="showToast('Quyền ${p.label} — ${r} đã cập nhật!')" title="Click để thay đổi">${p[r] ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>'}</span></td>`).join('')}
       </tr>`).join('')}
       </tbody>
     </table></div>
@@ -990,15 +1016,15 @@ function renderSettingsDashboard() {
         <div style="flex:1"><div style="font-size:13px;font-weight:600">Hiển thị thông báo khi làm mới</div><div style="font-size:11px;color:var(--muted)">Hiển thị "Dữ liệu Dashboard đã được cập nhật" mỗi 30s.</div></div>
         <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer;flex-shrink:0">
           <input type="checkbox" id="dashToastOpt" onchange="localStorage.setItem('hadiwa_dash_toast', this.checked)" style="opacity:0;width:0;height:0" ${localStorage.getItem('hadiwa_dash_toast') === 'true' ? 'checked' : ''}>
-          <span style="position:absolute;inset:0;background:var(--cyan);border-radius:22px;transition:.3s;background-color:inherit"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.3s" id="dashToastThumb"></span></span>
+          <span style="position:absolute;inset:0;background:var(--primary);border-radius:22px;transition:.3s;background-color:inherit"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.3s" id="dashToastThumb"></span></span>
         </label>
         <script>
           document.getElementById('dashToastOpt').addEventListener('change', function() {
-            this.nextElementSibling.style.background = this.checked ? 'var(--cyan)' : 'rgba(255,255,255,.1)';
+            this.nextElementSibling.style.background = this.checked ? 'var(--primary)' : 'rgba(255,255,255,.1)';
             document.getElementById('dashToastThumb').style.left = this.checked ? '21px' : '3px';
           });
           // Initial state
-          document.getElementById('dashToastOpt').nextElementSibling.style.background = document.getElementById('dashToastOpt').checked ? 'var(--cyan)' : 'rgba(255,255,255,.1)';
+          document.getElementById('dashToastOpt').nextElementSibling.style.background = document.getElementById('dashToastOpt').checked ? 'var(--primary)' : 'rgba(255,255,255,.1)';
           document.getElementById('dashToastThumb').style.left = document.getElementById('dashToastOpt').checked ? '21px' : '3px';
         </script>
       </div>
@@ -1009,13 +1035,13 @@ function renderSettingsDashboard() {
           ondragstart="dashDragStart(event,${i})" ondragover="dashDragOver(event)" ondrop="dashDrop(event,${i})"
           style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:${p.visible ? 'rgba(0,200,255,.04)' : 'rgba(0,0,0,.1)'};border:1px solid ${p.visible ? 'rgba(0,200,255,.15)' : 'var(--border)'};border-radius:10px;cursor:grab;transition:all .2s">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.3)" stroke-width="2" style="flex-shrink:0"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-          <span style="width:22px;height:22px;border-radius:6px;background:rgba(0,200,255,.12);font-size:11px;font-weight:700;color:var(--cyan);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Roboto Mono',monospace">${i + 1}</span>
+          <span style="width:22px;height:22px;border-radius:6px;background:rgba(0,200,255,.12);font-size:11px;font-weight:700;color:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:'Roboto Mono',monospace">${i + 1}</span>
           <span style="font-size:18px;flex-shrink:0">${p.icon}</span>
           <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600">${p.name}</div><div style="font-size:11px;color:var(--muted)">${p.desc}</div></div>
           ${p.required ? '<span class="badge badge-gray" style="font-size:10px;flex-shrink:0">Bắt buộc</span>' : ''}
           <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer;flex-shrink:0">
             <input type="checkbox" ${p.visible ? 'checked' : ''} ${p.required ? 'disabled' : ''} onchange="toggleDashPanel('${p.id}',this)" style="opacity:0;width:0;height:0">
-            <span style="position:absolute;inset:0;background:${p.visible ? 'var(--cyan)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s;opacity:${p.required ? '.5' : '1'}"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${p.visible ? '21px' : '3px'};transition:.3s"></span></span>
+            <span style="position:absolute;inset:0;background:${p.visible ? 'var(--primary)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s;opacity:${p.required ? '.5' : '1'}"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${p.visible ? '21px' : '3px'};transition:.3s"></span></span>
           </label>
         </div>`).join('')}
       </div>
@@ -1028,7 +1054,7 @@ function renderSettingsNotifications() {
   const toggle = (on) => `
     <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer">
       <input type="checkbox" ${on ? 'checked' : ''} style="opacity:0;width:0;height:0" onchange="showToast('Cài đặt thông báo đã cập nhật!')">
-      <span style="position:absolute;inset:0;background:${on ? 'var(--cyan)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${on ? '21px' : '3px'};transition:.3s"></span></span>
+      <span style="position:absolute;inset:0;background:${on ? 'var(--primary)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${on ? '21px' : '3px'};transition:.3s"></span></span>
     </label>`;
   return `
   <div class="grid-2" style="margin-bottom:16px">
@@ -1063,13 +1089,13 @@ function renderSettingsNotifications() {
       <thead><tr><th>Sự kiện</th><th>Kênh</th><th>Đối tượng nhận</th><th>Ưu tiên</th><th>Trạng thái</th></tr></thead>
       <tbody>
         ${[
-      ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg> Cảnh báo nghiêm trọng (Critical)', 'Email + SMS + Push', 'Admin + Dispatcher', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> Cao', true],
-      ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Cảnh báo thường (Warning)', 'Email + Push', 'Dispatcher + Operator', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);vertical-align:middle"></span> TB', true],
-      ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M12 2C12 2 4 10 4 14a8 8 0 0016 0C20 10 12 2 12 2z"/></svg> Phát hiện rò rỉ NRW', 'Email + SMS', 'Admin + Dispatcher', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> Cao', true],
-      ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg> Xuất hiện sự cố mới', 'Push + Email', 'Tất cả team', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);vertical-align:middle"></span> TB', true],
-      ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="7" width="16" height="11" rx="2" ry="2"/><line x1="22" y1="11" x2="22" y2="13"/></svg> Mất điện trạm bơm', 'SMS + Email', 'Admin + Dispatcher', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> Cao', true],
-      ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Báo cáo ngày', 'Email', 'Admin', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);vertical-align:middle"></span> Thấp', true],
-      ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M12 2C12 2 4 10 4 14a8 8 0 0016 0C20 10 12 2 12 2z"/></svg> Chất lượng nước vượt ngưỡng', 'Email + SMS', 'QC + Admin', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> Cao', false],
+      ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg> Cảnh báo nghiêm trọng (Critical)', 'Email + SMS + Push', 'Admin + Dispatcher', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> Cao', true],
+      ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Cảnh báo thường (Warning)', 'Email + Push', 'Dispatcher + Operator', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warning);vertical-align:middle"></span> TB', true],
+      ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M12 2C12 2 4 10 4 14a8 8 0 0016 0C20 10 12 2 12 2z"/></svg> Phát hiện rò rỉ NRW', 'Email + SMS', 'Admin + Dispatcher', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> Cao', true],
+      ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg> Xuất hiện sự cố mới', 'Push + Email', 'Tất cả team', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warning);vertical-align:middle"></span> TB', true],
+      ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="7" width="16" height="11" rx="2" ry="2"/><line x1="22" y1="11" x2="22" y2="13"/></svg> Mất điện trạm bơm', 'SMS + Email', 'Admin + Dispatcher', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> Cao', true],
+      ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Báo cáo ngày', 'Email', 'Admin', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success);vertical-align:middle"></span> Thấp', true],
+      ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M12 2C12 2 4 10 4 14a8 8 0 0016 0C20 10 12 2 12 2z"/></svg> Chất lượng nước vượt ngưỡng', 'Email + SMS', 'QC + Admin', '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> Cao', false],
     ].map(([ev, ch, to, pri, on]) => `<tr>
           <td style="font-size:13px">${ev}</td>
           <td style="font-size:12px;color:var(--muted)">${ch}</td>
@@ -1099,7 +1125,7 @@ function renderSettingsIntegrations() {
           <div style="display:flex;justify-content:space-between;align-items:flex-start">
             <div>
               <div style="font-size:13px;font-weight:600">${k.name}</div>
-              <div style="font-family:'Roboto Mono',monospace;font-size:11px;color:var(--cyan);margin:4px 0">${k.key}</div>
+              <div style="font-family:'Roboto Mono',monospace;font-size:11px;color:var(--primary);margin:4px 0">${k.key}</div>
               <div style="font-size:11px;color:var(--muted)">Scope: ${k.scope} · Hết hạn: ${k.exp}</div>
             </div>
             <div style="display:flex;gap:6px">
@@ -1147,7 +1173,7 @@ function renderSettingsIntegrations() {
         </div>
         <div>
           <label class="form-label" style="margin-bottom:8px;display:block">5 bản backup gần nhất</label>
-          ${[['backup_20260228_020001.sql.gz', '243 MB', '28/02/2026 02:00', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>'], ['backup_20260227_020001.sql.gz', '241 MB', '27/02/2026 02:00', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>'], ['backup_20260226_020001.sql.gz', '239 MB', '26/02/2026 02:00', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>'], ['backup_20260225_020001.sql.gz', '237 MB', '25/02/2026 02:00', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>'], ['backup_20260224_020001.sql.gz', '236 MB', '24/02/2026 02:00', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>']].map(([name, size, date, st]) => `
+          ${[['backup_20260228_020001.sql.gz', '243 MB', '28/02/2026 02:00', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>'], ['backup_20260227_020001.sql.gz', '241 MB', '27/02/2026 02:00', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>'], ['backup_20260226_020001.sql.gz', '239 MB', '26/02/2026 02:00', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>'], ['backup_20260225_020001.sql.gz', '237 MB', '25/02/2026 02:00', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>'], ['backup_20260224_020001.sql.gz', '236 MB', '24/02/2026 02:00', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>']].map(([name, size, date, st]) => `
           <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)">
             <span style="font-size:10px;font-family:'Roboto Mono',monospace;flex:1;color:var(--muted)">${name}</span>
             <span style="font-size:10px;color:var(--muted)">${size}</span>
@@ -1167,8 +1193,8 @@ function getDashPanelDefaults() {
     { id: 'kpi', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>', name: 'KPI Cards', desc: '6 thẻ thống kê chính (sản lượng, trạm, sự cố...)', visible: true, required: true },
     { id: 'charts', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>', name: 'Biểu đồ sản lượng', desc: 'Sản lượng 12h + 6 tháng (2 chart)', visible: true, required: false },
     { id: 'stations', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>', name: 'Trạng thái Trạm bơm', desc: 'Danh sách trạm bơm + trạng thái realtime', visible: true, required: false },
-    { id: 'heatmap', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" style="vertical-align:middle"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>', name: 'Heatmap sự cố', desc: 'Bản đồ nhiệt sự cố theo giờ / ngày trong tuần', visible: true, required: false },
-    { id: 'alarms', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>', name: 'Cảnh báo hệ thống', desc: 'Danh sách cảnh báo chưa xử lý', visible: true, required: false },
+    { id: 'heatmap', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" style="vertical-align:middle"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>', name: 'Heatmap sự cố', desc: 'Bản đồ nhiệt sự cố theo giờ / ngày trong tuần', visible: true, required: false },
+    { id: 'alarms', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>', name: 'Cảnh báo hệ thống', desc: 'Danh sách cảnh báo chưa xử lý', visible: true, required: false },
     { id: 'factories', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>', name: 'Nhà máy & Công suất', desc: 'Bảng công suất sử dụng từng nhà máy', visible: true, required: false },
     { id: 'ticker', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M1 6l7.5 7.5"/><path d="M1 1l5 5"/><circle cx="10" cy="13" r="2"/><path d="M3 21l7-7"/><path d="M9 21l3-3 3 3"/><path d="M12 21V14"/></svg>', name: 'LIVE Ticker', desc: 'Dải thông tin sự kiện realtime phía trên trang', visible: true, required: false },
   ];
@@ -1194,7 +1220,7 @@ function toggleDashPanel(id, cb) {
   if (p) { p.visible = cb.checked; }
   const span = cb.nextElementSibling;
   const dot = span?.querySelector('span');
-  if (span) span.style.background = cb.checked ? 'var(--cyan)' : 'rgba(255,255,255,.1)';
+  if (span) span.style.background = cb.checked ? 'var(--primary)' : 'rgba(255,255,255,.1)';
   if (dot) dot.style.left = cb.checked ? '21px' : '3px';
   const item = cb.closest('.dash-panel-item');
   if (item) {
@@ -1210,14 +1236,14 @@ function resetDashPanels() {
 }
 
 function saveDashPanels() {
-  showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã lưu cấu hình Dashboard! Vào Dashboard để xem thay đổi.');
+  showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã lưu cấu hình Dashboard! Vào Dashboard để xem thay đổi.');
 }
 
 function toggleTfa(method, checkbox) {
   showToast(`${checkbox.checked ? 'Đã bật' : 'Đã tắt'} 2FA phương thức ${method.toUpperCase()}!`);
   const span = checkbox.nextElementSibling;
   const dot = span?.querySelector('span');
-  if (span) span.style.background = checkbox.checked ? 'var(--cyan)' : 'rgba(255,255,255,.1)';
+  if (span) span.style.background = checkbox.checked ? 'var(--primary)' : 'rgba(255,255,255,.1)';
   if (dot) dot.style.left = checkbox.checked ? '21px' : '3px';
 }
 
@@ -1228,14 +1254,14 @@ function showTotpSetup() {
     <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Quét mã QR bên dưới bằng Google/Microsoft/Authy Authenticator:</p>
     <div style="text-align:center;margin:16px 0">
       <div style="width:150px;height:150px;background:#fff;border-radius:12px;margin:0 auto;padding:10px;display:flex;align-items:center;justify-content:center">
-        <svg viewBox="0 0 21 21" width="130" height="130"><rect width="21" height="21" fill="white"/><rect x="1" y="1" width="7" height="7" fill="#030e1c"/><rect x="2" y="2" width="5" height="5" fill="white"/><rect x="3" y="3" width="3" height="3" fill="#030e1c"/><rect x="13" y="1" width="7" height="7" fill="#030e1c"/><rect x="14" y="2" width="5" height="5" fill="white"/><rect x="15" y="3" width="3" height="3" fill="#030e1c"/><rect x="1" y="13" width="7" height="7" fill="#030e1c"/><rect x="2" y="14" width="5" height="5" fill="white"/><rect x="3" y="15" width="3" height="3" fill="#030e1c"/></svg>
+        <svg viewBox="0 0 21 21" width="130" height="130"><rect width="21" height="21" fill="white"/><rect x="1" y="1" width="7" height="7" fill="var(--bg-base)"/><rect x="2" y="2" width="5" height="5" fill="white"/><rect x="3" y="3" width="3" height="3" fill="var(--bg-base)"/><rect x="13" y="1" width="7" height="7" fill="var(--bg-base)"/><rect x="14" y="2" width="5" height="5" fill="white"/><rect x="15" y="3" width="3" height="3" fill="var(--bg-base)"/><rect x="1" y="13" width="7" height="7" fill="var(--bg-base)"/><rect x="2" y="14" width="5" height="5" fill="white"/><rect x="3" y="15" width="3" height="3" fill="var(--bg-base)"/></svg>
       </div>
       <div style="font-size:11px;color:var(--muted);margin-top:8px">Hoặc nhập thủ công:</div>
-      <div style="font-family:'Roboto Mono',monospace;font-size:14px;color:var(--cyan);letter-spacing:2px;margin-top:4px">JBSWY3DP EHPK3PXP</div>
+      <div style="font-family:'Roboto Mono',monospace;font-size:14px;color:var(--primary);letter-spacing:2px;margin-top:4px">JBSWY3DP EHPK3PXP</div>
     </div>
     <div style="margin-top:16px"><label class="form-label">Nhập mã xác nhận từ app để kích hoạt</label>
       <div style="display:flex;gap:8px;justify-content:center;margin-top:8px">
-        ${Array(6).fill(0).map(() => `<input style="width:42px;height:50px;background:rgba(0,200,255,.04);border:1.5px solid rgba(0,200,255,.2);border-radius:8px;text-align:center;font-size:20px;font-weight:700;font-family:'Roboto Mono',monospace;color:var(--cyan);outline:none;color:var(--cyan)" maxlength="1" inputmode="numeric">`).join('')}
+        ${Array(6).fill(0).map(() => `<input style="width:42px;height:50px;background:rgba(0,200,255,.04);border:1.5px solid rgba(0,200,255,.2);border-radius:8px;text-align:center;font-size:20px;font-weight:700;font-family:'Roboto Mono',monospace;color:var(--primary);outline:none;color:var(--primary)" maxlength="1" inputmode="numeric">`).join('')}
       </div>
     </div>
   </div>
@@ -1311,13 +1337,13 @@ function renderSettingsRag() {
         </thead>
         <tbody>
           ${[
-      { name: 'Quy_trinh_Xu_ly_Su_co_2026.pdf', type: 'PDF', size: '2.4 MB', date: '28/02/2026', vecs: '1,450', status: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Sẵn sàng', c: 'green' },
-      { name: 'Huong_dan_SD_SCADA_Trung_tam.docx', type: 'DOCX', size: '1.1 MB', date: '25/02/2026', vecs: '840', status: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Sẵn sàng', c: 'green' },
-      { name: 'https://hadiwa.vn/gioi-thieu', type: 'WEB', size: '32 KB', date: '15/03/2026', vecs: '120', status: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2" style="vertical-align:middle"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg> Đang quét', c: 'yellow' },
-      { name: 'Quy_chuan_Nuoc_Sich.pdf', type: 'PDF', size: '8.5 MB', date: '01/01/2026', vecs: '4,200', status: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Sẵn sàng', c: 'green' }
+      { name: 'Quy_trinh_Xu_ly_Su_co_2026.pdf', type: 'PDF', size: '2.4 MB', date: '28/02/2026', vecs: '1,450', status: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Sẵn sàng', c: 'green' },
+      { name: 'Huong_dan_SD_SCADA_Trung_tam.docx', type: 'DOCX', size: '1.1 MB', date: '25/02/2026', vecs: '840', status: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Sẵn sàng', c: 'green' },
+      { name: 'https://hadiwa.vn/gioi-thieu', type: 'WEB', size: '32 KB', date: '15/03/2026', vecs: '120', status: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" style="vertical-align:middle"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg> Đang quét', c: 'yellow' },
+      { name: 'Quy_chuan_Nuoc_Sich.pdf', type: 'PDF', size: '8.5 MB', date: '01/01/2026', vecs: '4,200', status: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Sẵn sàng', c: 'green' }
     ].map(d => `
           <tr>
-            <td style="font-weight:600;font-size:13px"><a href="#" style="color:var(--cyan);text-decoration:none">${d.name}</a></td>
+            <td style="font-weight:600;font-size:13px"><a href="#" style="color:var(--primary);text-decoration:none">${d.name}</a></td>
             <td><span class="badge badge-gray" style="font-size:10px">${d.type}</span></td>
             <td style="font-size:12px">${d.size}</td>
             <td style="font-size:12px;color:var(--muted)">${d.date}</td>
@@ -1325,7 +1351,7 @@ function renderSettingsRag() {
             <td><span class="badge ${d.c === 'green' ? 'badge-green' : 'badge-yellow'}" style="font-size:10px">${d.status}</span></td>
             <td style="text-align:right">
               <button class="btn btn-ghost btn-sm" title="Tạo lại vector" onclick="showToast('Đang tạo lại vector embeddings...')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg></button>
-              <button class="btn btn-ghost btn-sm" title="Xóa tài liệu" onclick="if(confirm('Xóa tài liệu này khỏi cơ sở dữ liệu tri thức?')) showToast('Đã xóa thành công!')"><span style="color:var(--red)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></span></button>
+              <button class="btn btn-ghost btn-sm" title="Xóa tài liệu" onclick="if(confirm('Xóa tài liệu này khỏi cơ sở dữ liệu tri thức?')) showToast('Đã xóa thành công!')"><span style="color:var(--danger)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg></span></button>
             </td>
           </tr>`).join('')}
         </tbody>
@@ -1334,18 +1360,46 @@ function renderSettingsRag() {
   </div>`;
 }
 
-// ── THEME (DARK / LIGHT) ──────────────────────────────────────────
+// ── THEME (DARK / LIGHT & BRAND PRESET) ───────────────────────────
 function initTheme() {
-  const t = localStorage.getItem('ioc_theme') || 'dark';
-  if (t === 'light') document.body.classList.add('light');
-  else document.body.classList.remove('light');
+  const t = localStorage.getItem('ioc_theme') || 'light';
+  const brand = localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
+
+  if (window.ThemeEngine && typeof window.ThemeEngine.applyGlobalTheme === 'function') {
+    window.ThemeEngine.applyGlobalTheme(brand, t);
+  } else {
+    if (t === 'dark') document.body.classList.add('dark');
+    else document.body.classList.remove('dark');
+  }
   updateThemeUI(t);
 }
 
+function initBrandPreset(presetId) {
+  const t = localStorage.getItem('ioc_theme') || 'light';
+  if (window.ThemeEngine && typeof window.ThemeEngine.applyGlobalTheme === 'function') {
+    window.ThemeEngine.applyGlobalTheme(presetId, t);
+  } else {
+    document.body.setAttribute('data-brand-preset', presetId);
+    localStorage.setItem('ioc_brand_preset', presetId);
+  }
+}
+
+function setBrandPreset(presetId) {
+  initBrandPreset(presetId);
+}
+
 function toggleTheme() {
-  const isLight = document.body.classList.toggle('light');
-  const t = isLight ? 'light' : 'dark';
-  localStorage.setItem('ioc_theme', t);
+  const isDarkNow = document.body.classList.contains('dark');
+  const t = isDarkNow ? 'light' : 'dark';
+  const brand = localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
+
+  if (window.ThemeEngine && typeof window.ThemeEngine.applyGlobalTheme === 'function') {
+    window.ThemeEngine.applyGlobalTheme(brand, t);
+  } else {
+    if (t === 'dark') document.body.classList.add('dark');
+    else document.body.classList.remove('dark');
+    localStorage.setItem('ioc_theme', t);
+  }
   updateThemeUI(t);
 }
 
@@ -1396,13 +1450,13 @@ class MockWebSocket {
     if (!dot || !txt) return;
     if (this.connected) {
       dot.className = 'pulse-dot green';
-      dot.style.boxShadow = '0 0 8px var(--green)';
-      txt.style.color = 'var(--green)';
+      dot.style.boxShadow = '0 0 8px var(--success)';
+      txt.style.color = 'var(--success)';
       txt.textContent = 'WS: Connected';
     } else {
       dot.className = 'pulse-dot red';
-      dot.style.boxShadow = '0 0 8px var(--red)';
-      txt.style.color = 'var(--red)';
+      dot.style.boxShadow = '0 0 8px var(--danger)';
+      txt.style.color = 'var(--danger)';
       txt.textContent = 'WS: Disconnected';
       showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Mất kết nối thời gian thực (WebSocket)', 4000);
     }
@@ -1458,20 +1512,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.error('[Hadiwa] Initialization Exception:', err);
     window.onerror(err.message, 'app.js', 0, 0, err);
   }
-
-  const _autoFsHandler = () => {
-    document.removeEventListener('click', _autoFsHandler, true);
-    document.removeEventListener('keydown', _autoFsHandler, true);
-    const el = document.documentElement;
-    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-      try {
-        if (el.requestFullscreen) el.requestFullscreen();
-        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
-      } catch (e) { /* blocked — user can click the ⛶ button manually */ }
-    }
-  };
-  document.addEventListener('click', _autoFsHandler, { capture: true, once: true });
-  document.addEventListener('keydown', _autoFsHandler, { capture: true, once: true });
 
   // Sync fullscreen button icon on external change (e.g. user presses Esc)
   document.addEventListener('fullscreenchange', _syncFsIcon);
@@ -1547,7 +1587,7 @@ function render2FaTable(page) {
         <span style="font-size:12px;color:var(--muted)">Trang ${page} / ${totalPages}</span>
         <div style="display:flex;gap:6px;">
           ${Array.from({ length: totalPages }, (_, i) => i + 1).map(p =>
-      `<button onclick="render2FaTable(${p})" style="min-width:30px;height:30px;border-radius:6px;border:1px solid ${p === page ? 'var(--cyan)' : 'var(--border)'};background:${p === page ? 'rgba(0,200,255,.15)' : 'transparent'};color:${p === page ? 'var(--cyan)' : 'var(--muted)'};font-size:12px;cursor:pointer;padding:0 6px;transition:.2s">${p}</button>`
+      `<button onclick="render2FaTable(${p})" style="min-width:30px;height:30px;border-radius:6px;border:1px solid ${p === page ? 'var(--primary)' : 'var(--border)'};background:${p === page ? 'rgba(0,200,255,.15)' : 'transparent'};color:${p === page ? 'var(--primary)' : 'var(--muted)'};font-size:12px;cursor:pointer;padding:0 6px;transition:.2s">${p}</button>`
     ).join('')}
         </div>
         <div style="display:flex;gap:6px;">
@@ -1604,10 +1644,10 @@ function renderSettingsUi() {
   const PALETTES = [
     { label: 'Ocean Blue (Mặc định)', accent: '#00c8ff', primary: '#0050cc' },
     { label: 'Emerald Green', accent: '#00e676', primary: '#00897b' },
-    { label: 'Violet Storm', accent: '#a855f7', primary: '#7c3aed' },
+    { label: 'Blue Intelligence', accent: '#3699FF', primary: 'var(--purple)' },
     { label: 'Sunset Orange', accent: '#ff6d00', primary: '#f59e0b' },
     { label: 'Crimson Red', accent: '#ff1744', primary: '#c62828' },
-    { label: 'Monochrome', accent: '#b0bec5', primary: '#546e7a' },
+    { label: 'Monochrome', accent: '#b0bec5', primary: 'var(--muted)' },
   ];
 
   const curFont = uiCfg.font || 'Inter';
@@ -1661,7 +1701,7 @@ function renderSettingsUi() {
             <div style="width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,${p.primary},${p.accent})"></div>
           </div>
           <div style="font-size:11px;color:var(--text)">${p.label}</div>
-          ${i === curPalette ? '<div style="font-size:10px;color:var(--cyan);margin-top:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="3" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đang dùng</div>' : ''}
+          ${i === curPalette ? '<div style="font-size:10px;color:var(--primary);margin-top:3px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="3" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đang dùng</div>' : ''}
         </div>`).join('')}
       </div>
       <div class="grid-2">
@@ -1719,7 +1759,7 @@ function renderSettingsUi() {
     const isOn = fullWidthPages.includes(p.id);
     return `<label style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;border:1px solid ${isOn ? 'rgba(0,200,255,.3)' : 'var(--border)'};background:${isOn ? 'rgba(0,200,255,.05)' : 'transparent'};cursor:pointer;transition:.2s" onclick="toggleFullWidthPage('${p.id}', this)">
             <input type="checkbox" ${isOn ? 'checked' : ''} style="display:none">
-            <div style="width:16px;height:16px;border-radius:4px;background:${isOn ? 'var(--cyan)' : 'rgba(255,255,255,.1)'};border:1px solid ${isOn ? 'var(--cyan)' : 'rgba(255,255,255,.2)'};display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s">
+            <div style="width:16px;height:16px;border-radius:4px;background:${isOn ? 'var(--primary)' : 'rgba(255,255,255,.1)'};border:1px solid ${isOn ? 'var(--primary)' : 'rgba(255,255,255,.2)'};display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s">
               ${isOn ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : ''}
             </div>
             <span style="font-size:12px">${p.label}</span>
@@ -1740,21 +1780,21 @@ function renderSettingsUi() {
             <label class="form-label">Tốc độ Live Ticker</label>
             <div style="display:flex;gap:8px;margin-top:8px">
               ${[['slow', '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Chậm'], ['normal', '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Bình thường'], ['fast', '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg> Nhanh']].map(([v, l]) => `
-              <button onclick="setTickerSpeed('${v}', this)" style="flex:1;padding:8px;font-size:12px;border-radius:8px;border:1px solid ${tickerSpeed === v ? 'var(--cyan)' : 'var(--border)'};background:${tickerSpeed === v ? 'rgba(0,200,255,.1)' : 'transparent'};color:${tickerSpeed === v ? 'var(--cyan)' : 'var(--muted)'};cursor:pointer;transition:.2s">${l}</button>`).join('')}
+              <button onclick="setTickerSpeed('${v}', this)" style="flex:1;padding:8px;font-size:12px;border-radius:8px;border:1px solid ${tickerSpeed === v ? 'var(--primary)' : 'var(--border)'};background:${tickerSpeed === v ? 'rgba(0,200,255,.1)' : 'transparent'};color:${tickerSpeed === v ? 'var(--primary)' : 'var(--muted)'};cursor:pointer;transition:.2s">${l}</button>`).join('')}
             </div>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
             <span style="font-size:13px">Bật micro-animations</span>
             <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer">
               <input type="checkbox" ${animEnabled ? 'checked' : ''} style="opacity:0;width:0;height:0" onchange="saveUiSetting('animEnabled',this.checked);showToast('Cài đặt animations đã cập nhật!')">
-              <span style="position:absolute;inset:0;background:${animEnabled ? 'var(--cyan)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${animEnabled ? '21px' : '3px'};transition:.3s"></span></span>
+              <span style="position:absolute;inset:0;background:${animEnabled ? 'var(--primary)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${animEnabled ? '21px' : '3px'};transition:.3s"></span></span>
             </label>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)">
             <span style="font-size:13px">Hiển thị WebSocket status bar</span>
             <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer">
               <input type="checkbox" ${showWsBar ? 'checked' : ''} style="opacity:0;width:0;height:0" onchange="saveUiSetting('showWsBar',this.checked); document.querySelector('.sys-status:nth-child(2)')&&(document.querySelector('.sys-status:nth-child(2)').style.display=this.checked?'flex':'none'); showToast('WS bar '+(this.checked?'đã hiện':'đã ẩn'))">
-              <span style="position:absolute;inset:0;background:${showWsBar ? 'var(--cyan)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${showWsBar ? '21px' : '3px'};transition:.3s"></span></span>
+              <span style="position:absolute;inset:0;background:${showWsBar ? 'var(--primary)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${showWsBar ? '21px' : '3px'};transition:.3s"></span></span>
             </label>
           </div>
         </div>
@@ -1775,7 +1815,7 @@ function renderSettingsUi() {
             <span style="font-size:13px">Sticky header khi scroll</span>
             <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer">
               <input type="checkbox" checked style="opacity:0;width:0;height:0" onchange="showToast('Demo: Sticky header '+(this.checked?'bật':'tắt'))">
-              <span style="position:absolute;inset:0;background:var(--cyan);border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:21px;transition:.3s"></span></span>
+              <span style="position:absolute;inset:0;background:var(--primary);border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:21px;transition:.3s"></span></span>
             </label>
           </div>
         </div>
@@ -1805,13 +1845,13 @@ function renderSettingsUi() {
       ];
       return ANIMS.map(a => {
         const sel = a.id === cur;
-        return `<div id="animOpt_${a.id}" onclick="selectModalAnim('${a.id}')" style="padding:14px;border-radius:10px;border:2px solid ${sel ? 'var(--cyan)' : 'rgba(255,255,255,.1)'};background:${sel ? 'rgba(0,200,255,.08)' : 'rgba(0,0,0,.2)'};cursor:pointer;transition:.2s;text-align:center">
+        return `<div id="animOpt_${a.id}" onclick="selectModalAnim('${a.id}')" style="padding:14px;border-radius:10px;border:2px solid ${sel ? 'var(--primary)' : 'rgba(255,255,255,.1)'};background:${sel ? 'rgba(0,200,255,.08)' : 'rgba(0,0,0,.2)'};cursor:pointer;transition:.2s;text-align:center">
               <div style="width:40px;height:40px;background:${sel ? 'rgba(0,200,255,.12)' : 'rgba(255,255,255,.05)'};border-radius:10px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${sel ? 'var(--cyan)' : 'var(--muted)'}" stroke-width="2">${a.icon}</svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="${sel ? 'var(--primary)' : 'var(--muted)'}" stroke-width="2">${a.icon}</svg>
               </div>
-              <div style="font-size:12px;font-weight:700;color:${sel ? 'var(--cyan)' : 'var(--text)'}">${a.label}</div>
+              <div style="font-size:12px;font-weight:700;color:${sel ? 'var(--primary)' : 'var(--text)'}">${a.label}</div>
               <div style="font-size:10px;color:var(--muted);margin-top:3px">${a.desc}</div>
-              ${sel ? '<div style="font-size:9px;color:var(--cyan);margin-top:4px;font-weight:700"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="3" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đang dùng</div>' : ''}
+              ${sel ? '<div style="font-size:9px;color:var(--primary);margin-top:4px;font-weight:700"><svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="3" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đang dùng</div>' : ''}
             </div>`;
       }).join('');
     })()}
@@ -1835,7 +1875,7 @@ function renderSettingsUi() {
         </div>
         <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer">
           <input type="checkbox" id="${id}" ${checked ? 'checked' : ''} style="opacity:0;width:0;height:0" onchange="${onChange}">
-          <span style="position:absolute;inset:0;border-radius:22px;transition:.3s;background:${checked ? 'var(--cyan)' : 'rgba(255,255,255,.12)'}">
+          <span style="position:absolute;inset:0;border-radius:22px;transition:.3s;background:${checked ? 'var(--primary)' : 'rgba(255,255,255,.12)'}">
             <span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;transition:.3s;left:${checked ? '21px' : '3px'}"></span>
           </span>
         </label>
@@ -1878,7 +1918,7 @@ function renderSettingsUi() {
             </div>
             <div style="display:flex;align-items:center;gap:8px">
               <button onclick="obAdjustVisits(-1)" style="width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,.05);color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">−</button>
-              <span style="font-size:15px;font-weight:700;color:var(--cyan);min-width:24px;text-align:center" id="obVisitsCounter">${obVisits}</span>
+              <span style="font-size:15px;font-weight:700;color:var(--primary);min-width:24px;text-align:center" id="obVisitsCounter">${obVisits}</span>
               <button onclick="obAdjustVisits(1)" style="width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:rgba(255,255,255,.05);color:var(--text);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">+</button>
             </div>
           </div>
@@ -1889,7 +1929,7 @@ function renderSettingsUi() {
               <div style="font-size:13px;font-weight:600">Xóa lịch sử đã xem hướng dẫn</div>
               <div style="font-size:11px;color:var(--muted);margin-top:2px">Tour và chip sẽ hiển thị lại như lần đầu sử dụng</div>
             </div>
-            <button onclick="obResetHistory()" class="btn btn-ghost btn-sm" style="display:inline-flex;align-items:center;gap:6px;border-color:rgba(255,202,40,.3);color:var(--yellow)">
+            <button onclick="obResetHistory()" class="btn btn-ghost btn-sm" style="display:inline-flex;align-items:center;gap:6px;border-color:rgba(255,202,40,.3);color:var(--warning)">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>
               </svg>
@@ -1928,7 +1968,7 @@ function selectModalAnim(id) {
   // Re-highlight grid
   document.querySelectorAll('[id^="animOpt_"]').forEach(el => {
     const sel = el.id === 'animOpt_' + id;
-    el.style.borderColor = sel ? 'var(--cyan)' : 'rgba(255,255,255,.1)';
+    el.style.borderColor = sel ? 'var(--primary)' : 'rgba(255,255,255,.1)';
     el.style.background = sel ? 'rgba(0,200,255,.08)' : 'rgba(0,0,0,.2)';
   });
   // Preview the chosen animation on the grid item
@@ -2051,7 +2091,7 @@ function previewFont(fontName) {
 
 function selectUiPalette(idx) {
   document.querySelectorAll('[id^="uiPalette"]').forEach((el, i) => {
-    el.style.borderColor = i === idx ? 'var(--cyan)' : 'var(--border)';
+    el.style.borderColor = i === idx ? 'var(--primary)' : 'var(--border)';
   });
   saveUiSetting('palette', idx);
   showToast('Demo: Bộ màu đã chọn. Nhấn Lưu để áp dụng.');
@@ -2064,8 +2104,8 @@ function setTickerSpeed(speed, btn) {
     b.style.color = 'var(--muted)';
     b.style.background = 'transparent';
   });
-  btn.style.borderColor = 'var(--cyan)';
-  btn.style.color = 'var(--cyan)';
+  btn.style.borderColor = 'var(--primary)';
+  btn.style.color = 'var(--primary)';
   btn.style.background = 'rgba(0,200,255,.1)';
   showToast('Tốc độ Ticker: ' + speed);
 }
@@ -2085,8 +2125,8 @@ function toggleFullWidthPage(pageId, labelEl) {
   if (cb) cb.checked = isOn;
   const box = labelEl.querySelector('div');
   if (box) {
-    box.style.background = isOn ? 'var(--cyan)' : 'rgba(255,255,255,.1)';
-    box.style.borderColor = isOn ? 'var(--cyan)' : 'rgba(255,255,255,.2)';
+    box.style.background = isOn ? 'var(--primary)' : 'rgba(255,255,255,.1)';
+    box.style.borderColor = isOn ? 'var(--primary)' : 'rgba(255,255,255,.2)';
     box.innerHTML = isOn ? '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' : '';
   }
   labelEl.style.borderColor = isOn ? 'rgba(0,200,255,.3)' : 'var(--border)';
@@ -2109,12 +2149,12 @@ function viewEmployeeDetail(id) {
     </div>
     <div class="modal-body">
       <div style="display:flex;gap:20px;align-items:center;margin-bottom:20px">
-        <div style="width:80px;height:80px;border-radius:50%;background:rgba(0,200,255,.1);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--cyan);border:2px solid var(--border);flex-shrink:0">
+        <div style="width:80px;height:80px;border-radius:50%;background:rgba(0,200,255,.1);display:flex;align-items:center;justify-content:center;font-size:32px;color:var(--primary);border:2px solid var(--border);flex-shrink:0">
           ${e.name.charAt(0)}
         </div>
         <div style="flex:1">
           <div style="font-size:20px;font-weight:700;color:var(--text)">${e.name}</div>
-          <div style="font-size:14px;color:var(--cyan);margin-top:4px">${e.position}</div>
+          <div style="font-size:14px;color:var(--primary);margin-top:4px">${e.position}</div>
           <div style="font-size:12px;color:var(--muted);margin-top:2px">${e.dept} — ${e.factory}</div>
         </div>
       </div>
@@ -2149,7 +2189,7 @@ function obApplySetting(key, value, toggleId, subId) {
   if (chk) {
     const span = chk.nextElementSibling;
     if (span) {
-      span.style.background = (value === '1') ? 'var(--cyan)' : 'rgba(255,255,255,.12)';
+      span.style.background = (value === '1') ? 'var(--primary)' : 'rgba(255,255,255,.12)';
       const thumb = span.firstElementChild;
       if (thumb) thumb.style.left = (value === '1') ? '21px' : '3px';
     }
@@ -2219,7 +2259,7 @@ function renderSettingsAi() {
       <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:12px">
         <div style="position:relative;width:34px;height:18px">
           <input type="checkbox" checked style="opacity:0;position:absolute;width:0;height:0">
-          <div style="position:absolute;inset:0;background:var(--cyan);border-radius:9px;"></div>
+          <div style="position:absolute;inset:0;background:var(--primary);border-radius:9px;"></div>
           <div style="position:absolute;top:2px;left:18px;width:14px;height:14px;background:#fff;border-radius:7px;transition:.2s"></div>
         </div>
         Kích hoạt
@@ -2261,7 +2301,7 @@ function renderSettingsAi() {
       <label style="display:flex;align-items:center;gap:5px;cursor:pointer">
         <div style="position:relative;width:32px;height:17px">
           <input type="checkbox" checked style="opacity:0;position:absolute">
-          <div style="position:absolute;inset:0;background:var(--cyan);border-radius:9px"></div>
+          <div style="position:absolute;inset:0;background:var(--primary);border-radius:9px"></div>
           <div style="position:absolute;top:2px;left:16px;width:13px;height:13px;background:#fff;border-radius:50%;transition:.2s"></div>
         </div>
       </label>
@@ -2281,7 +2321,7 @@ function renderSettingsAi() {
     <div style="margin-left:auto;display:flex;gap:10px;flex-direction:column;align-items:flex-end;flex-shrink:0">
       <div style="display:flex;align-items:center;gap:6px">
         <div class="pulse-dot green"></div>
-        <span style="font-size:12px;color:var(--green);font-weight:600">3/4 nhà cung cấp hoạt động</span>
+        <span style="font-size:12px;color:var(--success);font-weight:600">3/4 nhà cung cấp hoạt động</span>
       </div>
       <div style="font-size:11px;color:var(--muted)">Phiên bản API: v1.2.4</div>
     </div>
@@ -2289,7 +2329,7 @@ function renderSettingsAi() {
 
   <!-- Provider API Keys -->
   <div style="font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
     API Keys & Nhà cung cấp
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px">
@@ -2298,7 +2338,7 @@ function renderSettingsAi() {
 
   <!-- Per-feature model assignment -->
   <div style="font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
     Gán mô hình cho từng tính năng
   </div>
   <div class="card" style="padding:0;margin-bottom:24px;overflow:hidden">
@@ -2315,7 +2355,7 @@ function renderSettingsAi() {
 
   <!-- Global AI params -->
   <div style="font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
     Tham số toàn cục
   </div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
@@ -2328,9 +2368,9 @@ function renderSettingsAi() {
     <div class="card" style="padding:14px 16px">
       <div style="display:flex;justify-content:space-between;margin-bottom:8px">
         <label class="form-label" style="margin:0">${s.l}</label>
-        <span style="font-size:12px;color:var(--cyan);font-weight:700" id="ai_${s.id}_lbl">${s.val}</span>
+        <span style="font-size:12px;color:var(--primary);font-weight:700" id="ai_${s.id}_lbl">${s.val}</span>
       </div>
-      <input type="range" min="${s.min}" max="${s.max}" step="${s.step}" value="${s.val}" style="width:100%;accent-color:var(--cyan)"
+      <input type="range" min="${s.min}" max="${s.max}" step="${s.step}" value="${s.val}" style="width:100%;accent-color:var(--primary)"
         oninput="document.getElementById('ai_${s.id}_lbl').textContent=this.value">
       <div style="font-size:10px;color:var(--muted);margin-top:6px">${s.hint}</div>
     </div>`).join('')}
@@ -2351,7 +2391,7 @@ function renderSettingsAi() {
         <span style="font-size:12px">${t.l}</span>
         <div style="position:relative;width:34px;height:18px;flex-shrink:0">
           <input type="checkbox" ${t.on?'checked':''} style="opacity:0;position:absolute">
-          <div style="position:absolute;inset:0;background:${t.on?'var(--cyan)':'rgba(255,255,255,.12)'};border-radius:9px;transition:.2s"></div>
+          <div style="position:absolute;inset:0;background:${t.on?'var(--primary)':'rgba(255,255,255,.12)'};border-radius:9px;transition:.2s"></div>
           <div style="position:absolute;top:2px;left:${t.on?'18':'2'}px;width:14px;height:14px;background:#fff;border-radius:7px;transition:.2s"></div>
         </div>
       </label>`).join('')}
@@ -2363,4 +2403,3 @@ function renderSettingsAi() {
     <button class="btn btn-primary" onclick="showToast('✅ Đã lưu cấu hình AI & mô hình!')">Lưu cấu hình AI</button>
   </div>`;
 }
-

@@ -49,9 +49,9 @@ function renderIrrigationDataEntry() {
     </div>
   </div>
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-    ${[['Hồ chứa theo dõi',IRD_RESERVOIRS.length,'var(--cyan)','Tổng 183.9 triệu m³'],
-       ['Hồ cảnh báo thấp',lowRes,'var(--yellow)','Cần bổ sung nguồn'],
-       ['Máy bơm hoạt động',`${runningPumps}/${totalPumps}`,'var(--green)',`Lưu lượng ${totalFlow} m³/s`],
+    ${[['Hồ chứa theo dõi',IRD_RESERVOIRS.length,'var(--primary)','Tổng 183.9 triệu m³'],
+       ['Hồ cảnh báo thấp',lowRes,'var(--warning)','Cần bổ sung nguồn'],
+       ['Máy bơm hoạt động',`${runningPumps}/${totalPumps}`,'var(--success)',`Lưu lượng ${totalFlow} m³/s`],
        ['Cống điều tiết',IRD_SLUICES.length,'var(--purple)',`${IRD_SLUICES.filter(c=>c.status==='ok').length} đang mở`]].map(([l,v,c,s])=>`
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px 18px">
       <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px">${l}</div>
@@ -81,7 +81,7 @@ function _irdReservoirs() {
       <thead><tr><th>Hồ chứa</th><th>Huyện</th><th>H hiện tại</th><th>MNDBT</th><th>Dung tích hiện tại</th><th>Q ra (m³/s)</th><th>Q vào</th><th>Tình trạng</th><th></th></tr></thead>
       <tbody>${IRD_RESERVOIRS.map(r=>{
         const pct=Math.round(r.currentW/r.capacity*100);
-        const hc=r.currentH>=r.MNDBT?'var(--green)':r.currentH>=r.MNCN+0.5?'var(--yellow)':'#f87171';
+        const hc=r.currentH>=r.MNDBT?'var(--success)':r.currentH>=r.MNCN+0.5?'var(--warning)':'#f87171';
         const sc=r.status==='normal'?'badge-green':'badge-yellow';
         const sl=r.status==='normal'?'Bình thường':'Cảnh báo';
         return `<tr>
@@ -92,12 +92,12 @@ function _irdReservoirs() {
           <td>
             <div style="display:flex;align-items:center;gap:6px">
               <div style="width:50px;height:5px;background:rgba(255,255,255,.08);border-radius:3px">
-                <div style="width:${Math.min(pct,100)}%;height:100%;background:${pct>=70?'var(--green)':pct>=40?'var(--yellow)':'#f87171'};border-radius:3px"></div>
+                <div style="width:${Math.min(pct,100)}%;height:100%;background:${pct>=70?'var(--success)':pct>=40?'var(--warning)':'#f87171'};border-radius:3px"></div>
               </div>
               <span style="font-size:11px;color:var(--muted)">${r.currentW.toFixed(1)}/${r.capacity} Tr.m³ (${pct}%)</span>
             </div></td>
-          <td class="mono" style="color:var(--cyan)">${(r.spillQ+r.bottomQ).toFixed(1)}</td>
-          <td class="mono" style="color:var(--green)">${r.inQ.toFixed(1)}</td>
+          <td class="mono" style="color:var(--primary)">${(r.spillQ+r.bottomQ).toFixed(1)}</td>
+          <td class="mono" style="color:var(--success)">${r.inQ.toFixed(1)}</td>
           <td><span class="badge ${sc}" style="font-size:10px">${sl}</span></td>
           <td><div style="display:flex;gap:4px">
             <button class="btn btn-ghost btn-xs" onclick="irdUpdateReservoir('${r.id}')">Cập nhật</button>
@@ -115,8 +115,8 @@ function _irdPumps() {
         <td style="font-weight:700;font-size:12px">${p.name}</td>
         <td><span class="badge ${p.type==='tiêu'?'badge-blue':'badge-green'}" style="font-size:10px">${p.type}</span></td>
         <td style="font-size:11px;color:var(--muted)">${p.district}</td>
-        <td><span style="font-size:14px;font-weight:700;color:${p.pumpsRunning===p.pumps?'var(--green)':'var(--yellow)'}">${p.pumpsRunning}</span><span style="font-size:11px;color:var(--muted)">/${p.pumps}</span></td>
-        <td class="mono" style="color:var(--cyan)">${p.flowActual.toFixed(1)} m³/s</td>
+        <td><span style="font-size:14px;font-weight:700;color:${p.pumpsRunning===p.pumps?'var(--success)':'var(--warning)'}">${p.pumpsRunning}</span><span style="font-size:11px;color:var(--muted)">/${p.pumps}</span></td>
+        <td class="mono" style="color:var(--primary)">${p.flowActual.toFixed(1)} m³/s</td>
         <td class="mono" style="font-size:11px;color:var(--muted)">${p.capacity.toFixed(1)}</td>
         <td class="mono" style="font-size:11px">${p.power}</td>
         <td class="mono" style="font-size:11px;color:var(--muted)">${p.runtime}h</td>
@@ -136,11 +136,11 @@ function _irdSluices() {
         <td style="font-size:11px;color:var(--muted)">${c.district}</td>
         <td class="mono" style="font-size:11px">${c.spans}×${c.width}m</td>
         <td class="mono" style="font-size:11px;color:var(--muted)">${c.capacity}</td>
-        <td class="mono" style="color:${c.currentQ>0?'var(--cyan)':'var(--muted)'}">${c.currentQ}</td>
+        <td class="mono" style="color:${c.currentQ>0?'var(--primary)':'var(--muted)'}">${c.currentQ}</td>
         <td>
           <div style="display:flex;align-items:center;gap:6px">
             <div style="width:40px;height:5px;background:rgba(255,255,255,.08);border-radius:3px">
-              <div style="width:${c.openPct}%;height:100%;background:${c.openPct>0?'var(--cyan)':'var(--muted)'};border-radius:3px"></div>
+              <div style="width:${c.openPct}%;height:100%;background:${c.openPct>0?'var(--primary)':'var(--muted)'};border-radius:3px"></div>
             </div>
             <span style="font-size:11px">${c.openPct}%</span>
           </div></td>
@@ -170,7 +170,7 @@ window.irdUpdateReservoir = function(id) {
       ${[['MNDBT',r.MNDBT],['MNLKT',r.MNLKT],['MNTTK',r.MNTTK]].map(([l,v])=>`
       <div style="background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.15);border-radius:8px;padding:8px 10px">
         <div style="font-size:10px;color:var(--muted)">${l}</div>
-        <div style="font-size:13px;font-weight:700;color:var(--cyan)">${v} m</div>
+        <div style="font-size:13px;font-weight:700;color:var(--primary)">${v} m</div>
       </div>`).join('')}
     </div>
     <div class="form-row">
@@ -312,18 +312,18 @@ window.irdViewReservoir = function(id) {
     </div>
     <div style="background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.2);border-radius:10px;padding:14px;margin-bottom:10px">
       <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-        <span style="font-size:13px;font-weight:700">H = <span style="color:var(--cyan)">${r.currentH.toFixed(2)} m</span></span>
+        <span style="font-size:13px;font-weight:700">H = <span style="color:var(--primary)">${r.currentH.toFixed(2)} m</span></span>
         <span style="font-size:12px;color:var(--muted)">${r.currentW.toFixed(1)}/${r.capacity} triệu m³ (${pct}%)</span>
       </div>
       <div style="height:10px;background:rgba(255,255,255,.08);border-radius:5px;overflow:hidden">
-        <div style="width:${pct}%;height:100%;background:${pct>=70?'var(--green)':pct>=40?'var(--yellow)':'#f87171'};border-radius:5px"></div>
+        <div style="width:${pct}%;height:100%;background:${pct>=70?'var(--success)':pct>=40?'var(--warning)':'#f87171'};border-radius:5px"></div>
       </div>
       <div style="display:flex;justify-content:space-between;margin-top:5px;font-size:10px;color:var(--muted)">
         <span>MNCN: ${r.MNCN}m</span><span>MNDBT: ${r.MNDBT}m</span><span>MNLKT: ${r.MNLKT}m</span><span>MNTTK: ${r.MNTTK}m</span>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-      ${[['Q xả tràn',(r.spillQ).toFixed(1)+' m³/s','var(--yellow)'],['Q xả đáy',r.bottomQ.toFixed(1)+' m³/s','var(--cyan)'],['Q đến hồ',r.inQ.toFixed(1)+' m³/s','var(--green)']].map(([l,v,c])=>`
+      ${[['Q xả tràn',(r.spillQ).toFixed(1)+' m³/s','var(--warning)'],['Q xả đáy',r.bottomQ.toFixed(1)+' m³/s','var(--primary)'],['Q đến hồ',r.inQ.toFixed(1)+' m³/s','var(--success)']].map(([l,v,c])=>`
       <div style="text-align:center;padding:10px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px">
         <div style="font-size:10px;color:var(--muted);margin-bottom:4px">${l}</div>
         <div style="font-size:16px;font-weight:700;color:${c}">${v}</div>
@@ -581,18 +581,18 @@ window.irdViewReservoir = function(id) {
     </div>
     <div style="background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.2);border-radius:10px;padding:14px;margin-bottom:12px">
       <div style="display:flex;justify-content:space-between;margin-bottom:8px">
-        <span style="font-size:13px;font-weight:700">H = <span style="color:var(--cyan)">${r.currentH.toFixed(2)} m</span></span>
+        <span style="font-size:13px;font-weight:700">H = <span style="color:var(--primary)">${r.currentH.toFixed(2)} m</span></span>
         <span style="font-size:12px;color:var(--muted)">${r.currentW.toFixed(1)}/${r.capacity} triệu m³ (${pct}%)</span>
       </div>
       <div style="height:10px;background:rgba(255,255,255,.08);border-radius:5px;overflow:hidden">
-        <div style="width:${pct}%;height:100%;background:${pct>=70?'var(--green)':pct>=40?'var(--yellow)':'#f87171'};border-radius:5px"></div>
+        <div style="width:${pct}%;height:100%;background:${pct>=70?'var(--success)':pct>=40?'var(--warning)':'#f87171'};border-radius:5px"></div>
       </div>
       <div style="display:flex;justify-content:space-between;margin-top:5px;font-size:10px;color:var(--muted)">
         <span>MNCN: ${r.MNCN}m</span><span>MNDBT: ${r.MNDBT}m</span><span>MNLKT: ${r.MNLKT}m</span><span>MNTTK: ${r.MNTTK}m</span>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">
-      ${[['Q xả tràn',r.spillQ.toFixed(1)+' m³/s','var(--yellow)'],['Q xả đáy',r.bottomQ.toFixed(1)+' m³/s','var(--cyan)'],['Q đến hồ',r.inQ.toFixed(1)+' m³/s','var(--green)']].map(([l,v,c])=>`
+      ${[['Q xả tràn',r.spillQ.toFixed(1)+' m³/s','var(--warning)'],['Q xả đáy',r.bottomQ.toFixed(1)+' m³/s','var(--primary)'],['Q đến hồ',r.inQ.toFixed(1)+' m³/s','var(--success)']].map(([l,v,c])=>`
       <div style="text-align:center;padding:10px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px">
         <div style="font-size:10px;color:var(--muted);margin-bottom:4px">${l}</div>
         <div style="font-size:16px;font-weight:700;color:${c}">${v}</div>

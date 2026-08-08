@@ -107,10 +107,10 @@
                 s.textContent = `
           #ob-overlay{position:fixed;inset:0;z-index:99999;pointer-events:none}
           #ob-backdrop{position:fixed;inset:0;background:rgba(2,8,20,.82);backdrop-filter:blur(2px);pointer-events:all}
-          #ob-tooltip{position:fixed;background:linear-gradient(135deg,#071629,#0d2040);border:1px solid rgba(0,200,255,.35);border-radius:14px;padding:20px 22px;min-width:280px;max-width:340px;box-shadow:0 8px 40px rgba(0,0,0,.6);pointer-events:all;animation:ob-pop .25s cubic-bezier(.175,.885,.32,1.275);z-index:100000}
+          #ob-tooltip{position:fixed;background:linear-gradient(135deg,var(--bg-surface),#0d2040);border:1px solid rgba(0,200,255,.35);border-radius:14px;padding:20px 22px;min-width:280px;max-width:340px;box-shadow:0 8px 40px rgba(0,0,0,.6);pointer-events:all;animation:ob-pop .25s cubic-bezier(.175,.885,.32,1.275);z-index:100000}
           @keyframes ob-pop{from{opacity:0;transform:scale(.9) translateY(8px)}to{opacity:1;transform:none}}
           #ob-step-counter{font-size:10px;font-family:'Roboto Mono',monospace;color:rgba(0,200,255,.6);letter-spacing:1px;margin-bottom:8px;text-transform:uppercase}
-          #ob-title{font-size:15px;font-weight:700;color:#e3f2fd;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+          #ob-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;display:flex;align-items:center;gap:8px}
           #ob-title::before{content:'';display:inline-block;width:4px;height:16px;background:var(--cyan,#00c8ff);border-radius:2px;flex-shrink:0}
           #ob-body{font-size:13px;color:#90afc8;line-height:1.55;margin-bottom:18px}
           #ob-actions{display:flex;justify-content:space-between;align-items:center;gap:8px}
@@ -166,8 +166,8 @@
     function _buildHelpChip(pageId, pageCfg) {
         const chip = document.createElement('div');
         chip.className = 'ob-help-chip';
-        chip.style.cssText = 'display:inline-flex;align-items:center;gap:6px;flex-shrink:0;padding:6px 12px;background:rgba(0,200,255,.08);border:1.5px solid rgba(0,200,255,.45);border-radius:20px;cursor:pointer;font-size:12px;color:#e3f2fd;white-space:nowrap;transition:all .2s;font-weight:600';
-        chip.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00c8ff" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Hướng dẫn trang này`;
+        chip.style.cssText = 'display:inline-flex;align-items:center;gap:6px;flex-shrink:0;padding:6px 12px;background:rgba(0,200,255,.08);border:1.5px solid rgba(0,200,255,.45);border-radius:20px;cursor:pointer;font-size:12px;color:var(--text);white-space:nowrap;transition:all .2s;font-weight:600';
+        chip.innerHTML = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Hướng dẫn trang này`;
         chip.onmouseover = () => { chip.style.background = 'rgba(0,200,255,.18)'; };
         chip.onmouseout = () => { chip.style.background = 'rgba(0,200,255,.08)'; };
         chip.onclick = () => OB._sendHelpMessage(pageId, pageCfg);

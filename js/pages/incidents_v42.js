@@ -55,7 +55,7 @@ function incSlaInfo(inc) {
 
 function incSlaBar(inc) {
   const s = incSlaInfo(inc);
-  const color = s.overdue ? '#ef4444' : s.pct >= 80 ? '#f59e0b' : '#10b981';
+  const color = s.overdue ? '#ef4444' : s.pct >= 80 ? '#f59e0b' : 'var(--success)';
   const label = s.overdue
     ? `Quá hạn ${Math.round(s.elapsed - s.sla)}ph`
     : `Còn ${Math.round(s.remaining / 60)}h${Math.round(s.remaining % 60)}ph`;
@@ -80,7 +80,7 @@ function incOpenDetail(id) {
 
   const stepHtml = INC_STEPS.map((step, i) => {
     const status = STEP_STATUS[step.id]?.[inc.status] || 'pending';
-    const color = status === 'done' ? '#10b981' : status === 'in-progress' ? '#f59e0b' : '#374151';
+    const color = status === 'done' ? 'var(--success)' : status === 'in-progress' ? '#f59e0b' : '#374151';
     return `
     <div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;${i < INC_STEPS.length-1?'border-bottom:1px solid rgba(255,255,255,.05)':''}">
       <div style="width:28px;height:28px;border-radius:50%;border:2px solid ${color};display:flex;align-items:center;justify-content:center;flex-shrink:0;background:${color}20">
@@ -93,7 +93,7 @@ function incOpenDetail(id) {
       <div style="flex:1">
         <div style="font-size:12px;font-weight:700;color:${status==='pending'?'rgba(255,255,255,.35)':'#fff'}">${i+1}. ${step.label}</div>
         ${status === 'in-progress' ? '<div style="font-size:10px;color:#f59e0b">Đang thực hiện</div>' : ''}
-        ${status === 'done' ? '<div style="font-size:10px;color:#10b981">Hoàn tất</div>' : ''}
+        ${status === 'done' ? '<div style="font-size:10px;color:var(--success)">Hoàn tất</div>' : ''}
       </div>
       ${status !== 'done' && inc.status !== 'done'
         ? `<button class="btn btn-ghost btn-sm" onclick="incAdvanceStep('${id}','${step.id}')">Xác nhận</button>`
@@ -103,7 +103,7 @@ function incOpenDetail(id) {
 
   const timelineHtml = (inc.timeline || []).map(t => `
     <div style="display:flex;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05)">
-      <div style="width:7px;height:7px;border-radius:50%;background:#8b5cf6;flex-shrink:0;margin-top:5px"></div>
+      <div style="width:7px;height:7px;border-radius:50%;background:var(--purple);flex-shrink:0;margin-top:5px"></div>
       <div>
         <div style="font-size:11px;color:rgba(255,255,255,.7)">${t.event}</div>
         <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:1px">${t.time} · ${t.user||'Hệ thống'}</div>
@@ -113,7 +113,7 @@ function incOpenDetail(id) {
   const modal = `
   <div class="modal-header">
     <span class="modal-title" style="display:flex;align-items:center;gap:8px">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
       ${id} — ${inc.type}
     </span>
     <button class="modal-close" onclick="closeModal()">
@@ -129,10 +129,10 @@ function incOpenDetail(id) {
           <div><div style="color:rgba(255,255,255,.35)">Mức độ</div><div style="font-weight:700;color:${inc.severity==='critical'?'#f87171':inc.severity==='high'?'#fb923c':'#fbbf24'}">${inc.severity}</div></div>
           <div><div style="color:rgba(255,255,255,.35)">Phân công</div><div style="font-weight:700;color:#38bdf8">${inc.assignedTo||'Chưa phân công'}</div></div>
           <div><div style="color:rgba(255,255,255,.35)">Báo cáo lúc</div><div>${inc.report}</div></div>
-          <div><div style="color:rgba(255,255,255,.35)">SLA</div><div style="color:${sla.overdue?'#f87171':sla.pct>=80?'#fbbf24':'#34d399'};font-weight:700">${sla.overdue?'QUÁ HẠN':'Đúng hạn'}</div></div>
+          <div><div style="color:rgba(255,255,255,.35)">SLA</div><div style="color:${sla.overdue?'#f87171':sla.pct>=80?'#fbbf24':'var(--success-text)'};font-weight:700">${sla.overdue?'QUÁ HẠN':'Đúng hạn'}</div></div>
         </div>
         <div style="margin-top:8px;height:4px;background:rgba(255,255,255,.06);border-radius:2px">
-          <div style="height:100%;width:${sla.pct}%;background:${sla.overdue?'#ef4444':sla.pct>=80?'#f59e0b':'#10b981'};border-radius:2px"></div>
+          <div style="height:100%;width:${sla.pct}%;background:${sla.overdue?'#ef4444':sla.pct>=80?'#f59e0b':'var(--success)'};border-radius:2px"></div>
         </div>
       </div>
 
@@ -175,7 +175,7 @@ function incOpenDetail(id) {
         <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px">Check-in</div>
         ${extra.checkins.map(c=>`
         <div style="display:flex;gap:8px;font-size:11px;padding:5px 0;border-bottom:1px solid rgba(255,255,255,.05)">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" style="flex-shrink:0;margin-top:2px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" style="flex-shrink:0;margin-top:2px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           <div><div style="color:rgba(255,255,255,.7)">${c.user}</div><div style="color:rgba(255,255,255,.35)">${c.time} · ${c.note}</div></div>
         </div>`).join('')}
       </div>` : ''}

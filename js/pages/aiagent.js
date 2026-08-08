@@ -36,19 +36,19 @@ function renderAiAgent() {
   </div>
 
   <div class="kpi-grid" style="margin-bottom:16px">
-    <div class="kpi-card" style="--accent-color:var(--cyan)"><div class="kpi-label">Tác vụ đang chạy</div><div class="kpi-value">${agentJobs.filter(j => j.status === 'active').length}</div><div class="kpi-sub">/ ${agentJobs.length} tổng</div></div>
-    <div class="kpi-card" style="--accent-color:var(--yellow)"><div class="kpi-label">Bất thường phát hiện</div><div class="kpi-value">${anomalies.length}</div><div class="kpi-sub">tháng này cần kiểm tra</div></div>
-    <div class="kpi-card" style="--accent-color:var(--green)"><div class="kpi-label">Báo cáo đã gửi</div><div class="kpi-value">38</div><div class="kpi-sub">trong tháng 3/2026</div></div>
-    <div class="kpi-card" style="--accent-color:var(--blue)"><div class="kpi-label">Cảnh báo thông minh</div><div class="kpi-value">12</div><div class="kpi-sub">đã gửi SMS/Zalo</div></div>
+    <div class="kpi-card" style="--accent-color:var(--primary)"><div class="kpi-label">Tác vụ đang chạy</div><div class="kpi-value">${agentJobs.filter(j => j.status === 'active').length}</div><div class="kpi-sub">/ ${agentJobs.length} tổng</div></div>
+    <div class="kpi-card" style="--accent-color:var(--warning)"><div class="kpi-label">Bất thường phát hiện</div><div class="kpi-value">${anomalies.length}</div><div class="kpi-sub">tháng này cần kiểm tra</div></div>
+    <div class="kpi-card" style="--accent-color:var(--success)"><div class="kpi-label">Báo cáo đã gửi</div><div class="kpi-value">38</div><div class="kpi-sub">trong tháng 3/2026</div></div>
+    <div class="kpi-card" style="--accent-color:var(--info)"><div class="kpi-label">Cảnh báo thông minh</div><div class="kpi-value">12</div><div class="kpi-sub">đã gửi SMS/Zalo</div></div>
     <div class="kpi-card" style="--accent-color:var(--purple)"><div class="kpi-label">Chi phí tiết kiệm</div><div class="kpi-value">145<span style="font-size:14px;color:var(--muted);margin-left:4px">Triệu</span></div><div class="kpi-sub">Ước tính hàng tháng</div></div>
-    <div class="kpi-card" style="--accent-color:var(--cyan)"><div class="kpi-label">Hiệu suất vận hành</div><div class="kpi-value" style="color:var(--green)">+32<span style="font-size:14px;color:var(--muted);margin-left:4px">%</span></div><div class="kpi-sub">Cải thiện quy trình</div></div>
+    <div class="kpi-card" style="--accent-color:var(--primary)"><div class="kpi-label">Hiệu suất vận hành</div><div class="kpi-value" style="color:var(--success)">+32<span style="font-size:14px;color:var(--muted);margin-left:4px">%</span></div><div class="kpi-sub">Cải thiện quy trình</div></div>
   </div>
 
   <div class="tabs">
     <button class="tab-btn active" onclick="switchAgentTab(this,'scheduled')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Tác vụ lập lịch</button>
     <button class="tab-btn" onclick="switchAgentTab(this,'anomaly')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Giám sát bất thường</button>
     <button class="tab-btn" onclick="switchAgentTab(this,'alerts')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg> Cảnh báo thông minh</button>
-    <button class="tab-btn" onclick="switchAgentTab(this,'specialized')" style="background:rgba(139,92,246,.1);border-color:rgba(139,92,246,.3);color:#a78bfa"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> AI Agent Chuyên biệt <span style="background:#7c3aed;color:#fff;font-size:9px;padding:1px 5px;border-radius:4px;margin-left:4px;font-weight:700">Mới</span></button>
+    <button class="tab-btn" onclick="switchAgentTab(this,'specialized')" style="background:rgba(41,132,238,.1);border-color:rgba(41,132,238,.3);color:#5BA9FF"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> AI Agent Chuyên biệt <span style="background:var(--purple);color:#fff;font-size:9px;padding:1px 5px;border-radius:4px;margin-left:4px;font-weight:700">Mới</span></button>
     <button class="tab-btn" onclick="switchAgentTab(this,'aistats')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg> Thống kê</button>
   </div>
   <div id="agentTabContent">${renderScheduledJobs()}</div>`;
@@ -81,7 +81,7 @@ function renderScheduledJobs() {
           <td><span class="badge badge-blue" style="font-size:10px">${j.channel}</span></td>
           <td style="font-size:12px;color:var(--muted)">${j.recipients}</td>
           <td class="mono" style="font-size:11px;color:var(--muted)">${j.lastRun}</td>
-          <td class="mono" style="font-size:11px;color:var(--cyan)">${j.nextRun}</td>
+          <td class="mono" style="font-size:11px;color:var(--primary)">${j.nextRun}</td>
           <td>${j.status === 'active' ? '<span class="badge badge-green">Đang chạy</span>' : '<span class="badge badge-gray">Tạm dừng</span>'}</td>
           <td>
             <div style="display:flex;gap:4px">
@@ -110,7 +110,7 @@ function renderScheduledJobs() {
 function renderAnomalyDetection() {
   return `
   <div style="padding:10px 0;margin-bottom:12px;display:flex;align-items:center;gap:12px">
-    <div style="background:rgba(255,202,40,.1);border:1px solid rgba(255,202,40,.3);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--yellow)">
+    <div style="background:rgba(255,202,40,.1);border:1px solid rgba(255,202,40,.3);border-radius:8px;padding:10px 16px;font-size:13px;color:var(--warning)">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> AI đã phát hiện <strong>${anomalies.length} bất thường</strong> trên các tuyến đê trong tháng 3/2026. Cần kiểm tra hiện trường.
     </div>
     <button class="btn btn-ghost btn-sm" onclick="aiAgentExportAnomalies()">Xuất danh sách</button>
@@ -124,10 +124,10 @@ function renderAnomalyDetection() {
           <td style="font-weight:500;font-size:12px">${a.customer}</td>
           <td style="font-size:11px;color:var(--muted)">${a.address}</td>
           <td class="mono">${a.prevMonth}</td>
-          <td class="mono" style="color:${a.thisMonth === 0 ? 'var(--muted)' : a.thisMonth > a.prevMonth ? 'var(--red)' : 'var(--muted)'}">${a.thisMonth}</td>
-          <td class="mono" style="font-weight:700;color:${a.change.startsWith('-') ? 'var(--red)' : 'var(--yellow)'}">${a.change}</td>
-          <td style="font-size:12px;color:var(--yellow)">${a.risk}</td>
-          <td style="font-size:12px;color:var(--cyan)">${a.action}</td>
+          <td class="mono" style="color:${a.thisMonth === 0 ? 'var(--muted)' : a.thisMonth > a.prevMonth ? 'var(--danger)' : 'var(--muted)'}">${a.thisMonth}</td>
+          <td class="mono" style="font-weight:700;color:${a.change.startsWith('-') ? 'var(--danger)' : 'var(--warning)'}">${a.change}</td>
+          <td style="font-size:12px;color:var(--warning)">${a.risk}</td>
+          <td style="font-size:12px;color:var(--primary)">${a.action}</td>
           <td class="mono" style="font-size:11px;color:var(--muted)">${a.time}</td>
         </tr>`).join('')}
       </tbody>
@@ -146,7 +146,7 @@ function renderSmartAlerts() {
   <div style="margin-bottom:14px">
     <div style="display:flex;align-items:center;justify-content:space-between">
       <div>
-        <p style="color:var(--muted);font-size:13px">Hệ thống tự động gửi khi phát hiện chỉ số vượt ngưỡng. Tổng tháng 3: <strong style="color:var(--cyan)">8 cảnh báo</strong> đã gửi.</p>
+        <p style="color:var(--muted);font-size:13px">Hệ thống tự động gửi khi phát hiện chỉ số vượt ngưỡng. Tổng tháng 3: <strong style="color:var(--primary)">8 cảnh báo</strong> đã gửi.</p>
       </div>
       <button class="btn btn-primary btn-sm" onclick="openAlertConfig()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> Cấu hình ngưỡng</button>
     </div>
@@ -157,7 +157,7 @@ function renderSmartAlerts() {
       <div class="alarm-dot warning"></div>
       <div class="alarm-msg" style="flex:1">
         <div style="font-size:13px;font-weight:500">${a.msg}</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Gửi qua: <span style="color:var(--cyan)">${a.sent}</span></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Gửi qua: <span style="color:var(--primary)">${a.sent}</span></div>
         <div class="alarm-time">${a.time}</div>
       </div>
       <span class="badge badge-green" style="flex-shrink:0">Đã gửi</span>
@@ -182,9 +182,9 @@ function openNewJob() {
       <div class="form-group"><label class="form-label">Thời điểm chạy</label><input class="form-control" type="time" value="07:00"></div>
       <div class="form-group"><label class="form-label">Kênh gửi</label>
         <div style="display:flex;gap:12px;margin-top:8px">
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" checked style="accent-color:var(--cyan)"> Email</label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" style="accent-color:var(--cyan)"> Zalo</label>
-          <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" style="accent-color:var(--cyan)"> SMS</label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" checked style="accent-color:var(--primary)"> Email</label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" style="accent-color:var(--primary)"> Zalo</label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" style="accent-color:var(--primary)"> SMS</label>
         </div>
       </div>
     </div>
@@ -223,13 +223,13 @@ function viewJobDetail(id) {
   const historyHtml = j.history && j.history.length > 0
     ? j.history.map(h => `
             <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05)">
-                <div style="width:10px;height:10px;border-radius:50%;background:${h.status === 'success' ? 'var(--green)' : 'var(--red)'};margin-top:4px;flex-shrink:0"></div>
+                <div style="width:10px;height:10px;border-radius:50%;background:${h.status === 'success' ? 'var(--success)' : 'var(--danger)'};margin-top:4px;flex-shrink:0"></div>
                 <div style="flex:1">
                     <div style="display:flex;justify-content:space-between;margin-bottom:4px">
                         <span style="font-size:12px;font-weight:600">${h.action}</span>
                         <span style="font-size:11px;color:var(--muted)">${h.time}</span>
                     </div>
-                    <div style="font-size:12px;color:var(--text)">Đối tượng: <span style="color:var(--cyan)">${h.target}</span></div>
+                    <div style="font-size:12px;color:var(--text)">Đối tượng: <span style="color:var(--primary)">${h.target}</span></div>
                     <div style="font-size:11px;color:var(--muted);margin-top:2px">${h.detail}</div>
                 </div>
             </div>
@@ -245,7 +245,7 @@ function viewJobDetail(id) {
                 <div class="info-item"><label class="form-label" style="font-size:11px;color:var(--muted)">Lịch trình</label><div>${j.schedule}</div></div>
                 <div class="info-item"><label class="form-label" style="font-size:11px;color:var(--muted)">Kênh gửi</label><div><span class="badge badge-blue">${j.channel}</span></div></div>
                 <div class="info-item"><label class="form-label" style="font-size:11px;color:var(--muted)">Lần cuối</label><div class="mono" style="font-size:13px">${j.lastRun}</div></div>
-                <div class="info-item"><label class="form-label" style="font-size:11px;color:var(--muted)">Lần tới</label><div class="mono" style="font-size:13px;color:var(--cyan)">${j.nextRun}</div></div>
+                <div class="info-item"><label class="form-label" style="font-size:11px;color:var(--muted)">Lần tới</label><div class="mono" style="font-size:13px;color:var(--primary)">${j.nextRun}</div></div>
             </div>
             
             <div style="margin-top:20px">
@@ -253,7 +253,7 @@ function viewJobDetail(id) {
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                     Lịch sử thực thi gần đây
                 </h4>
-                <div style="background:rgba(0,0,0,.2);border-radius:12px;padding:4px 16px;border:1px solid var(--border)">
+                <div style="background:var(--bg-secondary);border-radius:12px;padding:4px 16px;border:1px solid var(--border)">
                     ${historyHtml}
                 </div>
             </div>
@@ -287,9 +287,9 @@ function editJob(id) {
                 </div>
                 <div class="form-group"><label class="form-label">Loại kênh</label>
                     <div style="display:flex;gap:12px;margin-top:8px">
-                        <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" ${j.channel.includes('Email') ? 'checked' : ''} style="accent-color:var(--cyan)"> Email</label>
-                        <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" ${j.channel.includes('Zalo') ? 'checked' : ''} style="accent-color:var(--cyan)"> Zalo</label>
-                        <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" ${j.channel.includes('SMS') ? 'checked' : ''} style="accent-color:var(--cyan)"> SMS</label>
+                        <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" ${j.channel.includes('Email') ? 'checked' : ''} style="accent-color:var(--primary)"> Email</label>
+                        <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" ${j.channel.includes('Zalo') ? 'checked' : ''} style="accent-color:var(--primary)"> Zalo</label>
+                        <label style="display:flex;align-items:center;gap:6px;cursor:pointer"><input type="checkbox" ${j.channel.includes('SMS') ? 'checked' : ''} style="accent-color:var(--primary)"> SMS</label>
                     </div>
                 </div>
             </div>
@@ -339,7 +339,7 @@ function renderSpecializedAgents() {
     },
     {
       icon: 'M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z', icon2: '',
-      name: 'Alert Composer AI', badge: 'Truyền thông', badgeColor: '#10b981',
+      name: 'Alert Composer AI', badge: 'Truyền thông', badgeColor: 'var(--primary)',
       desc: 'Tự động soạn bản tin cảnh báo PCTT cho dân cư theo vùng, kênh phát (SMS, loa phát thanh, MXH) dựa trên mức độ sự cố.',
       status: 'idle', tasks: 0, accuracy: '89.5%', lastRun: 'Chưa chạy',
       caps: ['Sinh bản tin tự động', 'Cá nhân hóa theo địa bàn', 'Đa kênh: SMS/MXH/Loa', 'Dịch sang tiếng dân tộc'],
@@ -353,7 +353,7 @@ function renderSpecializedAgents() {
     },
     {
       icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2', icon2: 'M13 5a2 2 0 00-4 0H7v4h10V5h-4',
-      name: 'Field Inspector AI', badge: 'Tuần tra', badgeColor: '#8b5cf6',
+      name: 'Field Inspector AI', badge: 'Tuần tra', badgeColor: 'var(--purple)',
       desc: 'Hỗ trợ đội tuần tra đê qua mobile: nhận ảnh hiện trường, phân loại sự cố (sụt đê, tổ mối, rò rỉ...), đề xuất biện pháp, mức ưu tiên xử lý.',
       status: 'active', tasks: 5, accuracy: '92.8%', lastRun: '21:30',
       caps: ['Nhận diện loại sự cố', 'Phân loại ưu tiên A/B/C', 'Đề xuất biện pháp', 'Tự động tạo phiếu SC'],
@@ -364,7 +364,7 @@ function renderSpecializedAgents() {
     : `<span class="badge badge-gray" style="font-size:10px">○ Chờ kích hoạt</span>`;
   return `
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-    ${[['6','Agents đã cấu hình','var(--cyan)'],['3','Đang hoạt động','var(--green)'],['18','Tasks hôm nay','var(--yellow)'],['93.1%','Độ chính xác TB','var(--purple)']].map(([v,l,c]) => `
+    ${[['6','Agents đã cấu hình','var(--primary)'],['3','Đang hoạt động','var(--success)'],['18','Tasks hôm nay','var(--warning)'],['93.1%','Độ chính xác TB','var(--purple)']].map(([v,l,c]) => `
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px">
       <div style="font-size:22px;font-weight:800;color:${c}">${v}</div>
       <div style="font-size:11px;color:var(--muted);margin-top:2px">${l}</div>
@@ -395,7 +395,7 @@ function renderSpecializedAgents() {
         ${a.caps.map(c => `<span style="font-size:10px;padding:2px 8px;border-radius:4px;background:${a.badgeColor}15;color:${a.badgeColor};border:1px solid ${a.badgeColor}30">${c}</span>`).join('')}
       </div>
       <div style="display:flex;justify-content:space-between;padding-top:10px;border-top:1px solid var(--border);font-size:11px;color:var(--muted)">
-        <span>Độ chính xác: <strong style="color:var(--green)">${a.accuracy}</strong></span>
+        <span>Độ chính xác: <strong style="color:var(--success)">${a.accuracy}</strong></span>
         <span>Lần cuối: <strong>${a.lastRun}</strong></span>
         <button class="btn btn-ghost btn-sm" style="padding:2px 8px;font-size:10px" onclick="agentHistory('${a.name}','${a.accuracy}','${a.lastRun}')">Lịch sử</button>
       </div>
@@ -423,7 +423,7 @@ function renderAgentStats() {
   ];
   return `
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-    ${[['1,259','Lần chạy tháng này','var(--cyan)'],['1,242','Thành công','var(--green)'],['6,745','AI Credits dùng','var(--yellow)'],['98.6%','Tỷ lệ thành công','var(--purple)']].map(([v,l,c]) => `
+    ${[['1,259','Lần chạy tháng này','var(--primary)'],['1,242','Thành công','var(--success)'],['6,745','AI Credits dùng','var(--warning)'],['98.6%','Tỷ lệ thành công','var(--purple)']].map(([v,l,c]) => `
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px">
       <div style="font-size:22px;font-weight:800;color:${c}">${v}</div>
       <div style="font-size:11px;color:var(--muted);margin-top:2px">${l}</div>
@@ -436,10 +436,10 @@ function renderAgentStats() {
       <tbody>${rows.map(r => `<tr>
         <td style="font-weight:600;font-size:13px">${r.name}</td>
         <td class="mono">${r.runs}</td>
-        <td class="mono" style="color:var(--green)">${r.ok}</td>
+        <td class="mono" style="color:var(--success)">${r.ok}</td>
         <td>${r.runs > 0 ? `<span class="badge badge-${r.ok/r.runs >= 0.95 ? 'green' : 'yellow'}">${(r.ok/r.runs*100).toFixed(0)}%</span>` : '<span class="badge badge-gray">—</span>'}</td>
         <td style="font-size:12px;color:var(--muted)">${r.avg}</td>
-        <td class="mono" style="color:var(--yellow)">${r.credits.toLocaleString()}</td>
+        <td class="mono" style="color:var(--warning)">${r.credits.toLocaleString()}</td>
       </tr>`).join('')}
       </tbody>
     </table></div>
@@ -514,10 +514,10 @@ window.agentStop = function(name) {
 window.agentActivate = function(name) {
   if (typeof openModal !== 'function') return;
   openModal(`
-  <div class="modal-header"><span class="modal-title" style="color:var(--green)">Kích hoạt — ${name}</span>
+  <div class="modal-header"><span class="modal-title" style="color:var(--success)">Kích hoạt — ${name}</span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div class="modal-body">
-    <div style="background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.2);border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:rgba(255,255,255,.6)">
+    <div style="background:rgba(41,132,238,.06);border:1px solid rgba(41,132,238,.2);border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:12px;color:rgba(255,255,255,.6)">
       Agent sẽ bắt đầu hoạt động ngay sau khi kích hoạt và tiêu thụ AI Credits.
     </div>
     <div class="form-group"><label class="form-label">Lịch chạy</label>
@@ -541,7 +541,7 @@ window.agentHistory = function(name, accuracy, lastRun) {
     { time: '12/03/2026 22:00', action: 'Xử lý tự động', status:'success', detail: 'Báo cáo đã gửi cho 3 người nhận.' },
     { time: '12/03/2026 08:00', action: 'Bảo trì', status:'info', detail: 'Cập nhật mô hình AI v2.3.1 thành công.' },
   ];
-  const sc = { success:'var(--green)', warn:'var(--yellow)', info:'var(--cyan)' };
+  const sc = { success:'var(--success)', warn:'var(--warning)', info:'var(--primary)' };
   openModal(`
   <div class="modal-header"><span class="modal-title">Lịch sử — ${name}</span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
@@ -549,17 +549,17 @@ window.agentHistory = function(name, accuracy, lastRun) {
     <div style="display:flex;gap:12px;margin-bottom:16px">
       <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:10px 14px;flex:1">
         <div style="font-size:10px;color:var(--muted);margin-bottom:3px">Độ chính xác</div>
-        <div style="font-size:18px;font-weight:800;color:var(--green)">${accuracy}</div>
+        <div style="font-size:18px;font-weight:800;color:var(--success)">${accuracy}</div>
       </div>
       <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:8px;padding:10px 14px;flex:1">
         <div style="font-size:10px;color:var(--muted);margin-bottom:3px">Lần chạy gần nhất</div>
-        <div style="font-size:14px;font-weight:700;color:var(--cyan)">${lastRun}</div>
+        <div style="font-size:14px;font-weight:700;color:var(--primary)">${lastRun}</div>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:8px">
       ${mockLog.map(l => `
       <div style="display:flex;gap:10px;padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;align-items:flex-start">
-        <div style="width:8px;height:8px;border-radius:50%;background:${sc[l.status]||'#6b7280'};margin-top:5px;flex-shrink:0"></div>
+        <div style="width:8px;height:8px;border-radius:50%;background:${sc[l.status]||'var(--text-subtle)'};margin-top:5px;flex-shrink:0"></div>
         <div style="flex:1">
           <div style="display:flex;justify-content:space-between;margin-bottom:3px">
             <span style="font-size:12px;font-weight:600">${l.action}</span>
@@ -577,7 +577,7 @@ window.agentMarketplace = function() {
   const agents = [
     { name:'Water Quality Predictor', badge:'Chất lượng nước', color:'#06b6d4', price:'Free', desc:'Dự báo chất lượng nước dựa trên pH, DO, độ đục.' },
     { name:'CCTV Intrusion AI', badge:'An ninh', color:'#f59e0b', price:'Credits', desc:'Phát hiện xâm nhập trái phép qua camera CCTV.' },
-    { name:'Pump Failure Predictor', badge:'Cơ điện', color:'#8b5cf6', price:'Credits', desc:'Dự báo sự cố máy bơm dựa trên rung động, nhiệt độ.' },
+    { name:'Pump Failure Predictor', badge:'Cơ điện', color:'var(--purple)', price:'Credits', desc:'Dự báo sự cố máy bơm dựa trên rung động, nhiệt độ.' },
     { name:'Rainfall Nowcasting', badge:'Thủy văn', color:'#3b82f6', price:'Free', desc:'Dự báo mưa siêu ngắn hạn (0-6h) từ radar VDMS.' },
   ];
   openModal(`
@@ -593,7 +593,7 @@ window.agentMarketplace = function() {
       <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:14px">
         <div style="display:flex;justify-content:space-between;margin-bottom:8px">
           <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:${a.color}18;color:${a.color};border:1px solid ${a.color}30">${a.badge}</span>
-          <span style="font-size:10px;color:${a.price==='Free'?'var(--green)':'var(--yellow)'};font-weight:700">${a.price}</span>
+          <span style="font-size:10px;color:${a.price==='Free'?'var(--success)':'var(--warning)'};font-weight:700">${a.price}</span>
         </div>
         <div style="font-size:13px;font-weight:700;margin-bottom:5px">${a.name}</div>
         <div style="font-size:11px;color:var(--muted);margin-bottom:10px;line-height:1.5">${a.desc}</div>

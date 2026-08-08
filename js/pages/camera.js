@@ -69,9 +69,9 @@ const CAM_POSITION_IMAGE = {
 // ── LOCATION TAXONOMY ──────────────────────────────────────────────
 const CAM_LOCATION_TYPES = {
   'Cổng & Bảo vệ': { positions: ['Cổng vào', 'Cổng ra', 'Sân trước', 'Bảo vệ'], icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M13 4h3a2 2 0 012 2v14"/><path d="M2 20h3"/><path d="M13 20h9"/><path d="M10 12v.01"/><path d="M13 4l-8 2v14l8 4V4z"/></svg>', color: '#00c8ff' },
-  'Khu xử lý & Bơm': { positions: ['Bơm chính', 'Khu vực xử lý', 'Xưởng bơm'], icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>', color: '#00e676' },
+  'Khu xử lý & Bơm': { positions: ['Bơm chính', 'Khu vực xử lý', 'Xưởng bơm'], icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>', color: 'var(--success)' },
   'Bể chứa & Hồ lắng': { positions: ['Bể nước', 'Bể chứa', 'Hồ lắng'], icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M12 2C12 2 4 10 4 14a8 8 0 0016 0C20 10 12 2 12 2z"/></svg>', color: '#0055dd' },
-  'Phòng điều khiển': { positions: ['Phòng điều khiển', 'Phòng kỹ thuật', 'Hành lang'], icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>', color: '#7c4dff' },
+  'Phòng điều khiển': { positions: ['Phòng điều khiển', 'Phòng kỹ thuật', 'Hành lang'], icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>', color: '#2984EE' },
   'Khu hóa chất': { positions: ['Khu vực hóa chất', 'Kho hóa chất'], icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v11m0 0a2 2 0 002 2h4a2 2 0 002-2V3M9 14l-3 7h12l-3-7"/></svg>', color: '#ffca28' },
   'Vành đai & An ninh': { positions: ['Tường rào', 'Cầu thang'], icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>', color: '#ff5722' },
 };
@@ -175,7 +175,7 @@ let camActivePage = 'live';
 let camLiveTimer = null;
 
 // ── HELPERS ────────────────────────────────────────────────────────
-const camStatusColor = s => ({ online: '#00e676', warning: '#ffca28', offline: '#ff1744' }[s] || '#546e7a');
+const camStatusColor = s => ({ online: 'var(--success)', warning: '#ffca28', offline: '#ff1744' }[s] || 'var(--muted)');
 const camStatusLabel = s => ({ online: 'Trực tuyến', warning: 'Cảnh báo', offline: 'Ngoại tuyến' }[s] || s);
 const camStatusClass = s => ({ online: 'green', warning: 'yellow', offline: 'red' }[s] || 'gray');
 function camUptimeStr(mins) {
@@ -223,7 +223,7 @@ function camRenderFrame(cam, mode = 'tile') {
 
   if (cam.status === 'offline') {
     return `<div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:${isDetail ? '10px' : '5px'};background:rgba(10,10,20,1)">
-      <svg width="${isDetail ? 40 : 24}" height="${isDetail ? 40 : 24}" viewBox="0 0 24 24" fill="none" stroke="#ff1744" stroke-width="1.5"><path d="M17 9.5v4.5L22 17V7L17 9.5z"/><line x1="1" y1="1" x2="23" y2="23" stroke="#ff1744"/><path d="M9.78 9.78A6.97 6.97 0 007 14H2V8h5.78M16 16H2a2 2 0 01-2-2V8a2 2 0 012-2h3"/></svg>
+      <svg width="${isDetail ? 40 : 24}" height="${isDetail ? 40 : 24}" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="1.5"><path d="M17 9.5v4.5L22 17V7L17 9.5z"/><line x1="1" y1="1" x2="23" y2="23" stroke="var(--danger)"/><path d="M9.78 9.78A6.97 6.97 0 007 14H2V8h5.78M16 16H2a2 2 0 01-2-2V8a2 2 0 012-2h3"/></svg>
       <span style="font-size:${isDetail ? '12' : '9'}px;color:#ff1744;letter-spacing:.5px;text-align:center">MẤT TÍN HIỆU<br><span style="font-size:9px;opacity:.6">${cam.lastEvent || ''}</span></span>
     </div>`;
   }
@@ -307,14 +307,14 @@ function camRenderFilterBar() {
       ['4x4', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="3.5" height="3.5"/><rect x="7.5" y="2" width="3.5" height="3.5"/><rect x="13" y="2" width="3.5" height="3.5"/><rect x="18.5" y="2" width="3.5" height="3.5"/><rect x="2" y="7.5" width="3.5" height="3.5"/><rect x="7.5" y="7.5" width="3.5" height="3.5"/><rect x="13" y="7.5" width="3.5" height="3.5"/><rect x="18.5" y="7.5" width="3.5" height="3.5"/></svg>', '4×4'],
       ['list', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>', 'List']
     ].map(([v, icon, tooltip]) => `
-            <button onclick="camGridMode='${v}';camCurrentPage=1;camRefresh()" title="${tooltip}" style="width:32px;height:32px;border-radius:6px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;${camGridMode === v ? 'background:rgba(0,200,255,.2);color:var(--cyan);box-shadow:0 0 0 1px var(--cyan)' : 'background:transparent;color:var(--muted)'}">
+            <button onclick="camGridMode='${v}';camCurrentPage=1;camRefresh()" title="${tooltip}" style="width:32px;height:32px;border-radius:6px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;${camGridMode === v ? 'background:rgba(0,200,255,.2);color:var(--primary);box-shadow:0 0 0 1px var(--primary)' : 'background:transparent;color:var(--muted)'}">
               ${icon}
             </button>`).join('')}
         </div>
 
         <!-- Count info -->
         <div style="font-size:12px; color:var(--muted)">
-          Đang hiển thị <span style="color:var(--text);font-weight:600">${filteredCount === 0 ? 0 : startIdx + 1}-${endIdx}</span> trên <span style="color:var(--cyan);font-weight:700">${filteredCount}</span> camera 
+          Đang hiển thị <span style="color:var(--text);font-weight:600">${filteredCount === 0 ? 0 : startIdx + 1}-${endIdx}</span> trên <span style="color:var(--primary);font-weight:700">${filteredCount}</span> camera 
           ${camFilterSite !== 'all' || camFilterLocType !== 'all' ? `<span style="opacity:0.6">(Tổng ${totalCams})</span>` : ''}
         </div>
       </div>
@@ -338,7 +338,7 @@ function camRenderPageNumbers(totalPages) {
       if (i === 4) html += '<span style="color:var(--muted)">...</span>';
       continue;
     }
-    html += `<button onclick="camCurrentPage=${i};camRefresh()" style="width:26px;height:26px;border-radius:6px;border:none;cursor:pointer;font-size:11px;font-weight:600;transition:.2s;${camCurrentPage === i ? 'background:var(--cyan);color:#000' : 'background:rgba(255,255,255,.05);color:var(--text)'}">${i}</button>`;
+    html += `<button onclick="camCurrentPage=${i};camRefresh()" style="width:26px;height:26px;border-radius:6px;border:none;cursor:pointer;font-size:11px;font-weight:600;transition:.2s;${camCurrentPage === i ? 'background:var(--primary);color:#000' : 'background:rgba(255,255,255,.05);color:var(--text)'}">${i}</button>`;
   }
   return html;
 }
@@ -346,10 +346,10 @@ function camRenderPageNumbers(totalPages) {
 function camRenderActiveFilterTags() {
   return `
   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
-    ${camFilterLocType !== 'all' ? `<div style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.22);border-radius:20px;font-size:11px;color:var(--cyan)">${CAM_LOCATION_TYPES[camFilterLocType]?.icon} ${camFilterLocType} <span onclick="camFilterLocType='all';camFilterSubLoc='all';camRefresh()" style="cursor:pointer;margin-left:3px;opacity:.7">×</span></div>` : ''}
-    ${camFilterSite !== 'all' ? `<div style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;background:rgba(124,77,255,.08);border:1px solid rgba(124,77,255,.22);border-radius:20px;font-size:11px;color:var(--purple)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg> ${camFilterSite} <span onclick="camFilterSite='all';camFilterSubLoc='all';camRefresh()" style="cursor:pointer;margin-left:3px;opacity:.7">×</span></div>` : ''}
-    ${camFilterSubLoc !== 'all' ? `<div style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;background:rgba(0,230,118,.08);border:1px solid rgba(0,230,118,.22);border-radius:20px;font-size:11px;color:var(--green)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> ${camFilterSubLoc} <span onclick="camFilterSubLoc='all';camRefresh()" style="cursor:pointer;margin-left:3px;opacity:.7">×</span></div>` : ''}
-    ${camFilterStatus !== 'all' ? `<div style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;background:rgba(255,202,40,.08);border:1px solid rgba(255,202,40,.22);border-radius:20px;font-size:11px;color:var(--yellow)">${camStatusLabel(camFilterStatus)} <span onclick="camFilterStatus='all';camRefresh()" style="cursor:pointer;margin-left:3px;opacity:.7">×</span></div>` : ''}
+    ${camFilterLocType !== 'all' ? `<div style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.22);border-radius:20px;font-size:11px;color:var(--primary)">${CAM_LOCATION_TYPES[camFilterLocType]?.icon} ${camFilterLocType} <span onclick="camFilterLocType='all';camFilterSubLoc='all';camRefresh()" style="cursor:pointer;margin-left:3px;opacity:.7">×</span></div>` : ''}
+    ${camFilterSite !== 'all' ? `<div style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;background:rgba(41,132,238,.08);border:1px solid rgba(41,132,238,.22);border-radius:20px;font-size:11px;color:var(--purple)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg> ${camFilterSite} <span onclick="camFilterSite='all';camFilterSubLoc='all';camRefresh()" style="cursor:pointer;margin-left:3px;opacity:.7">×</span></div>` : ''}
+    ${camFilterSubLoc !== 'all' ? `<div style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;background:rgba(41,132,238,.08);border:1px solid rgba(41,132,238,.22);border-radius:20px;font-size:11px;color:var(--success)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> ${camFilterSubLoc} <span onclick="camFilterSubLoc='all';camRefresh()" style="cursor:pointer;margin-left:3px;opacity:.7">×</span></div>` : ''}
+    ${camFilterStatus !== 'all' ? `<div style="display:inline-flex;align-items:center;gap:4px;padding:3px 10px;background:rgba(255,202,40,.08);border:1px solid rgba(255,202,40,.22);border-radius:20px;font-size:11px;color:var(--warning)">${camStatusLabel(camFilterStatus)} <span onclick="camFilterStatus='all';camRefresh()" style="cursor:pointer;margin-left:3px;opacity:.7">×</span></div>` : ''}
   </div>`;
 }
 
@@ -402,7 +402,7 @@ function camViewLive() {
         onmouseover="this.style.borderColor='rgba(0,200,255,.5)';this.style.transform='scale(1.012)'"
         onmouseout="this.style.borderColor='${borderColor}';this.style.transform='scale(1)'">
         <!-- Video frame -->
-        <div style="aspect-ratio:16/9;overflow:hidden;position:relative;background:#030e1c">
+        <div style="aspect-ratio:16/9;overflow:hidden;position:relative;background:var(--bg-base)">
           ${camRenderFrame(c, 'tile')}
         </div>
         <!-- Info bar -->
@@ -433,8 +433,8 @@ function camViewNvr() {
     ${window.CAM_DATA.nvrs.map(nvr => {
     const usedPct = Math.round(nvr.hdUsed / nvr.hdd * 100);
     const bwPct = Math.round(nvr.bandwidth / window.CAM_DATA.totalBandwidth * 100);
-    const bwColor = bwPct > 85 ? 'var(--red)' : bwPct > 65 ? 'var(--yellow)' : 'var(--green)';
-    const diskColor = usedPct > 85 ? 'var(--red)' : usedPct > 65 ? 'var(--yellow)' : 'var(--cyan)';
+    const bwColor = bwPct > 85 ? 'var(--danger)' : bwPct > 65 ? 'var(--warning)' : 'var(--success)';
+    const diskColor = usedPct > 85 ? 'var(--danger)' : usedPct > 65 ? 'var(--warning)' : 'var(--primary)';
     const online = window.CAM_DATA.cameras.filter(c => nvr.cams.includes(c.id) && c.status === 'online').length;
     const warn = window.CAM_DATA.cameras.filter(c => nvr.cams.includes(c.id) && c.status === 'warning').length;
     const offline = window.CAM_DATA.cameras.filter(c => nvr.cams.includes(c.id) && c.status === 'offline').length;
@@ -482,13 +482,13 @@ function camViewNvr() {
         <div style="font-size:12px;color:var(--muted);margin-top:3px">Đường truyền riêng · Tách biệt với mạng CNTT dùng chung</div>
       </div>
       <div style="display:flex;align-items:baseline;gap:6px">
-        <span style="font-size:30px;font-weight:700;color:var(--cyan);font-family:'Roboto Mono',monospace">${window.CAM_DATA.nvrs.reduce((s, n) => s + n.bandwidth, 0)}</span>
+        <span style="font-size:30px;font-weight:700;color:var(--primary);font-family:'Roboto Mono',monospace">${window.CAM_DATA.nvrs.reduce((s, n) => s + n.bandwidth, 0)}</span>
         <span style="color:var(--muted)">/</span>
-        <span style="font-size:24px;color:var(--green);font-family:'Roboto Mono',monospace">${window.CAM_DATA.totalBandwidth} Mbps</span>
+        <span style="font-size:24px;color:var(--success);font-family:'Roboto Mono',monospace">${window.CAM_DATA.totalBandwidth} Mbps</span>
       </div>
     </div>
     <div class="progress-bar" style="margin-top:12px;height:8px">
-      <div class="progress-fill" style="width:${Math.round(window.CAM_DATA.nvrs.reduce((s, n) => s + n.bandwidth, 0) / window.CAM_DATA.totalBandwidth * 100)}%;background:linear-gradient(90deg,var(--cyan),#0055dd)"></div>
+      <div class="progress-fill" style="width:${Math.round(window.CAM_DATA.nvrs.reduce((s, n) => s + n.bandwidth, 0) / window.CAM_DATA.totalBandwidth * 100)}%;background:linear-gradient(90deg,var(--primary),#0055dd)"></div>
     </div>
   </div>`;
 }
@@ -505,9 +505,9 @@ function camViewStorage() {
   const dailyGB = Math.round(parseFloat(avgBitrate) * onlineCams * 3600 * 24 / 8 / 1024);
   return `
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px">
-      ${[{ label: 'Tổng HDD', value: `${totalHdd} TB`, sub: `${freeHdd} TB trống`, color: 'var(--cyan)' },
-    { label: 'Đã dùng', value: `${usedHdd.toFixed(1)} TB`, sub: `${usedPct}% dung lượng`, color: usedPct > 80 ? 'var(--red)' : 'var(--yellow)' },
-    { label: 'Lưu trữ TB', value: `${window.CAM_DATA.storageRetentionDays} ngày`, sub: 'Theo cấu hình hiện tại', color: 'var(--green)' },
+      ${[{ label: 'Tổng HDD', value: `${totalHdd} TB`, sub: `${freeHdd} TB trống`, color: 'var(--primary)' },
+    { label: 'Đã dùng', value: `${usedHdd.toFixed(1)} TB`, sub: `${usedPct}% dung lượng`, color: usedPct > 80 ? 'var(--danger)' : 'var(--warning)' },
+    { label: 'Lưu trữ TB', value: `${window.CAM_DATA.storageRetentionDays} ngày`, sub: 'Theo cấu hình hiện tại', color: 'var(--success)' },
     { label: 'Ghi hình/ngày', value: `~${dailyGB} GB`, sub: `${avgBitrate} Mbps avg`, color: 'var(--purple)' }
     ].map(c => `
     <div class="kpi-card" style="--accent-color:${c.color}">
@@ -521,7 +521,7 @@ function camViewStorage() {
     <div style="padding:16px;display:flex;flex-direction:column;gap:16px">
       ${window.CAM_DATA.nvrs.map(nvr => {
       const pct = Math.round(nvr.hdUsed / nvr.hdd * 100);
-      const color = pct > 85 ? 'var(--red)' : pct > 65 ? 'var(--yellow)' : 'var(--cyan)';
+      const color = pct > 85 ? 'var(--danger)' : pct > 65 ? 'var(--warning)' : 'var(--primary)';
       const retDays = Math.round(window.CAM_DATA.storageRetentionDays * nvr.hdd / 16 * (1 - pct / 100 * 0.3));
       return `<div>
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
@@ -538,8 +538,8 @@ function camViewStorage() {
     <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg> Thông tin lưu trữ hệ thống</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px">
       ${[['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>', 'rgba(0,200,255,.04)', 'rgba(0,200,255,.08)', 'Ghi hình liên tục 24/7', `Toàn bộ ${totalCams} camera`],
-    ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>', 'rgba(124,77,255,.04)', 'rgba(124,77,255,.08)', 'Tự động ghi đè khi đầy', 'Vòng lặp tự động theo NVR'],
-    ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>', 'rgba(0,230,118,.04)', 'rgba(0,230,118,.08)', '04 đầu ghi NVR', `${totalHdd}TB · ${window.CAM_DATA.nvrs.reduce((s, n) => s + n.channels, 0)} kênh`],
+    ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 014-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>', 'rgba(41,132,238,.04)', 'rgba(41,132,238,.08)', 'Tự động ghi đè khi đầy', 'Vòng lặp tự động theo NVR'],
+    ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>', 'rgba(41,132,238,.04)', 'rgba(41,132,238,.08)', '04 đầu ghi NVR', `${totalHdd}TB · ${window.CAM_DATA.nvrs.reduce((s, n) => s + n.channels, 0)} kênh`],
     ['<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>', 'rgba(255,202,40,.04)', 'rgba(255,202,40,.08)', 'Màn hình hiển thị', '4× TV 65" + 1× TV 55"']
     ].map(([em, bg, bd, t, s]) => `
       <div style="display:flex;gap:10px;align-items:center;padding:10px;background:${bg};border-radius:8px;border:1px solid ${bd}">
@@ -568,24 +568,24 @@ function renderCamera() {
       <div style="display:flex;align-items:center;gap:8px;padding:5px 12px;background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.15);border-radius:8px">
         <div class="pulse-dot green"></div>
         <span style="font-size:12px;color:var(--muted)">LIVE</span>
-        <span id="camLiveClock" style="font-size:12px;font-family:'Roboto Mono',monospace;color:var(--cyan)"></span>
+        <span id="camLiveClock" style="font-size:12px;font-family:'Roboto Mono',monospace;color:var(--primary)"></span>
       </div>
     </div>
   </div>
 
   <!-- KPI pills -->
   <div style="display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;background:rgba(0,230,118,.07);border:1px solid rgba(0,230,118,.2);border-radius:10px">
-      <div class="pulse-dot green"></div><span style="font-size:13px;font-weight:600;color:var(--green)">${onlineCams} Online</span>
+    <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;background:rgba(41,132,238,.07);border:1px solid rgba(41,132,238,.2);border-radius:10px">
+      <div class="pulse-dot green"></div><span style="font-size:13px;font-weight:600;color:var(--success)">${onlineCams} Online</span>
     </div>
     <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;background:rgba(255,202,40,.07);border:1px solid rgba(255,202,40,.2);border-radius:10px">
-      <div class="pulse-dot yellow"></div><span style="font-size:13px;font-weight:600;color:var(--yellow)">${warnCams} Cảnh báo</span>
+      <div class="pulse-dot yellow"></div><span style="font-size:13px;font-weight:600;color:var(--warning)">${warnCams} Cảnh báo</span>
     </div>
     <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;background:rgba(255,23,68,.07);border:1px solid rgba(255,23,68,.2);border-radius:10px">
-      <div class="pulse-dot red"></div><span style="font-size:13px;font-weight:600;color:var(--red)">${offlineCams} Offline</span>
+      <div class="pulse-dot red"></div><span style="font-size:13px;font-weight:600;color:var(--danger)">${offlineCams} Offline</span>
     </div>
     <div style="flex:1"></div>
-    <div style="display:flex;align-items:center;gap:8px;padding:7px 14px;background:rgba(124,77,255,.07);border:1px solid rgba(124,77,255,.2);border-radius:10px">
+    <div style="display:flex;align-items:center;gap:8px;padding:7px 14px;background:rgba(41,132,238,.07);border:1px solid rgba(41,132,238,.2);border-radius:10px">
       <span style="font-size:14px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
       <span style="font-size:12px;color:var(--purple);font-weight:600">${camData.displayScreens.tv65}× TV 65" + ${camData.displayScreens.tv55}× TV 55"</span>
     </div>
@@ -594,7 +594,7 @@ function renderCamera() {
   <!-- Location type quick-filters -->
   <!-- <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
     <button onclick="camFilterLocType='all';camFilterSubLoc='all';camRefresh()"
-      style="padding:5px 12px;border-radius:20px;border:1px solid ${camFilterLocType === 'all' ? 'rgba(0,200,255,.4)' : 'rgba(255,255,255,.1)'};background:${camFilterLocType === 'all' ? 'rgba(0,200,255,.1)' : 'rgba(255,255,255,.03)'};color:${camFilterLocType === 'all' ? 'var(--cyan)' : 'var(--muted)'};cursor:pointer;font-size:11px;font-family:'Inter',sans-serif;transition:all .15s">
+      style="padding:5px 12px;border-radius:20px;border:1px solid ${camFilterLocType === 'all' ? 'rgba(0,200,255,.4)' : 'rgba(255,255,255,.1)'};background:${camFilterLocType === 'all' ? 'rgba(0,200,255,.1)' : 'rgba(255,255,255,.03)'};color:${camFilterLocType === 'all' ? 'var(--primary)' : 'var(--muted)'};cursor:pointer;font-size:11px;font-family:'Inter',sans-serif;transition:all .15s">
       Tất cả
     </button>
     ${Object.entries(CAM_LOCATION_TYPES).map(([name, lt]) => `
@@ -609,7 +609,7 @@ function renderCamera() {
   <div style="display:flex;align-items:center;gap:4px;margin-bottom:14px;background:rgba(255,255,255,.03);border:1px solid rgba(0,200,255,.08);border-radius:10px;padding:4px;width:fit-content">
     ${[{ id: 'live', label: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg> Hình ảnh Live' }, { id: 'nvr', label: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg> Đầu ghi NVR' }, { id: 'storage', label: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg> Lưu trữ' }].map(t => `
     <button onclick="camSwitchTab('${t.id}')"
-      style="padding:7px 16px;border-radius:7px;border:none;cursor:pointer;font-size:12px;font-weight:600;font-family:'Inter',sans-serif;transition:all .2s;${camActivePage === t.id ? 'background:rgba(0,200,255,.15);color:var(--cyan);border:1px solid rgba(0,200,255,.3)' : 'background:transparent;color:var(--muted);border:1px solid transparent'}">
+      style="padding:7px 16px;border-radius:7px;border:none;cursor:pointer;font-size:12px;font-weight:600;font-family:'Inter',sans-serif;transition:all .2s;${camActivePage === t.id ? 'background:rgba(0,200,255,.15);color:var(--primary);border:1px solid rgba(0,200,255,.3)' : 'background:transparent;color:var(--muted);border:1px solid transparent'}">
       ${t.label}
     </button>`).join('')}
   </div>
@@ -679,7 +679,7 @@ function camOpenDetail(camId) {
     </div>
 
     <!--Feed -->
-    <div style="aspect-ratio:16/9;background:#030e1c;border-radius:10px;overflow:hidden;margin-bottom:16px;border:1px solid rgba(0,200,255,.15);position:relative">
+    <div style="aspect-ratio:16/9;background:var(--bg-base);border-radius:10px;overflow:hidden;margin-bottom:16px;border:1px solid rgba(0,200,255,.15);position:relative">
       ${camRenderFrame(cam, 'detail')}
     </div>
 
@@ -736,8 +736,8 @@ function camOpenPlayback(camId) {
       <div style="aspect-ratio:16/9;background:#000;border-radius:10px;position:relative;overflow:hidden;margin-bottom:15px;border:1px solid rgba(0,200,255,.2)">
         <img src="${CAM_IMAGES[cam.imageKey]}" style="width:100%;height:100%;object-fit:cover;opacity:0.6;filter:grayscale(0.5)">
         <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center">
-          <div style="width:60px;height:60px;background:rgba(0,200,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--cyan)">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--cyan)"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <div style="width:60px;height:60px;background:rgba(0,200,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid var(--primary)">
+             <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary)"><polygon points="5 3 19 12 5 21 5 3"/></svg>
           </div>
         </div>
         <div style="position:absolute;top:10px;left:10px;background:rgba(0,0,0,.6);padding:4px 8px;border-radius:4px;font-size:10px;font-family:'Roboto Mono',monospace">HISTORY - 01/03/2026 14:20:33</div>
@@ -747,10 +747,10 @@ function camOpenPlayback(camId) {
       <div style="margin-bottom:15px">
         <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:5px">
           <span>14:00:00</span>
-          <span style="color:var(--cyan)">14:20:33</span>
+          <span style="color:var(--primary)">14:20:33</span>
           <span>15:00:00</span>
         </div>
-        <input type="range" style="width:100%;accent-color:var(--cyan);cursor:pointer">
+        <input type="range" style="width:100%;accent-color:var(--primary);cursor:pointer">
       </div>
 
       <!--Controls -->

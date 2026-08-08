@@ -132,27 +132,27 @@ function renderAiSmartPanel() {
   ];
 
   return `
-<div style="background:rgba(167,139,250,.06);border:1px solid rgba(167,139,250,.2);border-radius:14px;padding:14px 16px;margin-bottom:14px">
+<div style="background:rgba(91,169,255,.06);border:1px solid rgba(91,169,255,.2);border-radius:14px;padding:14px 16px;margin-bottom:14px">
   <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-    <div style="width:28px;height:28px;border-radius:8px;background:rgba(167,139,250,.15);display:flex;align-items:center;justify-content:center">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/></svg>
+    <div style="width:28px;height:28px;border-radius:8px;background:rgba(91,169,255,.15);display:flex;align-items:center;justify-content:center">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/></svg>
     </div>
     <div>
-      <div style="font-size:12px;font-weight:800;color:#a78bfa">Trợ lý AI PCTT</div>
-      <div style="font-size:10px;color:rgba(167,139,250,.6)">Nhận biết ${c.open.length} sự cố mở · ${c.stations.length} trạm đo</div>
+      <div style="font-size:12px;font-weight:800;color:#5BA9FF">Trợ lý AI PCTT</div>
+      <div style="font-size:10px;color:rgba(91,169,255,.6)">Nhận biết ${c.open.length} sự cố mở · ${c.stations.length} trạm đo</div>
     </div>
     <div style="flex:1"></div>
-    <div class="pulse-dot" style="background:#a78bfa;width:6px;height:6px;box-shadow:0 0 6px #a78bfa"></div>
+    <div class="pulse-dot" style="background:#5BA9FF;width:6px;height:6px;box-shadow:0 0 6px #5BA9FF"></div>
   </div>
   <!-- Quick query chips -->
   <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
     ${queries.map(q => `
     <button onclick="aiRunQuery(this, '${q}')" style="padding:4px 10px;border-radius:20px;font-size:11px;font-weight:600;
-      background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);color:#c4b5fd;cursor:pointer;transition:all .2s"
-      onmouseover="this.style.background='rgba(167,139,250,.2)'" onmouseout="this.style.background='rgba(167,139,250,.1)'">${q}</button>`).join('')}
+      background:rgba(91,169,255,.1);border:1px solid rgba(91,169,255,.25);color:#8CC5FF;cursor:pointer;transition:all .2s"
+      onmouseover="this.style.background='rgba(91,169,255,.2)'" onmouseout="this.style.background='rgba(91,169,255,.1)'">${q}</button>`).join('')}
   </div>
   <!-- Answer area -->
-  <div id="aiSmartAnswer" style="min-height:40px;font-size:12px;color:rgba(255,255,255,.7);line-height:1.6;background:rgba(0,0,0,.2);border-radius:8px;padding:10px;display:none"></div>
+  <div id="aiSmartAnswer" style="min-height:40px;font-size:12px;color:var(--text-2);line-height:1.6;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:10px;display:none"></div>
 </div>`;
 }
 
@@ -176,7 +176,7 @@ function renderDispatchRecommendation() {
   const incidents = [...c.critical, ...c.open.filter(i=>i.severity==='high' && !c.critical.includes(i))].slice(0, 4);
   return `
 <div style="margin-top:10px">
-  <div style="font-size:10px;font-weight:700;color:rgba(167,139,250,.6);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">AI Gợi ý điều phối</div>
+  <div style="font-size:10px;font-weight:700;color:rgba(91,169,255,.6);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">AI Gợi ý điều phối</div>
   ${incidents.map((i, idx) => {
     const c2 = i.severity === 'critical' ? '#ef4444' : '#f59e0b';
     return `
@@ -187,7 +187,7 @@ function renderDispatchRecommendation() {
       <div style="font-size:10px;color:rgba(255,255,255,.45)">${i.location}</div>
     </div>
     ${i.assignedTo
-      ? `<span style="font-size:10px;color:#34d399;flex-shrink:0">✓ Đã giao</span>`
+      ? `<span style="font-size:10px;color:var(--success-text);flex-shrink:0">✓ Đã giao</span>`
       : `<button class="btn btn-sm" onclick="viewIncident('${i.id}')" style="font-size:10px;padding:2px 8px;height:auto;background:${c2}22;border:1px solid ${c2}44;color:${c2};border-radius:6px">Phân công</button>`}
   </div>`;
   }).join('')}

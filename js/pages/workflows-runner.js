@@ -25,13 +25,13 @@ function wfRunNow(id) {
   const totalLabel = document.getElementById('wfSimTotal');
   if (totalLabel) totalLabel.textContent = order.length;
 
-  const icons = { trigger:'#ef4444', condition:'#f59e0b', action:'#10b981', ai:'#8b5cf6', control:'#64748b', integration:'#0891b2' };
+  const icons = { trigger:'var(--danger)', condition:'var(--warning-text)', action:'var(--primary)', ai:'var(--primary)', control:'var(--muted)', integration:'var(--primary)' };
   const delay = ms => new Promise(r => setTimeout(r, ms));
 
   async function runSteps() {
     for (let i = 0; i < order.length; i++) {
       const node = order[i];
-      const def  = WF_BLOCK_DEFS.find(d => d.id === node.defId) || { label: node.label, cat:'action', color:'#6b7280' };
+      const def  = WF_BLOCK_DEFS.find(d => d.id === node.defId) || { label: node.label, cat:'action', color:'var(--text-subtle)' };
       const pct  = Math.round(((i + 1) / order.length) * 100);
 
       // Highlight card
@@ -63,8 +63,8 @@ function wfRunNow(id) {
       if (log) {
         log.insertAdjacentHTML('beforeend', `
           <div class="wf-sim-log-entry" style="animation:fadeIn .3s ease">
-            <span style="color:${def.color||'#8b5cf6'};margin-right:6px">
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="${def.color||'#8b5cf6'}"><circle cx="12" cy="12" r="10"/></svg>
+            <span style="color:${def.color||'var(--purple)'};margin-right:6px">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="${def.color||'var(--purple)'}"><circle cx="12" cy="12" r="10"/></svg>
             </span>
             <span style="color:rgba(255,255,255,.5);font-size:10px;margin-right:6px">${new Date().toLocaleTimeString('vi-VN')}</span>
             <span>${def.label}</span>
@@ -77,9 +77,9 @@ function wfRunNow(id) {
     }
 
     // Done
-    if (bar) { bar.style.width = '100%'; bar.style.background = '#10b981'; }
+    if (bar) { bar.style.width = '100%'; bar.style.background = 'var(--success)'; }
     const status = document.getElementById('wfSimStatus');
-    if (status) { status.textContent = 'Hoàn thành'; status.style.color = '#34d399'; }
+    if (status) { status.textContent = 'Hoàn thành'; status.style.color = 'var(--success-text)'; }
     const closeBtn = document.getElementById('wfSimCloseBtn');
     if (closeBtn) closeBtn.textContent = 'Đóng';
 
@@ -93,10 +93,10 @@ function wfRunNow(id) {
 }
 
 function _wfSimOverlay(wf, order) {
-  const colors = { trigger:'#ef4444', condition:'#f59e0b', action:'#10b981', ai:'#8b5cf6', control:'#64748b', integration:'#0891b2' };
+  const colors = { trigger:'var(--danger)', condition:'var(--warning-text)', action:'var(--primary)', ai:'var(--primary)', control:'var(--muted)', integration:'var(--primary)' };
   const nodeCards = order.map((node, i) => {
-    const def = WF_BLOCK_DEFS.find(d => d.id === node.defId) || { label: node.label, cat: 'action', color: '#6b7280', icon: '' };
-    const col = def.color || '#6b7280';
+    const def = WF_BLOCK_DEFS.find(d => d.id === node.defId) || { label: node.label, cat: 'action', color: 'var(--text-subtle)', icon: '' };
+    const col = def.color || 'var(--text-subtle)';
     return `<div class="wf-sim-node" data-idx="${i}" style="--nc:${col}">
       <div class="wf-sim-node-inner">
         <span class="wf-sim-node-icon" style="color:${col}">${def.icon||''}</span>
@@ -105,7 +105,7 @@ function _wfSimOverlay(wf, order) {
           <div style="font-size:10px;color:rgba(255,255,255,.4)">${def.label}</div>
         </div>
         <span class="wf-sim-check">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
         </span>
       </div>
     </div>`;
@@ -114,14 +114,14 @@ function _wfSimOverlay(wf, order) {
   return `
 <style>
 #wfSimOverlay{position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(12px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;animation:fadeIn .25s ease}
-.wf-sim-box{background:#0f0f1a;border:1px solid rgba(139,92,246,.3);border-radius:20px;width:100%;max-width:680px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.6)}
+.wf-sim-box{background:#0f0f1a;border:1px solid rgba(41,132,238,.3);border-radius:20px;width:100%;max-width:680px;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,.6)}
 .wf-sim-header{padding:18px 22px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between}
 .wf-sim-title{font-size:15px;font-weight:800;color:#fff}
 .wf-sim-subtitle{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
 .wf-sim-body{display:flex;flex:1;overflow:hidden}
 .wf-sim-steps{width:220px;flex-shrink:0;padding:16px;overflow-y:auto;border-right:1px solid rgba(255,255,255,.06)}
 .wf-sim-node{border-radius:10px;padding:8px 10px;margin-bottom:4px;border:1px solid rgba(255,255,255,.07);transition:all .3s;background:rgba(255,255,255,.03)}
-.wf-sim-node.wf-sim-active{background:rgba(139,92,246,.12);border-color:rgba(139,92,246,.4);transform:translateX(3px)}
+.wf-sim-node.wf-sim-active{background:rgba(41,132,238,.12);border-color:rgba(41,132,238,.4);transform:translateX(3px)}
 .wf-sim-node.wf-sim-done{opacity:.45}
 .wf-sim-node-inner{display:flex;align-items:center;gap:8px}
 .wf-sim-node-icon{display:flex;align-items:center;flex-shrink:0}
@@ -130,7 +130,7 @@ function _wfSimOverlay(wf, order) {
 .wf-sim-right{flex:1;display:flex;flex-direction:column;overflow:hidden}
 .wf-sim-progress-wrap{padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.06)}
 .wf-sim-prog-bar-bg{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden;margin:8px 0}
-.wf-sim-prog-bar{height:100%;background:linear-gradient(90deg,#7c3aed,#8b5cf6);border-radius:3px;transition:width .5s ease;width:0}
+.wf-sim-prog-bar{height:100%;background:linear-gradient(90deg,var(--purple),var(--purple));border-radius:3px;transition:width .5s ease;width:0}
 .wf-sim-log-area{flex:1;overflow-y:auto;padding:12px 16px}
 .wf-sim-log-entry{font-size:11px;color:rgba(255,255,255,.65);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.04);display:flex;align-items:flex-start;gap:4px;line-height:1.5}
 .wf-sim-footer{padding:12px 18px;border-top:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between}
@@ -160,7 +160,7 @@ function _wfSimOverlay(wf, order) {
     </div>
     <div class="wf-sim-footer">
       <span style="font-size:11px;color:rgba(255,255,255,.35)">${wf.nodes.length} blocks — Môi trường: Sandbox</span>
-      <button id="wfSimCloseBtn" onclick="wfSimClose()" style="padding:7px 18px;border-radius:8px;background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);color:#a78bfa;font-size:12px;font-weight:600;cursor:pointer">Hủy</button>
+      <button id="wfSimCloseBtn" onclick="wfSimClose()" style="padding:7px 18px;border-radius:8px;background:rgba(41,132,238,.15);border:1px solid rgba(41,132,238,.3);color:#5BA9FF;font-size:12px;font-weight:600;cursor:pointer">Hủy</button>
     </div>
   </div>
 </div>`;

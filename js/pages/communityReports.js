@@ -2,11 +2,11 @@
 let crTab = 'pending';
 
 const CR_TYPES = {
-  flooding:          { label: 'Ngập đường / ngõ',                   color: '#0066ff', badge: 'badge-blue'   },
+  flooding:          { label: 'Ngập đường / ngõ',                   color: 'var(--info)', badge: 'badge-blue'   },
   landslide:         { label: 'Sạt lở đất',                         color: '#d97706', badge: 'badge-orange' },
-  tree_fall:         { label: 'Cây đổ nguy hiểm',                   color: '#16a34a', badge: 'badge-green'  },
+  tree_fall:         { label: 'Cây đổ nguy hiểm',                   color: 'var(--success)', badge: 'badge-green'  },
   dike_risk:         { label: 'Đê có dấu hiệu nguy hiểm',           color: '#dc2626', badge: 'badge-red'    },
-  drain_blocked:     { label: 'Cống thoát nước bị tắc',             color: '#7c3aed', badge: 'badge-purple' },
+  drain_blocked:     { label: 'Cống thoát nước bị tắc',             color: 'var(--purple)', badge: 'badge-purple' },
   infra_damage:      { label: 'Công trình bị hư hại',               color: '#f59e0b', badge: 'badge-yellow' },
   vi_pham_hanh_lang: { label: 'Vi phạm hành lang đê / PCTT',        color: '#c2410c', badge: 'badge-red'    },
   other:             { label: 'Sự cố khác',                         color: '#64748b', badge: 'badge-gray'   },
@@ -90,24 +90,24 @@ function renderCommunityReports() {
 
   <!-- KPI Row -->
   <div class="grid-auto" style="margin-bottom:16px">
-    <div class="card kpi-card" style="border-top:2px solid var(--yellow)">
+    <div class="card kpi-card" style="border-top:2px solid var(--warning)">
       <div class="kpi-label">Chờ xử lý</div>
-      <div class="kpi-value" style="color:var(--yellow)">${pending}</div>
+      <div class="kpi-value" style="color:var(--warning)">${pending}</div>
       <div class="kpi-sub">Cần phân công</div>
     </div>
-    <div class="card kpi-card" style="border-top:2px solid var(--blue)">
+    <div class="card kpi-card" style="border-top:2px solid var(--info)">
       <div class="kpi-label">Đang xử lý</div>
-      <div class="kpi-value" style="color:var(--blue)">${proc}</div>
+      <div class="kpi-value" style="color:var(--info)">${proc}</div>
       <div class="kpi-sub">Đã phân công</div>
     </div>
-    <div class="card kpi-card" style="border-top:2px solid var(--red)">
+    <div class="card kpi-card" style="border-top:2px solid var(--danger)">
       <div class="kpi-label">Khẩn cấp</div>
-      <div class="kpi-value" style="color:var(--red)">${critical}</div>
+      <div class="kpi-value" style="color:var(--danger)">${critical}</div>
       <div class="kpi-sub">Ưu tiên cao nhất</div>
     </div>
-    <div class="card kpi-card" style="border-top:2px solid var(--green)">
+    <div class="card kpi-card" style="border-top:2px solid var(--success)">
       <div class="kpi-label">Hoàn thành</div>
-      <div class="kpi-value" style="color:var(--green)">${resolved}</div>
+      <div class="kpi-value" style="color:var(--success)">${resolved}</div>
       <div class="kpi-sub">Trong 7 ngày</div>
     </div>
   </div>
@@ -129,8 +129,8 @@ function renderCommunityReports() {
       <div style="margin-top:12px;padding-top:10px;border-top:1px solid var(--border)">
         <div style="font-size:11px;color:var(--muted);margin-bottom:7px">Nguồn tiếp nhận</div>
         ${[
-          { ch: 'App Hadiwa', val: CR_REPORTS.length, color: 'var(--cyan)' },
-          { ch: 'Đường dây 1800', val: 3,             color: 'var(--green)' },
+          { ch: 'App Hadiwa', val: CR_REPORTS.length, color: 'var(--primary)' },
+          { ch: 'Đường dây 1800', val: 3,             color: 'var(--success)' },
           { ch: 'Zalo OA',    val: 1,                 color: '#0068ff' },
         ].map(c => `
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
@@ -192,7 +192,7 @@ function renderCommunityReports() {
                   <td>
                     <div>${statusBadge(r.status)}</div>
                     ${assigneeName ? `<div style="font-size:10px;color:var(--muted);margin-top:2px">${assigneeName}</div>` : ''}
-                    ${r.images > 0 ? `<div style="font-size:10px;color:var(--cyan);margin-top:2px;display:flex;align-items:center;gap:3px">
+                    ${r.images > 0 ? `<div style="font-size:10px;color:var(--primary);margin-top:2px;display:flex;align-items:center;gap:3px">
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>${r.images} ảnh</div>` : ''}
                   </td>
                   <td onclick="event.stopPropagation()">
@@ -204,7 +204,7 @@ function renderCommunityReports() {
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                       </button>` : ''}
                       ${r.status === 'pending' ? `<button class="btn btn-primary btn-xs" onclick="assignCrReport('${r.id}')">Phân công</button>` : ''}
-                      ${r.status === 'processing' ? `<button class="btn btn-ghost btn-xs" style="color:var(--green);border-color:var(--green)" onclick="resolveCrReport('${r.id}')">✓ Xong</button>` : ''}
+                      ${r.status === 'processing' ? `<button class="btn btn-ghost btn-xs" style="color:var(--success);border-color:var(--success)" onclick="resolveCrReport('${r.id}')">✓ Xong</button>` : ''}
                     </div>
                   </td>
                 </tr>`;
@@ -378,7 +378,7 @@ function viewCrReport(id) {
   if (!r) return;
   const t = CR_TYPES[r.type] || { label: r.type, badge: 'badge-gray', color: 'var(--muted)' };
   const priorityLabel = { critical: 'KHẨN CẤP', high: 'Cao', medium: 'Trung bình', low: 'Thấp' }[r.priority] || '';
-  const priorityColor = { critical: 'var(--red)', high: 'var(--orange)', medium: 'var(--yellow)', low: 'var(--muted)' }[r.priority];
+  const priorityColor = { critical: 'var(--danger)', high: 'var(--orange)', medium: 'var(--warning)', low: 'var(--muted)' }[r.priority];
   const assigneeName  = r.assignee ? (DATA.employees.find(e => e.id === r.assignee)?.name || r.assignee) : 'Chưa phân công';
   const imgs = CR_IMAGES[r.id] || [];
 
@@ -404,7 +404,7 @@ function viewCrReport(id) {
         </div>
         <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:9px;padding:10px 12px">
           <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px">Cán bộ xử lý</div>
-          <div style="font-size:13px;font-weight:600;margin-top:4px;color:${r.assignee?'var(--cyan)':'var(--muted)'}">${assigneeName}</div>
+          <div style="font-size:13px;font-weight:600;margin-top:4px;color:${r.assignee?'var(--primary)':'var(--muted)'}">${assigneeName}</div>
         </div>
       </div>
 
@@ -418,16 +418,16 @@ function viewCrReport(id) {
           <div class="card" style="padding:14px">
             <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Địa điểm xảy ra</div>
             <div style="display:flex;align-items:flex-start;gap:8px">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 016.93 12L12 22 5.07 14A8 8 0 0112 2z"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="flex-shrink:0;margin-top:2px"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 016.93 12L12 22 5.07 14A8 8 0 0112 2z"/></svg>
               <div>
                 <div style="font-size:13px;font-weight:600">${r.district}</div>
                 <div style="font-size:12px;color:var(--muted);margin-top:2px">${r.address}</div>
               </div>
             </div>
           </div>
-          ${r.note ? `<div class="card" style="padding:14px;border-left:3px solid var(--cyan)">
+          ${r.note ? `<div class="card" style="padding:14px;border-left:3px solid var(--primary)">
             <div style="font-size:10px;font-weight:700;color:var(--muted);margin-bottom:6px;text-transform:uppercase">Ghi chú xử lý</div>
-            <div style="font-size:13px;color:var(--cyan)">${r.note}</div>
+            <div style="font-size:13px;color:var(--primary)">${r.note}</div>
           </div>` : ''}
 
           <!-- Images strip -->
@@ -438,7 +438,7 @@ function viewCrReport(id) {
               ${imgs.map((img, i) => `
               <div onclick="closeModal();setTimeout(()=>openCrGallery('${r.id}',${i}),100)"
                 style="width:80px;height:58px;border-radius:7px;overflow:hidden;cursor:pointer;flex-shrink:0;position:relative;border:2px solid var(--border);transition:.15s"
-                onmouseover="this.style.borderColor='var(--cyan)'" onmouseout="this.style.borderColor='var(--border)'">
+                onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--border)'">
                 <img src="${img}" style="width:100%;height:100%;object-fit:cover" alt="Ảnh ${i+1}">
                 <div style="position:absolute;inset:0;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;transition:.15s"
                   onmouseover="this.style.background='rgba(0,200,255,.18)'" onmouseout="this.style.background='rgba(0,0,0,0)'">
@@ -447,7 +447,7 @@ function viewCrReport(id) {
               </div>`).join('')}
               <div onclick="closeModal();setTimeout(()=>openCrGallery('${r.id}',0),100)"
                 style="width:80px;height:58px;border-radius:7px;border:1.5px dashed var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-size:10px;color:var(--muted);gap:3px"
-                onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--cyan)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+                onmouseover="this.style.borderColor='var(--primary)';this.style.color='var(--primary)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                 Xem tất cả
               </div>
@@ -468,7 +468,7 @@ function viewCrReport(id) {
           </div>
           <div class="card" style="padding:14px">
             <div style="font-size:10px;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Phân công xử lý</div>
-            <div id="vcrAssignName" style="font-size:13px;font-weight:600;margin-bottom:8px;color:${r.assignee?'var(--cyan)':'var(--muted)'}">${assigneeName}</div>
+            <div id="vcrAssignName" style="font-size:13px;font-weight:600;margin-bottom:8px;color:${r.assignee?'var(--primary)':'var(--muted)'}">${assigneeName}</div>
             <div class="form-group" style="margin-bottom:8px">
               <label class="form-label" style="font-size:11px">Ghi chú</label>
               <textarea id="vcrNote" class="form-control" rows="3" style="font-size:12px" placeholder="Tiến độ xử lý...">${r.note}</textarea>
@@ -632,15 +632,15 @@ function renderCrAnalytics() {
       <!-- Xếp hạng mức độ nghiêm trọng -->
       <div class="card" style="padding:16px">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
           <span style="font-size:12px;font-weight:700">Xếp hạng mức độ nghiêm trọng theo khu vực</span>
         </div>
         ${sevRanked.map(([d,s],i)=>`
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-          <div style="width:20px;text-align:center;font-size:11px;font-weight:700;color:${i===0?'var(--red)':i===1?'var(--yellow)':'var(--muted)'}">#${i+1}</div>
+          <div style="width:20px;text-align:center;font-size:11px;font-weight:700;color:${i===0?'var(--danger)':i===1?'var(--warning)':'var(--muted)'}">#${i+1}</div>
           <div style="font-size:12px;font-weight:${i<2?600:400};flex:1">${d}</div>
           <div style="flex:2;height:8px;background:rgba(255,255,255,.07);border-radius:4px;overflow:hidden">
-            <div style="width:${Math.round(s/maxSev*100)}%;height:100%;background:${i===0?'var(--red)':i===1?'var(--yellow)':'var(--cyan)'};border-radius:4px;transition:.4s"></div>
+            <div style="width:${Math.round(s/maxSev*100)}%;height:100%;background:${i===0?'var(--danger)':i===1?'var(--warning)':'var(--primary)'};border-radius:4px;transition:.4s"></div>
           </div>
           <div style="font-size:11px;color:var(--muted);min-width:28px;text-align:right">${s}đ</div>
         </div>`).join('')}
@@ -650,20 +650,20 @@ function renderCrAnalytics() {
       <!-- Dự báo xu hướng ngắn hạn -->
       <div class="card" style="padding:16px">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           <span style="font-size:12px;font-weight:700">Dự báo xu hướng ngắn hạn (7 ngày tới)</span>
         </div>
         <div style="display:flex;flex-direction:column;gap:8px">
           ${trendData.map(t=>`
           <div style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:${t.up?'rgba(239,68,68,.05)':'rgba(22,163,74,.05)'}">
             <div style="font-size:12px;flex:1;font-weight:500">${t.label}</div>
-            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:${t.up?'var(--red)':'var(--green)'}">
+            <div style="display:flex;align-items:center;gap:5px;font-size:11px;color:${t.up?'var(--danger)':'var(--success)'}">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 ${t.up?'<polyline points="18 15 12 9 6 15"/>':'<polyline points="6 9 12 15 18 9"/>'}
               </svg>
               ${t.up?'Tăng':'Giảm'}: ${t.prev}→${t.curr} phản ánh/tuần
             </div>
-            <div style="padding:2px 7px;border-radius:5px;font-size:9px;background:${t.up?'rgba(239,68,68,.12)':'rgba(22,163,74,.12)'};color:${t.up?'var(--red)':'var(--green)'}">
+            <div style="padding:2px 7px;border-radius:5px;font-size:9px;background:${t.up?'rgba(239,68,68,.12)':'rgba(22,163,74,.12)'};color:${t.up?'var(--danger)':'var(--success)'}">
               ${t.up?'⚠ Chú ý':'✓ Ổn định'}
             </div>
           </div>`).join('')}
@@ -680,7 +680,7 @@ function renderCrAnalytics() {
       <!-- Phân tích điểm nóng lặp lại -->
       <div class="card" style="padding:16px">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
           <span style="font-size:12px;font-weight:700">Điểm nóng phản ánh lặp lại</span>
         </div>
         ${hotspots.length===0?'<p style="color:var(--muted);font-size:12px">Không có điểm nóng lặp lại trong kỳ này</p>':`
@@ -703,7 +703,7 @@ function renderCrAnalytics() {
           <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
             <div style="font-size:11px;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${CR_TYPES[t]?.label||t}</div>
             <div style="flex:2;height:5px;background:rgba(255,255,255,.07);border-radius:3px;overflow:hidden">
-              <div style="width:${Math.round(n/reports.length*100)}%;height:100%;background:var(--cyan);border-radius:3px"></div>
+              <div style="width:${Math.round(n/reports.length*100)}%;height:100%;background:var(--primary);border-radius:3px"></div>
             </div>
             <div style="font-size:10px;color:var(--muted);min-width:18px;text-align:right">${n}</div>
           </div>`).join('')}
@@ -717,19 +717,19 @@ function renderCrAnalytics() {
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
             <span style="font-size:12px;font-weight:700">Gợi ý phương án ứng phó AI</span>
           </div>
-          <span style="font-size:10px;padding:2px 7px;background:rgba(124,58,237,.15);color:#a78bfa;border-radius:5px">AI</span>
+          <span style="font-size:10px;padding:2px 7px;background:rgba(41,132,238,.15);color:#5BA9FF;border-radius:5px">AI</span>
         </div>
-        <div style="font-size:11px;color:var(--muted);margin-bottom:10px;padding:7px 10px;background:rgba(124,58,237,.06);border-radius:7px;border-left:3px solid #7c3aed">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:10px;padding:7px 10px;background:rgba(41,132,238,.06);border-radius:7px;border-left:3px solid var(--purple)">
           Dựa trên loại phản ánh nhiều nhất: <strong style="color:white">${topTypeName}</strong> (${typeRanked[0]?.[1]||0} báo cáo)
         </div>
         <div style="display:flex;flex-direction:column;gap:7px">
           ${sugg.map((s,i)=>`
-          <div style="display:flex;align-items:flex-start;gap:9px;padding:8px 10px;border-radius:8px;background:rgba(124,58,237,.05);border:1px solid rgba(124,58,237,.12)">
-            <div style="width:20px;height:20px;border-radius:50%;background:rgba(124,58,237,.2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#a78bfa;flex-shrink:0">${i+1}</div>
+          <div style="display:flex;align-items:flex-start;gap:9px;padding:8px 10px;border-radius:8px;background:rgba(41,132,238,.05);border:1px solid rgba(41,132,238,.12)">
+            <div style="width:20px;height:20px;border-radius:50%;background:rgba(41,132,238,.2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#5BA9FF;flex-shrink:0">${i+1}</div>
             <div style="font-size:12px;line-height:1.5">${s}</div>
           </div>`).join('')}
         </div>
-        <button class="btn btn-outline btn-sm" style="width:100%;margin-top:12px;color:#a78bfa;border-color:rgba(124,58,237,.3)" onclick="showToast('Tạo lệnh chỉ đạo từ gợi ý AI...')">
+        <button class="btn btn-outline btn-sm" style="width:100%;margin-top:12px;color:#5BA9FF;border-color:rgba(41,132,238,.3)" onclick="showToast('Tạo lệnh chỉ đạo từ gợi ý AI...')">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
           Chuyển thành lệnh chỉ đạo
         </button>

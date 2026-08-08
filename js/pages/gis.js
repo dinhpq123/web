@@ -96,18 +96,26 @@ let gisLayerFlags = {
   flood: true, landslide: true, resources4tc: true,
 };
 
+// ── THEME COLOR HELPERS (semantic CSS tokens for map markers/popups) ──
+function gisColor(varName, fallback) {
+  return getComputedStyle(document.documentElement).getPropertyValue(varName).trim() || fallback;
+}
+// "Nguy hiểm" tier sits between cảnh báo (warning) and khẩn cấp (emergency/danger) —
+// there's no dedicated token for it, so blend the two so it still reacts to theme changes.
+const GIS_ORANGE = 'color-mix(in srgb, var(--warning), var(--danger))';
+
 // ── DIKE COLOR MAPPING ────────────────────────────────────────────
 function getDikeStyle(dike) {
   const isMajor = dike.type === 'major' || dike.type === 'transmission';
   const isMinor = dike.type === 'minor' || dike.type === 'meter';
   const statusColors = {
-    active: '#00f080',   // An toàn
-    warning: '#ffdb4d',  // Cảnh báo
-    danger: '#ff9500',   // Nguy hiểm
-    emergency: '#ff3d57', // Khẩn cấp
-    closed: '#546e7a',
+    active: 'var(--success)',    // An toàn
+    warning: 'var(--warning)',   // Cảnh báo
+    danger: GIS_ORANGE,    // Nguy hiểm
+    emergency: 'var(--danger)', // Khẩn cấp
+    closed: 'var(--text-subtle)',
   };
-  const color = statusColors[dike.status] || '#00f080';
+  const color = statusColors[dike.status] || 'var(--success)';
   return {
     color,
     weight: isMajor ? 5 : isMinor ? 3 : 4,
@@ -120,8 +128,8 @@ function getDikeStyle(dike) {
 
 // ── SLUICE GATE SVG ICONS ─────────────────────────────────────────
 function makeSluiceIcon(sluice) {
-  const statusColors = { open: '#00e676', closed: '#ff1744', warning: '#ffca28', active: '#00c8ff' };
-  const c = statusColors[sluice.status] || '#00e676';
+  const statusColors = { open: 'var(--success)', closed: 'var(--danger)', warning: 'var(--warning)', active: 'var(--primary)' };
+  const c = statusColors[sluice.status] || 'var(--success)';
 
   let svgInner = '';
   if (sluice.type === 'gate') {
@@ -161,7 +169,7 @@ function makeSluiceIcon(sluice) {
     : '';
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="28" viewBox="0 0 24 28">
-    <circle cx="12" cy="14" r="11.5" fill="rgba(3,14,28,0.88)" stroke="${c}" stroke-width="1.5"/>
+    <circle cx="12" cy="14" r="11.5" fill="color-mix(in srgb, var(--bg-surface) 88%, transparent)" stroke="${c}" stroke-width="1.5"/>
     ${outerRing}
     ${svgInner}
   </svg>`;
@@ -177,9 +185,13 @@ function makeSluiceIcon(sluice) {
 
 // ── STATION DOT ICON ─────────────────────────────────────────────
 function makeStationIcon(status) {
-  const c = { online: '#00e676', warning: '#ffca28', offline: '#ff1744' }[status] || '#546e7a';
+  const c = {
+    online: gisColor('--success', 'var(--success)'),
+    warning: gisColor('--warning', '#F6C000'),
+    offline: gisColor('--danger', '#E14E54'), // "offline" here means station is out/alarming, not just no-data
+  }[status] || 'var(--muted)';
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
-    <circle cx="13" cy="13" r="10" fill="rgba(3,14,28,.9)" stroke="${c}" stroke-width="2"/>
+    <circle cx="13" cy="13" r="10" fill="color-mix(in srgb, var(--bg-surface) 90%, transparent)" stroke="${c}" stroke-width="2"/>
     <circle cx="13" cy="13" r="5" fill="${c}" opacity=".8"/>
     <circle cx="13" cy="13" r="5" fill="none" stroke="${c}" stroke-width="8" opacity=".12"/>
   </svg>`;
@@ -188,25 +200,28 @@ function makeStationIcon(status) {
 
 // ── FACTORY ICON ─────────────────────────────────────────────────
 function makeFactoryIcon() {
+  const c = gisColor('--cyan', '#00D2FF');
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30">
-    <rect x="3" y="3" width="24" height="24" rx="5" fill="rgba(3,14,28,.92)" stroke="#00c8ff" stroke-width="1.8"/>
-    <rect x="8" y="14" width="4" height="9" fill="#00c8ff" opacity=".8"/>
-    <rect x="13" y="12" width="4" height="11" fill="#00c8ff" opacity=".9"/>
-    <rect x="18" y="16" width="4" height="7" fill="#00c8ff" opacity=".7"/>
-    <line x1="7" y1="22" x2="23" y2="22" stroke="#00c8ff" stroke-width="1.2" opacity=".5"/>
-    <line x1="8" y1="9" x2="8" y2="14" stroke="#00c8ff" stroke-width="1.5"/>
-    <line x1="13" y1="8" x2="13" y2="12" stroke="#00c8ff" stroke-width="1.5"/>
-    <line x1="18" y1="10" x2="18" y2="16" stroke="#00c8ff" stroke-width="1.5"/>
+    <rect x="3" y="3" width="24" height="24" rx="5" fill="color-mix(in srgb, var(--bg-surface) 92%, transparent)" stroke="${c}" stroke-width="1.8"/>
+    <rect x="8" y="14" width="4" height="9" fill="${c}" opacity=".8"/>
+    <rect x="13" y="12" width="4" height="11" fill="${c}" opacity=".9"/>
+    <rect x="18" y="16" width="4" height="7" fill="${c}" opacity=".7"/>
+    <line x1="7" y1="22" x2="23" y2="22" stroke="${c}" stroke-width="1.2" opacity=".5"/>
+    <line x1="8" y1="9" x2="8" y2="14" stroke="${c}" stroke-width="1.5"/>
+    <line x1="13" y1="8" x2="13" y2="12" stroke="${c}" stroke-width="1.5"/>
+    <line x1="18" y1="10" x2="18" y2="16" stroke="${c}" stroke-width="1.5"/>
   </svg>`;
   return L.divIcon({ html: svg, className: '', iconSize: [30, 30], iconAnchor: [15, 15] });
 }
 
 // ── INCIDENT ICON ─────────────────────────────────────────────────
 function makeIncidentIcon() {
+  const c = gisColor('--danger', '#E14E54');
+  const cLight = 'color-mix(in srgb, var(--danger) 70%, white)';
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26">
-    <polygon points="13,3 24,23 2,23" fill="rgba(255,23,68,.18)" stroke="#ff1744" stroke-width="2" stroke-linejoin="round"/>
-    <line x1="13" y1="10" x2="13" y2="17" stroke="#ff5252" stroke-width="2.5" stroke-linecap="round"/>
-    <circle cx="13" cy="20" r="1.5" fill="#ff5252"/>
+    <polygon points="13,3 24,23 2,23" fill="color-mix(in srgb, ${c} 18%, transparent)" stroke="${c}" stroke-width="2" stroke-linejoin="round"/>
+    <line x1="13" y1="10" x2="13" y2="17" stroke="${cLight}" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="13" cy="20" r="1.5" fill="${cLight}"/>
   </svg>`;
   return L.divIcon({ html: svg, className: '', iconSize: [26, 26], iconAnchor: [13, 23] });
 }
@@ -214,10 +229,10 @@ function makeIncidentIcon() {
 // ── DIKE POPUP BUILDER ────────────────────────────────────────────
 function buildDikePopup(dike) {
   const statusLabel = {
-    active: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);vertical-align:middle"></span> An toàn',
-    warning: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);vertical-align:middle"></span> Cảnh báo',
-    danger: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--orange);vertical-align:middle"></span> Nguy hiểm',
-    emergency: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> Khẩn cấp',
+    active: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success);vertical-align:middle"></span> An toàn',
+    warning: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warning);vertical-align:middle"></span> Cảnh báo',
+    danger: `<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${GIS_ORANGE};vertical-align:middle"></span> Nguy hiểm`,
+    emergency: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> Khẩn cấp',
   }[dike.status] || dike.status;
   const typeLabel = { major: 'Đê cấp I (Trung ương)', transmission: 'Đê cấp II', minor: 'Đê địa phương', meter: 'Kênh dẫn' }[dike.type] || dike.type;
   return `<div class="gis-popup-inner">
@@ -226,8 +241,8 @@ function buildDikePopup(dike) {
     <div class="gis-popup-grid">
       <div><div class="gis-popup-key">Chiều dài</div><div class="gis-popup-val">${dike.length || '2.4'} km</div></div>
       <div><div class="gis-popup-key">Cao trình đỉnh</div><div class="gis-popup-val">+12.5 m</div></div>
-      <div><div class="gis-popup-key">Mực nước</div><div class="gis-popup-val" style="color:#00c8ff">${dike.waterLevel || '8.2'} m</div></div>
-      <div><div class="gis-popup-key">Độ an toàn</div><div class="gis-popup-val" style="color:#00f080">Đảm bảo</div></div>
+      <div><div class="gis-popup-key">Mực nước</div><div class="gis-popup-val" style="color:var(--primary)">${dike.waterLevel || '8.2'} m</div></div>
+      <div><div class="gis-popup-key">Độ an toàn</div><div class="gis-popup-val" style="color:var(--success)">Đảm bảo</div></div>
     </div>
     <div class="gis-popup-status">${statusLabel}</div>
     ${dike.sluices?.length ? `<div class="gis-popup-key" style="margin-top:6px">Cống trên đoạn: <b>${dike.sluices.length}</b></div>` : ''}
@@ -240,14 +255,14 @@ function buildDikePopup(dike) {
 // ── SLUICE POPUP ────────────────────────────────────────────────
 function buildSluicePopup(sluice) {
   const typeLabel = { gate: 'Cống ngăn triều', butterfly: 'Cống tiêu úng', check: 'Cống 1 chiều', meter: 'Trạm hydrology' }[sluice.type] || sluice.type;
-  const statusLabel = { open: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);vertical-align:middle"></span> Đang mở', closed: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> Đã đóng', warning: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);vertical-align:middle"></span> Cảnh báo', active: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);vertical-align:middle"></span> Hoạt động' }[sluice.status] || sluice.status;
+  const statusLabel = { open: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success);vertical-align:middle"></span> Đang mở', closed: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> Đã đóng', warning: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warning);vertical-align:middle"></span> Cảnh báo', active: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success);vertical-align:middle"></span> Hoạt động' }[sluice.status] || sluice.status;
   return `<div class="gis-popup-inner">
     <div class="gis-popup-title">${sluice.id}</div>
     <div class="gis-popup-sub">${typeLabel}</div>
     <div class="gis-popup-status">${statusLabel}</div>
     <div style="margin-top:8px;display:flex;gap:8px">
-      <button onclick="this.closest('.leaflet-popup').remove()" style="flex:1;padding:5px;background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.3);color:#00c8ff;border-radius:6px;cursor:pointer;font-size:11px">Đóng</button>
-      ${sluice.status === 'open' ? `<button onclick="this.closest('.leaflet-popup').remove()" style="flex:1;padding:5px;background:rgba(255,23,68,.1);border:1px solid rgba(255,23,68,.3);color:#ff5252;border-radius:6px;cursor:pointer;font-size:11px">Vận hành đóng</button>` : ''}
+      <button onclick="this.closest('.leaflet-popup').remove()" style="flex:1;padding:5px;background:color-mix(in srgb, var(--cyan) 10%, transparent);border:1px solid color-mix(in srgb, var(--cyan) 30%, transparent);color:var(--cyan);border-radius:6px;cursor:pointer;font-size:11px">Đóng</button>
+      ${sluice.status === 'open' ? `<button onclick="this.closest('.leaflet-popup').remove()" style="flex:1;padding:5px;background:color-mix(in srgb, var(--danger) 10%, transparent);border:1px solid color-mix(in srgb, var(--danger) 30%, transparent);color:var(--danger);border-radius:6px;cursor:pointer;font-size:11px">Vận hành đóng</button>` : ''}
     </div>
   </div>`;
 }
@@ -341,15 +356,15 @@ function renderGis() {
 
   // Horizontal layer bar — shown only when left panel is hidden
   const LAYER_ITEMS = [
-    ['stations', 'Trạm thủy văn', '#00d2ff'],
-    ['factories', 'Trạm bơm / Hồ chứa', '#00f080'],
-    ['incidents', 'Sự cố đê điều', '#ff3d57'],
-    ['dikes', 'Tuyến đê', '#ff9500'],
-    ['dmaZones', 'Vùng đê bảo vệ', 'rgba(0,210,255,.5)'],
-    ['sluices', 'Cống / Đập', '#00d2ff'],
-    ['flood', 'Ngập lụt RT', '#00b4ff'],
+    ['stations', 'Trạm thủy văn', 'var(--primary)'],
+    ['factories', 'Trạm bơm / Hồ chứa', 'var(--success)'],
+    ['incidents', 'Sự cố đê điều', 'var(--danger)'],
+    ['dikes', 'Tuyến đê', GIS_ORANGE],
+    ['dmaZones', 'Vùng đê bảo vệ', 'color-mix(in srgb, var(--success) 50%, transparent)'],
+    ['sluices', 'Cống / Đập', 'var(--info)'],
+    ['flood', 'Ngập lụt RT', 'var(--info)'],
     ['landslide', 'Sạt lở', '#ff6b00'],
-    ['resources4tc', '4 Tại chỗ', '#a855f7'],
+    ['resources4tc', '4 Tại chỗ', '#3699FF'],
   ];
 
   return `
@@ -370,14 +385,14 @@ function renderGis() {
 
   <!-- Status bar -->
   <div style="display:flex;gap:12px;margin-bottom:12px;align-items:center;flex-wrap:wrap">
-    <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;background:rgba(0,240,128,.08);border:1px solid rgba(0,240,128,.22);border-radius:10px">
-      <div class="pulse-dot green"></div><span style="font-size:13px;font-weight:600;color:var(--green)">${onlineCount} Trạm bình thường</span>
+    <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;background:var(--success-soft);border:1px solid var(--border-active);border-radius:10px">
+      <div class="pulse-dot green"></div><span style="font-size:13px;font-weight:600;color:var(--success)">${onlineCount} Trạm bình thường</span>
     </div>
     <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.22);border-radius:10px">
-      <div class="pulse-dot yellow"></div><span style="font-size:13px;font-weight:600;color:var(--yellow)">${warnCount} Cảnh báo</span>
+      <div class="pulse-dot yellow"></div><span style="font-size:13px;font-weight:600;color:var(--warning)">${warnCount} Cảnh báo</span>
     </div>
     <div style="display:flex;align-items:center;gap:7px;padding:7px 14px;background:rgba(255,23,68,.08);border:1px solid rgba(255,23,68,.22);border-radius:10px">
-      <div class="pulse-dot red"></div><span style="font-size:13px;font-weight:600;color:var(--red)">${offlineCount} Sự cố khẩn cấp</span>
+      <div class="pulse-dot red"></div><span style="font-size:13px;font-weight:600;color:var(--danger)">${offlineCount} Sự cố khẩn cấp</span>
     </div>
     <div style="flex:1"></div>
     <select class="form-control" style="max-width:200px" onchange="gisFilterFactory(this.value)">
@@ -395,11 +410,11 @@ function renderGis() {
       <input type="checkbox" ${gisLayerFlags[key] ? 'checked' : ''} onchange="toggleGisLayerGroup('${key}',this.checked)"
         style="accent-color:${color};width:13px;height:13px;cursor:pointer">
       <span style="width:10px;height:2.5px;background:${color};border-radius:2px;display:inline-block"></span>
-      <span style="font-size:11px;font-weight:500;color:#cfd8e3">${label}</span>
+      <span style="font-size:11px;font-weight:500;color:var(--text-2)">${label}</span>
     </label>`).join('')}
     <!-- DMA quick toggles in hbar -->
     <span style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;margin-left:8px;margin-right:4px">Khu vực:</span>
-    <button onclick="gisToggleAllDma(true)" style="font-size:10px;padding:3px 10px;background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.25);color:var(--cyan);border-radius:5px;cursor:pointer">Bật tất cả</button>
+    <button onclick="gisToggleAllDma(true)" style="font-size:10px;padding:3px 10px;background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.25);color:var(--primary);border-radius:5px;cursor:pointer">Bật tất cả</button>
     <button onclick="gisToggleAllDma(false)" style="font-size:10px;padding:3px 10px;background:rgba(84,110,122,.1);border:1px solid rgba(84,110,122,.25);color:var(--muted);border-radius:5px;cursor:pointer">Tắt tất cả</button>
   </div>
 
@@ -429,7 +444,7 @@ function renderGis() {
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
           <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase">Vùng bảo vệ đê</div>
           <div style="display:flex;gap:4px">
-            <button onclick="gisToggleAllDma(true)" style="font-size:10px;padding:2px 7px;background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.25);color:var(--cyan);border-radius:4px;cursor:pointer">Bật</button>
+            <button onclick="gisToggleAllDma(true)" style="font-size:10px;padding:2px 7px;background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.25);color:var(--primary);border-radius:4px;cursor:pointer">Bật</button>
             <button onclick="gisToggleAllDma(false)" style="font-size:10px;padding:2px 7px;background:rgba(84,110,122,.1);border:1px solid rgba(84,110,122,.25);color:var(--muted);border-radius:4px;cursor:pointer">Tắt</button>
           </div>
         </div>
@@ -437,7 +452,7 @@ function renderGis() {
     const vis = gisDmaVisibility[dma.id] !== false;
     const statusDot = { ok: 'green', warning: 'yellow', critical: 'red' }[dma.status] || 'gray';
     const safetyLevel = dma.loss >= 18 ? 'Nguy hiểm' : dma.loss >= 13 ? 'Cảnh báo' : 'An toàn';
-    const safetyColor = dma.loss >= 18 ? '#ff1744' : dma.loss >= 13 ? '#ffca28' : '#00f080';
+    const safetyColor = dma.loss >= 18 ? 'var(--danger)' : dma.loss >= 13 ? 'var(--warning)' : 'var(--success)';
     return `
           <div style="padding:8px 0;border-bottom:1px solid rgba(0,200,255,.06)">
             <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
@@ -463,7 +478,7 @@ function renderGis() {
       <div class="card" style="padding:12px;flex-shrink:0">
         <div id="gisLegendHeader" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:${gisLegendVisible ? '10px' : '0'}">
           <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase">Chú giải Đê điều</div>
-          <button id="gisBtnToggleLegend" onclick="gisToggleLegend()" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;background:rgba(0,200,255,.05)">
+          <button id="gisBtnToggleLegend" onclick="gisToggleLegend()" style="background:none;border:none;color:var(--primary);cursor:pointer;font-size:10px;font-weight:600;padding:2px 6px;border-radius:4px;background:rgba(0,200,255,.05)">
             ${gisLegendVisible ? 'Ẩn' : 'Hiện'}
           </button>
         </div>
@@ -474,7 +489,7 @@ function renderGis() {
     ['#ffdb4d', 4, null, 'Đê cấp II / Đê sông'],
     ['#ff7043', 3, null, 'Đê địa phương / Đê bao'],
     ['#ff1744', 4, '8 6', 'Sạt lở / Sự cố đê'],
-    ['#546e7a', 3, '8 6', 'Đê đang thi công'],
+    ['var(--muted)', 3, '8 6', 'Đê đang thi công'],
   ].map(([c, w, dash, label]) => `
         <div style="display:flex;align-items:center;gap:8px;padding:4px 0">
           <svg width="28" height="6" viewBox="0 0 28 6">
@@ -484,10 +499,10 @@ function renderGis() {
         </div>`).join('')}
         <div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(0,200,255,.08)">
           ${[
-    ['#00f080', 'Cống vận hành BT'],
-    ['#ff3d57', 'Cống đóng (Khẩn cấp)'],
-    ['#ffdb4d', 'Cống đang sửa chữa'],
-    ['#00d2ff', 'Trạm thủy văn / Đo mưa'],
+    ['var(--success)', 'Cống vận hành BT'],
+    ['var(--danger)', 'Cống đóng (Khẩn cấp)'],
+    ['var(--warning)', 'Cống đang sửa chữa'],
+    ['var(--primary)', 'Trạm thủy văn / Đo mưa'],
   ].map(([c, l]) => `
           <div style="display:flex;align-items:center;gap:7px;padding:3px 0">
             <div style="width:14px;height:14px;border-radius:50%;border:1.5px solid ${c};background:${c}22;flex-shrink:0"></div>
@@ -505,13 +520,13 @@ function renderGis() {
       <!-- Toggle tab LEFT -->
       <button id="gisBtnToggleLeft" onclick="gisTogglePanel('left')"
         title="Ẩn/hiện panel trái"
-        style="position:absolute;top:50%;left:0;transform:translateY(-50%);z-index:1000;width:16px;height:56px;border-radius:0 8px 8px 0;background:rgba(7,22,41,.92);border:1px solid rgba(0,200,255,.25);border-left:none;color:var(--cyan);cursor:pointer;font-size:9px;display:flex;align-items:center;justify-content:center;transition:all .2s"
+        style="position:absolute;top:50%;left:0;transform:translateY(-50%);z-index:1000;width:16px;height:56px;border-radius:0 8px 8px 0;background:rgba(7,22,41,.92);border:1px solid rgba(0,200,255,.25);border-left:none;color:var(--primary);cursor:pointer;font-size:9px;display:flex;align-items:center;justify-content:center;transition:all .2s"
         onmouseover="this.style.background='rgba(0,200,255,.2)'" onmouseout="this.style.background='rgba(7,22,41,.92)'">&#9664;</button>
 
       <!-- Toggle tab RIGHT -->
       <button id="gisBtnToggleRight" onclick="gisTogglePanel('right')"
         title="Ẩn/hiện panel phải"
-        style="position:absolute;top:50%;right:0;transform:translateY(-50%);z-index:1000;width:16px;height:56px;border-radius:8px 0 0 8px;background:rgba(7,22,41,.92);border:1px solid rgba(0,200,255,.25);border-right:none;color:var(--cyan);cursor:pointer;font-size:9px;display:flex;align-items:center;justify-content:center;transition:all .2s"
+        style="position:absolute;top:50%;right:0;transform:translateY(-50%);z-index:1000;width:16px;height:56px;border-radius:8px 0 0 8px;background:rgba(7,22,41,.92);border:1px solid rgba(0,200,255,.25);border-right:none;color:var(--primary);cursor:pointer;font-size:9px;display:flex;align-items:center;justify-content:center;transition:all .2s"
         onmouseover="this.style.background='rgba(0,200,255,.2)'" onmouseout="this.style.background='rgba(7,22,41,.92)'">&#9654;</button>
     </div>
 
@@ -535,7 +550,7 @@ function renderGis() {
               </div>
             </div>
             <div style="text-align:right;flex-shrink:0">
-              <div style="font-size:12px;font-family:'Roboto Mono',monospace;color:var(--cyan)">${s.status !== 'offline' ? s.pressure + ' m' : '—'}</div>
+              <div style="font-size:12px;font-family:'Roboto Mono',monospace;color:var(--primary)">${s.status !== 'offline' ? s.pressure + ' m' : '—'}</div>
               <div style="font-size:10px;color:var(--muted)">${s.status !== 'offline' ? s.flow + ' m³/s' : 'Sự cố'}</div>
             </div>
           </div>`).join('')}
@@ -551,7 +566,7 @@ function renderGis() {
           ${dmaList.slice(0, 6).map(dma => {
     const pct = dma.loss;
     const safetyMsg = pct >= 18 ? 'Nguy hiểm' : pct >= 13 ? 'Cảnh báo' : 'An toàn';
-    const c = pct >= 18 ? 'var(--red)' : pct >= 13 ? 'var(--yellow)' : 'var(--green)';
+    const c = pct >= 18 ? 'var(--danger)' : pct >= 13 ? 'var(--warning)' : 'var(--success)';
     return `
             <div style="padding:6px 14px" onclick="gisZoomToDma('${dma.id}')" class="gis-dma-row">
               <div style="display:flex;justify-content:space-between;margin-bottom:4px">
@@ -619,21 +634,21 @@ window.afterRender_gis = function () {
       s.textContent = `
         .gis-popup .leaflet-popup-content-wrapper{background:transparent!important;box-shadow:none!important;padding:0!important}
         .gis-popup .leaflet-popup-content{margin:0!important}
-        .gis-popup .leaflet-popup-tip{background:#071629}
-        .gis-popup-inner{background:#071629;border:1px solid rgba(0,200,255,.2);border-radius:12px;padding:14px;min-width:200px;max-width:260px;font-family:Inter,sans-serif;color:#e3f2fd}
-        .gis-popup-title{font-size:13px;font-weight:700;color:#00c8ff;margin-bottom:3px}
-        .gis-popup-sub{font-size:11px;color:#546e7a;margin-bottom:10px}
+        .gis-popup .leaflet-popup-tip{background:var(--bg-surface)}
+        .gis-popup-inner{background:var(--bg-surface);border:1px solid color-mix(in srgb, var(--cyan) 20%, transparent);border-radius:12px;padding:14px;min-width:200px;max-width:260px;font-family:Inter,sans-serif;color:var(--text)}
+        .gis-popup-title{font-size:13px;font-weight:700;color:var(--cyan);margin-bottom:3px}
+        .gis-popup-sub{font-size:11px;color:var(--muted);margin-bottom:10px}
         .gis-popup-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-        .gis-popup-key{font-size:10px;color:#546e7a}
+        .gis-popup-key{font-size:10px;color:var(--muted)}
         .gis-popup-val{font-size:13px;font-weight:700}
-        .gis-popup-status{font-size:11px;padding:4px 10px;border-radius:20px;display:inline-block;background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);color:#90caf9}
+        .gis-popup-status{font-size:11px;padding:4px 10px;border-radius:20px;display:inline-block;background:color-mix(in srgb, var(--cyan) 8%, transparent);border:1px solid color-mix(in srgb, var(--cyan) 20%, transparent);color:var(--text-2)}
         .gis-valve-icon{background:none!important;border:none!important}
         .gis-dma-label{background:none!important;border:none!important;font-family:Inter,sans-serif}
-        .leaflet-control-zoom{border:1px solid rgba(0,200,255,.2)!important;background:rgba(7,22,41,.9)!important;border-radius:8px!important;overflow:hidden}
-        .leaflet-control-zoom a{background:transparent!important;color:#00c8ff!important;border-color:rgba(0,200,255,.15)!important;font-size:18px!important;line-height:28px!important}
-        .leaflet-control-zoom a:hover{background:rgba(0,200,255,.1)!important}
+        .leaflet-control-zoom{border:1px solid color-mix(in srgb, var(--cyan) 20%, transparent)!important;background:color-mix(in srgb, var(--bg-surface) 90%, transparent)!important;border-radius:8px!important;overflow:hidden}
+        .leaflet-control-zoom a{background:transparent!important;color:var(--cyan)!important;border-color:color-mix(in srgb, var(--cyan) 15%, transparent)!important;font-size:18px!important;line-height:28px!important}
+        .leaflet-control-zoom a:hover{background:color-mix(in srgb, var(--cyan) 10%, transparent)!important}
         .gis-dma-row{cursor:pointer;transition:background .15s}
-        .gis-dma-row:hover{background:rgba(0,200,255,.04)}
+        .gis-dma-row:hover{background:color-mix(in srgb, var(--cyan) 4%, transparent)}
         .gis-pipe-glow{filter:drop-shadow(0 0 3px currentColor)}
       `;
       document.head.appendChild(s);
@@ -655,11 +670,11 @@ window.afterRender_gis = function () {
         <div class="gis-popup-sub">${dma.district}</div>
         <div class="gis-popup-grid">
           <div><div class="gis-popup-key">Cao trình TB</div><div class="gis-popup-val">${(dma.avgElevation || 12.5).toLocaleString('vi-VN')} m</div></div>
-          <div><div class="gis-popup-key">Mức an toàn</div><div class="gis-popup-val" style="color:${dma.loss >= 18 ? '#ff1744' : dma.loss >= 13 ? '#ffca28' : '#00e676'}">${dma.loss >= 18 ? 'Nguy hiểm' : dma.loss >= 13 ? 'Cảnh báo' : 'An toàn'}</div></div>
-          <div><div class="gis-popup-key">Lưu lượng xả</div><div class="gis-popup-val" style="color:#00c8ff">${dma.supplyFlow} m³/s</div></div>
-          <div><div class="gis-popup-key">Tuyến đê</div><div class="gis-popup-val" style="color:#00e676">${dma.consumptionFlow} km</div></div>
+          <div><div class="gis-popup-key">Mức an toàn</div><div class="gis-popup-val" style="color:${dma.loss >= 18 ? 'var(--danger)' : dma.loss >= 13 ? 'var(--warning)' : 'var(--success)'}">${dma.loss >= 18 ? 'Nguy hiểm' : dma.loss >= 13 ? 'Cảnh báo' : 'An toàn'}</div></div>
+          <div><div class="gis-popup-key">Lưu lượng xả</div><div class="gis-popup-val" style="color:var(--cyan)">${dma.supplyFlow} m³/s</div></div>
+          <div><div class="gis-popup-key">Tuyến đê</div><div class="gis-popup-val" style="color:var(--success)">${dma.consumptionFlow} km</div></div>
         </div>
-        <div class="gis-popup-status">${{ ok: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);vertical-align:middle"></span> Bình thường', warning: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);vertical-align:middle"></span> Cảnh báo rủi ro', critical: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> Sự cố/Xung yếu' }[dma.status] || dma.status}</div>
+        <div class="gis-popup-status">${{ ok: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success);vertical-align:middle"></span> Bình thường', warning: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warning);vertical-align:middle"></span> Cảnh báo rủi ro', critical: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> Sự cố/Xung yếu' }[dma.status] || dma.status}</div>
       </div>`, { className: 'gis-popup', maxWidth: 280 });
 
       if (vis) polygon.addTo(gisMap);
@@ -742,13 +757,13 @@ window.afterRender_gis = function () {
         <div class="gis-popup-title">${s.name}</div>
         <div class="gis-popup-sub">${s.factory} · ${s.id}</div>
         <div class="gis-popup-grid">
-          <div><div class="gis-popup-key">Mực nước</div><div class="gis-popup-val" style="color:#00c8ff">${s.status !== 'offline' ? s.pressure + ' m' : '—'}</div></div>
-          <div><div class="gis-popup-key">Lưu lượng</div><div class="gis-popup-val" style="color:#00e676">${s.status !== 'offline' ? s.flow + ' m³/s' : '—'}</div></div>
+          <div><div class="gis-popup-key">Mực nước</div><div class="gis-popup-val" style="color:var(--cyan)">${s.status !== 'offline' ? s.pressure + ' m' : '—'}</div></div>
+          <div><div class="gis-popup-key">Lưu lượng</div><div class="gis-popup-val" style="color:var(--success)">${s.status !== 'offline' ? s.flow + ' m³/s' : '—'}</div></div>
           <div><div class="gis-popup-key">Mực nước hồ</div><div class="gis-popup-val">${s.status !== 'offline' ? s.level + '%' : '—'}</div></div>
           <div><div class="gis-popup-key">Trạng thái TB</div><div class="gis-popup-val">${s.status !== 'offline' ? 'Hoạt động' : '—'}</div></div>
         </div>
-        <div class="gis-popup-status">${{ online: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);vertical-align:middle"></span> Bình thường', warning: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);vertical-align:middle"></span> Cảnh báo', offline: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);vertical-align:middle"></span> Sự cố/Mất tin' }[s.status]}</div>
-        <div style="margin-top:8px;font-size:10px;color:#546e7a">${s.lat}°N · ${s.lng}°E</div>
+        <div class="gis-popup-status">${{ online: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success);vertical-align:middle"></span> Bình thường', warning: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warning);vertical-align:middle"></span> Cảnh báo', offline: '<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> Sự cố/Mất tin' }[s.status]}</div>
+        <div style="margin-top:8px;font-size:10px;color:var(--muted)">${s.lat}°N · ${s.lng}°E</div>
       </div>`, { className: 'gis-popup', maxWidth: 280 });
       if (gisLayerFlags.stations) marker.addTo(gisMap);
       return marker;
@@ -766,8 +781,8 @@ window.afterRender_gis = function () {
         <div class="gis-popup-sub">${f.location} · Quản lý: ${f.manager}</div>
         <div class="gis-popup-grid">
         <div class="gis-popup-grid">
-          <div><div class="gis-popup-key">Dung tích TK</div><div class="gis-popup-val" style="color:#00c8ff">${f.capacity.toLocaleString('vi-VN')} m³</div></div>
-          <div><div class="gis-popup-key">Hiện tại</div><div class="gis-popup-val" style="color:#00e676">${f.output.toLocaleString('vi-VN')} m³</div></div>
+          <div><div class="gis-popup-key">Dung tích TK</div><div class="gis-popup-val" style="color:var(--cyan)">${f.capacity.toLocaleString('vi-VN')} m³</div></div>
+          <div><div class="gis-popup-key">Hiện tại</div><div class="gis-popup-val" style="color:var(--success)">${f.output.toLocaleString('vi-VN')} m³</div></div>
         </div>
         <div class="gis-popup-status">${Math.round(f.output / f.capacity * 100)}% dung tích hồ</div>
       </div>`, { className: 'gis-popup', maxWidth: 280 });
@@ -786,30 +801,30 @@ window.afterRender_gis = function () {
       const isAssigned = !!(inc.assignedTo);
       const isProcessing = inc.status === 'processing';
       const statusLabel = { new: 'Mới – Chưa phân công', processing: 'Đang xử lý' }[inc.status] || inc.status;
-      const statusColor = isProcessing ? 'rgba(255,202,40,.1)' : 'rgba(255,23,68,.1)';
-      const statusBorderColor = isProcessing ? 'rgba(255,202,40,.3)' : 'rgba(255,23,68,.3)';
-      const statusTextColor = isProcessing ? '#ffca28' : '#ff5252';
+      const statusColor = isProcessing ? 'color-mix(in srgb, var(--warning) 10%, transparent)' : 'color-mix(in srgb, var(--danger) 10%, transparent)';
+      const statusBorderColor = isProcessing ? 'color-mix(in srgb, var(--warning) 30%, transparent)' : 'color-mix(in srgb, var(--danger) 30%, transparent)';
+      const statusTextColor = isProcessing ? 'var(--warning)' : 'var(--danger)';
 
       const actionBtns = isAssigned || isProcessing
-        ? `<button onclick="gisViewIncident('${inc.id}')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:7px 10px;background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.3);color:#00c8ff;border-radius:8px;cursor:pointer;font-size:11px;font-weight:600;transition:.15s" onmouseover="this.style.background='rgba(0,200,255,.2)'" onmouseout="this.style.background='rgba(0,200,255,.1)'">
+        ? `<button onclick="gisViewIncident('${inc.id}')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:7px 10px;background:color-mix(in srgb, var(--cyan) 10%, transparent);border:1px solid color-mix(in srgb, var(--cyan) 30%, transparent);color:var(--cyan);border-radius:8px;cursor:pointer;font-size:11px;font-weight:600;transition:.15s" onmouseover="this.style.background='color-mix(in srgb, var(--cyan) 20%, transparent)'" onmouseout="this.style.background='color-mix(in srgb, var(--cyan) 10%, transparent)'">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             Xem chi tiết
           </button>`
-        : `<button onclick="gisCreateWorkOrder('${inc.id}','${inc.location.replace(/'/g, "&apos;")}')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:7px 10px;background:rgba(255,202,40,.1);border:1px solid rgba(255,202,40,.35);color:#ffca28;border-radius:8px;cursor:pointer;font-size:11px;font-weight:600;transition:.15s" onmouseover="this.style.background='rgba(255,202,40,.2)'" onmouseout="this.style.background='rgba(255,202,40,.1)'">
+        : `<button onclick="gisCreateWorkOrder('${inc.id}','${inc.location.replace(/'/g, "&apos;")}')" style="flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:7px 10px;background:color-mix(in srgb, var(--warning) 10%, transparent);border:1px solid color-mix(in srgb, var(--warning) 35%, transparent);color:var(--warning);border-radius:8px;cursor:pointer;font-size:11px;font-weight:600;transition:.15s" onmouseover="this.style.background='color-mix(in srgb, var(--warning) 20%, transparent)'" onmouseout="this.style.background='color-mix(in srgb, var(--warning) 10%, transparent)'">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
             Tạo lệnh CT
           </button>`;
 
-      marker.bindPopup(`<div class="gis-popup-inner" style="border-color:rgba(255,23,68,.3);min-width:230px">
-        <div class="gis-popup-title" style="color:#ff5252"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ${inc.id}</div>
+      marker.bindPopup(`<div class="gis-popup-inner" style="border-color:color-mix(in srgb, var(--danger) 30%, transparent);min-width:230px">
+        <div class="gis-popup-title" style="color:var(--danger)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> ${inc.id}</div>
         <div class="gis-popup-sub">${inc.type}</div>
-        <div style="font-size:12px;margin-bottom:8px;color:#cfd8e3">${inc.location}</div>
+        <div style="font-size:12px;margin-bottom:8px;color:var(--text-2)">${inc.location}</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px;font-size:11px">
-          <div><div style="color:#546e7a;font-size:10px">Mức độ</div><div style="font-weight:700;color:${inc.severity === 'critical' ? '#ff1744' : inc.severity === 'high' ? '#ff5252' : '#ffca28'}">${inc.severity}</div></div>
-          <div><div style="color:#546e7a;font-size:10px">Phân công</div><div style="font-weight:700;color:${isAssigned ? '#00c8ff' : '#546e7a'}">${inc.assignedTo || 'Chưa có'}</div></div>
+          <div><div style="color:var(--muted);font-size:10px">Mức độ</div><div style="font-weight:700;color:${inc.severity === 'critical' ? 'var(--danger)' : inc.severity === 'high' ? 'color-mix(in srgb, var(--danger) 70%, white)' : 'var(--warning)'}">${inc.severity}</div></div>
+          <div><div style="color:var(--muted);font-size:10px">Phân công</div><div style="font-weight:700;color:${isAssigned ? 'var(--cyan)' : 'var(--muted)'}">${inc.assignedTo || 'Chưa có'}</div></div>
         </div>
         <div style="padding:4px 10px;border-radius:20px;display:inline-block;background:${statusColor};border:1px solid ${statusBorderColor};color:${statusTextColor};font-size:11px;margin-bottom:10px">${statusLabel}</div>
-        <div style="font-size:10px;color:#546e7a;margin-bottom:10px">Báo cáo: ${inc.report}</div>
+        <div style="font-size:10px;color:var(--muted);margin-bottom:10px">Báo cáo: ${inc.report}</div>
         <div style="display:flex;gap:7px">${actionBtns}</div>
       </div>`, { className: 'gis-popup', maxWidth: 280 });
       if (gisLayerFlags.incidents) marker.addTo(gisMap);
@@ -822,13 +837,13 @@ window.afterRender_gis = function () {
 
     // Flood zones (polygons)
     GIS_FLOOD_ZONES.forEach(fz => {
-      const levelColors = { danger: '#ff3d57', warning: '#ffca28', ok: '#00e676' };
-      const c = levelColors[fz.level] || '#ffca28';
+      const levelColors = { danger: gisColor('--danger', '#E14E54'), warning: gisColor('--warning', '#F6C000'), ok: gisColor('--success', 'var(--success)') };
+      const c = levelColors[fz.level] || levelColors.warning;
       const poly = L.polygon(fz.coords, {
         color: c, weight: 2, opacity: 0.7,
         fillColor: c, fillOpacity: 0.18, dashArray: '5 4',
       });
-      poly.bindPopup(`<div class="gis-popup-inner" style="border-color:${c}55">
+      poly.bindPopup(`<div class="gis-popup-inner" style="border-color:color-mix(in srgb, ${c} 33%, transparent)">
         <div class="gis-popup-title" style="color:${c}">${fz.name}</div>
         <div class="gis-popup-sub">${fz.id}</div>
         <div class="gis-popup-grid">
@@ -844,26 +859,26 @@ window.afterRender_gis = function () {
 
     // Flood sensors (circle markers)
     GIS_FLOOD_SENSORS.forEach(s => {
-      const c = s.status === 'danger' ? '#ff3d57' : s.status === 'warning' ? '#ffca28' : '#00e676';
+      const c = s.status === 'danger' ? gisColor('--danger', '#E14E54') : s.status === 'warning' ? gisColor('--warning', '#F6C000') : gisColor('--success', 'var(--success)');
       const trendArrow = s.trend === 'up' ? '↑' : s.trend === 'down' ? '↓' : '→';
-      const trendColor = s.trend === 'up' ? '#ff5252' : s.trend === 'down' ? '#00e676' : '#ffca28';
+      const trendColor = s.trend === 'up' ? gisColor('--danger', '#E14E54') : s.trend === 'down' ? gisColor('--success', 'var(--success)') : gisColor('--warning', '#F6C000');
       const circle = L.circleMarker([s.lat, s.lng], {
         radius: 8 + (s.level > 1 ? 4 : s.level > 0.5 ? 2 : 0),
         color: c, weight: 2, opacity: 0.9,
         fillColor: c, fillOpacity: 0.35,
       });
-      const histHtml = s.history.map((v,i) => `<span style="display:inline-block;width:22px;height:${Math.round(v*40+4)}px;background:${c}66;border-radius:2px 2px 0 0;vertical-align:bottom;margin:0 1px" title="${v}m"></span>`).join('');
-      circle.bindPopup(`<div class="gis-popup-inner" style="border-color:${c}55">
+      const histHtml = s.history.map((v,i) => `<span style="display:inline-block;width:22px;height:${Math.round(v*40+4)}px;background:color-mix(in srgb, ${c} 40%, transparent);border-radius:2px 2px 0 0;vertical-align:bottom;margin:0 1px" title="${v}m"></span>`).join('');
+      circle.bindPopup(`<div class="gis-popup-inner" style="border-color:color-mix(in srgb, ${c} 33%, transparent)">
         <div class="gis-popup-title" style="color:${c}">${s.name}</div>
         <div class="gis-popup-sub">${s.id} · Cập nhật: ${s.timestamp}</div>
         <div class="gis-popup-grid">
           <div><div class="gis-popup-key">Mực nước</div><div class="gis-popup-val" style="color:${c};font-size:22px;font-weight:900">${s.level} m</div></div>
           <div><div class="gis-popup-key">Xu hướng</div><div class="gis-popup-val" style="color:${trendColor};font-size:18px">${trendArrow}</div></div>
         </div>
-        <div style="margin:8px 0 4px;font-size:10px;color:rgba(255,255,255,.4)">LỊCH SỬ 4 KỲ G�ần NHẤT</div>
+        <div style="margin:8px 0 4px;font-size:10px;color:var(--muted)">LỊCH SỬ 4 KỲ Gần NHẤT</div>
         <div style="display:flex;align-items:flex-end;height:48px;margin-bottom:4px">${histHtml}</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.4)">← Cũ hơn · Mới nhất →</div>
-        <div class="gis-popup-status" style="margin-top:8px">${{danger:'<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ff3d57;vertical-align:middle"></span> Nguy hiểm',warning:'<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#ffca28;vertical-align:middle"></span> Cảnh báo',ok:'<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#00e676;vertical-align:middle"></span> Bình thường'}[s.status]}</div>
+        <div style="font-size:10px;color:var(--muted)">← Cũ hơn · Mới nhất →</div>
+        <div class="gis-popup-status" style="margin-top:8px">${{danger:'<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--danger);vertical-align:middle"></span> Nguy hiểm',warning:'<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warning);vertical-align:middle"></span> Cảnh báo',ok:'<span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--success);vertical-align:middle"></span> Bình thường'}[s.status]}</div>
       </div>`, { className: 'gis-popup', maxWidth: 280 });
       if (gisLayerFlags.flood) circle.addTo(gisMap);
       gisLayers.flood.push(circle);
@@ -873,24 +888,24 @@ window.afterRender_gis = function () {
     gisLayers.landslide = [];
     GIS_LANDSLIDE_ZONES.forEach(ls => {
       const levelCfg = {
-        critical: { color:'#ff1744', size:20, label:'Khẩn cấp' },
-        high:     { color:'#ff6b00', size:17, label:'Nguy cơ cao' },
-        medium:   { color:'#ffca28', size:14, label:'Theo dõi' },
-        low:      { color:'#546e7a', size:11, label:'Đã xử lý' },
-      }[ls.level] || { color:'#ffca28', size:14, label:'Theo dõi' };
+        critical: { color: gisColor('--danger', '#E14E54'), size:20, label:'Khẩn cấp' },
+        high:     { color: GIS_ORANGE, size:17, label:'Nguy cơ cao' }, // between warning & danger, no dedicated token
+        medium:   { color: gisColor('--warning', '#F6C000'), size:14, label:'Theo dõi' },
+        low:      { color:'var(--muted)', size:11, label:'Đã xử lý' },
+      }[ls.level] || { color: gisColor('--warning', '#F6C000'), size:14, label:'Theo dõi' };
 
       const typeCfg = { river_bank:'Sạt lở bờ sông', slope:'Sạt trượt đất', dike:'Sạt lở đê', canal:'Sạt lở kênh' };
       const statusCfg = { emergency:'⚡ Khẩn cấp', monitoring:'◎ Đang theo dõi', repairing:'⚙ Đang sửa chữa', resolved:'✓ Đã xử lý' };
 
       // Triangle SVG icon for landslide
       const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${levelCfg.size+4}" height="${levelCfg.size+4}" viewBox="0 0 24 24">
-        <polygon points="12,2 23,22 1,22" fill="${levelCfg.color}33" stroke="${levelCfg.color}" stroke-width="2" stroke-linejoin="round"/>
+        <polygon points="12,2 23,22 1,22" fill="color-mix(in srgb, ${levelCfg.color} 20%, transparent)" stroke="${levelCfg.color}" stroke-width="2" stroke-linejoin="round"/>
         <line x1="12" y1="9" x2="12" y2="15" stroke="${levelCfg.color}" stroke-width="2" stroke-linecap="round"/>
         <circle cx="12" cy="18" r="1.5" fill="${levelCfg.color}"/>
       </svg>`;
       const icon = L.divIcon({ html: svg, className: '', iconSize:[levelCfg.size+4,levelCfg.size+4], iconAnchor:[(levelCfg.size+4)/2,levelCfg.size+4] });
       const marker = L.marker([ls.lat, ls.lng], { icon, zIndexOffset: 700 });
-      marker.bindPopup(`<div class="gis-popup-inner" style="border-color:${levelCfg.color}55">
+      marker.bindPopup(`<div class="gis-popup-inner" style="border-color:color-mix(in srgb, ${levelCfg.color} 33%, transparent)">
         <div class="gis-popup-title" style="color:${levelCfg.color}">${ls.name}</div>
         <div class="gis-popup-sub">${ls.id} · ${typeCfg[ls.type] || ls.type}</div>
         <div class="gis-popup-grid">
@@ -899,7 +914,7 @@ window.afterRender_gis = function () {
           <div><div class="gis-popup-key">Diện tích</div><div class="gis-popup-val">${ls.affectedArea}</div></div>
           <div><div class="gis-popup-key">Phát hiện</div><div class="gis-popup-val">${ls.discoveredDate}</div></div>
         </div>
-        <div style="padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.04);font-size:11px;color:rgba(255,255,255,.65);margin:8px 0;line-height:1.5">${ls.note}</div>
+        <div style="padding:6px 10px;border-radius:8px;background:color-mix(in srgb, var(--text) 4%, transparent);font-size:11px;color:var(--text-2);margin:8px 0;line-height:1.5">${ls.note}</div>
         <div class="gis-popup-status">${statusCfg[ls.status] || ls.status}</div>
       </div>`, { className: 'gis-popup', maxWidth: 300 });
       if (gisLayerFlags.landslide) marker.addTo(gisMap);
@@ -909,9 +924,9 @@ window.afterRender_gis = function () {
     // ── GIS-3: 4 TẠI CHỖ RESOURCES ──────────────────────────────
     gisLayers.resources = [];
     const resourceCfg = {
-      warehouse: { color:'#a855f7', label:'Kho vật tư', shape:'square' },
+      warehouse: { color:'#3699FF', label:'Kho vật tư', shape:'square' },
       command:   { color:'#f59e0b', label:'Sở chỉ huy', shape:'star' },
-      vehicle:   { color:'#06b6d4', label:'Tập kết PT', shape:'diamond' },
+      vehicle:   { color: gisColor('--cyan', '#06b6d4'), label:'Tập kết PT', shape:'diamond' },
     };
     GIS_RESOURCES_4TC.forEach(r => {
       const cfg = resourceCfg[r.type] || resourceCfg.warehouse;
@@ -929,11 +944,11 @@ window.afterRender_gis = function () {
 
       let detailHtml = '';
       if (r.type === 'warehouse') {
-        detailHtml = `<div style="margin-top:8px"><div style="font-size:10px;color:rgba(255,255,255,.4);margin-bottom:4px">VẬT TƯ DỰ TRỮ</div>${r.items.map(it=>`<div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:rgba(255,255,255,.7)">${it.name}</span><span style="font-weight:700;color:${cfg.color}">${it.qty.toLocaleString('vi-VN')} ${it.unit}</span></div>`).join('')}<div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:6px">Kiểm kê: ${r.lastCheck}</div></div>`;
+        detailHtml = `<div style="margin-top:8px"><div style="font-size:10px;color:var(--muted);margin-bottom:4px">VẬT TƯ DỰ TRỮ</div>${r.items.map(it=>`<div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid color-mix(in srgb, var(--text) 5%, transparent)"><span style="color:var(--text-2)">${it.name}</span><span style="font-weight:700;color:${cfg.color}">${it.qty.toLocaleString('vi-VN')} ${it.unit}</span></div>`).join('')}<div style="font-size:10px;color:var(--muted);margin-top:6px">Kiểm kê: ${r.lastCheck}</div></div>`;
       } else if (r.type === 'command') {
         detailHtml = `<div class="gis-popup-grid" style="margin-top:8px"><div><div class="gis-popup-key">Quân số</div><div class="gis-popup-val" style="color:${cfg.color}">${r.personnel} người</div></div><div><div class="gis-popup-key">Liên hệ</div><div class="gis-popup-val" style="font-size:11px">${r.contact}</div></div><div><div class="gis-popup-key">Thành lập</div><div class="gis-popup-val" style="font-size:11px">${r.established}</div></div></div>`;
       } else {
-        detailHtml = `<div style="margin-top:8px">${r.vehicles.map(v=>`<div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.05)"><span style="color:rgba(255,255,255,.7)">${v.name}</span><span style="font-weight:700;color:${cfg.color}">${v.qty} cái</span></div>`).join('')}</div>`;
+        detailHtml = `<div style="margin-top:8px">${r.vehicles.map(v=>`<div style="display:flex;justify-content:space-between;font-size:11px;padding:3px 0;border-bottom:1px solid color-mix(in srgb, var(--text) 5%, transparent)"><span style="color:var(--text-2)">${v.name}</span><span style="font-weight:700;color:${cfg.color}">${v.qty} cái</span></div>`).join('')}</div>`;
       }
       marker.bindPopup(`<div class="gis-popup-inner" style="border-color:${cfg.color}55">
         <div class="gis-popup-title" style="color:${cfg.color}">${r.name}</div>
@@ -952,7 +967,7 @@ function injectPipeTooltipStyles() {
   if (document.getElementById('gisPipeTooltipCss')) return;
   const s = document.createElement('style');
   s.id = 'gisPipeTooltipCss';
-  s.textContent = `.gis-pipe-tooltip{background:rgba(7,22,41,.95)!important;border:1px solid rgba(0,200,255,.25)!important;color:#00c8ff!important;font-size:11px!important;padding:4px 10px!important;border-radius:7px!important;font-family:Inter,sans-serif!important;box-shadow:0 4px 12px rgba(0,0,0,.4)!important}`;
+  s.textContent = `.gis-pipe-tooltip{background:color-mix(in srgb, var(--bg-surface) 95%, transparent)!important;border:1px solid color-mix(in srgb, var(--cyan) 25%, transparent)!important;color:var(--cyan)!important;font-size:11px!important;padding:4px 10px!important;border-radius:7px!important;font-family:Inter,sans-serif!important;box-shadow:0 4px 12px rgba(0,0,0,.4)!important}`;
   document.head.appendChild(s);
 }
 
@@ -1054,7 +1069,7 @@ function viewNrwOnGis(dmaId, dmaName, lat, lng, lossPercent, lossM3, riskLevel) 
 function gisHighlightNrw(dmaId, dmaName, lat, lng, safetyPercent, lossM3, riskLevel) {
   if (!gisMap) { setTimeout(() => gisHighlightNrw(dmaId, dmaName, lat, lng, safetyPercent, lossM3, riskLevel), 400); return; }
   if (_gisNrwLayer) { gisMap.removeLayer(_gisNrwLayer); _gisNrwLayer = null; }
-  const riskColor = riskLevel === 'Rất cao' ? '#ff1744' : riskLevel === 'Cao' ? '#ffca28' : '#00e676';
+  const riskColor = riskLevel === 'Rất cao' ? gisColor('--danger', '#E14E54') : riskLevel === 'Cao' ? gisColor('--warning', '#F6C000') : gisColor('--success', 'var(--success)');
   _gisNrwLayer = L.circle([lat, lng], {
     radius: 2000, color: riskColor, fillColor: riskColor, fillOpacity: 0.1, weight: 2.5, dashArray: '8 5',
   }).addTo(gisMap);

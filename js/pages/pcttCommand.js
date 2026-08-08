@@ -53,7 +53,7 @@ const CMD_SCENARIOS = [
     forces:{ total:1200, ready:980, alert:'Trực ban tăng cường 16/24', units:'8 đội, 18 xã/phường' },
     resources:{ sandbags:'150,000 bao', boats:'80 chiếc', pumps:'65 máy bơm', food:'Đủ 5 ngày' },
   },
-  { id:'SC-05', name:'Hạn hán nghiêm trọng — Thiếu nước tưới', level:'warning', color:'#00e676',
+  { id:'SC-05', name:'Hạn hán nghiêm trọng — Thiếu nước tưới', level:'warning', color:'var(--success)',
     trigger:'Mực nước hồ chứa < 30% dung tích, thiếu nước tưới > 3 tuần', phase:'Ứng phó hạn chế',
     tasks:[
       { id:'T-21', t:'Điều phối tưới luân phiên các vùng ưu tiên lúa', s:'done', assignee:'Phòng kỹ thuật', deadline:'Hàng ngày', priority:'high' },
@@ -101,9 +101,9 @@ function renderPcttCommand() {
   <!-- Status Cards -->
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px">
     ${[
-      { label:'Lệnh đã thực hiện', val:executed, color:'var(--green)' },
-      { label:'Chờ phê duyệt', val:pending, color:'var(--yellow)' },
-      { label:'Kịch bản chuẩn bị', val:CMD_SCENARIOS.length, color:'var(--cyan)' },
+      { label:'Lệnh đã thực hiện', val:executed, color:'var(--success)' },
+      { label:'Chờ phê duyệt', val:pending, color:'var(--warning)' },
+      { label:'Kịch bản chuẩn bị', val:CMD_SCENARIOS.length, color:'var(--primary)' },
       { label:'Lực lượng trực ban', val:`${totalForce}/${totalMax}`, color:'var(--purple)' },
     ].map(s=>`
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px 20px">
@@ -172,14 +172,14 @@ function _renderCmdTab(cmdLogs, activeScn, totalForce, totalMax) {
     </div>
     <div style="display:flex;flex-direction:column;gap:8px">
       ${tasks.map((task,i) => {
-        const colors={done:'var(--green)',processing:'var(--cyan)',pending:'var(--muted)'};
+        const colors={done:'var(--success)',processing:'var(--primary)',pending:'var(--muted)'};
         const labels={done:'Hoàn thành',processing:'Đang thực hiện',pending:'Chờ thực hiện'};
         const badges={done:'badge-green',processing:'badge-blue',pending:'badge-gray'};
-        const pColor={critical:'var(--red)',high:'var(--yellow)',normal:'var(--muted)'}[task.priority]||'var(--muted)';
+        const pColor={critical:'var(--danger)',high:'var(--warning)',normal:'var(--muted)'}[task.priority]||'var(--muted)';
         return `
         <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:10px;transition:background .2s" onmouseover="this.style.background='rgba(255,255,255,.04)'" onmouseout="this.style.background='rgba(255,255,255,.02)'">
           <div style="width:24px;height:24px;border-radius:6px;border:1.5px solid ${colors[task.s]};background:${task.s==='done'?colors[task.s]:'transparent'};display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer" onclick="toggleCmdTask('${scn.id}','${task.id}')">
-            ${task.s==='done'?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>':task.s==='processing'?`<div style="width:8px;height:8px;border-radius:50%;background:var(--cyan)"></div>`:''}
+            ${task.s==='done'?'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>':task.s==='processing'?`<div style="width:8px;height:8px;border-radius:50%;background:var(--primary)"></div>`:''}
           </div>
           <div style="flex:1;min-width:0">
             <div style="font-size:13px;${task.s==='done'?'text-decoration:line-through;opacity:.5':''}">${task.t}</div>
@@ -218,7 +218,7 @@ function _renderCmdTab(cmdLogs, activeScn, totalForce, totalMax) {
           <div style="display:flex;gap:8px">
             <button class="btn btn-ghost btn-sm" style="flex:1" onclick="viewScenarioDetail('${s.id}')">Xem kịch bản</button>
             ${isActive
-              ? `<button class="btn btn-sm" style="flex:1;background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.3)" disabled>✓ Đang kích hoạt</button>`
+              ? `<button class="btn btn-sm" style="flex:1;background:rgba(41,132,238,.1);color:var(--success);border:1px solid rgba(41,132,238,.3)" disabled>✓ Đang kích hoạt</button>`
               : `<button class="btn btn-sm" style="flex:1;background:${s.color}22;color:${s.color};border:1px solid ${s.color}44" onclick="activateScenario('${s.id}')">Kích hoạt</button>`}
           </div>
         </div>`;
@@ -279,7 +279,7 @@ function _renderCmdTab(cmdLogs, activeScn, totalForce, totalMax) {
               <td style="font-size:12px;color:var(--muted)">${r.task}</td>
               <td class="mono" style="font-weight:700">${r.count}</td>
               <td>${statusBadge(r.status)}</td>
-              <td class="mono" style="font-size:12px;color:var(--cyan)">${r.contact}</td>
+              <td class="mono" style="font-size:12px;color:var(--primary)">${r.contact}</td>
             </tr>`).join('')}
           </tbody>
         </table>
@@ -308,14 +308,14 @@ function _renderCmdTab(cmdLogs, activeScn, totalForce, totalMax) {
               const sColor=c.status==='executed'?'badge-green':'badge-yellow';
               const sLabel=c.status==='executed'?'Đã thực hiện':'Chờ phê duyệt';
               return `<tr>
-                <td class="mono" style="color:var(--cyan);font-size:12px">${c.id}</td>
+                <td class="mono" style="color:var(--primary);font-size:12px">${c.id}</td>
                 <td style="font-size:12px;max-width:280px">${c.action}</td>
                 <td style="font-size:12px;color:var(--muted)">${c.requestedBy||c.by||'—'}</td>
                 <td><span class="badge ${pColor}" style="font-size:10px">${pLabel}</span></td>
                 <td><span class="badge ${sColor}" style="font-size:10px">${sLabel}</span></td>
                 <td>${c.status==='pending_approval'?`<div style="display:flex;gap:4px">
-                  <button class="btn btn-sm" style="font-size:10px;background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.25);padding:3px 8px" onclick="approveCmdLog('${c.id}')">Duyệt</button>
-                  <button class="btn btn-ghost btn-xs" style="font-size:10px;color:var(--red)" onclick="rejectCmdLog('${c.id}')">Từ chối</button>
+                  <button class="btn btn-sm" style="font-size:10px;background:rgba(41,132,238,.1);color:var(--success);border:1px solid rgba(41,132,238,.25);padding:3px 8px" onclick="approveCmdLog('${c.id}')">Duyệt</button>
+                  <button class="btn btn-ghost btn-xs" style="font-size:10px;color:var(--danger)" onclick="rejectCmdLog('${c.id}')">Từ chối</button>
                 </div>`:`<span style="font-size:11px;color:var(--muted)">${c.time||c.requestedAt||'—'}</span>`}</td>
               </tr>`;
             }).join('')}
@@ -329,7 +329,7 @@ function _renderCmdTab(cmdLogs, activeScn, totalForce, totalMax) {
           <button class="btn btn-ghost btn-sm" ${cmdLogPage===1?'disabled':''} onclick="changeCmdLogPage(${cmdLogPage-1})">Trước</button>
           ${Array.from({length:Math.min(totalPages,7)},(_,i)=>{
             const p = totalPages<=7 ? i+1 : cmdLogPage<=4 ? i+1 : Math.min(cmdLogPage+i-3,totalPages);
-            return `<button class="btn btn-sm" style="min-width:32px;border:1px solid ${p===cmdLogPage?'var(--cyan)':'var(--border)'};background:${p===cmdLogPage?'rgba(0,200,255,.15)':'transparent'};color:${p===cmdLogPage?'var(--cyan)':'var(--muted)'}" onclick="changeCmdLogPage(${p})">${p}</button>`;
+            return `<button class="btn btn-sm" style="min-width:32px;border:1px solid ${p===cmdLogPage?'var(--primary)':'var(--border)'};background:${p===cmdLogPage?'rgba(0,200,255,.15)':'transparent'};color:${p===cmdLogPage?'var(--primary)':'var(--muted)'}" onclick="changeCmdLogPage(${p})">${p}</button>`;
           }).join('')}
           <button class="btn btn-ghost btn-sm" ${cmdLogPage===totalPages?'disabled':''} onclick="changeCmdLogPage(${cmdLogPage+1})">Sau</button>
         </div>
@@ -382,7 +382,7 @@ window.activateScenario = function(id) {
   </div>
   <div class="modal-footer">
     <button class="btn btn-ghost" onclick="closeModal()">Hủy</button>
-    <button class="btn btn-sm" style="background:rgba(255,23,68,.15);color:var(--red);border:1px solid rgba(255,23,68,.3)" onclick="doActivateScenario('${id}')">
+    <button class="btn btn-sm" style="background:rgba(255,23,68,.15);color:var(--danger);border:1px solid rgba(255,23,68,.3)" onclick="doActivateScenario('${id}')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
       Xác nhận Kích hoạt
     </button>
@@ -409,7 +409,7 @@ window.viewScenarioDetail = function(id) {
     <div style="font-size:13px;font-weight:700;margin-bottom:8px">Danh sách nhiệm vụ (${s.tasks.length})</div>
     ${s.tasks.map(t=>`
     <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;margin-bottom:6px">
-      <div style="width:18px;height:18px;border-radius:4px;background:${{done:'var(--green)',processing:'var(--cyan)',pending:'rgba(255,255,255,.15)'}[t.s]};flex-shrink:0"></div>
+      <div style="width:18px;height:18px;border-radius:4px;background:${{done:'var(--success)',processing:'var(--primary)',pending:'rgba(255,255,255,.15)'}[t.s]};flex-shrink:0"></div>
       <div style="flex:1"><div style="font-size:12px">${t.t}</div><div style="font-size:10px;color:var(--muted)">${t.assignee}</div></div>
       <span class="badge ${{done:'badge-green',processing:'badge-blue',pending:'badge-gray'}[t.s]}" style="font-size:9px">${{done:'Xong',processing:'Đang làm',pending:'Chờ'}[t.s]}</span>
     </div>`).join('')}
@@ -426,7 +426,7 @@ window.openAddTaskModal = function() {
   <div class="modal-header"><span class="modal-title">Thêm nhiệm vụ chỉ đạo</span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div class="modal-body">
-    <div class="form-group"><label class="form-label">Nội dung nhiệm vụ <span style="color:var(--red)">*</span></label>
+    <div class="form-group"><label class="form-label">Nội dung nhiệm vụ <span style="color:var(--danger)">*</span></label>
       <textarea id="tDesc" class="form-control" rows="2" placeholder="Mô tả nhiệm vụ cụ thể..."></textarea></div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">Người phụ trách</label>
@@ -489,21 +489,21 @@ window.viewTaskDetail = function(scnId, taskId) {
 
 window.openEmergencyModal = function() {
   openModal(`
-  <div class="modal-header"><span class="modal-title" style="color:var(--red)">🚨 Kích hoạt Chế độ Khẩn cấp</span>
+  <div class="modal-header"><span class="modal-title" style="color:var(--danger)">🚨 Kích hoạt Chế độ Khẩn cấp</span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div class="modal-body">
     <div style="padding:16px;background:rgba(255,23,68,.08);border:1px solid rgba(255,23,68,.3);border-radius:10px;margin-bottom:16px">
-      <div style="font-size:14px;font-weight:800;color:var(--red);margin-bottom:8px">⚠ CẢNH BÁO: Hành động không thể hoàn tác trong 24h</div>
+      <div style="font-size:14px;font-weight:800;color:var(--danger);margin-bottom:8px">⚠ CẢNH BÁO: Hành động không thể hoàn tác trong 24h</div>
       <div style="font-size:12px;color:var(--muted)">Kích hoạt chế độ khẩn cấp sẽ:<br>• Triệu tập TOÀN BỘ lực lượng (312 người)<br>• Gửi SMS khẩn cấp tới 29 quận/huyện<br>• Phát cảnh báo qua loa phát thanh tự động<br>• Báo cáo tự động lên Bộ NN&PTNT</div>
     </div>
-    <div class="form-group"><label class="form-label">Lý do kích hoạt <span style="color:var(--red)">*</span></label>
+    <div class="form-group"><label class="form-label">Lý do kích hoạt <span style="color:var(--danger)">*</span></label>
       <textarea id="emergReason" class="form-control" rows="3" placeholder="Mô tả tình huống khẩn cấp..."></textarea></div>
     <div class="form-group"><label class="form-label">Người ra lệnh</label>
       <input class="form-control" value="${typeof currentUser !== 'undefined' ? currentUser?.name : 'Chi cục trưởng'}" readonly style="opacity:.7"></div>
   </div>
   <div class="modal-footer">
     <button class="btn btn-ghost" onclick="closeModal()">Hủy</button>
-    <button class="btn btn-sm" style="background:rgba(255,23,68,.2);color:var(--red);border:1px solid rgba(255,23,68,.4);font-weight:700" onclick="doEmergency()">XÁC NHẬN KHẨN CẤP</button>
+    <button class="btn btn-sm" style="background:rgba(255,23,68,.2);color:var(--danger);border:1px solid rgba(255,23,68,.4);font-weight:700" onclick="doEmergency()">XÁC NHẬN KHẨN CẤP</button>
   </div>`);
 };
 
@@ -573,33 +573,33 @@ const CMD_AI_SUGGESTIONS = {
 function renderAiScenarioPanel(scnId) {
   const ai = CMD_AI_SUGGESTIONS[scnId];
   if (!ai) return `<div style="padding:14px;font-size:12px;color:var(--muted)">Chưa có phân tích AI cho kịch bản này.</div>`;
-  const riskColor = ai.risk==='Cao'?'var(--red)':ai.risk==='Trung bình'?'var(--yellow)':'var(--green)';
+  const riskColor = ai.risk==='Cao'?'var(--danger)':ai.risk==='Trung bình'?'var(--warning)':'var(--success)';
   return `
-  <div class="card" style="padding:16px;margin-top:14px;border-left:3px solid #7c3aed">
+  <div class="card" style="padding:16px;margin-top:14px;border-left:3px solid var(--purple)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
       <div style="display:flex;align-items:center;gap:8px">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/></svg>
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/></svg>
         <span style="font-size:12px;font-weight:700">Phân tích AI — Gợi ý ứng phó</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
         <div style="font-size:11px;color:var(--muted)">Độ tin cậy:</div>
-        <div style="padding:2px 9px;border-radius:10px;background:rgba(124,58,237,.15);color:#a78bfa;font-size:11px;font-weight:700">${ai.aiScore}%</div>
+        <div style="padding:2px 9px;border-radius:10px;background:rgba(41,132,238,.15);color:#5BA9FF;font-size:11px;font-weight:700">${ai.aiScore}%</div>
         <div style="padding:2px 9px;border-radius:10px;background:rgba(${ai.risk==='Cao'?'239,68,68':'234,179,8'},.12);color:${riskColor};font-size:10px;font-weight:700">Rủi ro: ${ai.risk}</div>
       </div>
     </div>
-    <div style="padding:9px 12px;background:rgba(124,58,237,.06);border-radius:8px;font-size:12px;color:var(--muted);margin-bottom:12px;border-left:2px solid #7c3aed">
-      <strong style="color:#a78bfa">Dự báo xu hướng:</strong> ${ai.trend}
+    <div style="padding:9px 12px;background:rgba(41,132,238,.06);border-radius:8px;font-size:12px;color:var(--muted);margin-bottom:12px;border-left:2px solid var(--purple)">
+      <strong style="color:#5BA9FF">Dự báo xu hướng:</strong> ${ai.trend}
     </div>
     <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Gợi ý phương án ứng phó</div>
     <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px">
       ${ai.suggestions.map((s,i)=>`
-      <div style="display:flex;align-items:flex-start;gap:9px;padding:8px 10px;border-radius:8px;background:rgba(124,58,237,.05);border:1px solid rgba(124,58,237,.12)">
-        <div style="width:18px;height:18px;border-radius:50%;background:rgba(124,58,237,.2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#a78bfa;flex-shrink:0">${i+1}</div>
+      <div style="display:flex;align-items:flex-start;gap:9px;padding:8px 10px;border-radius:8px;background:rgba(41,132,238,.05);border:1px solid rgba(41,132,238,.12)">
+        <div style="width:18px;height:18px;border-radius:50%;background:rgba(41,132,238,.2);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#5BA9FF;flex-shrink:0">${i+1}</div>
         <div style="font-size:12px;line-height:1.5">${s}</div>
       </div>`).join('')}
     </div>
     <div style="display:flex;gap:8px">
-      <button class="btn btn-sm" style="background:rgba(124,58,237,.15);color:#a78bfa;border:1px solid rgba(124,58,237,.3)" onclick="showToast('Đang tạo lệnh chỉ đạo từ gợi ý AI...')">
+      <button class="btn btn-sm" style="background:rgba(41,132,238,.15);color:#5BA9FF;border:1px solid rgba(41,132,238,.3)" onclick="showToast('Đang tạo lệnh chỉ đạo từ gợi ý AI...')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         Tạo lệnh từ gợi ý AI
       </button>
@@ -615,7 +615,7 @@ function renderAiScenarioPanel(scnId) {
 function _renderLienCapTab() {
   const levelColors = { urgent:'#ef4444', normal:'#38bdf8' };
   const statusCfg = {
-    confirmed:   { label:'Đã xác nhận', color:'#10b981', bg:'rgba(16,185,129,.1)' },
+    confirmed:   { label:'Đã xác nhận', color:'var(--success)', bg:'rgba(41,132,238,.1)' },
     pending:     { label:'Chờ xác nhận', color:'#f59e0b', bg:'rgba(245,158,11,.1)' },
     no_response: { label:'Không phản hồi', color:'#ef4444', bg:'rgba(239,68,68,.1)' },
   };
@@ -646,10 +646,10 @@ function _renderLienCapTab() {
             <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:4px">Từ: <strong style="color:rgba(255,255,255,.7)">${d.from}</strong></div>
           </div>
           <div style="text-align:center;flex-shrink:0;margin-left:20px">
-            <div style="font-size:22px;font-weight:800;color:${pct===100?'#10b981':pct>50?'#f59e0b':'#ef4444'}">${pct}%</div>
+            <div style="font-size:22px;font-weight:800;color:${pct===100?'var(--success)':pct>50?'#f59e0b':'#ef4444'}">${pct}%</div>
             <div style="font-size:10px;color:rgba(255,255,255,.4)">${confirmed}/${total} xã xác nhận</div>
             <div style="width:80px;height:4px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:6px;overflow:hidden">\
-              <div style="height:100%;width:${pct}%;background:${pct===100?'#10b981':pct>50?'#f59e0b':'#ef4444'};border-radius:2px"></div>
+              <div style="height:100%;width:${pct}%;background:${pct===100?'var(--success)':pct>50?'#f59e0b':'#ef4444'};border-radius:2px"></div>
             </div>
           </div>
         </div>

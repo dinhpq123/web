@@ -52,7 +52,7 @@ function renderScheduler() {
     }).join('');
 
     const stIcon = s.type === 'pump' ? '⚙' : '🚧';
-    const stColor = { ok:'var(--green)', warning:'var(--yellow)', critical:'var(--red)' }[s.status] || 'var(--muted)';
+    const stColor = { ok:'var(--success)', warning:'var(--warning)', critical:'var(--danger)' }[s.status] || 'var(--muted)';
     return `
     <div style="display:grid;grid-template-columns:180px 1fr 44px 60px;align-items:center;gap:8px;margin-bottom:10px">
       <div style="font-size:12px;font-weight:600;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">
@@ -130,9 +130,9 @@ function renderScheduler() {
           </div>
           <div style="display:flex;gap:8px">
             <button class="btn btn-ghost btn-sm" onclick="openCloneProfileModal('${currentProfile.id}')">Nhân bản</button>
-            <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="confirmDeleteProfile('${currentProfile.id}')">Xóa</button>
+            <button class="btn btn-ghost btn-sm" style="color:var(--danger)" onclick="confirmDeleteProfile('${currentProfile.id}')">Xóa</button>
             ${currentProfile.isActive
-              ? `<button class="btn btn-sm" style="background:rgba(0,230,118,.12);color:var(--green);border:1px solid rgba(0,230,118,.3)" disabled>✓ Đang hoạt động</button>`
+              ? `<button class="btn btn-sm" style="background:rgba(41,132,238,.12);color:var(--success);border:1px solid rgba(41,132,238,.3)" disabled>✓ Đang hoạt động</button>`
               : `<button class="btn btn-primary btn-sm" onclick="activateProfile('${currentProfile.id}')">Kích hoạt</button>`}
           </div>
         </div>
@@ -140,8 +140,8 @@ function renderScheduler() {
         <!-- KPIs -->
         <div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--border)">
           ${[
-            { label: 'Trạm vận hành', val: `${activeStations}/${stations.length}`, color: 'var(--cyan)' },
-            { label: 'Tổng giờ bơm/ngày', val: `${totalHours}h`, color: 'var(--yellow)' },
+            { label: 'Trạm vận hành', val: `${activeStations}/${stations.length}`, color: 'var(--primary)' },
+            { label: 'Tổng giờ bơm/ngày', val: `${totalHours}h`, color: 'var(--warning)' },
             { label: 'Điện tiêu thụ/ngày', val: `${Math.round(totalPower).toLocaleString()} kWh`, color: 'var(--orange)' },
             { label: 'Điều kiện áp dụng', val: '...' , color: 'var(--muted)' },
           ].map((k,i) => `
@@ -185,7 +185,7 @@ function renderScheduler() {
                 const h = sched.reduce((a,iv)=>{ const d=iv[1]>iv[0]?iv[1]-iv[0]:(24-iv[0])+iv[1]; return a+d; },0);
                 const schedStr = sched.length ? sched.map(iv=>`${String(iv[0]).padStart(2,'0')}h-${String(iv[1]).padStart(2,'0')}h`).join(', ') : '—';
                 return `<tr>
-                  <td><strong class="mono" style="color:var(--cyan);font-size:12px">${s.id}</strong><br><span style="font-size:12px">${s.name}</span></td>
+                  <td><strong class="mono" style="color:var(--primary);font-size:12px">${s.id}</strong><br><span style="font-size:12px">${s.name}</span></td>
                   <td><span class="badge ${s.type==='pump'?'badge-blue':'badge-gray'}" style="font-size:10px">${s.type==='pump'?'Trạm bơm':'Cống TL'}</span></td>
                   <td style="font-size:12px;color:var(--muted)">${s.district}</td>
                   <td class="mono" style="font-size:12px">${s.capacity} ${s.unit}</td>
@@ -221,7 +221,7 @@ window.openAddProfileModal = function() {
   <div class="modal-body" style="max-height:78vh;overflow-y:auto">
     <div class="form-row">
       <div class="form-group">
-        <label class="form-label">Tên kịch bản <span style="color:var(--red)">*</span></label>
+        <label class="form-label">Tên kịch bản <span style="color:var(--danger)">*</span></label>
         <input id="newProfileName" class="form-control" placeholder="VD: Kịch bản Lũ đặc biệt lớn" required>
       </div>
       <div class="form-group">
@@ -251,7 +251,7 @@ window.openAddProfileModal = function() {
         <div style="display:flex;gap:8px;align-items:center">
           <input id="newProfileColor" type="color" value="#00c8ff" style="width:50px;height:38px;border:1px solid var(--border);border-radius:8px;cursor:pointer;background:none;padding:2px">
           <div style="display:flex;gap:6px">
-            ${['#ff3c50','#ff9800','#00e676','#00c8ff','#9c27b0','#e91e63','#607d8b'].map(c=>`
+            ${['#ff3c50','#ff9800','var(--success)','#00c8ff','#2984EE','#e91e63','#607d8b'].map(c=>`
             <div style="width:24px;height:24px;border-radius:6px;background:${c};cursor:pointer;border:2px solid transparent" onclick="document.getElementById('newProfileColor').value='${c}'" title="${c}"></div>`).join('')}
           </div>
         </div>
@@ -368,7 +368,7 @@ window.openEditStationSchedule = function(stationId, profileId) {
         <input type="number" value="${iv[0]}" min="0" max="23" class="form-control" style="flex:1;font-size:12px" placeholder="Bắt đầu (h)">
         <span style="color:var(--muted)">→</span>
         <input type="number" value="${iv[1]}" min="1" max="24" class="form-control" style="flex:1;font-size:12px" placeholder="Kết thúc (h)">
-        <button class="btn btn-ghost btn-xs" style="color:var(--red)" onclick="this.parentElement.remove()">✕</button>
+        <button class="btn btn-ghost btn-xs" style="color:var(--danger)" onclick="this.parentElement.remove()">✕</button>
       </div>`).join('') : '<div style="font-size:12px;color:var(--muted);padding:12px;background:rgba(255,255,255,.03);border:1px dashed var(--border);border-radius:8px;text-align:center">Không có lịch vận hành trong kịch bản này</div>'}
     </div>
     <button class="btn btn-ghost btn-sm" style="margin-top:10px" onclick="addIntervalRow()">+ Thêm khoảng thời gian</button>
@@ -384,7 +384,7 @@ window.addIntervalRow = function() {
   if (!list) return;
   const div = document.createElement('div');
   div.style.cssText = 'display:flex;gap:8px;align-items:center';
-  div.innerHTML = `<input type="number" min="0" max="23" class="form-control" style="flex:1;font-size:12px" placeholder="Bắt đầu (h)"><span style="color:var(--muted)">→</span><input type="number" min="1" max="24" class="form-control" style="flex:1;font-size:12px" placeholder="Kết thúc (h)"><button class="btn btn-ghost btn-xs" style="color:var(--red)" onclick="this.parentElement.remove()">✕</button>`;
+  div.innerHTML = `<input type="number" min="0" max="23" class="form-control" style="flex:1;font-size:12px" placeholder="Bắt đầu (h)"><span style="color:var(--muted)">→</span><input type="number" min="1" max="24" class="form-control" style="flex:1;font-size:12px" placeholder="Kết thúc (h)"><button class="btn btn-ghost btn-xs" style="color:var(--danger)" onclick="this.parentElement.remove()">✕</button>`;
   list.appendChild(div);
 };
 
@@ -403,11 +403,11 @@ window.confirmDeleteProfile = function(id) {
   if (!p) return;
   if (p.isActive) { showToast('⚠ Không thể xóa kịch bản đang active!'); return; }
   openModal(`
-  <div class="modal-header"><span class="modal-title" style="color:var(--red)">Xóa kịch bản</span><button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  <div class="modal-header"><span class="modal-title" style="color:var(--danger)">Xóa kịch bản</span><button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div class="modal-body"><p>Bạn có chắc muốn xóa kịch bản <strong>"${p.name}"</strong>? Hành động này không thể hoàn tác.</p></div>
   <div class="modal-footer">
     <button class="btn btn-ghost" onclick="closeModal()">Hủy</button>
-    <button class="btn btn-sm" style="background:rgba(255,23,68,.15);color:var(--red);border:1px solid rgba(255,23,68,.3)" onclick="doDeleteProfile('${id}')">Xóa kịch bản</button>
+    <button class="btn btn-sm" style="background:rgba(255,23,68,.15);color:var(--danger);border:1px solid rgba(255,23,68,.3)" onclick="doDeleteProfile('${id}')">Xóa kịch bản</button>
   </div>`);
 };
 

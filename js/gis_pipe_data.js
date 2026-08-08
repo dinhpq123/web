@@ -44,7 +44,7 @@ window.GIS_DMA_ZONES = [
   },
   {
     id: 'HL04', name: 'Hành lang bảo vệ Đê Tả Đuống', district: 'Gia Lâm – Đông Anh',
-    color: '#00e676', fillOpacity: 0.06,
+    color: '#2984EE', fillOpacity: 0.06,
     status: 'ok', loss: 0, customers: 0, supplyFlow: 0, consumptionFlow: 0,
     coords: [
       [21.0700, 105.9500], [21.0800, 105.9800], [21.0850, 106.0100],
@@ -56,7 +56,7 @@ window.GIS_DMA_ZONES = [
   },
   {
     id: 'HL05', name: 'Vùng lưu vực hồ Suối Hai', district: 'H. Ba Vì',
-    color: '#7c4dff', fillOpacity: 0.08,
+    color: '#2984EE', fillOpacity: 0.08,
     status: 'ok', loss: 0, customers: 0, supplyFlow: 0, consumptionFlow: 0,
     coords: [
       [21.1500, 105.2800], [21.1600, 105.3200], [21.1450, 105.3800],

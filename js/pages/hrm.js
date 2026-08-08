@@ -43,12 +43,12 @@ function renderHrm() {
     </div>
   </div>
   <div class="kpi-grid" style="margin-bottom:16px">
-    <div class="kpi-card" style="--accent-color:var(--cyan)"><div class="kpi-label">Tổng CBCNV</div><div class="kpi-value">${DATA.employees.length}</div></div>
-    <div class="kpi-card" style="--accent-color:var(--green)"><div class="kpi-label">Đang làm việc</div><div class="kpi-value">${DATA.employees.filter(e => e.status === 'active').length}</div></div>
-    <div class="kpi-card" style="--accent-color:var(--yellow)"><div class="kpi-label">Ca 24/7 hôm nay</div><div class="kpi-value">3</div><div class="kpi-sub">Sáng · Chiều · Đêm</div></div>
-    <div class="kpi-card" style="--accent-color:var(--blue)"><div class="kpi-label">Tuổi trung bình</div><div class="kpi-value">${avgAge}</div><div class="kpi-sub">Năm tuổi</div></div>
+    <div class="kpi-card" style="--accent-color:var(--primary)"><div class="kpi-label">Tổng CBCNV</div><div class="kpi-value">${DATA.employees.length}</div></div>
+    <div class="kpi-card" style="--accent-color:var(--success)"><div class="kpi-label">Đang làm việc</div><div class="kpi-value">${DATA.employees.filter(e => e.status === 'active').length}</div></div>
+    <div class="kpi-card" style="--accent-color:var(--warning)"><div class="kpi-label">Ca 24/7 hôm nay</div><div class="kpi-value">3</div><div class="kpi-sub">Sáng · Chiều · Đêm</div></div>
+    <div class="kpi-card" style="--accent-color:var(--info)"><div class="kpi-label">Tuổi trung bình</div><div class="kpi-value">${avgAge}</div><div class="kpi-sub">Năm tuổi</div></div>
     <div class="kpi-card" style="--accent-color:var(--purple)"><div class="kpi-label">KN trung bình</div><div class="kpi-value">${avgExp}</div><div class="kpi-sub">Năm kinh nghiệm</div></div>
-    <div class="kpi-card" style="--accent-color:var(--green)"><div class="kpi-label">KPI TB tháng 2</div><div class="kpi-value" style="color:var(--green)">92<span style="font-size:16px;color:var(--muted)">%</span></div></div>
+    <div class="kpi-card" style="--accent-color:var(--success)"><div class="kpi-label">KPI TB tháng 2</div><div class="kpi-value" style="color:var(--success)">92<span style="font-size:16px;color:var(--muted)">%</span></div></div>
   </div>
   <div class="tabs">
     <button class="tab-btn ${hrmTab === 'employees' ? 'active' : ''}" onclick="switchHrmTab('employees')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Danh sách CBCNV</button>
@@ -118,7 +118,7 @@ function renderEmployeeList() {
           <td style="font-size:12px;color:var(--muted)">${e.email}</td>
           <td style="display:flex;gap:5px;align-items:center">
             <button class="btn btn-ghost btn-sm" onclick="editEmployee('${e.id}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Sửa</button>
-            <button class="btn btn-sm btn-icon" title="Xóa" style="color:var(--red);background:transparent;border:none" onclick="confirmDeleteEmployee('${e.id}','${e.name}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
+            <button class="btn btn-sm btn-icon" title="Xóa" style="color:var(--danger);background:transparent;border:none" onclick="confirmDeleteEmployee('${e.id}','${e.name}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg></button>
           </td>
         </tr>`;
   }).join('')}
@@ -162,9 +162,9 @@ function confirmDeleteEmployee(id, name) {
   </div>
   <div class="modal-body" style="text-align:center;padding:24px 16px">
     <div style="width:52px;height:52px;border-radius:50%;background:rgba(239,154,154,.1);border:1.5px solid rgba(239,154,154,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 14px">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef9a9a" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
     </div>
-    <div style="font-size:15px;font-weight:600;margin-bottom:8px">Xóa tài khoản "<span style="color:var(--cyan)">${name}</span>"?</div>
+    <div style="font-size:15px;font-weight:600;margin-bottom:8px">Xóa tài khoản "<span style="color:var(--primary)">${name}</span>"?</div>
     <p style="font-size:13px;color:var(--muted);line-height:1.6;max-width:320px;margin:0 auto">Hành động này <strong style="color:#ef9a9a">không thể hoàn tác</strong>. Toàn bộ dữ liệu chấm công, KPI và lịch sử của nhân viên sẽ bị xóa vĩnh viễn.</p>
   </div>
   <div class="modal-footer" style="justify-content:center;gap:12px">
@@ -176,8 +176,8 @@ function confirmDeleteEmployee(id, name) {
 function renderAttendance() {
   const days = Array.from({ length: 27 }, (_, i) => i + 1);
   const shiftColors = {
-    'CA1': 'rgba(0,200,255,.18)', 'CA2': 'rgba(255,202,40,.18)', 'CA3': 'rgba(124,77,255,.18)',
-    'CAN': 'rgba(0,230,118,.18)', 'CAP': 'rgba(33,150,243,.18)', 'CAO': 'rgba(255,109,0,.18)',
+    'CA1': 'rgba(0,200,255,.18)', 'CA2': 'rgba(255,202,40,.18)', 'CA3': 'rgba(41,132,238,.18)',
+    'CAN': 'rgba(41,132,238,.18)', 'CAP': 'rgba(33,150,243,.18)', 'CAO': 'rgba(255,109,0,.18)',
     'CAL': 'rgba(255,23,68,.18)', 'CA-': 'rgba(144,164,174,.18)', 'CA0': 'transparent'
   };
   const shiftText = {
@@ -185,8 +185,8 @@ function renderAttendance() {
     'CAP': 'P', 'CAO': 'Ô', 'CAL': 'L', 'CA-': 'V', 'CA0': '–'
   };
   const shiftFg = {
-    'CA1': 'var(--cyan)', 'CA2': 'var(--yellow)', 'CA3': '#b388ff', 'CAN': 'var(--green)',
-    'CAP': 'var(--blue)', 'CAO': '#ff6d00', 'CAL': '#ff1744', 'CA-': 'var(--muted)', 'CA0': 'var(--muted)'
+    'CA1': 'var(--primary)', 'CA2': 'var(--warning)', 'CA3': '#8CC5FF', 'CAN': 'var(--success)',
+    'CAP': 'var(--info)', 'CAO': '#ff6d00', 'CAL': '#ff1744', 'CA-': 'var(--muted)', 'CA0': 'var(--muted)'
   };
 
   return `
@@ -227,7 +227,7 @@ function renderAttendance() {
                 <div style="width:28px;height:28px;margin:auto;background:${shiftColors[s]};border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:${shiftFg[s]};cursor:pointer" title="${DATA.shifts.find(sh => sh.id === s)?.name || 'Nghỉ'}">${shiftText[s]}</div>
               </td>`;
     }).join('')}
-            <td style="text-align:center;font-weight:700;color:${workDays >= 20 ? 'var(--green)' : workDays > 10 ? 'var(--yellow)' : 'var(--red)'}">
+            <td style="text-align:center;font-weight:700;color:${workDays >= 20 ? 'var(--success)' : workDays > 10 ? 'var(--warning)' : 'var(--danger)'}">
               ${workDays}<span style="font-size:10px;color:var(--muted);font-weight:400"> ngày</span>
             </td>
           </tr>`;
@@ -253,13 +253,13 @@ function renderKpiBoard() {
         ${DATA.employeeKpi.filter(k => k.score > 0).sort((a, b) => b.score - a.score).slice(0, 5).map((k, idx) => {
     const e = DATA.employees.find(x => x.id === k.id);
     return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
-            <div style="width:28px;height:28px;background:linear-gradient(135deg,${['#ffd700', '#c0c0c0', '#cd7f32', '#0066ff', '#00c8ff'][idx]},${['#ff9900', '#909090', '#8b4513', '#0044aa', '#0088bb'][idx]});border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">${idx + 1}</div>
+            <div style="width:28px;height:28px;background:linear-gradient(135deg,${['#ffd700', '#c0c0c0', '#cd7f32', 'var(--info)', 'var(--primary)'][idx]},${['#ff9900', '#909090', '#8b4513', '#1877e7', 'var(--primary-hover)'][idx]});border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700">${idx + 1}</div>
             <div style="flex:1">
               <div style="font-size:13px;font-weight:600">${e?.name || k.id}</div>
               <div style="font-size:11px;color:var(--muted)">${e?.dept}</div>
             </div>
             <div style="text-align:right">
-              <div style="font-size:18px;font-weight:700;color:${k.score >= 95 ? 'var(--green)' : k.score >= 85 ? 'var(--cyan)' : 'var(--yellow)'}">${k.score}<span style="font-size:11px;color:var(--muted)">%</span></div>
+              <div style="font-size:18px;font-weight:700;color:${k.score >= 95 ? 'var(--success)' : k.score >= 85 ? 'var(--primary)' : 'var(--warning)'}">${k.score}<span style="font-size:11px;color:var(--muted)">%</span></div>
               <div style="font-size:10px;color:var(--muted)">${k.done}/${k.tasks} task</div>
             </div>
           </div>`;
@@ -292,8 +292,8 @@ function renderKpiBoard() {
           <td style="min-width:120px">${metricsHtml}</td>
           <td>
             <div style="display:flex;align-items:center;gap:8px">
-              <div class="progress-bar" style="flex:1;height:6px"><div class="progress-fill" style="width:${k.score}%;background:${k.score >= 95 ? 'var(--green)' : k.score >= 85 ? 'var(--cyan)' : 'var(--yellow)'}"></div></div>
-              <span class="mono" style="min-width:36px;font-size:12px;font-weight:700;color:${k.score >= 95 ? 'var(--green)' : k.score >= 85 ? 'var(--cyan)' : 'var(--yellow)'}">${k.score || '—'}%</span>
+              <div class="progress-bar" style="flex:1;height:6px"><div class="progress-fill" style="width:${k.score}%;background:${k.score >= 95 ? 'var(--success)' : k.score >= 85 ? 'var(--primary)' : 'var(--warning)'}"></div></div>
+              <span class="mono" style="min-width:36px;font-size:12px;font-weight:700;color:${k.score >= 95 ? 'var(--success)' : k.score >= 85 ? 'var(--primary)' : 'var(--warning)'}">${k.score || '—'}%</span>
             </div>
           </td>
           <td><span class="badge ${rc}">${rank}</span></td>
@@ -307,6 +307,8 @@ function renderKpiBoard() {
 function renderKpiCharts() {
   const c = document.getElementById('kpiChart');
   if (!c) return;
+  const palette = getChartPalette();
+  const gridColor = hexToRgba(palette.cyan, .05);
   const data = DATA.employeeKpi.filter(k => k.score > 0);
   new Chart(c, {
     type: 'bar',
@@ -314,17 +316,17 @@ function renderKpiCharts() {
       labels: data.map(k => DATA.employees.find(e => e.id === k.id)?.name || k.id),
       datasets: [{
         label: 'Điểm KPI (%)', data: data.map(k => k.score),
-        backgroundColor: data.map(k => k.score >= 95 ? 'rgba(0,230,118,.5)' : k.score >= 85 ? 'rgba(0,200,255,.5)' : 'rgba(255,202,40,.5)'),
-        borderColor: data.map(k => k.score >= 95 ? '#00e676' : k.score >= 85 ? '#00c8ff' : '#ffca28'),
+        backgroundColor: data.map(k => k.score >= 95 ? hexToRgba(palette.success, .5) : k.score >= 85 ? hexToRgba(palette.cyan, .5) : hexToRgba(palette.warning, .5)),
+        borderColor: data.map(k => k.score >= 95 ? palette.success : k.score >= 85 ? palette.cyan : palette.warning),
         borderWidth: 1.5, borderRadius: 5
       }]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
-      plugins: { legend: { labels: { color: '#90caf9', font: { size: 11 } } } },
+      plugins: { legend: { labels: { color: palette.textSecondary, font: { size: 11 } } } },
       scales: {
-        x: { ticks: { color: '#546e7a', font: { size: 10 } }, grid: { color: 'rgba(0,200,255,.05)' } },
-        y: { min: 0, max: 100, ticks: { color: '#546e7a' }, grid: { color: 'rgba(0,200,255,.05)' } }
+        x: { ticks: { color: palette.textMuted, font: { size: 10 } }, grid: { color: gridColor } },
+        y: { min: 0, max: 100, ticks: { color: palette.textMuted }, grid: { color: gridColor } }
       }
     }
   });
@@ -342,7 +344,7 @@ function openAddEmployee() {
       <div>
         <div style="font-size:13px;font-weight:600;margin-bottom:4px">Ảnh đại diện</div>
         <div style="font-size:11px;color:var(--muted);margin-bottom:8px">JPG, PNG · Tối đa 2MB · Tỷ lệ 1:1</div>
-        <label style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:7px;font-size:12px;color:var(--cyan)">
+        <label style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:7px;font-size:12px;color:var(--primary)">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           Chọn ảnh
           <input type="file" accept="image/*" style="display:none" onchange="previewEmpAvatar(this)">
@@ -384,9 +386,9 @@ function editEmployee(id) {
 
     <!-- Employee ID badge -->
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;padding:8px 12px;background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);border-radius:8px">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
       <span style="font-size:11px;color:var(--muted)">Mã nhân viên:</span>
-      <span style="font-family:'Roboto Mono',monospace;font-size:13px;font-weight:600;color:var(--cyan)">${e.id}</span>
+      <span style="font-family:'Roboto Mono',monospace;font-size:13px;font-weight:600;color:var(--primary)">${e.id}</span>
       <span style="margin-left:auto"><span class="badge ${e.status === 'active' ? 'badge-green' : e.status === 'leave' ? 'badge-yellow' : 'badge-gray'}">${e.status === 'active' ? 'Đang làm việc' : e.status === 'leave' ? 'Nghỉ phép' : 'Ngừng HĐ'}</span></span>
     </div>
 
@@ -398,7 +400,7 @@ function editEmployee(id) {
       <div>
         <div style="font-size:13px;font-weight:600;margin-bottom:2px">${e.name}</div>
         <div style="font-size:11px;color:var(--muted);margin-bottom:8px">${roleLabel[e.role] || e.role} · ${e.dept}</div>
-        <label style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:7px;font-size:12px;color:var(--cyan)">
+        <label style="cursor:pointer;display:inline-flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:7px;font-size:12px;color:var(--primary)">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           Đổi ảnh
           <input type="file" accept="image/*" style="display:none" onchange="previewEditAvatar(this)">
@@ -444,9 +446,9 @@ function editEmployee(id) {
       <div class="form-group">
         <label class="form-label">Trạng thái</label>
         <select class="form-control">
-          <option value="active" ${e.status === 'active' ? 'selected' : ''}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đang làm việc</option>
-          <option value="leave" ${e.status === 'leave' ? 'selected' : ''}><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--yellow);vertical-align:middle"></span> Nghỉ phép</option>
-          <option value="inactive" ${e.status === 'inactive' ? 'selected' : ''}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg> Ngừng hợp đồng</option>
+          <option value="active" ${e.status === 'active' ? 'selected' : ''}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đang làm việc</option>
+          <option value="leave" ${e.status === 'leave' ? 'selected' : ''}><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--warning);vertical-align:middle"></span> Nghỉ phép</option>
+          <option value="inactive" ${e.status === 'inactive' ? 'selected' : ''}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg> Ngừng hợp đồng</option>
         </select>
       </div>
     </div>
@@ -462,10 +464,10 @@ function editEmployee(id) {
 
   </div>
   <div class="modal-footer" style="justify-content:space-between">
-    <button class="btn btn-sm" style="background:rgba(255,202,40,.08);color:var(--yellow);border:1px solid rgba(255,202,40,.2)" onmouseover="this.style.background='rgba(255,202,40,.16)'" onmouseout="this.style.background='rgba(255,202,40,.08)'" onclick="closeModal();showToast('Đã tạm ngưng tài khoản ${e.name}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> Tạm ngưng</button>
+    <button class="btn btn-sm" style="background:rgba(255,202,40,.08);color:var(--warning);border:1px solid rgba(255,202,40,.2)" onmouseover="this.style.background='rgba(255,202,40,.16)'" onmouseout="this.style.background='rgba(255,202,40,.08)'" onclick="closeModal();showToast('Đã tạm ngưng tài khoản ${e.name}')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg> Tạm ngưng</button>
     <div style="display:flex;gap:8px">
       <button class="btn btn-ghost" onclick="closeModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Hủy</button>
-      <button class="btn btn-primary" onclick="closeModal();showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã cập nhật hồ sơ ${e.name}!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg> Lưu thay đổi</button>
+      <button class="btn btn-primary" onclick="closeModal();showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã cập nhật hồ sơ ${e.name}!')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg> Lưu thay đổi</button>
     </div>
   </div>`);
 }
@@ -484,15 +486,15 @@ function previewEditAvatar(input) {
 // ── ORG CHART ─────────────────────────────────────────────────────
 function renderOrgChart() {
   const phongBans = [
-    { name:'Lê Hùng Cường', title:'Trưởng phòng QL Thủy lợi', color:'var(--cyan)' },
-    { name:'Trần Thị Hương', title:'Trưởng phòng Điều hành PCTT', color:'var(--yellow)' },
+    { name:'Lê Hùng Cường', title:'Trưởng phòng QL Thủy lợi', color:'var(--primary)' },
+    { name:'Trần Thị Hương', title:'Trưởng phòng Điều hành PCTT', color:'var(--warning)' },
     { name:'Phạm Thị Ngọc', title:'Trưởng phòng QL Đê điều', color:'var(--purple)' },
-    { name:'Đỗ Mạnh Tuân', title:'Trưởng phòng Kỹ thuật & CNTT', color:'var(--green)' },
+    { name:'Đỗ Mạnh Tuân', title:'Trưởng phòng Kỹ thuật & CNTT', color:'var(--success)' },
     { name:'Hoàng Văn Bình', title:'Trưởng phòng Hành chính-TC', color:'var(--muted)' },
   ];
   const donViTT = [
-    { name:'Đội Tuần tra Đê Hữu Hồng', color:'var(--red)' },
-    { name:'Đội Tuần tra Đê Hữu Đáy', color:'var(--red)' },
+    { name:'Đội Tuần tra Đê Hữu Hồng', color:'var(--danger)' },
+    { name:'Đội Tuần tra Đê Hữu Đáy', color:'var(--danger)' },
     { name:'TT Dự báo & Cảnh báo sớm', color:'var(--blue, #3b82f6)' },
     { name:'Đội ƯCSC & Xung kích', color:'#f97316' },
   ];
@@ -508,7 +510,7 @@ function renderOrgChart() {
     <div style="padding:24px 16px;overflow-x:auto">
       <div style="display:flex;flex-direction:column;align-items:center;min-width:860px">
         <!-- Chi cục trưởng -->
-        <div style="min-width:230px;padding:14px 20px;background:rgba(255,23,68,.07);border:2px solid var(--red);border-radius:12px;text-align:center;box-shadow:0 2px 16px rgba(255,23,68,.14)">
+        <div style="min-width:230px;padding:14px 20px;background:rgba(255,23,68,.07);border:2px solid var(--danger);border-radius:12px;text-align:center;box-shadow:0 2px 16px rgba(255,23,68,.14)">
           <div style="font-size:14px;font-weight:800">Nguyễn Văn Sơn</div>
           <div style="font-size:11px;color:var(--muted);margin-top:3px">Chi cục trưởng</div>
           <div style="margin-top:6px"><span class="badge badge-red" style="font-size:10px">CHI CỤC TRƯỞNG</span></div>
@@ -520,7 +522,7 @@ function renderOrgChart() {
           ${[['Trần Văn Minh','Phó Chi cục trưởng 1','Phụ trách ĐĐ &amp; TL'],['Lý Thị Thảo','Phó Chi cục trưởng 2','Phụ trách PCTT &amp; HC']].map(([n,t,r]) => `
           <div style="display:flex;flex-direction:column;align-items:center">
             <div style="width:2px;height:18px;background:var(--border)"></div>
-            <div style="min-width:185px;padding:11px 14px;background:rgba(255,202,40,.05);border:1.5px solid var(--yellow);border-radius:10px;text-align:center">
+            <div style="min-width:185px;padding:11px 14px;background:rgba(255,202,40,.05);border:1.5px solid var(--warning);border-radius:10px;text-align:center">
               <div style="font-size:12px;font-weight:700">${n}</div>
               <div style="font-size:10px;color:var(--muted);margin-top:2px">${t}</div>
               <div style="margin-top:4px"><span class="badge badge-yellow" style="font-size:9px">${r}</span></div>
@@ -559,7 +561,7 @@ function renderOrgChart() {
     </div>
     <!-- Legend -->
     <div style="padding:10px 18px;border-top:1px solid var(--border);display:flex;gap:14px;flex-wrap:wrap">
-      ${[['var(--red)','Lãnh đạo'],['var(--yellow)','Phó Chi cục trưởng'],['var(--cyan)','Phòng TL'],['var(--purple)','Phòng ĐĐ'],['var(--green)','Phòng KT'],['var(--muted)','Phòng HC'],['#f97316','Đơn vị trực thuộc']].map(([c,l]) =>
+      ${[['var(--danger)','Lãnh đạo'],['var(--warning)','Phó Chi cục trưởng'],['var(--primary)','Phòng TL'],['var(--purple)','Phòng ĐĐ'],['var(--success)','Phòng KT'],['var(--muted)','Phòng HC'],['#f97316','Đơn vị trực thuộc']].map(([c,l]) =>
         `<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div style="width:9px;height:9px;border-radius:2px;background:${c};flex-shrink:0"></div>${l}</div>`
       ).join('')}
     </div>
@@ -598,12 +600,12 @@ function renderDeptManagement() {
             <td style="font-size:13px">${d.head}</td>
             <td>
               <div style="display:flex;align-items:center;gap:8px">
-                <span style="font-size:16px;font-weight:700;color:var(--cyan)">${d.count}</span>
+                <span style="font-size:16px;font-weight:700;color:var(--primary)">${d.count}</span>
                 <span style="font-size:11px;color:var(--muted)">người</span>
               </div>
             </td>
             <td style="font-size:11px;color:var(--muted)">${d.email}</td>
-            <td class="mono" style="font-size:13px;color:${d.budget>600?'var(--yellow)':'inherit'}">${d.budget > 0 ? d.budget : '—'}</td>
+            <td class="mono" style="font-size:13px;color:${d.budget>600?'var(--warning)':'inherit'}">${d.budget > 0 ? d.budget : '—'}</td>
             <td><button class="btn btn-ghost btn-sm" onclick="showToast('Chi tiết phòng ban ${d.name}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Chi tiết</button></td>
           </tr>`).join('')}
         </tbody>
@@ -613,10 +615,10 @@ function renderDeptManagement() {
   <!-- Summary -->
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px">
     ${[
-      { label: 'Tổng biên chế', val: depts.reduce((s,d)=>s+d.count,0)+' người', color: 'var(--cyan)' },
-      { label: 'Ngân sách ước tính', val: (depts.reduce((s,d)=>s+d.budget,0)/1000).toFixed(2)+' Tỷ/năm', color: 'var(--yellow)' },
-      { label: 'Phòng ban & Đơn vị', val: depts.length+' đơn vị', color: 'var(--green)' },
-      { label: 'Lực lượng tuần tra & ƯCSC', val: '56 người', color: 'var(--red)' },
+      { label: 'Tổng biên chế', val: depts.reduce((s,d)=>s+d.count,0)+' người', color: 'var(--primary)' },
+      { label: 'Ngân sách ước tính', val: (depts.reduce((s,d)=>s+d.budget,0)/1000).toFixed(2)+' Tỷ/năm', color: 'var(--warning)' },
+      { label: 'Phòng ban & Đơn vị', val: depts.length+' đơn vị', color: 'var(--success)' },
+      { label: 'Lực lượng tuần tra & ƯCSC', val: '56 người', color: 'var(--danger)' },
     ].map(k => `
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px">
       <div style="font-size:11px;color:var(--muted)">${k.label}</div>
@@ -628,11 +630,11 @@ function renderDeptManagement() {
 // ── TAB: LIÊN HỆ & THÔNG BÁO ─────────────────────────────────────
 function renderContactsTab() {
   const channels = [
-    { id: 'email',    label: 'Email',      color: 'var(--cyan)' },
+    { id: 'email',    label: 'Email',      color: 'var(--primary)' },
     { id: 'zalo',     label: 'Zalo',       color: '#0068ff' },
     { id: 'telegram', label: 'Telegram',   color: '#29b6f6' },
-    { id: 'ioc',      label: 'IOC Push',   color: 'var(--green)' },
-    { id: 'app',      label: 'App Mobile', color: 'var(--blue)' },
+    { id: 'ioc',      label: 'IOC Push',   color: 'var(--success)' },
+    { id: 'app',      label: 'App Mobile', color: 'var(--info)' },
   ];
   const contacts = DATA.employees.map((e, i) => ({
     ...e,
@@ -740,7 +742,7 @@ function openEditContact(id, name, email, phone, zalo, telegram) {
     <div class="modal-body">
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Email công vụ <span style="color:var(--red)">*</span></label>
+          <label class="form-label">Email công vụ <span style="color:var(--danger)">*</span></label>
           <input id="ec_email" type="email" class="form-control" value="${email}">
         </div>
         <div class="form-group">
@@ -827,7 +829,7 @@ function renderNotifGroupsTab() {
         <button class="btn btn-ghost btn-sm" onclick="openGroupHistory('${g.id}','${g.name}')">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
         </button>
-        <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="deleteNotifGroup('${g.id}','${g.name}')">
+        <button class="btn btn-ghost btn-sm" style="color:var(--danger)" onclick="deleteNotifGroup('${g.id}','${g.name}')">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
         </button>
       </div>
@@ -854,7 +856,7 @@ function openEditNotifGroup(id) {
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
         <div style="display:flex;flex-direction:column;gap:12px">
           <div class="form-group">
-            <label class="form-label">Tên nhóm <span style="color:var(--red)">*</span></label>
+            <label class="form-label">Tên nhóm <span style="color:var(--danger)">*</span></label>
             <input id="eg_name" type="text" class="form-control" value="${g.name}">
           </div>
           <div class="form-group">
@@ -864,7 +866,7 @@ function openEditNotifGroup(id) {
           <div class="form-group">
             <label class="form-label">Màu nhóm</label>
             <div style="display:flex;gap:8px;flex-wrap:wrap" id="eg_color_row">
-              ${['var(--red)','var(--cyan)','var(--blue)','var(--green)','var(--yellow)','var(--purple)'].map(c =>
+              ${['var(--danger)','var(--primary)','var(--info)','var(--success)','var(--warning)','var(--purple)'].map(c =>
                 `<div style="width:26px;height:26px;border-radius:8px;background:${c};cursor:pointer;border:3px solid ${c==g.color?'rgba(255,255,255,.9)':'transparent'};transition:.15s" onclick="this.parentElement.querySelectorAll('div').forEach(d=>d.style.borderColor='transparent');this.style.borderColor='rgba(255,255,255,.9)';document.getElementById('eg_color').value='${c}'"></div>`
               ).join('')}
               <input type="hidden" id="eg_color" value="${g.color}">
@@ -888,7 +890,7 @@ function openEditNotifGroup(id) {
           <div style="height:270px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:6px">
             ${emps.map(e =>
               `<label style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer" data-n="${e.name.toLowerCase()}">
-                <input type="checkbox" id="eg_m_${e.id}" ${g.members.includes(e.id) ? 'checked' : ''} style="accent-color:var(--cyan)"
+                <input type="checkbox" id="eg_m_${e.id}" ${g.members.includes(e.id) ? 'checked' : ''} style="accent-color:var(--primary)"
                   onchange="document.getElementById('eg_count').textContent=[...document.querySelectorAll('[id^=eg_m_]:checked')].length">
                 <span style="font-size:12px;font-weight:500">${e.name}</span>
                 <span style="font-size:10px;color:var(--muted);margin-left:4px">${e.dept}</span>
@@ -971,7 +973,7 @@ function openGroupHistory(id, name) {
             </div>
           </div>
           <div style="text-align:right;flex-shrink:0">
-            <div style="font-size:16px;font-weight:700;color:var(--green)">${h.sent}</div>
+            <div style="font-size:16px;font-weight:700;color:var(--success)">${h.sent}</div>
             <div style="font-size:10px;color:var(--muted)">nhận</div>
           </div>
         </div>`).join('')}
@@ -993,7 +995,7 @@ function openCreateNotifGroup() {
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
         <div style="display:flex;flex-direction:column;gap:12px">
           <div class="form-group">
-            <label class="form-label">Tên nhóm <span style="color:var(--red)">*</span></label>
+            <label class="form-label">Tên nhóm <span style="color:var(--danger)">*</span></label>
             <input id="ng_name" type="text" class="form-control" placeholder="VD: Nhóm Trực ban tuần 12">
           </div>
           <div class="form-group">
@@ -1003,10 +1005,10 @@ function openCreateNotifGroup() {
           <div class="form-group">
             <label class="form-label">Màu nhóm</label>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
-              ${['var(--red)','var(--cyan)','var(--blue)','var(--green)','var(--yellow)','var(--purple)'].map((c,i) =>
+              ${['var(--danger)','var(--primary)','var(--info)','var(--success)','var(--warning)','var(--purple)'].map((c,i) =>
                 `<div style="width:26px;height:26px;border-radius:8px;background:${c};cursor:pointer;border:3px solid ${i===1?'rgba(255,255,255,.9)':'transparent'};transition:.15s" onclick="this.parentElement.querySelectorAll('div').forEach(d=>d.style.borderColor='transparent');this.style.borderColor='rgba(255,255,255,.9)';document.getElementById('ng_color').value='${c}'"></div>`
               ).join('')}
-              <input type="hidden" id="ng_color" value="var(--cyan)">
+              <input type="hidden" id="ng_color" value="var(--primary)">
             </div>
           </div>
           <div class="form-group">
@@ -1027,7 +1029,7 @@ function openCreateNotifGroup() {
           <div style="height:270px;overflow-y:auto;border:1px solid var(--border);border-radius:8px;padding:6px">
             ${emps.map(e =>
               `<label style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:6px;cursor:pointer" data-n="${e.name.toLowerCase()}">
-                <input type="checkbox" id="ng_m_${e.id}" style="accent-color:var(--cyan)"
+                <input type="checkbox" id="ng_m_${e.id}" style="accent-color:var(--primary)"
                   onchange="document.getElementById('ng_count').textContent=[...document.querySelectorAll('[id^=ng_m_]:checked')].length">
                 <span style="font-size:12px;font-weight:500">${e.name}</span>
                 <span style="font-size:10px;color:var(--muted);margin-left:4px">${e.dept}</span>
@@ -1054,7 +1056,7 @@ function saveNewNotifGroup() {
   window.NOTIFY_GROUPS.push({
     id: newId, name,
     desc: document.getElementById('ng_desc')?.value?.trim() || '',
-    color: document.getElementById('ng_color')?.value || 'var(--cyan)',
+    color: document.getElementById('ng_color')?.value || 'var(--primary)',
     channels, members,
   });
   closeModal();
@@ -1067,11 +1069,11 @@ function saveNewNotifGroup() {
 function renderSpeakersTab() {
   const sp = window.NOTIFY_SPEAKERS || [];
   const typeLabel = { indoor:'Trong tòa nhà', public:'Điểm công cộng', mobile:'Cơ động' };
-  const typeColor = { indoor:'var(--cyan)', public:'var(--green)', mobile:'var(--yellow)' };
+  const typeColor = { indoor:'var(--primary)', public:'var(--success)', mobile:'var(--warning)' };
   const online = sp.filter(s => s.status === 'online').length;
   return `
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-    ${[{label:'Tổng cụm loa',val:sp.length,color:'var(--cyan)'},{label:'Online',val:online,color:'var(--green)'},{label:'Offline',val:sp.length-online,color:'var(--red)'},{label:'Công cộng',val:sp.filter(s=>s.type==='public').length,color:'var(--yellow)'}].map(k=>`
+    ${[{label:'Tổng cụm loa',val:sp.length,color:'var(--primary)'},{label:'Online',val:online,color:'var(--success)'},{label:'Offline',val:sp.length-online,color:'var(--danger)'},{label:'Công cộng',val:sp.filter(s=>s.type==='public').length,color:'var(--warning)'}].map(k=>`
     <div class="card" style="padding:14px 16px"><div style="font-size:11px;color:var(--muted)">${k.label}</div><div style="font-size:22px;font-weight:800;color:${k.color}">${k.val}</div></div>`).join('')}
   </div>
   <div class="card" style="padding:0">
@@ -1103,10 +1105,10 @@ function renderSpeakersTab() {
             <td><strong>${s.name}</strong></td>
             <td style="font-size:12px;color:var(--muted)">${s.location}</td>
             <td><span class="badge" style="background:rgba(255,255,255,.05);color:${typeColor[s.type]||'var(--muted)'};font-size:10px">${typeLabel[s.type]||s.type}</span></td>
-            <td><code style="font-size:11px;color:var(--cyan)">${s.endpoint}</code></td>
+            <td><code style="font-size:11px;color:var(--primary)">${s.endpoint}</code></td>
             <td>
               <div style="display:flex;align-items:center;gap:6px">
-                <div style="width:7px;height:7px;border-radius:50%;background:${s.status==='online'?'var(--green)':'var(--red)'};${s.status==='online'?'box-shadow:0 0 6px var(--green)':''}"></div>
+                <div style="width:7px;height:7px;border-radius:50%;background:${s.status==='online'?'var(--success)':'var(--danger)'};${s.status==='online'?'box-shadow:0 0 6px var(--success)':''}"></div>
                 <span class="badge ${s.status==='online'?'badge-green':'badge-gray'}" style="font-size:10px">${s.status==='online'?'Online':'Offline'}</span>
               </div>
             </td>
@@ -1122,7 +1124,7 @@ function renderSpeakersTab() {
                 <button class="btn btn-ghost btn-xs" title="Chỉnh sửa" onclick="openEditSpeaker('${s.id}')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
                 </button>
-                <button class="btn btn-ghost btn-xs" style="color:var(--red)" title="Xoá" onclick="deleteSpeaker('${s.id}','${s.name}')">
+                <button class="btn btn-ghost btn-xs" style="color:var(--danger)" title="Xoá" onclick="deleteSpeaker('${s.id}','${s.name}')">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/></svg>
                 </button>
               </div>
@@ -1187,7 +1189,7 @@ function openEditSpeaker(id) {
     </div>
     <div class="modal-body">
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Tên cụm loa <span style="color:var(--red)">*</span></label>
+        <div class="form-group"><label class="form-label">Tên cụm loa <span style="color:var(--danger)">*</span></label>
           <input id="es_name" type="text" class="form-control" value="${s.name}"></div>
         <div class="form-group"><label class="form-label">Loại</label>
           <select id="es_type" class="form-control">
@@ -1198,7 +1200,7 @@ function openEditSpeaker(id) {
       </div>
       <div class="form-group"><label class="form-label">Vị trí</label>
         <input id="es_location" type="text" class="form-control" value="${s.location}"></div>
-      <div class="form-group"><label class="form-label">API Endpoint <span style="color:var(--red)">*</span></label>
+      <div class="form-group"><label class="form-label">API Endpoint <span style="color:var(--danger)">*</span></label>
         <input id="es_endpoint" type="text" class="form-control" value="${s.endpoint}" style="font-family:monospace;font-size:13px"></div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">Trạng thái</label>
@@ -1249,7 +1251,7 @@ function openAddSpeaker() {
     </div>
     <div class="modal-body">
       <div class="form-row">
-        <div class="form-group"><label class="form-label">Tên cụm loa <span style="color:var(--red)">*</span></label>
+        <div class="form-group"><label class="form-label">Tên cụm loa <span style="color:var(--danger)">*</span></label>
           <input id="as_name" type="text" class="form-control" placeholder="VD: Loa tầng 2 trụ sở"></div>
         <div class="form-group"><label class="form-label">Loại</label>
           <select id="as_type" class="form-control">
@@ -1260,7 +1262,7 @@ function openAddSpeaker() {
       </div>
       <div class="form-group"><label class="form-label">Vị trí / Địa điểm</label>
         <input id="as_location" type="text" class="form-control" placeholder="VD: Tầng 2, Phòng họp lớn, Trụ sở Chi cục"></div>
-      <div class="form-group"><label class="form-label">API Endpoint <span style="color:var(--red)">*</span></label>
+      <div class="form-group"><label class="form-label">API Endpoint <span style="color:var(--danger)">*</span></label>
         <input id="as_endpoint" type="text" class="form-control" placeholder="http://192.168.1.xx/api/broadcast" style="font-family:monospace;font-size:13px">
         <div style="font-size:11px;color:var(--muted);margin-top:4px">Địa chỉ API REST. Hệ thống sẽ POST payload văn bản/âm thanh.</div></div>
       <div class="form-row">
@@ -1291,7 +1293,7 @@ function pingNewSpeaker() {
   res.textContent   = 'Đang ping ' + ep + '...';
   const ms = 60 + Math.floor(Math.random() * 150);
   setTimeout(() => {
-    res.style.color = 'var(--green)';
+    res.style.color = 'var(--success)';
     res.textContent = 'OK — kết nối thành công — ' + ms + 'ms';
   }, ms + 300);
 }

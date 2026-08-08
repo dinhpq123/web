@@ -4,12 +4,12 @@
 
 function renderBusinessOverview() {
   const stats = [
-    { label: 'Doanh thu tháng', value: '59.95 tỉ', unit: 'VND', trend: '+5.2%', data: BIZ_STATS.revenueTrend, color: 'var(--cyan)' },
-    { label: 'Sản lượng tiêu thụ', value: '5.45M', unit: 'm³', trend: '+1.8%', data: BIZ_STATS.consumptionTrend, color: 'var(--green)' },
-    { label: 'Khách hàng mới', value: '+350', unit: 'KH', trend: '+12%', data: BIZ_STATS.customersTrend, color: 'var(--blue)' },
+    { label: 'Doanh thu tháng', value: '59.95 tỉ', unit: 'VND', trend: '+5.2%', data: BIZ_STATS.revenueTrend, color: 'var(--primary)' },
+    { label: 'Sản lượng tiêu thụ', value: '5.45M', unit: 'm³', trend: '+1.8%', data: BIZ_STATS.consumptionTrend, color: 'var(--success)' },
+    { label: 'Khách hàng mới', value: '+350', unit: 'KH', trend: '+12%', data: BIZ_STATS.customersTrend, color: 'var(--info)' },
     { label: 'Tỷ lệ thu tiền', value: '94%', unit: '%', trend: '+0.5%', data: BIZ_STATS.collectionTrend, color: 'var(--purple)' },
-    { label: 'Nợ khó đòi', value: '2.45 tỉ', unit: 'VND', trend: '-15%', data: BIZ_STATS.debtTrend, color: 'var(--red)' },
-    { label: 'Yêu cầu hỗ trợ', value: '4,870', unit: 'Cuộc', trend: '+3.5%', data: BIZ_STATS.callsTrend, color: 'var(--yellow)' },
+    { label: 'Nợ khó đòi', value: '2.45 tỉ', unit: 'VND', trend: '-15%', data: BIZ_STATS.debtTrend, color: 'var(--danger)' },
+    { label: 'Yêu cầu hỗ trợ', value: '4,870', unit: 'Cuộc', trend: '+3.5%', data: BIZ_STATS.callsTrend, color: 'var(--warning)' },
   ];
 
   const kpiCards = stats.map(s => `
@@ -125,7 +125,7 @@ function renderBusinessOverview() {
                   <td style="font-weight:600">${d.factory}</td>
                   <td class="mono">${formatNum(d.revenue / 1000000)} Tr</td>
                   <td class="mono">${formatNum(d.consumption)} m³</td>
-                  <td style="color:var(--cyan)">+${d.newCustomers}</td>
+                  <td style="color:var(--primary)">+${d.newCustomers}</td>
                   <td>${statusBadge(d.status)}</td>
                 </tr>
               `).join('')}
@@ -151,6 +151,7 @@ function initBizTrendChart() {
   if (!ctx) return;
 
   const data = BIZ_OVERVIEW_DATA.consumptionTrendMonthly;
+  const palette = getChartPalette();
 
   new Chart(ctx, {
     type: 'line',
@@ -160,8 +161,8 @@ function initBizTrendChart() {
         {
           label: 'Doanh thu (Triệu VND)',
           data: data.revenue,
-          borderColor: '#00c8ff',
-          backgroundColor: 'rgba(0, 200, 255, 0.1)',
+          borderColor: palette.cyan,
+          backgroundColor: hexToRgba(palette.cyan, 0.1),
           fill: true,
           tension: 0.4,
           yAxisID: 'y'
@@ -169,7 +170,7 @@ function initBizTrendChart() {
         {
           label: 'Sản lượng (Triệu m³)',
           data: data.consumption.map(v => v * 10), // Scale for visual
-          borderColor: '#00e676',
+          borderColor: palette.success,
           backgroundColor: 'transparent',
           borderDash: [5, 5],
           tension: 0.4,
@@ -181,20 +182,20 @@ function initBizTrendChart() {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { position: 'top', labels: { color: '#94a3b8', font: { size: 11 } } }
+        legend: { position: 'top', labels: { color: palette.textMuted, font: { size: 11 } } }
       },
       scales: {
         y: {
-          ticks: { color: '#64748b' },
-          grid: { color: 'rgba(255,255,255,0.05)' }
+          ticks: { color: palette.textMuted },
+          grid: { color: palette.gridLine }
         },
         y1: {
           position: 'right',
-          ticks: { color: '#64748b', callback: v => (v / 10) + 'M' },
+          ticks: { color: palette.textMuted, callback: v => (v / 10) + 'M' },
           grid: { display: false }
         },
         x: {
-          ticks: { color: '#64748b' },
+          ticks: { color: palette.textMuted },
           grid: { display: false }
         }
       }
@@ -209,6 +210,7 @@ function initBizFactoryRankChart() {
   const data = BIZ_OVERVIEW_DATA.revenueByFactory;
   const revenues = data.map(d => +(d.revenue / 1e9).toFixed(2));
   const outputs = data.map(d => Math.round((d.revenue / 1e9) * 28.5 + (Math.random() * 20 - 10)));
+  const palette = getChartPalette();
 
   new Chart(ctx, {
     type: 'bar',
@@ -218,8 +220,8 @@ function initBizFactoryRankChart() {
         {
           label: 'Doanh thu (Tỷ VND)',
           data: revenues,
-          backgroundColor: 'rgba(0,200,255,0.65)',
-          borderColor: 'rgba(0,200,255,0.9)',
+          backgroundColor: hexToRgba(palette.cyan, 0.65),
+          borderColor: hexToRgba(palette.cyan, 0.9),
           borderWidth: 1,
           borderRadius: 4,
           xAxisID: 'xRevenue'
@@ -227,8 +229,8 @@ function initBizFactoryRankChart() {
         {
           label: 'Sản lượng (Ngàn m³)',
           data: outputs,
-          backgroundColor: 'rgba(0,230,118,0.55)',
-          borderColor: 'rgba(0,230,118,0.9)',
+          backgroundColor: 'var(--success-soft)',
+          borderColor: 'var(--success-soft)',
           borderWidth: 1,
           borderRadius: 4,
           xAxisID: 'xOutput'
@@ -243,7 +245,7 @@ function initBizFactoryRankChart() {
         legend: {
           display: true,
           position: 'right',
-          labels: { color: '#94a3b8', font: { size: 11 }, boxWidth: 12, padding: 16 }
+          labels: { color: palette.textMuted, font: { size: 11 }, boxWidth: 12, padding: 16 }
         },
         tooltip: {
           enabled: false,
@@ -262,16 +264,16 @@ function initBizFactoryRankChart() {
             const label = items[0]?.label || '';
             const rows = items.map(p => {
               const isRev = p.dataset.xAxisID === 'xRevenue';
-              const color = isRev ? '#00c8ff' : '#00e676';
+              const color = isRev ? palette.cyan : palette.success;
               const val   = isRev ? `${p.parsed.x} Tỷ VND` : `${p.parsed.x.toLocaleString()} Ngàn m³`;
               const name  = isRev ? 'Doanh thu' : 'Sản lượng';
               return '<div style="display:flex;align-items:center;gap:8px;margin-top:6px">'
                 + '<span style="width:8px;height:8px;border-radius:50%;background:' + color + ';flex-shrink:0"></span>'
-                + '<span style="color:#94a3b8">' + name + ':</span>'
+                + '<span style="color:' + palette.textMuted + '">' + name + ':</span>'
                 + '<span style="color:' + color + ';font-weight:700;margin-left:auto;padding-left:12px">' + val + '</span>'
                 + '</div>';
             }).join('');
-            el.innerHTML = '<div style="display:flex;align-items:center;font-weight:700;font-size:13px;color:#00c8ff;border-bottom:1px solid rgba(0,200,255,.15);padding-bottom:7px;margin-bottom:2px">'
+            el.innerHTML = '<div style="display:flex;align-items:center;font-weight:700;font-size:13px;color:' + palette.cyan + ';border-bottom:1px solid ' + hexToRgba(palette.cyan, .15) + ';padding-bottom:7px;margin-bottom:2px">'
               + FACTORY_SVG + label + '</div>' + rows;
             const pos = chart.canvas.getBoundingClientRect();
             el.style.opacity = '1';
@@ -287,36 +289,36 @@ function initBizFactoryRankChart() {
       },
       scales: {
         y: {
-          ticks: { color: '#94a3b8', font: { size: 11 } },
+          ticks: { color: palette.textMuted, font: { size: 11 } },
           grid: { display: false }
         },
         xRevenue: {
           position: 'top',
           ticks: {
-            color: '#00c8ff',
+            color: palette.cyan,
             font: { size: 10 },
             callback: v => v + ' Tỷ'
           },
-          grid: { color: 'rgba(0,200,255,0.06)' },
+          grid: { color: hexToRgba(palette.cyan, 0.06) },
           title: {
             display: true,
             text: 'Doanh thu (Tỷ VND)',
-            color: '#00c8ff',
+            color: palette.cyan,
             font: { size: 10, weight: '600' }
           }
         },
         xOutput: {
           position: 'bottom',
           ticks: {
-            color: '#00e676',
+            color: palette.success,
             font: { size: 10 },
             callback: v => v + 'K'
           },
-          grid: { color: 'rgba(0,230,118,0.06)' },
+          grid: { color: hexToRgba(palette.success, 0.08) },
           title: {
             display: true,
             text: 'Sản lượng (Ngàn m³)',
-            color: '#00e676',
+            color: palette.success,
             font: { size: 10, weight: '600' }
           }
         }

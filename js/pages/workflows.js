@@ -107,7 +107,7 @@ function renderWfBuilder() {
 .wfb-canvas-wrap.connecting{cursor:crosshair}
 .wfb-grid{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1px);background-size:28px 28px;pointer-events:none}
 .wfb-node{position:absolute;background:rgba(12,15,28,.94);border-radius:14px;border:2px solid;padding:11px 14px;cursor:pointer;user-select:none;min-width:140px;transition:box-shadow .2s;backdrop-filter:blur(8px)}
-.wfb-node.selected{box-shadow:0 0 0 3px rgba(139,92,246,.65),0 8px 32px rgba(0,0,0,.5)!important}
+.wfb-node.selected{box-shadow:0 0 0 3px rgba(41,132,238,.65),0 8px 32px rgba(0,0,0,.5)!important}
 .wfb-node-head{display:flex;align-items:center;gap:8px;margin-bottom:3px}
 .wfb-node-icon{display:flex;align-items:center;flex-shrink:0}
 .wfb-node-label{font-size:12px;font-weight:700;color:#fff;flex:1}
@@ -118,8 +118,8 @@ function renderWfBuilder() {
 .wfb-toolbar{position:absolute;top:12px;left:50%;transform:translateX(-50%);display:flex;gap:7px;background:rgba(10,12,26,.92);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px 13px;z-index:10;backdrop-filter:blur(14px);align-items:center}
 .wfb-tb-btn{padding:6px 13px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid;transition:all .2s;display:flex;align-items:center;gap:5px}
 .wfb-tb-back{background:transparent;color:rgba(255,255,255,.55);border-color:rgba(255,255,255,.14)}.wfb-tb-back:hover{background:rgba(255,255,255,.07);color:#fff}
-.wfb-tb-save{background:linear-gradient(135deg,#7c3aed,#8b5cf6);color:#fff;border-color:transparent}.wfb-tb-save:hover{box-shadow:0 4px 16px rgba(139,92,246,.5)}
-.wfb-tb-run{background:rgba(16,185,129,.14);color:#34d399;border-color:rgba(16,185,129,.35)}.wfb-tb-run:hover{background:rgba(16,185,129,.28)}
+.wfb-tb-save{background:linear-gradient(135deg,var(--purple),var(--purple));color:#fff;border-color:transparent}.wfb-tb-save:hover{box-shadow:0 4px 16px rgba(41,132,238,.5)}
+.wfb-tb-run{background:rgba(41,132,238,.14);color:var(--success-text);border-color:rgba(41,132,238,.35)}.wfb-tb-run:hover{background:rgba(41,132,238,.28)}
 .wfb-tb-name{background:transparent;border:none;color:#fff;font-size:14px;font-weight:700;outline:none;width:190px;text-align:center;font-family:'Inter',sans-serif}
 .wfb-hint{font-size:10px;color:rgba(255,255,255,.25);pointer-events:none;position:absolute;bottom:16px;left:50%;transform:translateX(-50%);white-space:nowrap}
 .wfb-props{width:255px;min-width:255px;background:rgba(255,255,255,.03);border-left:1px solid rgba(255,255,255,.07);display:flex;flex-direction:column;overflow-y:auto}
@@ -128,7 +128,7 @@ function renderWfBuilder() {
 .wfb-prop-row{margin-bottom:12px}
 .wfb-prop-label{font-size:10px;font-weight:600;color:rgba(255,255,255,.38);letter-spacing:.07em;text-transform:uppercase;margin-bottom:5px}
 .wfb-prop-input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:7px 10px;color:#fff;font-size:12px;font-family:'Inter',sans-serif;outline:none;transition:border-color .2s;box-sizing:border-box}
-.wfb-prop-input:focus{border-color:rgba(139,92,246,.6)}
+.wfb-prop-input:focus{border-color:rgba(41,132,238,.6)}
 .wfb-prop-select{width:100%;background:#0f1629;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:7px 10px;color:#fff;font-size:12px;font-family:'Inter',sans-serif;outline:none;box-sizing:border-box}
 .wfb-prop-hint{font-size:10px;color:rgba(255,255,255,.28);margin-top:4px;line-height:1.4}
 .wfb-node-del-btn{width:100%;padding:8px;border-radius:8px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.3);color:#f87171;font-size:12px;font-weight:600;cursor:pointer;margin-top:10px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:5px}
@@ -181,11 +181,11 @@ function renderWfBuilder() {
     <svg id="wfbSvg" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:1">
       <defs>
         <marker id="wfArrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-          <polygon points="0 0, 8 3, 0 6" fill="rgba(139,92,246,.75)"/>
+          <polygon points="0 0, 8 3, 0 6" fill="rgba(41,132,238,.75)"/>
         </marker>
       </defs>
       <g id="wfbEdgesG"></g>
-      <path id="wfbDragEdge" d="" stroke="rgba(139,92,246,.5)" stroke-width="2" fill="none"
+      <path id="wfbDragEdge" d="" stroke="rgba(41,132,238,.5)" stroke-width="2" fill="none"
             stroke-dasharray="6 4" marker-end="url(#wfArrow)" style="pointer-events:none"/>
     </svg>
     <!-- Nodes -->
@@ -328,7 +328,7 @@ function renderWfEdges() {
     const { x: x1, y: y1 } = _getPortCenter(edge.fromId, 'out');
     const { x: x2, y: y2 } = _getPortCenter(edge.toId,   'in');
     if (!x1 && !x2) return '';
-    return `<path d="${_bezier(x1,y1,x2,y2)}" stroke="rgba(139,92,246,.65)" stroke-width="2" fill="none"
+    return `<path d="${_bezier(x1,y1,x2,y2)}" stroke="rgba(41,132,238,.65)" stroke-width="2" fill="none"
       marker-end="url(#wfArrow)"
       onclick="wfRemoveEdge('${edge.id}')" style="pointer-events:stroke;cursor:pointer"
       title="Click để xoá kết nối"/>`;
@@ -390,7 +390,7 @@ function renderWfPropsPanel(node) {
   const fallbackSvg = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>';
   body.innerHTML = `
     <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(255,255,255,.07)">
-      <span style="color:${def.color||'#8b5cf6'}">${def.icon||fallbackSvg}</span>
+      <span style="color:${def.color||'var(--purple)'}">${def.icon||fallbackSvg}</span>
       <div>
         <div style="font-size:13px;font-weight:700;color:#fff">${def.label}</div>
         <div style="font-size:10px;color:rgba(255,255,255,.38)">${def.desc||''}</div>

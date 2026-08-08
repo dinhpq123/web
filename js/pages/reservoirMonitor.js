@@ -147,28 +147,28 @@ function renderReservoirMonitor() {
 <style>
 .rsv-page{padding:18px 22px;max-width:1280px;margin:0 auto}
 .rsv-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
-.rsv-kpi{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:12px 16px}
+.rsv-kpi{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:12px 16px}
 .rsv-kpi-val{font-size:28px;font-weight:900;line-height:1}
-.rsv-kpi-lbl{font-size:10px;color:rgba(255,255,255,.37);font-weight:600;margin-top:3px;text-transform:uppercase;letter-spacing:.05em}
-.rsv-tabs{display:flex;gap:4px;margin-bottom:14px;background:rgba(255,255,255,.04);border-radius:10px;padding:4px;width:fit-content}
-.rsv-tab{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.45);border:none;background:transparent;transition:all .2s}
-.rsv-tab.active{background:rgba(255,255,255,.1);color:#fff}
-.rsv-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:16px;margin-bottom:10px;transition:border-color .2s}
-.rsv-card:hover{border-color:rgba(255,255,255,.13)}
-.rsv-level-bar{height:8px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:6px}
+.rsv-kpi-lbl{font-size:10px;color:var(--muted);font-weight:600;margin-top:3px;text-transform:uppercase;letter-spacing:.05em}
+.rsv-tabs{display:flex;gap:4px;margin-bottom:14px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:4px;width:fit-content}
+.rsv-tab{padding:7px 16px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-2);border:none;background:transparent;transition:all .2s}
+.rsv-tab.active{background:var(--button-primary-background);color:var(--button-primary-text)}
+.rsv-card{background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:10px;transition:border-color .2s}
+.rsv-card:hover{border-color:var(--border-active)}
+.rsv-level-bar{height:8px;border-radius:4px;background:var(--bg-tertiary);overflow:hidden;margin-top:6px}
 .rsv-level-fill{height:100%;border-radius:4px;transition:width .5s}
 </style>
 
 <div class="rsv-page">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:14px;flex-wrap:wrap;gap:10px">
     <div>
-      <h1 style="font-size:20px;font-weight:800;color:#fff;margin:0 0 4px;display:flex;align-items:center;gap:8px">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <h1 style="font-size:20px;font-weight:800;color:var(--text);margin:0 0 4px;display:flex;align-items:center;gap:8px">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>
         </svg>
         Giám sát Hồ chứa Thủy lợi
       </h1>
-      <div style="font-size:12px;color:rgba(255,255,255,.37)">${RSV_DATA.length} hồ chứa · Tổng dung tích ${totalCap.toFixed(1)} triệu m³ · Đang xả: ${releasing} hồ</div>
+      <div style="font-size:12px;color:var(--muted)">${RSV_DATA.length} hồ chứa · Tổng dung tích ${totalCap.toFixed(1)} triệu m³ · Đang xả: ${releasing} hồ</div>
     </div>
     <div style="display:flex;gap:8px">
       <button class="btn btn-ghost btn-sm" onclick="showToast('Đang tải báo cáo hồ chứa...','info')">
@@ -181,7 +181,7 @@ function renderReservoirMonitor() {
   <div class="rsv-kpis">
     ${[
       ['Tổng dung tích', totalCap.toFixed(1)+' tr.m³', '#38bdf8'],
-      ['Đang tích nước', (totalCur/totalCap*100).toFixed(0)+'%', '#10b981'],
+      ['Đang tích nước', (totalCur/totalCap*100).toFixed(0)+'%', 'var(--success)'],
       ['Hồ đang xả lũ', releasing, '#f59e0b'],
       ['Hồ nguy hiểm', dangerous, '#ef4444'],
     ].map(([l,v,c])=>`
@@ -224,14 +224,14 @@ function rsvRenderTab() {
 // ── INSPECTION TAB ─────────────────────────────────────────────────
 function rsvInspections() {
   const statusCfg = {
-    ok:      {label:'An toàn',    color:'#10b981', bg:'rgba(16,185,129,.1)'},
-    warning: {label:'Cần theo dõi', color:'#f59e0b', bg:'rgba(245,158,11,.1)'},
+    ok:      {label:'An toàn',    color:'var(--success)', bg:'rgba(41,132,238,.1)'},
+    warning: {label:'Cần theo dõi', color:'var(--warning-text)', bg:'var(--warning-soft)'},
     overdue: {label:'Quá hạn / Khôi khản', color:'#ef4444', bg:'rgba(239,68,68,.1)'},
   };
   const overdueCount = RSV_INSPECTIONS.reduce((n,r)=>n+r.inspections.filter(i=>i.status==='overdue').length,0);
   return `
   ${overdueCount>0?`<div style="padding:10px 14px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:10px;margin-bottom:14px;display:flex;align-items:center;gap:10px">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
     <span style="font-size:13px;font-weight:600;color:#ef4444">${overdueCount} kỳ kiểm định quá hạn — cần xử lý khẩn!</span>
   </div>`:''}
   ${RSV_INSPECTIONS.map(r => {
@@ -241,8 +241,8 @@ function rsvInspections() {
     <div class="rsv-card" style="border-left:3px solid ${cfg.color};margin-bottom:10px">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
         <div>
-          <div style="font-size:14px;font-weight:800;color:#fff">${r.reservoir}</div>
-          <div style="font-size:11px;color:rgba(255,255,255,.4)">${r.id} · Kế hoạch kiểm định tiếp: <span style="color:${latestInsp.status==='overdue'?'#ef4444':'#f59e0b'};font-weight:700">${latestInsp.nextCycle}</span></div>
+          <div style="font-size:14px;font-weight:800;color:var(--text)">${r.reservoir}</div>
+          <div style="font-size:11px;color:var(--text-2)">${r.id} · Kế hoạch kiểm định tiếp: <span style="color:${latestInsp.status==='overdue'?'var(--danger)':'var(--warning-text)'};font-weight:700">${latestInsp.nextCycle}</span></div>
         </div>
         <span style="padding:3px 10px;border-radius:20px;font-size:10px;font-weight:800;background:${cfg.bg};color:${cfg.color};border:1px solid ${cfg.color}40">${cfg.label}</span>
       </div>
@@ -250,17 +250,17 @@ function rsvInspections() {
         ${r.inspections.map((insp,i) => {
           const ic = statusCfg[insp.status] || statusCfg.ok;
           return `
-          <div style="display:flex;gap:10px;align-items:center;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;border:1px solid rgba(255,255,255,.06)">
+          <div style="display:flex;gap:10px;align-items:center;padding:8px 12px;background:var(--bg-secondary);border-radius:8px;border:1px solid var(--border)">
             <div style="width:6px;height:6px;border-radius:50%;background:${ic.color};flex-shrink:0"></div>
             <div style="flex:1;min-width:0">
-              <div style="font-size:12px;font-weight:600;color:#fff">${insp.cycle}</div>
-              <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:1px">${insp.unit === '—' ? 'Chưa có đơn vị kiểm định' : insp.unit} · ${insp.date === '—' ? 'Chưa thực hiện' : insp.date}</div>
-              <div style="font-size:11px;color:rgba(255,255,255,.55);margin-top:2px;line-height:1.4">${insp.conclusion}</div>
+              <div style="font-size:12px;font-weight:600;color:var(--text)">${insp.cycle}</div>
+              <div style="font-size:11px;color:var(--muted);margin-top:1px">${insp.unit === '—' ? 'Chưa có đơn vị kiểm định' : insp.unit} · ${insp.date === '—' ? 'Chưa thực hiện' : insp.date}</div>
+              <div style="font-size:11px;color:var(--text-2);margin-top:2px;line-height:1.4">${insp.conclusion}</div>
             </div>
             <div style="text-align:right;flex-shrink:0">
               ${insp.qdNum !== '—' ? `
-              <div style="font-size:10px;color:rgba(255,255,255,.4)">QĐ: ${insp.qdNum}</div>
-              <div style="font-size:10px;color:rgba(255,255,255,.3)">${insp.qdDate}</div>
+              <div style="font-size:10px;color:var(--text-2)">QĐ: ${insp.qdNum}</div>
+              <div style="font-size:10px;color:var(--muted)">${insp.qdDate}</div>
               <button class="btn btn-ghost btn-sm" style="font-size:10px;margin-top:4px" onclick="showToast('Tải QĐ ${insp.qdNum}...')">Tải QĐ</button>` : ''}
             </div>
           </div>`;
@@ -316,27 +316,27 @@ function rsvWaterPlan() {
     <select class="form-control" style="width:220px" onchange="window._rsvWPSel=this.value;rsvSetTab('waterplan')">
       ${RSV_WATER_PLANS.map(p=>`<option value="${p.id}" ${p.id===selId?'selected':''}>${p.name}</option>`).join('')}
     </select>
-    <div style="font-size:12px;color:rgba(255,255,255,.45)">QĐ phê duyệt: <strong style="color:#fff">${plan.qdNum}</strong> ngày ${plan.qdDate}</div>
+    <div style="font-size:12px;color:var(--text-2)">QĐ phê duyệt: <strong style="color:var(--text)">${plan.qdNum}</strong> ngày ${plan.qdDate}</div>
     <button class="btn btn-ghost btn-sm" onclick="showToast('Tải phương án tích nước...')">Tải PDF QĐ</button>
   </div>
   <!-- Info grid -->
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px">
     ${[
       ['Cao trình thiết kế',`${plan.designLevel} m`,'#38bdf8'],
-      ['Mực nước bình thường',`${plan.normalLevel} m`,'#10b981'],
-      ['Mực nước chết',`${plan.deadLevel} m`,'#6b7280'],
+      ['Mực nước bình thường',`${plan.normalLevel} m`,'var(--success)'],
+      ['Mực nước chết',`${plan.deadLevel} m`,'var(--text-subtle)'],
     ].map(([l,v,c])=>`<div class="rsv-kpi"><div class="rsv-kpi-val" style="color:${c}">${v}</div><div class="rsv-kpi-lbl">${l}</div></div>`).join('')}
   </div>
   <!-- Monthly table -->
   <div class="rsv-card">
-    <div style="font-size:12px;font-weight:700;color:rgba(255,255,255,.5);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">Mực nước an toàn theo tháng</div>
+    <div style="font-size:12px;font-weight:700;color:var(--text-2);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">Mực nước an toàn theo tháng</div>
     <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:6px">
       ${months.map(m => {
         const pctMax  = Math.round((m.max  - plan.deadLevel)/(plan.designLevel - plan.deadLevel)*100);
         const pctSafe = Math.round((m.safe - plan.deadLevel)/(plan.designLevel - plan.deadLevel)*100);
         return `<div style="text-align:center">
-          <div style="font-size:10px;color:rgba(255,255,255,.4);margin-bottom:4px">${m.m}</div>
-          <div style="height:80px;background:rgba(255,255,255,.05);border-radius:4px;position:relative;overflow:hidden">
+          <div style="font-size:10px;color:var(--muted);margin-bottom:4px">${m.m}</div>
+          <div style="height:80px;background:var(--bg-tertiary);border-radius:4px;position:relative;overflow:hidden">
             <div style="position:absolute;bottom:0;left:0;right:0;height:${pctMax}%;background:rgba(56,189,248,.2);border-radius:4px"></div>
             <div style="position:absolute;bottom:0;left:0;right:0;height:${pctSafe}%;background:#38bdf8;border-radius:4px"></div>
           </div>
@@ -344,7 +344,7 @@ function rsvWaterPlan() {
         </div>`;
       }).join('')}
     </div>
-    <div style="display:flex;gap:16px;margin-top:10px;font-size:11px;color:rgba(255,255,255,.4)">
+    <div style="display:flex;gap:16px;margin-top:10px;font-size:11px;color:var(--text-2)">
       <div><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#38bdf8;margin-right:5px"></span>Mực nước tích an toàn</div>
       <div><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:rgba(56,189,248,.2);margin-right:5px"></span>Mực nước tối đa cho phép</div>
     </div>
@@ -369,7 +369,7 @@ window.openAddWaterPlanModal = function() {
       <div class="form-group"><label class="form-label">Cao trình thiết kế (m)</label><input class="form-control" type="number"></div>
       <div class="form-group"><label class="form-label">Mực nước bình thường (m)</label><input class="form-control" type="number"></div>
     </div>
-    <div style="font-size:12px;color:var(--muted);padding:10px;background:rgba(255,255,255,.03);border-radius:8px">
+    <div style="font-size:12px;color:var(--muted);padding:10px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px">
       Mực nước an toàn theo từng tháng sẽ được nhập đầy đủ trong form chi tiết (12 tháng).
     </div>
   </div>
@@ -383,20 +383,20 @@ function rsvOverview() {
   return `<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
     ${RSV_DATA.map(r=>{
       const pct = Math.round(r.current/r.capacity*100);
-      const fillColor = r.status==='critical'?'#ef4444':r.status==='danger'?'#f59e0b':r.status==='warning'?'#fbbf24':'#10b981';
+      const fillColor = r.status==='critical'?'var(--danger)':r.status==='danger'?'var(--warning-text)':r.status==='warning'?'var(--warning-text)':'var(--success)';
       const statusLabel = {ok:'Bình thường',warning:'Cảnh báo',danger:'Nguy hiểm',critical:'Khẩn cấp'}[r.status];
       const levelAbove = r.currentLevel - r.normalLevel;
       return `
     <div class="rsv-card" style="border-left:3px solid ${fillColor}">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
         <div>
-          <div style="font-size:14px;font-weight:800;color:#fff">${r.name}</div>
-          <div style="font-size:11px;color:rgba(255,255,255,.4)">${r.district} · ${r.purpose}</div>
+          <div style="font-size:14px;font-weight:800;color:var(--text)">${r.name}</div>
+          <div style="font-size:11px;color:var(--text-2)">${r.district} · ${r.purpose}</div>
         </div>
         <span style="padding:3px 10px;border-radius:20px;font-size:10px;font-weight:800;background:${fillColor}20;color:${fillColor};border:1px solid ${fillColor}40">${statusLabel}</span>
       </div>
       <!-- Capacity bar -->
-      <div style="display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,.5);margin-bottom:3px">
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-2);margin-bottom:3px">
         <span>Dung tích hiện tại</span>
         <span style="font-weight:700;color:${fillColor}">${r.current.toFixed(1)} / ${r.capacity} tr.m³ (${pct}%)</span>
       </div>
@@ -405,24 +405,24 @@ function rsvOverview() {
       </div>
       <!-- Stats grid -->
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;font-size:11px">
-        <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:8px">
-          <div style="color:rgba(255,255,255,.4);font-size:9px;margin-bottom:2px">Cao trình</div>
-          <div style="font-weight:700;color:${levelAbove>0?fillColor:'#fff'};font-family:monospace">${r.currentLevel}m</div>
+        <div style="text-align:center;padding:6px;background:var(--bg-secondary);border-radius:8px">
+          <div style="color:var(--muted);font-size:9px;margin-bottom:2px">Cao trình</div>
+          <div style="font-weight:700;color:${levelAbove>0?fillColor:'var(--text)'};font-family:monospace">${r.currentLevel}m</div>
           ${levelAbove > 0 ? `<div style="font-size:9px;color:${fillColor}">+${levelAbove.toFixed(2)}m MNDBT</div>` : ''}
         </div>
-        <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:8px">
-          <div style="color:rgba(255,255,255,.4);font-size:9px;margin-bottom:2px">Cổng xả</div>
-          <div style="font-weight:700;color:${r.gatesOpen>0?'#f59e0b':'#10b981'};font-family:monospace">${r.gatesOpen}/${r.gates}</div>
-          <div style="font-size:9px;color:rgba(255,255,255,.4)">${r.gatesOpen>0?r.gateFlow+' m³/s':'Đóng'}</div>
+        <div style="text-align:center;padding:6px;background:var(--bg-secondary);border-radius:8px">
+          <div style="color:var(--muted);font-size:9px;margin-bottom:2px">Cổng xả</div>
+          <div style="font-weight:700;color:${r.gatesOpen>0?'var(--warning-text)':'var(--success)'};font-family:monospace">${r.gatesOpen}/${r.gates}</div>
+          <div style="font-size:9px;color:var(--muted)">${r.gatesOpen>0?r.gateFlow+' m³/s':'Đóng'}</div>
         </div>
-        <div style="text-align:center;padding:6px;background:rgba(255,255,255,.03);border-radius:8px">
-          <div style="color:rgba(255,255,255,.4);font-size:9px;margin-bottom:2px">Lưu lượng vào</div>
-          <div style="font-weight:700;font-family:monospace;color:${r.inflow>r.outflow?'#f59e0b':'#10b981'}">${r.inflow}</div>
-          <div style="font-size:9px;color:rgba(255,255,255,.4)">m³/s</div>
+        <div style="text-align:center;padding:6px;background:var(--bg-secondary);border-radius:8px">
+          <div style="color:var(--muted);font-size:9px;margin-bottom:2px">Lưu lượng vào</div>
+          <div style="font-weight:700;font-family:monospace;color:${r.inflow>r.outflow?'var(--warning-text)':'var(--success)'}">${r.inflow}</div>
+          <div style="font-size:9px;color:var(--muted)">m³/s</div>
         </div>
       </div>
-      <div style="display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.05)">
-        <span style="font-size:10px;color:rgba(255,255,255,.35)">Hạ lưu: ${r.downstreamRiver}</span>
+      <div style="display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
+        <span style="font-size:10px;color:var(--muted)">Hạ lưu: ${r.downstreamRiver}</span>
         <button class="btn btn-ghost btn-sm" onclick="rsvGateControl('${r.id}')" style="font-size:11px">Điều tiết cửa van</button>
       </div>
     </div>`;
@@ -431,7 +431,7 @@ function rsvOverview() {
 }
 
 function rsvEvents() {
-  const typeColor = { release:'#f59e0b', close:'#10b981', alert:'#ef4444' };
+  const typeColor = { release:'var(--warning-text)', close:'var(--success)', alert:'var(--danger)' };
   const typeLabel = { release:'Mở xả', close:'Đóng van', alert:'Cảnh báo' };
   return `<div class="card" style="padding:0">
     <div class="card-header">
@@ -442,21 +442,21 @@ function rsvEvents() {
       </button>
     </div>
     ${RSV_EVENTS.map(e=>{
-      const tc = typeColor[e.type]||'#6b7280';
-      return `<div style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);border-left:3px solid ${tc}">
+      const tc = typeColor[e.type]||'var(--text-subtle)';
+      return `<div style="padding:12px 16px;border-bottom:1px solid var(--border);border-left:3px solid ${tc}">
         <div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap">
           <div style="flex:1">
             <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px">
               <span style="font-size:10px;font-weight:800;padding:1px 8px;border-radius:20px;background:${tc}20;color:${tc}">${typeLabel[e.type]}</span>
-              <span style="font-size:11px;font-weight:700;color:#fff">${e.reservoir}</span>
-              <span style="font-size:10px;font-family:monospace;color:rgba(255,255,255,.35)">${e.time}</span>
+              <span style="font-size:11px;font-weight:700;color:var(--text)">${e.reservoir}</span>
+              <span style="font-size:10px;font-family:monospace;color:var(--muted)">${e.time}</span>
             </div>
-            <div style="font-size:12px;color:rgba(255,255,255,.7);margin-bottom:3px">${e.action}</div>
-            <div style="font-size:11px;color:rgba(255,255,255,.4);line-height:1.4">Lý do: ${e.trigger}</div>
+            <div style="font-size:12px;color:var(--text);margin-bottom:3px">${e.action}</div>
+            <div style="font-size:11px;color:var(--text-2);line-height:1.4">Lý do: ${e.trigger}</div>
           </div>
           <div style="text-align:right;flex-shrink:0">
             <div style="font-size:14px;font-weight:800;color:${tc};font-family:monospace">${e.flow}</div>
-            <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:2px">${e.operator}</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:2px">${e.operator}</div>
           </div>
         </div>
       </div>`;

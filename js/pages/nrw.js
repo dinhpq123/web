@@ -10,10 +10,10 @@ function renderNrw() {
     </div>
   </div>
   <div class="kpi-grid" style="margin-bottom:16px">
-    <div class="kpi-card" style="--accent-color:var(--yellow)"><div class="kpi-label">Tỷ lệ an toàn trung bình</div><div class="kpi-value" style="color:var(--yellow)">${(BIZ_STATS.dikeConditionOk)}<span style="font-size:16px;color:var(--muted)">%</span></div><div class="kpi-sub">Mục tiêu: >95% an toàn</div></div>
-    <div class="kpi-card" style="--accent-color:var(--red)"><div class="kpi-label">Đê xung yếu (Cấp I)</div><div class="kpi-value" style="color:var(--red)">${DIKE_DATA.filter(d => d.grade === 1 && d.condition === 'critical').length}</div><div class="kpi-sub">cần gia cố khẩn cấp</div></div>
-    <div class="kpi-card" style="--accent-color:var(--cyan)"><div class="kpi-label">Mực nước Trạm Hà Nội</div><div class="kpi-value">4.82<span style="font-size:14px;color:var(--muted)"> m</span></div><div class="kpi-sub">lúc 14:00 – Sông Hồng</div></div>
-    <div class="kpi-card" style="--accent-color:var(--red)"><div class="kpi-label">Sự cố đê điều (YTD)</div><div class="kpi-value" style="color:var(--red)">${BIZ_STATS.openIncidents}</div><div class="kpi-sub">Hiện tại đang xử lý</div></div>
+    <div class="kpi-card" style="--accent-color:var(--warning)"><div class="kpi-label">Tỷ lệ an toàn trung bình</div><div class="kpi-value" style="color:var(--warning)">${(BIZ_STATS.dikeConditionOk)}<span style="font-size:16px;color:var(--muted)">%</span></div><div class="kpi-sub">Mục tiêu: >95% an toàn</div></div>
+    <div class="kpi-card" style="--accent-color:var(--danger)"><div class="kpi-label">Đê xung yếu (Cấp I)</div><div class="kpi-value" style="color:var(--danger)">${DIKE_DATA.filter(d => d.grade === 1 && d.condition === 'critical').length}</div><div class="kpi-sub">cần gia cố khẩn cấp</div></div>
+    <div class="kpi-card" style="--accent-color:var(--primary)"><div class="kpi-label">Mực nước Trạm Hà Nội</div><div class="kpi-value">4.82<span style="font-size:14px;color:var(--muted)"> m</span></div><div class="kpi-sub">lúc 14:00 – Sông Hồng</div></div>
+    <div class="kpi-card" style="--accent-color:var(--danger)"><div class="kpi-label">Sự cố đê điều (YTD)</div><div class="kpi-value" style="color:var(--danger)">${BIZ_STATS.openIncidents}</div><div class="kpi-sub">Hiện tại đang xử lý</div></div>
   </div>
   <div class="tabs">
     <button class="tab-btn ${dikeTab === 'overview' ? 'active' : ''}" onclick="switchDikeTab('overview')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M3 17h18M5 17V9l7-5 7 5v8"/></svg> Tổng quan Tuyến đê</button>
@@ -50,7 +50,7 @@ function renderDikeOverview() {
   <div class="grid-auto" style="margin-bottom:16px">
     ${DIKE_DATA.map((d) => {
     const pct = Math.round((d.heightCurrent / d.heightDesign) * 100);
-    const c = d.condition === 'critical' ? 'var(--red)' : d.condition === 'warning' ? 'var(--yellow)' : 'var(--green)';
+    const c = d.condition === 'critical' ? 'var(--danger)' : d.condition === 'warning' ? 'var(--warning)' : 'var(--success)';
     const statusLabel = d.condition === 'critical' ? 'Xung yếu' : d.condition === 'warning' ? 'Cảnh báo' : 'An toàn';
     
     return `<div class="card" style="padding:18px">
@@ -148,7 +148,7 @@ function renderDikeIncidents() {
         </div>
         <span class="badge ${i.severity === 'critical' ? 'badge-red' : 'badge-yellow'}">${i.severity.toUpperCase()}</span>
       </div>
-      <div style="font-size:13px;color:var(--text2);line-height:1.5;margin-bottom:12px;background:rgba(0,0,0,.1);padding:10px;border-radius:6px">
+      <div style="font-size:13px;color:var(--text2);line-height:1.5;margin-bottom:12px;background:var(--bg-secondary);padding:10px;border-radius:6px;border:1px solid var(--border)">
         ${i.note}
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px">

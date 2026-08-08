@@ -167,10 +167,10 @@ const LIMS_ICON = {
 function limsStatusColor(v, key) {
   const lim = LIMS_DATA.limits[key];
   if (!lim) return 'var(--text)';
-  if (key === 'coliform') return v > 0 ? 'var(--red)' : 'var(--green)';
-  if (v < lim.min || v > lim.max) return 'var(--red)';
+  if (key === 'coliform') return v > 0 ? 'var(--danger)' : 'var(--success)';
+  if (v < lim.min || v > lim.max) return 'var(--danger)';
   const rangePct = (v - lim.min) / (lim.max - lim.min);
-  return rangePct < 0.2 || rangePct > 0.8 ? 'var(--yellow)' : 'var(--green)';
+  return rangePct < 0.2 || rangePct > 0.8 ? 'var(--warning)' : 'var(--success)';
 }
 
 function limsParamBadge(v, key) {
@@ -202,15 +202,15 @@ function renderLims() {
   </div>
 
   <!-- Global LIMS Filters -->
-  <div class="card" style="padding:16px; margin-bottom:16px; display:flex; gap:16px; align-items:center; background:rgba(255,255,255,0.03); border:1px solid var(--border)">
+  <div class="card" style="padding:16px; margin-bottom:16px; display:flex; gap:16px; align-items:center; background:var(--bg-card); border:1px solid var(--border)">
     <div style="position:relative; flex:1">
       <input        <input class="form-control" placeholder="Vd: Quận Hà Đông">kiếm theo mã mẫu, thiết bị, kết quả..."
-        style="padding-left:36px; height:38px; background:rgba(255,255,255,0.05); border-radius:10px"
+        style="padding-left:36px; height:38px; background:var(--bg-card); border-radius:10px"
         onkeyup="updateLimsGlobalFilter('search', this.value)" value="${limsSearchQuery}">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" style="position:absolute; left:12px; top:11px"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     </div>
     <div style="width:180px">
-      <select class="form-control" style="height:38px; background:rgba(255,255,255,0.05); border-radius:10px" onchange="updateLimsGlobalFilter('plant', this.value)">
+      <select class="form-control" style="height:38px; background:var(--bg-card); border-radius:10px" onchange="updateLimsGlobalFilter('plant', this.value)">
         <option value="all" ${limsFilterPlant === 'all' ? 'selected' : ''}>Tất cả nhà máy</option>
         <option value="NM-01" ${limsFilterPlant === 'NM-01' ? 'selected' : ''}>Hồ Suối Hai</option>
         <option value="NM-02" ${limsFilterPlant === 'NM-02' ? 'selected' : ''}>Hồ Đồng Mô</option>
@@ -218,7 +218,7 @@ function renderLims() {
       </select>
     </div>
     <div style="width:160px">
-      <select class="form-control" style="height:38px; background:rgba(255,255,255,0.05); border-radius:10px" onchange="updateLimsGlobalFilter('status', this.value)">
+      <select class="form-control" style="height:38px; background:var(--bg-card); border-radius:10px" onchange="updateLimsGlobalFilter('status', this.value)">
         <option value="all" ${limsFilterStatus === 'all' ? 'selected' : ''}>Mọi trạng thái</option>
         <option value="ok" ${limsFilterStatus === 'ok' ? 'selected' : ''}>Đạt chuẩn</option>
         <option value="alert" ${limsFilterStatus === 'alert' ? 'selected' : ''}>Cảnh báo</option>
@@ -339,10 +339,10 @@ function renderLimsOverview() {
   <!-- KPI Cards -->
   <div class="grid-auto" style="margin-bottom:16px">
     ${[
-      { label: 'Tổng mẫu hôm nay', value: total, sub: `${okCount} đạt / ${pendCnt} chờ kết quả`, color: 'var(--cyan)', icon: LIMS_ICON.flask },
-      { label: 'Cảnh báo chất lượng', value: alertCnt, sub: alertCnt > 0 ? 'Yêu cầu xử lý ngay' : 'Không có cảnh báo', color: alertCnt > 0 ? 'var(--red)' : 'var(--green)', icon: LIMS_ICON.alert },
-      { label: 'Thiết bị kiểm định', value: `${calibOk}/${LIMS_DATA.calibrations.length}`, sub: calibBad > 0 ? `${calibBad} cần gia hạn` : 'Tất cả còn hiệu lực', color: calibBad > 0 ? 'var(--yellow)' : 'var(--green)', icon: LIMS_ICON.check },
-      { label: 'Điểm lấy mẫu aktif', value: LIMS_DATA.sites.length, sub: 'Tuần hoàn 24h', color: 'var(--cyan)', icon: LIMS_ICON.map },
+      { label: 'Tổng mẫu hôm nay', value: total, sub: `${okCount} đạt / ${pendCnt} chờ kết quả`, color: 'var(--primary)', icon: LIMS_ICON.flask },
+      { label: 'Cảnh báo chất lượng', value: alertCnt, sub: alertCnt > 0 ? 'Yêu cầu xử lý ngay' : 'Không có cảnh báo', color: alertCnt > 0 ? 'var(--danger)' : 'var(--success)', icon: LIMS_ICON.alert },
+      { label: 'Thiết bị kiểm định', value: `${calibOk}/${LIMS_DATA.calibrations.length}`, sub: calibBad > 0 ? `${calibBad} cần gia hạn` : 'Tất cả còn hiệu lực', color: calibBad > 0 ? 'var(--warning)' : 'var(--success)', icon: LIMS_ICON.check },
+      { label: 'Điểm lấy mẫu aktif', value: LIMS_DATA.sites.length, sub: 'Tuần hoàn 24h', color: 'var(--primary)', icon: LIMS_ICON.map },
     ].map(card => `
     <div class="card" style="padding:20px">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px">
@@ -357,10 +357,10 @@ function renderLimsOverview() {
   <!-- Alert banner -->
   ${latestAlert ? `
   <div style="background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.4);border-radius:10px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:flex-start;gap:12px">
-    <div style="color:var(--red);margin-top:2px;flex-shrink:0">${LIMS_ICON.alert}</div>
+    <div style="color:var(--danger);margin-top:2px;flex-shrink:0">${LIMS_ICON.alert}</div>
     <div style="flex:1">
-      <div style="font-weight:700;color:var(--red);margin-bottom:2px">CẢNH BÁO: Clo dư thấp tại ${latestAlert.siteName}</div>
-      <div style="font-size:13px;color:var(--text)">Mẫu <strong>${latestAlert.id}</strong> &nbsp;|&nbsp; Clo dư: <strong style="color:var(--red)">0.1 mg/l</strong> (Yêu cầu 0.2 – 1.0 mg/l) &nbsp;|&nbsp; Nguy cơ tái nhiễm vi khuẩn cuối nguồn nước.</div>
+      <div style="font-weight:700;color:var(--danger);margin-bottom:2px">CẢNH BÁO: Clo dư thấp tại ${latestAlert.siteName}</div>
+      <div style="font-size:13px;color:var(--text)">Mẫu <strong>${latestAlert.id}</strong> &nbsp;|&nbsp; Clo dư: <strong style="color:var(--danger)">0.1 mg/l</strong> (Yêu cầu 0.2 – 1.0 mg/l) &nbsp;|&nbsp; Nguy cơ tái nhiễm vi khuẩn cuối nguồn nước.</div>
     </div>
     <button class="btn btn-primary btn-sm" onclick="showToast('Đã gửi lệnh xử lý đến Trưởng ca!')" style="flex-shrink:0">Xử lý ngay</button>
   </div>` : ''}
@@ -378,7 +378,7 @@ function renderLimsOverview() {
         <div style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--muted)">${LIMS_ICON.trending}</div>
       </div>
       <div style="display:flex;height:60px;gap:4px;align-items:flex-end;margin-bottom:10px">
-        ${spark(LIMS_DATA.trends.turbidity, 'var(--cyan)')}
+        ${spark(LIMS_DATA.trends.turbidity, 'var(--primary)')}
       </div>
       <div style="display:flex;justify-content:space-between">
         ${LIMS_DATA.trends.dates.map((d, i) => `<div style="font-size:10px;color:var(--muted);flex:1;text-align:center">${d}</div>`).join('')}
@@ -399,7 +399,7 @@ function renderLimsOverview() {
         <div style="display:inline-flex;align-items:center;gap:4px;font-size:11px;color:var(--muted)">${LIMS_ICON.trending}</div>
       </div>
       <div style="display:flex;height:60px;gap:4px;align-items:flex-end;margin-bottom:10px">
-        ${spark(LIMS_DATA.trends.chlorine, 'var(--green)')}
+        ${spark(LIMS_DATA.trends.chlorine, 'var(--success)')}
       </div>
       <div style="display:flex;justify-content:space-between">
         ${LIMS_DATA.trends.dates.map(d => `<div style="font-size:10px;color:var(--muted);flex:1;text-align:center">${d}</div>`).join('')}
@@ -420,10 +420,10 @@ function renderLimsOverview() {
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px">
       ${LIMS_DATA.sites.map(site => {
       const s = LIMS_DATA.samples.find(sm => sm.siteId === site.id);
-      const dotColor = !s ? 'var(--muted)' : s.status === 'alert' ? 'var(--red)' : s.status === 'pending' ? 'var(--yellow)' : 'var(--green)';
+      const dotColor = !s ? 'var(--muted)' : s.status === 'alert' ? 'var(--danger)' : s.status === 'pending' ? 'var(--warning)' : 'var(--success)';
       const label = !s ? 'Chưa lấy mẫu' : s.status === 'alert' ? 'Cảnh báo' : s.status === 'pending' ? 'Đang phân tích' : 'Đạt chuẩn';
       return `
-        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(0,0,0,.15);border-radius:8px;border-left:3px solid ${dotColor}">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg-secondary);border-radius:8px;border-left:3px solid ${dotColor}">
           <div style="width:10px;height:10px;border-radius:50%;background:${dotColor};box-shadow:0 0 8px ${dotColor};flex-shrink:0;${s?.status === 'alert' ? 'animation:pulse 1.5s infinite' : ''};"></div>
           <div>
             <div style="font-size:13px;font-weight:600">${site.name}</div>
@@ -520,7 +520,7 @@ function renderLimsResults() {
       ${Object.keys(paramLabels).map(k => `<th style="text-align:center">${paramLabels[k]}</th>`).join('')}
       <th>Kết luận</th>
     </tr></thead>
-    <thead style="background:rgba(0,0,0,.2)"><tr>
+    <thead style="background:var(--bg-secondary)"><tr>
       <td style="font-size:10px;color:var(--muted);padding:4px 16px">QCVN 01-1:2018/BYT</td>
       ${Object.entries(LIMS_DATA.limits).map(([k, lim]) => `<td style="text-align:center;font-size:10px;color:var(--muted);padding:4px 8px">${lim.min > 0 ? lim.min + '–' : '≤ '}${lim.max} ${lim.unit}</td>`).join('')}
       <td></td>
@@ -579,7 +579,7 @@ function renderLimsCalib() {
           <td class="mono text-cyan" style="font-size:12px">${c.id}</td>
           <td style="font-weight:500">${c.equipment}</td>
           <td class="mono" style="font-size:12px;color:var(--muted)">${c.lastDate}</td>
-          <td class="mono" style="font-size:12px;color:${c.status === 'overdue' ? 'var(--red)' : c.status === 'warning' ? 'var(--yellow)' : 'var(--green)'}">${c.nextDate}</td>
+          <td class="mono" style="font-size:12px;color:${c.status === 'overdue' ? 'var(--danger)' : c.status === 'warning' ? 'var(--warning)' : 'var(--success)'}">${c.nextDate}</td>
           <td style="font-size:13px">${c.agency}</td>
           <td class="mono" style="font-size:11px;color:var(--muted)">${c.cert}</td>
           <td><span class="badge ${cls}">${label}</span></td>
@@ -599,7 +599,7 @@ function renderLimsCalib() {
     <div style="display:flex;flex-direction:column;gap:8px">
       ${[...LIMS_DATA.calibrations].sort((a, b) => a.nextDate.localeCompare(b.nextDate)).slice(0, 5).map(c => {
     const [cls] = statusMap[c.status];
-    return `<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(0,0,0,.15);border-radius:8px;border-left:3px solid ${c.status === 'overdue' ? 'var(--red)' : c.status === 'warning' ? 'var(--yellow)' : 'var(--green)'}">
+    return `<div style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:var(--bg-secondary);border-radius:8px;border-left:3px solid ${c.status === 'overdue' ? 'var(--danger)' : c.status === 'warning' ? 'var(--warning)' : 'var(--success)'}">
           <div style="font-family:'Roboto Mono',monospace;font-size:12px;color:var(--muted);min-width:80px">${c.nextDate}</div>
           <div style="flex:1;font-size:13px;font-weight:500">${c.equipment}</div>
           <div style="font-size:12px;color:var(--muted)">${c.agency}</div>
@@ -656,11 +656,11 @@ function renderLimsInspection() {
                 <td style="padding:12px 0">
                   <div style="font-weight:600">${h.plant}</div>
                   <div style="font-size:11px;color:var(--muted)">${h.date} &nbsp;·&nbsp; ${h.agency}</div>
-                  ${h.note ? `<div style="font-size:11px;color:var(--yellow);margin-top:4px;font-style:italic">Note: ${h.note}</div>` : ''}
+                  ${h.note ? `<div style="font-size:11px;color:var(--warning);margin-top:4px;font-style:italic">Note: ${h.note}</div>` : ''}
                 </td>
                 <td style="text-align:center;padding:12px 0">
                   <div style="font-family:'Roboto Mono',monospace;font-size:12px">${h.numSamples} mẫu</div>
-                  <div style="font-size:10px;color:${h.numFail > 0 ? 'var(--red)' : 'var(--muted)'}">${h.numFail > 0 ? h.numFail + ' lỗi' : '0 lỗi'}</div>
+                  <div style="font-size:10px;color:${h.numFail > 0 ? 'var(--danger)' : 'var(--muted)'}">${h.numFail > 0 ? h.numFail + ' lỗi' : '0 lỗi'}</div>
                 </td>
                 <td style="text-align:center;padding:12px 0">
                   <span class="badge ${h.result === 'pass' ? 'badge-green' : 'badge-red'}" style="cursor:pointer" onclick="showToast('Xem báo cáo ${h.report}')">${h.result === 'pass' ? 'ĐẠT' : 'CHƯA ĐẠT'}</span>
@@ -679,19 +679,19 @@ function renderLimsInspection() {
             <div style="font-weight:700;margin-bottom:2px">Lịch kiểm định nước liên ngành sắp tới</div>
             <div style="font-size:11px;color:var(--muted)">Dựa trên kế hoạch của Sở NN&PTNT Hà Nội</div>
           </div>
-          <div style="color:var(--cyan)">${LIMS_ICON.calendar}</div>
+          <div style="color:var(--primary)">${LIMS_ICON.calendar}</div>
         </div>
         <div style="display:flex;flex-direction:column;gap:12px">
           ${upcoming.map(u => `
           <div style="padding:14px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px">
             <div style="display:flex;justify-content:space-between;margin-bottom:8px">
               <span class="badge badge-blue" style="font-size:10px">${u.period}</span>
-              <span style="font-family:'Roboto Mono',monospace;font-size:12px;font-weight:600;color:var(--yellow)">${u.plannedDate}</span>
+              <span style="font-family:'Roboto Mono',monospace;font-size:12px;font-weight:600;color:var(--warning)">${u.plannedDate}</span>
             </div>
             <div style="font-weight:700;font-size:14px;margin-bottom:4px;display:flex;align-items:center;gap:6px">${u.plant}</div>
             <div style="font-size:12px;color:var(--muted);margin-bottom:10px">${u.agency}</div>
-            <div style="background:rgba(255,190,0,.08);padding:10px;border-radius:6px;border-left:3px solid var(--yellow);font-size:12px;line-height:1.6;color:var(--text-dim)">
-              <strong style="color:var(--yellow)">Ghi chú:</strong> ${u.note}
+            <div style="background:rgba(255,190,0,.08);padding:10px;border-radius:6px;border-left:3px solid var(--warning);font-size:12px;line-height:1.6;color:var(--text-dim)">
+              <strong style="color:var(--warning)">Ghi chú:</strong> ${u.note}
             </div>
           </div>`).join('')}
         </div>
@@ -712,9 +712,9 @@ function renderLimsAi() {
   });
 
   const levelCfg = {
-    critical: { color: 'var(--red)', alpha: 'rgba(255,71,87,', label: 'Khẩn cấp', icon: LIMS_ICON.alert },
-    warning: { color: 'var(--yellow)', alpha: 'rgba(255,190,0,', label: 'Cảnh báo', icon: LIMS_ICON.alert },
-    info: { color: 'var(--cyan)', alpha: 'rgba(0,200,255,', label: 'Thông tin', icon: LIMS_ICON.bulb },
+    critical: { color: 'var(--danger)', alpha: 'rgba(255,71,87,', label: 'Khẩn cấp', icon: LIMS_ICON.alert },
+    warning: { color: 'var(--warning)', alpha: 'rgba(255,190,0,', label: 'Cảnh báo', icon: LIMS_ICON.alert },
+    info: { color: 'var(--primary)', alpha: 'rgba(0,200,255,', label: 'Thông tin', icon: LIMS_ICON.bulb },
   };
 
   return `
@@ -749,23 +749,23 @@ function renderLimsAi() {
           <span style="display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;background:${alpha}.1);border:1px solid ${alpha}.3);font-size:12px;font-weight:700;color:${color}">${label}</span>
         </div>
         <div style="padding:16px 18px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
-          <div style="background:rgba(0,0,0,.18);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:10px">
-            <div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--cyan);text-transform:uppercase;display:flex;align-items:center;gap:4px">${LIMS_ICON.cpu} Hiện trạng & Dự báo</div>
+          <div style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:10px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--primary);text-transform:uppercase;display:flex;align-items:center;gap:4px">${LIMS_ICON.cpu} Hiện trạng & Dự báo</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
               <div style="font-size:12px;color:var(--muted)">Đầu vào:<br><strong style="color:var(--text)">${r.input || '—'}</strong></div>
-              <div style="font-size:12px;color:var(--muted)">Dự báo đầu ra:<br><strong style="color:var(--green)">${r.predictedOutput || '—'}</strong></div>
+              <div style="font-size:12px;color:var(--muted)">Dự báo đầu ra:<br><strong style="color:var(--success)">${r.predictedOutput || '—'}</strong></div>
             </div>
             <div style="font-size:13px;line-height:1.7;color:var(--text);border-top:1px solid rgba(255,255,255,.05);padding-top:8px">${r.detail}</div>
           </div>
           <div style="background:${alpha}.06);border-radius:8px;padding:12px;border:1px solid ${alpha}.2);display:flex;flex-direction:column;gap:10px">
             <div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:${color};text-transform:uppercase;display:flex;align-items:center;gap:4px">${LIMS_ICON.bulb} Liều lượng hóa chất tối ưu</div>
-            <div style="font-size:13px;font-weight:700;color:${color};background:rgba(0,0,0,.2);padding:8px 12px;border-radius:6px;border:1px dashed ${alpha}.4)">${r.dosing || '—'}</div>
+            <div style="font-size:13px;font-weight:700;color:${color};background:var(--bg-tertiary);padding:8px 12px;border-radius:6px;border:1px dashed ${alpha}.4)">${r.dosing || '—'}</div>
             <div style="font-size:13px;line-height:1.7;color:var(--text)">${r.action}</div>
-            <div style="font-size:11px;color:var(--green);font-weight:600;display:flex;align-items:center;gap:4px">${LIMS_ICON.check} ${r.savings || 'Tiết kiệm chi phí'}</div>
+            <div style="font-size:11px;color:var(--success);font-weight:600;display:flex;align-items:center;gap:4px">${LIMS_ICON.check} ${r.savings || 'Tiết kiệm chi phí'}</div>
           </div>
         </div>
         <div style="padding:0 18px 14px;display:flex;justify-content:flex-end;gap:8px">
-          ${r.level === 'critical' ? `<button class="btn btn-primary btn-sm" style="display:inline-flex;align-items:center;gap:5px;background:var(--red);border-color:var(--red)" onclick="showToast('Đã gửi lệnh xử lý khẩn!')">Xử lý khẩn cấp</button>` : ''}
+          ${r.level === 'critical' ? `<button class="btn btn-primary btn-sm" style="display:inline-flex;align-items:center;gap:5px;background:var(--danger);border-color:var(--danger)" onclick="showToast('Đã gửi lệnh xử lý khẩn!')">Xử lý khẩn cấp</button>` : ''}
           <button class="btn btn-outline btn-sm" onclick="showToast('Đã giao việc cho Trưởng ca!')">Giao việc</button>
           <button class="btn btn-ghost btn-sm" onclick="showToast('Đã đánh dấu hoàn thành!')">Đánh dấu xử lý</button>
         </div>
@@ -807,7 +807,7 @@ window.openLimsSampleDetail = function (id) {
       <button class="modal-close" onclick="closeModal(event)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="modal-body" style="padding:0;max-height:70vh;overflow-y:auto;overflow-x:hidden">
-      <div style="padding:16px 20px;background:${hasAlert ? 'rgba(255,71,87,.08)' : 'rgba(0,200,100,.06)'};border-bottom:1px solid var(--border)">
+      <div style="padding:16px 20px;background:${hasAlert ? 'rgba(255,71,87,.08)' : 'rgba(41,132,238,.06)'};border-bottom:1px solid var(--border)">
         <span class="badge ${hasAlert ? 'badge-red' : 'badge-green'}" style="font-size:13px;padding:6px 14px">${hasAlert ? 'KHÔNG ĐẠT – Có chỉ tiêu vượt ngưỡng QCVN' : 'ĐẠT CHUẨN – QCVN 01-1:2018/BYT'}</span>
       </div>
       <table style="width:100%;border-collapse:collapse">
@@ -837,7 +837,7 @@ window.openLimsSampleDetail = function (id) {
     <div class="modal-footer">
       <button class="btn btn-ghost" onclick="closeModal(event)">Đóng</button>
       <button class="btn btn-outline" onclick="showToast('Đang xuất E-CoA ...');closeModal(event)">${LIMS_ICON.download} Xuất E-CoA</button>
-      ${hasAlert ? `<button class="btn btn-primary" style="background:var(--red);border-color:var(--red)" onclick="showToast('Đã gửi cảnh báo đến Lãnh đạo!');closeModal(event)">Gửi cảnh báo</button>` : ''}
+      ${hasAlert ? `<button class="btn btn-primary" style="background:var(--danger);border-color:var(--danger)" onclick="showToast('Đã gửi cảnh báo đến Lãnh đạo!');closeModal(event)">Gửi cảnh báo</button>` : ''}
     </div>
   `);
 };
@@ -877,7 +877,7 @@ window.processLimsOcr = function () {
       <div style="font-weight:600;margin-bottom:5px">Đang xử lý bằng AI OCR...</div>
       <div style="font-size:12px;color:var(--muted)">Đang nhận diện các trường dữ liệu và bóc tách giá trị...</div>
       <div style="width:200px;height:4px;background:rgba(255,255,255,.1);border-radius:2px;margin:20px auto;overflow:hidden">
-        <div id="ocrProgress" style="width:0;height:100%;background:var(--cyan);transition:width 0.3s"></div>
+        <div id="ocrProgress" style="width:0;height:100%;background:var(--primary);transition:width 0.3s"></div>
       </div>
     </div>
   `;
@@ -905,7 +905,7 @@ function showOcrResults() {
   };
 
   body.innerHTML = `
-    <div style="margin-bottom:15px;padding:12px;background:rgba(0,255,100,.05);border:1px solid rgba(0,255,100,.2);border-radius:8px;font-size:13px;color:var(--green)">
+    <div style="margin-bottom:15px;padding:12px;background:var(--success-soft);border:1px solid var(--border-active);border-radius:8px;font-size:13px;color:var(--success-text)">
       ${LIMS_ICON.check} AI đã nhận diện thành công các chỉ số từ tài liệu. Vui lòng kiểm tra lại trước khi lưu.
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:15px">
@@ -956,7 +956,7 @@ window.openLimsImportExcelModal = function () {
     <div class="modal-body" style="text-align:center;padding:30px">
       <div style="font-size:40px;margin-bottom:15px">📊</div>
       <div style="font-weight:600;margin-bottom:8px">Chọn file Excel (.xlsx, .csv)</div>
-      <div style="font-size:12px;color:var(--muted);margin-bottom:20px">Dữ liệu sẽ được import hàng loạt vào hệ thống. Tải file mẫu <a href="#" style="color:var(--cyan)">tại đây</a>.</div>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:20px">Dữ liệu sẽ được import hàng loạt vào hệ thống. Tải file mẫu <a href="#" style="color:var(--primary)">tại đây</a>.</div>
       <input type="file" id="excelFileInput" style="display:none" onchange="simulateExcelImport()">
       <button class="btn btn-primary" onclick="document.getElementById('excelFileInput').click()">Chọn File</button>
     </div>

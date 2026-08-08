@@ -31,13 +31,13 @@ function renderPlants() {
         Xuất Excel
       </button>
 
-      <div style="display:flex; background:rgba(255,255,255,0.05); padding:4px; border-radius:10px; margin-right:12px; border:1px solid var(--border)">
+      <div style="display:flex; background:var(--bg-card); padding:4px; border-radius:10px; margin-right:12px; border:1px solid var(--border)">
         <button class="btn btn-icon btn-sm" onclick="switchPlantsView('grid')" title="Dạng lưới" 
-          style="border:none; border-radius:7px; background:${plantsViewMode === 'grid' ? 'var(--cyan)' : 'transparent'}; color:${plantsViewMode === 'grid' ? '#fff' : 'var(--muted)'}">
+          style="border:none; border-radius:7px; background:${plantsViewMode === 'grid' ? 'var(--primary)' : 'transparent'}; color:${plantsViewMode === 'grid' ? '#fff' : 'var(--muted)'}">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
         </button>
         <button class="btn btn-icon btn-sm" onclick="switchPlantsView('list')" title="Dạng danh sách" 
-          style="border:none; border-radius:7px; background:${plantsViewMode === 'list' ? 'var(--cyan)' : 'transparent'}; color:${plantsViewMode === 'list' ? '#fff' : 'var(--muted)'}">
+          style="border:none; border-radius:7px; background:${plantsViewMode === 'list' ? 'var(--primary)' : 'transparent'}; color:${plantsViewMode === 'list' ? '#fff' : 'var(--muted)'}">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
         </button>
       </div>
@@ -118,19 +118,19 @@ function renderPlantsGrid(filteredPlants, canEdit) {
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
       <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:10px">
         <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Công suất TK</div>
-        <div style="font-size:16px;font-weight:700;font-family:'Roboto Mono',monospace;color:var(--cyan)">${formatNum(f.capacity)} <span style="font-size:10px;font-weight:400;color:var(--muted)">m³/n</span></div>
+        <div style="font-size:16px;font-weight:700;font-family:'Roboto Mono',monospace;color:var(--primary)">${formatNum(f.capacity)} <span style="font-size:10px;font-weight:400;color:var(--muted)">m³/n</span></div>
       </div>
       <div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:10px">
         <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px">Thực tế</div>
-        <div style="font-size:16px;font-weight:700;font-family:'Roboto Mono',monospace;color:var(--green)">${formatNum(f.output)} <span style="font-size:10px;font-weight:400;color:var(--muted)">m³/n</span></div>
+        <div style="font-size:16px;font-weight:700;font-family:'Roboto Mono',monospace;color:var(--success)">${formatNum(f.output)} <span style="font-size:10px;font-weight:400;color:var(--muted)">m³/n</span></div>
       </div>
     </div>
     <div style="margin-bottom:12px">
       <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-bottom:4px">
         <span>Hiệu suất vận hành</span><span>${Math.round(f.output / f.capacity * 100)}%</span>
       </div>
-      <div class="progress-bar" style="height:6px; background:rgba(255,255,255,0.05)">
-        <div class="progress-fill" style="width:${f.output / f.capacity * 100}%;background:linear-gradient(90deg, var(--cyan), var(--green))"></div>
+      <div class="progress-bar" style="height:6px; background:var(--bg-card)">
+        <div class="progress-fill" style="width:${f.output / f.capacity * 100}%;background:linear-gradient(90deg, var(--primary), var(--success))"></div>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:11px;color:var(--muted)">
@@ -179,17 +179,17 @@ function renderPlantsList(filteredPlants, canEdit) {
               <div style="font-size:11px; color:var(--muted)">ID: NM-${f.id.toString().padStart(2, '0')} | QL: ${f.manager}</div>
             </td>
             <td>
-              <a href="https://maps.google.com/?q=${encodeURIComponent(f.address)}" target="_blank" class="gis-link" onclick="event.stopPropagation()" style="display:flex; align-items:center; gap:5px; color:var(--cyan); font-size:12px; text-decoration:none">
+              <a href="https://maps.google.com/?q=${encodeURIComponent(f.address)}" target="_blank" class="gis-link" onclick="event.stopPropagation()" style="display:flex; align-items:center; gap:5px; color:var(--primary); font-size:12px; text-decoration:none">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
                 ${f.address}
               </a>
             </td>
             <td class="text-right mono" style="font-weight:600">${formatNum(f.capacity)}</td>
-            <td class="text-right mono" style="font-weight:600; color:var(--green)">${formatNum(f.output)}</td>
+            <td class="text-right mono" style="font-weight:600; color:var(--success)">${formatNum(f.output)}</td>
             <td>
               <div style="display:flex; align-items:center; gap:8px">
-                 <div class="progress-bar" style="width:60px; height:5px; background:rgba(255,255,255,0.05)">
-                   <div class="progress-fill" style="width:${f.output / f.capacity * 100}%; background:var(--cyan)"></div>
+                 <div class="progress-bar" style="width:60px; height:5px; background:var(--bg-card)">
+                   <div class="progress-fill" style="width:${f.output / f.capacity * 100}%; background:var(--primary)"></div>
                  </div>
                  <span class="mono" style="font-size:11px">${Math.round(f.output / f.capacity * 100)}%</span>
               </div>
@@ -232,8 +232,8 @@ function openPlantDetail(id) {
   </div>
   <div class="modal-body">
     <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px">
-      <div class="card" style="padding:16px; background:rgba(255,255,255,0.02)">
-        <h4 style="margin:0 0 12px 0; color:var(--cyan); font-size:13px; text-transform:uppercase">Thông tin cơ bản</h4>
+      <div class="card" style="padding:16px; background:var(--bg-card)">
+        <h4 style="margin:0 0 12px 0; color:var(--primary); font-size:13px; text-transform:uppercase">Thông tin cơ bản</h4>
         <div style="display:grid; gap:8px; font-size:13px">
           <div style="display:flex; justify-content:space-between"><span style="color:var(--muted)">Địa bàn:</span> <span>${f.location}</span></div>
           <div style="display:flex; justify-content:space-between"><span style="color:var(--muted)">Địa chỉ:</span> <span style="text-align:right">${f.address}</span></div>
@@ -242,34 +242,34 @@ function openPlantDetail(id) {
           <div style="display:flex; justify-content:space-between"><span style="color:var(--muted)">Trạng thái:</span> ${statusBadge(f.status)}</div>
         </div>
       </div>
-      <div class="card" style="padding:16px; background:rgba(255,255,255,0.02)">
-        <h4 style="margin:0 0 12px 0; color:var(--green); font-size:13px; text-transform:uppercase">Hiệu suất & Sản lượng</h4>
+      <div class="card" style="padding:16px; background:var(--bg-card)">
+        <h4 style="margin:0 0 12px 0; color:var(--success); font-size:13px; text-transform:uppercase">Hiệu suất & Sản lượng</h4>
         <div style="display:grid; gap:8px; font-size:13px">
           <div style="display:flex; justify-content:space-between"><span style="color:var(--muted)">Công suất TK:</span> <span class="mono">${formatNum(f.capacity)} m³/n</span></div>
           <div style="display:flex; justify-content:space-between"><span style="color:var(--muted)">Sản lượng TT:</span> <span class="mono">${formatNum(f.output)} m³/n</span></div>
           <div style="display:flex; justify-content:space-between"><span style="color:var(--muted)">Hiệu suất NM:</span> <span class="mono">${Math.round(f.output / f.capacity * 100)}%</span></div>
-          <div style="display:flex; justify-content:space-between"><span style="color:var(--muted)">Tỷ lệ thất thoát:</span> <span class="mono" style="color:var(--red)">${f.loss}%</span></div>
+          <div style="display:flex; justify-content:space-between"><span style="color:var(--muted)">Tỷ lệ thất thoát:</span> <span class="mono" style="color:var(--danger)">${f.loss}%</span></div>
         </div>
       </div>
     </div>
     
-    <div class="card" style="padding:16px; background:rgba(255,255,255,0.02); margin-bottom:20px">
-      <h4 style="margin:0 0 12px 0; color:var(--yellow); font-size:13px; text-transform:uppercase">Chỉ số vận hành & Kinh doanh</h4>
+    <div class="card" style="padding:16px; background:var(--bg-card); margin-bottom:20px">
+      <h4 style="margin:0 0 12px 0; color:var(--warning); font-size:13px; text-transform:uppercase">Chỉ số vận hành & Kinh doanh</h4>
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px">
         <div style="display:grid; gap:10px">
           <div style="padding:10px; background:rgba(0,200,255,0.05); border-radius:8px">
             <div style="font-size:11px; color:var(--muted)">Điện năng tiêu thụ</div>
-            <div style="font-size:18px; font-weight:700; color:var(--cyan)">${f.powerUsage} <span style="font-size:12px; font-weight:400">kWh/m³</span></div>
+            <div style="font-size:18px; font-weight:700; color:var(--primary)">${f.powerUsage} <span style="font-size:12px; font-weight:400">kWh/m³</span></div>
           </div>
           <div style="padding:10px; background:rgba(76,175,80,0.05); border-radius:8px">
             <div style="font-size:11px; color:var(--muted)">Tuân thủ chất lượng</div>
-            <div style="font-size:18px; font-weight:700; color:var(--green)">${f.compliance}%</div>
+            <div style="font-size:18px; font-weight:700; color:var(--success)">${f.compliance}%</div>
           </div>
         </div>
         <div style="display:grid; gap:10px">
           <div style="padding:10px; background:rgba(255,193,7,0.05); border-radius:8px">
             <div style="font-size:11px; color:var(--muted)">Chi phí hóa chất</div>
-            <div style="font-size:18px; font-weight:700; color:var(--yellow)">${formatNum(f.chemicalCost)} <span style="font-size:12px; font-weight:400">đ/m³</span></div>
+            <div style="font-size:18px; font-weight:700; color:var(--warning)">${formatNum(f.chemicalCost)} <span style="font-size:12px; font-weight:400">đ/m³</span></div>
           </div>
           <div style="padding:10px; background:rgba(156,39,176,0.05); border-radius:8px">
             <div style="font-size:11px; color:var(--muted)">Doanh thu dự kiến (24h)</div>
@@ -304,7 +304,7 @@ function openPlantGIS(id) {
   openModal(`
   <div class="modal-header">
     <span class="modal-title" style="display:flex;align-items:center;gap:8px">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
       Bản đồ GIS — ${f.name}
     </span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
@@ -313,19 +313,19 @@ function openPlantGIS(id) {
     <div id="plantGISMap" style="width:100%; height:420px; border-radius:0 0 12px 12px"></div>
     <div style="padding:14px 20px; display:flex; gap:20px; align-items:center; flex-wrap:wrap; border-top:1px solid var(--border)">
       <div style="display:flex; align-items:center; gap:6px; font-size:12px">
-        <div style="width:12px;height:12px;border-radius:50%;background:var(--cyan);border:2px solid rgba(0,200,255,.4)"></div>
+        <div style="width:12px;height:12px;border-radius:50%;background:var(--primary);border:2px solid rgba(0,200,255,.4)"></div>
         <span style="color:var(--muted)">Nhà máy</span>
       </div>
       <div style="display:flex; align-items:center; gap:6px; font-size:12px">
-        <div style="width:12px;height:12px;border-radius:50%;background:var(--green);border:2px solid rgba(0,230,118,.4)"></div>
+        <div style="width:12px;height:12px;border-radius:50%;background:var(--success);border:2px solid rgba(41,132,238,.4)"></div>
         <span style="color:var(--muted)">Trạm bơm Online</span>
       </div>
       <div style="display:flex; align-items:center; gap:6px; font-size:12px">
-        <div style="width:12px;height:12px;border-radius:50%;background:var(--yellow);border:2px solid rgba(255,202,40,.4)"></div>
+        <div style="width:12px;height:12px;border-radius:50%;background:var(--warning);border:2px solid rgba(255,202,40,.4)"></div>
         <span style="color:var(--muted)">Cảnh báo</span>
       </div>
       <div style="display:flex; align-items:center; gap:6px; font-size:12px">
-        <div style="width:12px;height:12px;border-radius:50%;background:var(--red);border:2px solid rgba(239,83,80,.4)"></div>
+        <div style="width:12px;height:12px;border-radius:50%;background:var(--danger);border:2px solid rgba(239,83,80,.4)"></div>
         <span style="color:var(--muted)">Offline / Sự cố</span>
       </div>
       <div style="margin-left:auto; font-size:11px; color:var(--muted)">
@@ -363,7 +363,7 @@ function openPlantGIS(id) {
 
     // Station markers
     relatedStations.forEach(s => {
-      const color = s.status === 'online' ? '#00e676' : s.status === 'warning' ? '#ffca28' : '#ef5350';
+      const color = s.status === 'online' ? 'var(--success)' : s.status === 'warning' ? '#ffca28' : '#ef5350';
       const stIcon = L.divIcon({
         className: 'custom-div-icon',
         html: '<div style="width:20px;height:20px;border-radius:50%;background:' + color + ';border:2px solid rgba(255,255,255,.5);box-shadow:0 0 10px ' + color + '60;"></div>',

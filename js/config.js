@@ -46,24 +46,29 @@ const APP_CONFIG = {
         bgHeader: 'rgba(5,17,33,0.75)',
         bgDropdown: 'rgba(5,17,33,0.95)',
         bgDropdown2: 'rgba(5,17,33,.6)',
-        cyan: '#00d2ff',
-        blue: '#0066ff',
-        green: '#00f080',
-        yellow: '#ffdb4d',
-        red: '#ff3d57',
-        purple: '#9d70ff',
-        orange: '#ff9500',
-        text: '#f0f7ff',
-        text2: '#a5d2ff',
-        muted: '#648da1',
-        label: '#8ba5b0',
-        border: 'rgba(0,210,255,.12)',
-        borderActive: 'rgba(0,210,255,.45)',
-        glass: 'rgba(10,24,43,0.65)',
+        primary: 'var(--primary)',
+        info: 'var(--info)',
+        success: 'var(--success)',
+        warning: 'var(--warning)',
+        danger: 'var(--danger)',
+        cyan: 'var(--primary)',
+        blue: 'var(--info)',
+        green: 'var(--success)',
+        yellow: 'var(--warning)',
+        red: 'var(--danger)',
+        purple: 'var(--purple)',
+        orange: '#f28c28',
+        text: 'var(--text-primary)',
+        text2: 'var(--text-secondary)',
+        muted: 'var(--text-muted)',
+        label: 'var(--text-subtle)',
+        border: 'var(--border)',
+        borderActive: 'var(--primary)',
+        glass: 'rgba(255,255,255,0.92)',
         blur: 'blur(16px)',
-        shadow: '0 8px 32px rgba(0,0,0,.6)',
-        glow: '0 0 25px rgba(0,210,255,.25)',
-        gridLine: 'rgba(0,210,255,.02)',
+        shadow: '0 2px 12px rgba(24,24,62,0.06)',
+        glow: '0 0 20px rgba(41,132,238,0.20)',
+        gridLine: 'rgba(41,132,238,0.05)',
       },
       light: {
         bgBase: '#f4f7f9',
@@ -75,11 +80,11 @@ const APP_CONFIG = {
         bgDropdown: 'rgba(255,255,255,0.98)',
         bgDropdown2: 'rgba(244,247,249,.95)',
         cyan: '#0088dd',
-        blue: '#0066ff',
+        blue: 'var(--info)',
         green: '#00b060',
         yellow: '#e68a00',
         red: '#e53935',
-        purple: '#7b21e0',
+        purple: '#285CAA',
         orange: '#e07000',
         text: '#0a1a2f',
         text2: '#1c3d5d',
@@ -130,17 +135,17 @@ const APP_CONFIG = {
     },
 
     colors: {
-      dike: '#ff9500',           // Tuyến đê
-      seaDike: '#ff3d57',        // Đê biển
-      riverDike: '#ffdb4d',      // Đê sông
-      sluiceGate: '#00d2ff',     // Cống thủy lợi
-      pumpStation: '#00f080',    // Trạm bơm thủy lợi
-      reservoir: '#0066ff',      // Hồ chứa
-      floodZone: 'rgba(255,61,87,.25)',  // Vùng ngập
-      waterLevel: '#00d2ff',     // Trạm đo mực nước
-      rainfall: '#9d70ff',       // Trạm đo mưa
-      irrigationCanal: '#0099cc', // Kênh mương
-      crossSection: '#ffdb4d',   // Mặt cắt đê
+      dike: '#f28c28',           // Tuyến đê
+      seaDike: 'var(--danger)',        // Đê biển
+      riverDike: 'var(--warning)',      // Đê sông
+      sluiceGate: 'var(--info)',     // Cống thủy lợi
+      pumpStation: 'var(--primary)',    // Trạm bơm thủy lợi
+      reservoir: 'var(--info)',      // Hồ chứa
+      floodZone: 'rgba(225,78,84,.25)',  // Vùng ngập
+      waterLevel: 'var(--primary)',     // Trạm đo mực nước
+      rainfall: 'var(--purple)',       // Trạm đo mưa
+      irrigationCanal: 'var(--info)', // Kênh mương
+      crossSection: 'var(--warning)',   // Mặt cắt đê
     },
   },
 
@@ -323,7 +328,7 @@ const APP_CONFIG = {
   // ── DIKE CONFIG ────────────────────────────────────────────────
   dike: {
     safetyZones: [
-      { label: 'An toàn', color: '#00f080', minDelta: 1.0 },
+      { label: 'An toàn', color: 'var(--success)', minDelta: 1.0 },
       { label: 'Cảnh báo', color: '#ffdb4d', minDelta: 0.5 },
       { label: 'Nguy hiểm', color: '#ff9500', minDelta: 0.2 },
       { label: 'Khẩn cấp', color: '#ff3d57', minDelta: 0.0 },

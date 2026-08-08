@@ -48,7 +48,7 @@ function renderCallCenter() {
   <div class="page-header">
     <div class="page-title">
       <h1>Tổng đài CSKH</h1>
-      <p>Quản lý cuộc gọi và ticket hỗ trợ khách hàng — <span style="color:var(--cyan)">1900 545 520</span></p>
+      <p>Quản lý cuộc gọi và ticket hỗ trợ khách hàng — <span style="color:var(--primary)">1900 545 520</span></p>
     </div>
     <div class="page-actions">
       <button class="btn btn-ghost btn-sm" onclick="openNewTicket()">
@@ -63,59 +63,59 @@ function renderCallCenter() {
 
   <!-- Consolidated KPIs (2 rows of 3) -->
   <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom:16px">
-    <div class="kpi-card" style="--accent-color:var(--cyan); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
+    <div class="kpi-card" style="--accent-color:var(--primary); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
       <div style="flex:1">
         <div class="kpi-label">Cuộc gọi hôm nay</div>
         <div class="kpi-value">${DATA.callLogs.length}</div>
         <div class="kpi-sub">${inbound} đến · ${DATA.callLogs.length - inbound} đi</div>
       </div>
       <div style="width:60%; height:50px; flex-shrink:0">
-        ${generateSparkline(DATA.ccTrends.calls, 'var(--cyan)')}
+        ${generateSparkline(DATA.ccTrends.calls, 'var(--primary)')}
       </div>
     </div>
 
-    <div class="kpi-card" style="--accent-color:var(--green); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
+    <div class="kpi-card" style="--accent-color:var(--success); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
       <div style="flex:1">
         <div class="kpi-label">Đã giải quyết</div>
         <div class="kpi-value">${resolved}</div>
         <div class="kpi-sub">Tỷ lệ 94.5%</div>
       </div>
       <div style="width:60%; height:50px; flex-shrink:0">
-        ${generateSparkline(DATA.ccTrends.resolved, 'var(--green)')}
+        ${generateSparkline(DATA.ccTrends.resolved, 'var(--success)')}
       </div>
     </div>
 
-    <div class="kpi-card" style="--accent-color:var(--red); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
+    <div class="kpi-card" style="--accent-color:var(--danger); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
       <div style="flex:1">
         <div class="kpi-label">Phản ánh nhiều nhất</div>
         <div class="kpi-value" style="font-size:16px;line-height:1.4">
           <div>${['Hóa đơn', 'Nước đục', 'Áp lực yếu', 'Hợp đồng'][Math.floor(Math.random() * 4)]}</div>
-          <div style="color:var(--cyan)">Nhà máy: ${topFactory}</div>
+          <div style="color:var(--primary)">Nhà máy: ${topFactory}</div>
         </div>
         <div class="kpi-sub">${maxCount} lượt phản ánh</div>
       </div>
       <!-- No sparkline for this card as requested -->
     </div>
 
-    <div class="kpi-card" style="--accent-color:var(--yellow); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
+    <div class="kpi-card" style="--accent-color:var(--warning); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
       <div style="flex:1">
         <div class="kpi-label">Ticket tháng này</div>
         <div class="kpi-value">${marchTickets.length}</div>
-        <div class="kpi-sub"><span style="color:var(--green)">${resolvedMarch} xong</span> · <span style="color:var(--yellow)">${openMarch} chờ</span></div>
+        <div class="kpi-sub"><span style="color:var(--success)">${resolvedMarch} xong</span> · <span style="color:var(--warning)">${openMarch} chờ</span></div>
       </div>
       <div style="width:60%; height:50px; flex-shrink:0">
-        ${generateSparkline(DATA.ccTrends.tickets, 'var(--yellow)')}
+        ${generateSparkline(DATA.ccTrends.tickets, 'var(--warning)')}
       </div>
     </div>
 
-    <div class="kpi-card" style="--accent-color:var(--blue); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
+    <div class="kpi-card" style="--accent-color:var(--info); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
       <div style="flex:1">
         <div class="kpi-label">Thời gian TB</div>
         <div class="kpi-value">5:09</div>
         <div class="kpi-sub">phút / cuộc gọi</div>
       </div>
       <div style="width:60%; height:50px; flex-shrink:0">
-        ${generateSparkline(DATA.ccTrends.duration, 'var(--blue)')}
+        ${generateSparkline(DATA.ccTrends.duration, 'var(--info)')}
       </div>
     </div>
 
@@ -136,7 +136,7 @@ function renderCallCenter() {
     <span style="font-size:12px;color:var(--muted);font-weight:600">AGENT ONLINE:</span>
     ${[{ name: 'NV Phương', status: 'available' }, { name: 'NV Tuấn', status: 'busy' }, { name: 'NV Hoa', status: 'break' }].map(a => `
     <div style="display:flex;align-items:center;gap:8px">
-      <div style="width:8px;height:8px;border-radius:50%;background:${a.status === 'available' ? 'var(--green)' : a.status === 'busy' ? 'var(--red)' : 'var(--yellow)'};box-shadow:0 0 6px currentColor"></div>
+      <div style="width:8px;height:8px;border-radius:50%;background:${a.status === 'available' ? 'var(--success)' : a.status === 'busy' ? 'var(--danger)' : 'var(--warning)'};box-shadow:0 0 6px currentColor"></div>
       <span style="font-size:13px">${a.name}</span>
       <span style="font-size:11px;color:var(--muted)">(${a.status === 'available' ? 'Sẵn sàng' : a.status === 'busy' ? 'Đang gọi' : 'Nghỉ giải lao'})</span>
     </div>`).join('')}
@@ -290,26 +290,29 @@ function renderCskhStats() {
 }
 
 function renderCskhCharts() {
+  const palette = getChartPalette();
+  const ccGrid = hexToRgba(palette.cyan, .05);
+  const ccPurple = getThemeColor('--purple', '#2984EE');
   const c1 = document.getElementById('ccCallChart');
   if (c1) new Chart(c1, {
     type: 'bar',
     data: {
       labels: Array.from({ length: 27 }, (_, i) => `${i + 1}/2`),
       datasets: [
-        { label: 'Inbound', data: [122, 185, 140, 168, 95, 82, 204, 221, 155, 182, 128, 174, 252, 145, 192, 215, 138, 164, 185, 222, 105, 142, 178, 205, 198, 235, 155], backgroundColor: 'rgba(0,200,255,.5)', borderColor: '#00c8ff', borderWidth: 1, borderRadius: 3 },
-        { label: 'Outbound', data: [52, 85, 64, 72, 45, 38, 82, 95, 68, 75, 52, 68, 105, 52, 75, 82, 58, 62, 75, 95, 42, 55, 72, 85, 78, 92, 65], backgroundColor: 'rgba(124,77,255,.4)', borderColor: '#7c4dff', borderWidth: 1, borderRadius: 3 }
+        { label: 'Inbound', data: [122, 185, 140, 168, 95, 82, 204, 221, 155, 182, 128, 174, 252, 145, 192, 215, 138, 164, 185, 222, 105, 142, 178, 205, 198, 235, 155], backgroundColor: hexToRgba(palette.cyan, .5), borderColor: palette.cyan, borderWidth: 1, borderRadius: 3 },
+        { label: 'Outbound', data: [52, 85, 64, 72, 45, 38, 82, 95, 68, 75, 52, 68, 105, 52, 75, 82, 58, 62, 75, 95, 42, 55, 72, 85, 78, 92, 65], backgroundColor: hexToRgba(ccPurple, .4), borderColor: ccPurple, borderWidth: 1, borderRadius: 3 }
       ]
     },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#90caf9', font: { size: 11 } } } }, scales: { x: { ticks: { color: '#546e7a', font: { size: 9 } }, grid: { color: 'rgba(0,200,255,.05)' } }, y: { ticks: { color: '#546e7a' }, grid: { color: 'rgba(0,200,255,.05)' } } } }
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: palette.textSecondary, font: { size: 11 } } } }, scales: { x: { ticks: { color: palette.textMuted, font: { size: 9 } }, grid: { color: ccGrid } }, y: { ticks: { color: palette.textMuted }, grid: { color: ccGrid } } } }
   });
   const c2 = document.getElementById('ccTopicChart');
   if (c2) new Chart(c2, {
     type: 'doughnut',
     data: {
       labels: ['Chất lượng nước', 'Hóa đơn', 'Áp lực yếu', 'Lắp đặt mới', 'Vỡ ống/rò rỉ', 'Khác'],
-      datasets: [{ data: [1420, 985, 842, 625, 580, 418], backgroundColor: ['#00c8ff', '#ffca28', '#ff6d00', '#00e676', '#ff1744', '#7c4dff'], borderColor: '#071629', borderWidth: 2 }]
+      datasets: [{ data: [1420, 985, 842, 625, 580, 418], backgroundColor: [palette.info, palette.warning, '#F28C28', palette.success, palette.danger, ccPurple], borderColor: palette.surface, borderWidth: 2 }]
     },
-    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#90caf9', font: { size: 11 }, padding: 10 } } } }
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: palette.textSecondary, font: { size: 11 }, padding: 10 } } } }
   });
 }
 
@@ -344,13 +347,13 @@ function viewTicket(id) {
   // Build timeline HTML
   const timelineHtml = (t.timeline || []).map(item => `
     <div style="display:flex;gap:12px;margin-bottom:14px;position:relative">
-      <div style="width:10px;height:10px;border-radius:50%;background:var(--cyan);margin-top:4px;flex-shrink:0;z-index:2"></div>
+      <div style="width:10px;height:10px;border-radius:50%;background:var(--primary);margin-top:4px;flex-shrink:0;z-index:2"></div>
       <div style="flex:1">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:2px">
           <span style="font-weight:600;font-size:13px">${item.action}</span>
           <span style="font-size:11px;color:var(--muted)">${item.time}</span>
         </div>
-        <div style="font-size:12px;color:var(--muted)">Thực hiện bởi: <span style="color:var(--cyan)">${item.user}</span></div>
+        <div style="font-size:12px;color:var(--muted)">Thực hiện bởi: <span style="color:var(--primary)">${item.user}</span></div>
         <div style="font-size:12px;margin-top:4px;color:#cbd5e1">${item.note}</div>
       </div>
     </div>`).join('');
@@ -364,13 +367,13 @@ function viewTicket(id) {
       <div style="margin-top:20px;padding:16px;background:rgba(0,200,255,0.05);border-radius:8px;border:1px solid rgba(0,200,255,0.1)">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
           <span style="font-weight:600;font-size:13px">Đánh giá của khách hàng</span>
-          <span style="color:var(--yellow);font-size:16px">${stars}</span>
+          <span style="color:var(--warning);font-size:16px">${stars}</span>
         </div>
         <div style="font-style:italic;font-size:12px;color:#94a3b8">"${t.feedback}"</div>
       </div>`;
     } else {
       ratingHtml = `
-      <div style="margin-top:20px;padding:12px;background:rgba(255,255,255,0.02);border-radius:8px;text-align:center;font-size:12px;color:var(--muted);border:1px dashed var(--border)">
+      <div style="margin-top:20px;padding:12px;background:var(--bg-card);border-radius:8px;text-align:center;font-size:12px;color:var(--muted);border:1px dashed var(--border)">
         Khách hàng chưa để lại feedback/rating
       </div>`;
     }

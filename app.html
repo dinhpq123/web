@@ -11,7 +11,8 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap"
         rel="stylesheet">
-    <link href="css/main.css?v=20260304ah" rel="stylesheet">
+    <link href="css/main.css?v=20260808-adaptive-evg-26" rel="stylesheet">
+    <script src="js/themeEngine.js?v=20260808-adaptive-evg-26"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
@@ -21,20 +22,24 @@
     <div class="app" id="app-root">
         <!-- SIDEBAR -->
         <aside class="sidebar" id="sidebar">
-            <div class="sidebar-logo" style="cursor:pointer" onclick="if(typeof showModuleHub==='function'){showModuleHub(page=>{if(typeof buildSidebar==='function')buildSidebar();navigate(page)})}">
-                <div class="logo-icon" style="background:none;padding:0;overflow:hidden">
-                    <img src="assets/hadiwa_logo.svg" alt="Hadiwa"
-                        style="width:100%;height:100%;object-fit:contain;border-radius:10px">
+            <div class="sidebar-logo">
+                <div class="sidebar-brand" style="cursor:pointer" onclick="if(typeof showModuleHub==='function'){showModuleHub(page=>{if(typeof buildSidebar==='function')buildSidebar();navigate(page)})}">
+                    <div class="logo-icon" style="background:none;padding:0;overflow:hidden">
+                        <img src="assets/hadiwa_logo.svg" alt="Hadiwa"
+                            style="width:100%;height:100%;object-fit:contain;border-radius:10px">
+                    </div>
+                    <div class="logo-name">
+                        <h2>HADIWA</h2><span>IOC Thủy lợi &amp; PCTT</span>
+                    </div>
                 </div>
-                <div class="logo-name">
-                    <h2>HADIWA</h2><span>IOC Thủy lợi &amp; PCTT</span>
-                </div>
-            </div>
-            <div class="sidebar-logo-hint" style="text-align:center;padding:0 8px 8px;margin-top:-8px">
-                <span style="font-size:9px;color:rgba(255,255,255,.2);letter-spacing:.08em;cursor:pointer"
-                  onclick="if(typeof showModuleHub==='function'){showModuleHub(page=>{if(typeof buildSidebar==='function')buildSidebar();navigate(page)})}">
-                  ↑ Nhấn để mở Trình khởi chạy
-                </span>
+                <button class="toggle-btn sidebar-toggle-btn" onclick="toggleSidebar()" title="Thu/Mở sidebar" aria-label="Thu hoặc mở sidebar">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6" />
+                        <line x1="3" y1="12" x2="21" y2="12" />
+                        <line x1="3" y1="18" x2="21" y2="18" />
+                    </svg>
+                </button>
             </div>
             <nav class="sidebar-nav" id="sidebarNav"></nav>
             <div class="sidebar-footer" style="display:none;border-top:1px solid rgba(255,255,255,.05);margin:0 12px;">
@@ -63,14 +68,6 @@
         <div class="main-wrapper">
             <header class="app-header">
                 <div class="header-left">
-                    <button class="toggle-btn" onclick="toggleSidebar()" title="Thu/Mở sidebar">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2">
-                            <line x1="3" y1="6" x2="21" y2="6" />
-                            <line x1="3" y1="12" x2="21" y2="12" />
-                            <line x1="3" y1="18" x2="21" y2="18" />
-                        </svg>
-                    </button>
                     <div class="breadcrumb" id="breadcrumb"><strong>Dashboard</strong></div>
                 </div>
                 <div class="header-center">
@@ -82,9 +79,9 @@
                     <div class="sys-status" style="margin-left:12px;cursor:pointer" onclick="toggleMockWebSocket()"
                         title="Click để thử nghiệm ngắt kết nối WebSocket">
                         <div class="pulse-dot green" id="wsStatusDot"
-                            style="width:6px;height:6px;box-shadow:0 0 8px var(--green)"></div>
+                            style="width:6px;height:6px;box-shadow:0 0 8px var(--success)"></div>
                         <span id="wsStatusText"
-                            style="color:var(--green);font-family:'Roboto Mono',monospace;font-size:11px">WS:
+                            style="color:var(--success);font-family:'Roboto Mono',monospace;font-size:11px">WS:
                             Connected</span>
                     </div>
                     -->
@@ -109,7 +106,7 @@
                     </button>
                     <div
                         style="display:flex; align-items:center; gap:8px; margin-right:12px; padding-right:16px; border-right:1px solid rgba(255,255,255,.1)">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)"
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
                             stroke-width="1.5">
                             <path
                                 d="M17.5 19C19.9853 19 22 16.9853 22 14.5C22 12.1166 20.1517 10.1683 17.8091 10.0152C17.3875 6.6346 14.4984 4 11 4C7.13401 4 4 7.13401 4 11C4 11.2312 4.01121 11.4597 4.03306 11.6845C2.28588 12.3023 1 13.9961 1 16C1 18.2091 2.79086 20 5 20H17.5V19Z"
@@ -201,79 +198,80 @@
     </div>
 
     <!-- Scripts -->
-    <script src="js/rbac.js"></script>
-    <script src="js/data.js"></script>
-    <script src="js/export.js"></script>
-    <script src="js/pages/dashboard.js"></script>
-    <script src="js/gis_pipe_data.js"></script>
-    <script src="js/pages/gis.js"></script>
-    <script src="js/pages/camera.js"></script>
-    <script src="js/pages/videowall.js"></script>
+    <script src="js/rbac.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/data.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/export.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/utils/chartColors.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/dashboard.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/gis_pipe_data.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/gis.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/camera.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/videowall.js?v=20260808-adaptive-evg-26"></script>
 
-    <script src="js/pages/reports.js"></script>
-    <script src="js/pages/reports_irr_detail.js"></script>
-    <script src="js/pages/scada.js"></script>
-    <script src="js/pages/alerts.js"></script>
-    <script src="js/pages/alerts_modals.js"></script>
-    <script src="js/pages/scheduler.js"></script>
-    <script src="js/pages/incidents.js"></script>
-    <script src="js/pages/incidents_v42.js"></script>
-    <script src="js/notification_helper.js"></script>
-    <script src="js/pages/weatherBulletin.js"></script>
-    <script src="js/pages/weather_v44.js"></script>
-    <script src="js/pages/pcttMedia.js"></script>
-    <script src="js/pages/communityReports.js"></script>
-    <script src="js/pages/commsDevices.js"></script>
-    <script src="js/pages/plants.js"></script>
-    <script src="js/pages/production.js"></script>
-    <script src="js/pages/lims.js"></script>
-    <script src="js/pages/business_overview.js"></script>
-    <script src="js/pages/business_history.js"></script>
-    <script src="js/pages/business.js"></script>
-    <script src="js/pages/callcenter.js"></script>
-    <script src="js/pages/customerdetail.js"></script>
-    <script src="js/pages/hrm.js"></script>
-    <script src="js/pages/workflows-data.js"></script>
-    <script src="js/pages/workflows-list.js"></script>
-    <script src="js/pages/workflows-runner.js"></script>
-    <script src="js/pages/workflows.js"></script>
-    <script src="js/pages/hrm_additions.js"></script>
-    <script src="js/pages/nrw.js"></script>
-    <script src="js/pages/aiagent.js"></script>
-    <script src="js/pages/chatbot.js"></script>
-    <script src="js/pages/ai_v51.js"></script>
-    <script src="js/pages/datahub.js"></script>
-    <script src="js/pages/dieuhanhPage.js"></script>
-    <script src="js/pages/log.js"></script>
+    <script src="js/pages/reports.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/reports_irr_detail.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/scada.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/alerts.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/alerts_modals.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/scheduler.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/incidents.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/incidents_v42.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/notification_helper.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/weatherBulletin.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/weather_v44.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/pcttMedia.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/communityReports.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/commsDevices.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/plants.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/production.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/lims.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/business_overview.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/business_history.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/business.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/callcenter.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/customerdetail.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/hrm.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/workflows-data.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/workflows-list.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/workflows-runner.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/workflows.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/hrm_additions.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/nrw.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/aiagent.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/chatbot.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/ai_v51.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/datahub.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/dieuhanhPage.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/log.js?v=20260808-adaptive-evg-26"></script>
 
     <!-- NEW PCTT MODULES -->
-    <script src="js/pages/irrigationAssets.js"></script>
-    <script src="js/pages/reservoirMonitor.js"></script>
-    <script src="js/pages/dikeManagement.js"></script>
-    <script src="js/pages/dikeManagement_modals.js"></script>
-    <script src="js/utils/importHelper.js"></script>
-    <script src="js/pages/dikeInspection.js"></script>
-    <script src="js/pages/irrigationDataEntry.js"></script>
-    <script src="js/pages/hydrologicalData.js"></script>
-    <script src="js/pages/pcttDamageReport.js"></script>
-    <script src="js/pages/dikePermit.js"></script>
-    <script src="js/pages/pcttDocuments.js"></script>
-    <script src="js/pages/documentManagement.js"></script>
-    <script src="js/pages/documentManagement_modals.js"></script>
-    <script src="js/pages/pcttCommand.js"></script>
-    <script src="js/pages/communeReporting.js"></script>
-    <script src="js/pages/pcttOperations.js"></script>
-    <script src="js/pages/pcttFund.js"></script>
-    <script src="js/pages/iotMonitor.js"></script>
-    <script src="js/pages/fourOnSite.js"></script>
-    <script src="js/pages/fourOnSite_modals.js"></script>
+    <script src="js/pages/irrigationAssets.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/reservoirMonitor.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/dikeManagement.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/dikeManagement_modals.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/utils/importHelper.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/dikeInspection.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/irrigationDataEntry.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/hydrologicalData.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/pcttDamageReport.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/dikePermit.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/pcttDocuments.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/documentManagement.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/documentManagement_modals.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/pcttCommand.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/communeReporting.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/pcttOperations.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/pcttFund.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/iotMonitor.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/fourOnSite.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/pages/fourOnSite_modals.js?v=20260808-adaptive-evg-26"></script>
 
-    <script src="js/filterbar.js"></script>
-    <script src="js/onboarding-config.js"></script>
-    <script src="js/onboarding.js"></script>
-    <script src="js/config.js"></script>
-    <script src="js/hub.js"></script>
-    <script src="js/app.js"></script>
+    <script src="js/filterbar.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/onboarding-config.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/onboarding.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/config.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/hub.js?v=20260808-adaptive-evg-26"></script>
+    <script src="js/app.js?v=20260808-adaptive-evg-26"></script>
 
     <!-- STICKY CHATBOT WIDGET -->
     <div id="qwcChatbot"
@@ -281,12 +279,12 @@
 
         <!-- Chat Window -->
         <div id="qwcChatWindow"
-            style="display:none;width:400px;height:550px;background:#071629;border:1px solid rgba(0,200,255,.2);border-radius:16px;box-shadow:0 10px 40px rgba(0,0,0,0.5);margin-bottom:16px;overflow:visible;transform-origin:bottom right;animation:chatPop .3s cubic-bezier(0.175,0.885,0.32,1.275);flex-direction:column">
+            style="display:none;width:400px;height:550px;background:var(--bg-surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow-dropdown);margin-bottom:16px;overflow:visible;transform-origin:bottom right;animation:chatPop .3s cubic-bezier(0.175,0.885,0.32,1.275);flex-direction:column">
 
             <!-- Header -->
             <div
-                style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;background:var(--surface);border-radius:16px 16px 0 0">
-                <div style="font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px;color:#fff">
+                style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:var(--bg-surface);border-radius:16px 16px 0 0">
+                <div style="font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px;color:var(--text)">
                     <div
                         style="width:26px;height:26px;background:rgba(0,200,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;padding:3px">
                         <img src="assets/system-logo-small.png" style="width:100%;height:100%;object-fit:contain">
@@ -296,9 +294,9 @@
                 <div style="display:flex;align-items:center;gap:6px">
                     <!-- TTS Toggle -->
                     <button id="qwcTtsBtn" title="Bật/tắt đọc to phản hồi AI" onclick="toggleStickyTts(this)"
-                        style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--muted);width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s"
+                        style="background:var(--bg-hover);border:1px solid var(--border);color:var(--muted);width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s"
                         onmouseover="this.style.background='rgba(255,255,255,.1)'"
-                        onmouseout="this.style.background=window._qwcTtsOn?'rgba(0,200,255,.15)':'rgba(255,255,255,.05)'">
+                        onmouseout="this.style.background=window._qwcTtsOn?'rgba(0,200,255,.15)':'var(--bg-hover)'">
                         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                             stroke-width="2">
                             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
@@ -307,9 +305,9 @@
                     </button>
                     <!-- Close -->
                     <button onclick="document.getElementById('qwcChatWindow').style.display='none'"
-                        style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:var(--text);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:.2s"
+                        style="background:var(--bg-hover);border:1px solid var(--border);color:var(--text);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;transition:.2s"
                         onmouseover="this.style.background='rgba(255,255,255,.1)'"
-                        onmouseout="this.style.background='rgba(255,255,255,.05)'"><svg width="10" height="10"
+                        onmouseout="this.style.background='var(--bg-hover)'"><svg width="10" height="10"
                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                             <line x1="18" y1="6" x2="6" y2="18" />
                             <line x1="6" y1="6" x2="18" y2="18" />
@@ -339,7 +337,7 @@
                     <div class="voice-bar-dot" style="animation-delay:0.5s"></div>
                     <div class="voice-bar-dot" style="animation-delay:0.6s"></div>
                 </div>
-                <span style="font-size:12px;color:var(--red);display:flex;align-items:center;gap:5px">
+                <span style="font-size:12px;color:var(--danger);display:flex;align-items:center;gap:5px">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z" />
                         <path d="M19 10v2a7 7 0 01-14 0v-2" />
@@ -349,12 +347,12 @@
                     Đang nghe...
                 </span>
                 <button onclick="stopStickyVoice()"
-                    style="margin-left:auto;font-size:11px;color:var(--muted);background:none;border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:3px 8px;cursor:pointer">Dừng</button>
+                    style="margin-left:auto;font-size:11px;color:var(--muted);background:none;border:1px solid var(--border);border-radius:6px;padding:3px 8px;cursor:pointer">Dừng</button>
             </div>
 
             <!-- Output Format Bar -->
             <div id="qwcFormatBar"
-                style="display:flex;align-items:center;gap:5px;padding:6px 14px 2px;overflow-x:auto;scrollbar-width:none;border-top:1px solid rgba(255,255,255,.04);flex-shrink:0;flex-wrap:nowrap">
+                style="display:flex;align-items:center;gap:5px;padding:6px 14px 2px;overflow-x:auto;scrollbar-width:none;border-top:1px solid var(--border);flex-shrink:0;flex-wrap:nowrap">
             </div>
 
             <!-- Suggestion Chips -->
@@ -366,7 +364,7 @@
 
             <!-- Uploaded File Preview -->
             <div id="stickyFilePreview"
-                style="display:none;padding:10px 16px;border-top:1px solid rgba(255,255,255,.05);background:rgba(0,0,0,.2);position:relative">
+                style="display:none;padding:10px 16px;border-top:1px solid var(--border);background:var(--bg-card);position:relative">
                 <div id="stickyFilePreviewContent" style="display:flex;align-items:center;gap:12px"></div>
                 <button onclick="clearStickyFile()"
                     style="position:absolute;top:50%;right:12px;transform:translateY(-50%);background:rgba(255,23,68,.1);border:1px solid rgba(255,23,68,.3);color:#ff6b6b;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s"><svg
@@ -378,15 +376,15 @@
 
             <!-- Input Box -->
             <div
-                style="background:#131d36;padding:16px;border-radius:0 0 16px 16px;border-top:1px solid rgba(255,255,255,.05);position:relative">
+                style="background:var(--bg-card);padding:16px;border-radius:0 0 16px 16px;border-top:1px solid var(--border);position:relative">
                 <div style="position:relative;margin-bottom:12px">
                     <input type="text" id="stickyChatInput" placeholder="Hỏi Hadiwa AI • • •"
                         onkeydown="if(event.key==='Enter') sendStickyChat()"
-                        style="width:100%;background:rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:14px;font-family:'Inter',sans-serif;padding:12px 45px 12px 14px;outline:none;caret-color:var(--cyan);transition:border-color .2s"
-                        onfocus="this.style.borderColor='var(--cyan)'"
-                        onblur="this.style.borderColor='rgba(255,255,255,.1)'">
+                        style="width:100%;background:var(--bg-hover);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;font-family:'Inter',sans-serif;padding:12px 45px 12px 14px;outline:none;caret-color:var(--primary);transition:border-color .2s"
+                        onfocus="this.style.borderColor='var(--primary)'"
+                        onblur="this.style.borderColor='var(--border)'">
                     <button class="chat-send" onclick="sendStickyChat()"
-                        style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--cyan);color:#fff;border:none;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;padding:0">
+                        style="position:absolute;right:6px;top:50%;transform:translateY(-50%);background:var(--primary);color:var(--text-on-primary);border:none;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s;padding:0">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="none">
                             <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
                         </svg>
@@ -400,7 +398,7 @@
                             onchange="handleStickyFileAttach(this)">
                         <button onclick="document.getElementById('qwcChatAttach').click()"
                             style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;padding:0;transition:.2s"
-                            onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--muted)'"
+                            onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted)'"
                             title="Đính kèm">
                             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -414,7 +412,7 @@
                             <button
                                 onclick="const m = document.getElementById('qwcToolMenu'); window._qwcCatClose?window._qwcCatClose():null; m.style.display = m.style.display==='block'?'none':'block'; window._qwcToolClose=()=>m.style.display='none'; event.stopPropagation();"
                                 style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;padding:2px 6px;border-radius:6px;transition:.2s"
-                                onmouseover="this.style.background='rgba(255,255,255,.05)';this.style.color='#fff'"
+                                onmouseover="this.style.background='var(--bg-hover)';this.style.color='var(--text)'"
                                 onmouseout="this.style.background='transparent';this.style.color='var(--muted)'"
                                 title="Công cụ">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -430,9 +428,9 @@
                             </button>
                             <!-- Tool Dropdown -->
                             <div id="qwcToolMenu"
-                                style="display:none;position:absolute;bottom:calc(100% + 10px);left:-20px;background:#1e293b;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px;min-width:180px;box-shadow:0 4px 20px rgba(0,0,0,.5);z-index:100;animation:chatPop .2s ease">
-                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
-                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                style="display:none;position:absolute;bottom:calc(100% + 10px);left:-20px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:6px;min-width:180px;box-shadow:var(--shadow-dropdown);z-index:100;animation:chatPop .2s ease">
+                                <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='var(--bg-hover)'"
                                     onmouseout="this.style.background='transparent'"
                                     onclick="document.getElementById('qwcToolLabel').innerText='Tra cứu SCADA'; this.parentElement.style.display='none'">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -441,8 +439,8 @@
                                         <polyline points="16 7 22 7 22 13" />
                                     </svg> Tra cứu SCADA
                                 </div>
-                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
-                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='var(--bg-hover)'"
                                     onmouseout="this.style.background='transparent'"
                                     onclick="document.getElementById('qwcToolLabel').innerText='Bản đồ GIS'; this.parentElement.style.display='none'">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -452,8 +450,8 @@
                                         <line x1="15" y1="6" x2="15" y2="21" />
                                     </svg> Bản đồ GIS
                                 </div>
-                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
-                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='var(--bg-hover)'"
                                     onmouseout="this.style.background='transparent'"
                                     onclick="document.getElementById('qwcToolLabel').innerText='Viết Báo cáo'; this.parentElement.style.display='none'">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -464,8 +462,8 @@
                                         <line x1="16" y1="17" x2="8" y2="17" />
                                     </svg> Viết báo cáo
                                 </div>
-                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
-                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='var(--bg-hover)'"
                                     onmouseout="this.style.background='transparent'"
                                     onclick="document.getElementById('qwcToolLabel').innerText='Quản trị RAG'; this.parentElement.style.display='none'">
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -488,7 +486,7 @@
                             <button
                                 onclick="const m = document.getElementById('qwcCatMenu'); window._qwcToolClose?window._qwcToolClose():null; m.style.display = m.style.display==='block'?'none':'block'; window._qwcCatClose=()=>m.style.display='none'; event.stopPropagation();"
                                 style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;gap:4px;font-size:13px;font-weight:500;padding:4px 8px;border-radius:6px;transition:.2s"
-                                onmouseover="this.style.background='rgba(255,255,255,.05)';this.style.color='#fff'"
+                                onmouseover="this.style.background='var(--bg-hover)';this.style.color='var(--text)'"
                                 onmouseout="this.style.background='transparent';this.style.color='var(--muted)'">
                                 <span id="qwcCatLabel">Sản xuất</span>
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -498,9 +496,9 @@
                             </button>
                             <!-- Cat Dropdown -->
                             <div id="qwcCatMenu"
-                                style="display:none;position:absolute;bottom:calc(100% + 5px);right:0;background:#1e293b;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:6px;min-width:160px;box-shadow:0 4px 20px rgba(0,0,0,.5);z-index:100;animation:chatPop .2s ease">
-                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
-                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                style="display:none;position:absolute;bottom:calc(100% + 5px);right:0;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:6px;min-width:160px;box-shadow:var(--shadow-dropdown);z-index:100;animation:chatPop .2s ease">
+                                <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='var(--bg-hover)'"
                                     onmouseout="this.style.background='transparent'"
                                     onclick="document.getElementById('qwcCatLabel').innerHTML='<svg width=&quot;13&quot; height=&quot;13&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot; style=&quot;flex-shrink:0;vertical-align:middle&quot;><rect x=&quot;3&quot; y=&quot;11&quot; width=&quot;18&quot; height=&quot;10&quot; rx=&quot;2&quot;/><path d=&quot;M12 11V7&quot;/><circle cx=&quot;12&quot; cy=&quot;5&quot; r=&quot;2&quot;/><path d=&quot;M8 11V9a4 4 0 018 0v2&quot;/></svg> Tất cả'; this.parentElement.style.display='none'">
                                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -511,7 +509,7 @@
                                         <path d="M8 11V9a4 4 0 018 0v2" />
                                     </svg> Tất cả
                                 </div>
-                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;background:rgba(255,255,255,.05);display:flex;align-items:center;gap:8px"
+                                <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;background:var(--bg-hover);display:flex;align-items:center;gap:8px"
                                     onclick="document.getElementById('qwcCatLabel').innerText='Sản xuất'; this.parentElement.style.display='none'">
                                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                         stroke-width="2" style="flex-shrink:0">
@@ -519,8 +517,8 @@
                                         <polyline points="9 22 9 12 15 12 15 22" />
                                     </svg> Sản xuất
                                 </div>
-                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
-                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='var(--bg-hover)'"
                                     onmouseout="this.style.background='transparent'"
                                     onclick="document.getElementById('qwcCatLabel').innerText='Chất lượng'; this.parentElement.style.display='none'">
                                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -528,8 +526,8 @@
                                         <path d="M12 2.69l5.66 5.66a8 8 0 11-11.31 0z" />
                                     </svg> Chất lượng nước
                                 </div>
-                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
-                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='var(--bg-hover)'"
                                     onmouseout="this.style.background='transparent'"
                                     onclick="document.getElementById('qwcCatLabel').innerText='Mạng lưới'; this.parentElement.style.display='none'">
                                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -540,8 +538,8 @@
                                             d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
                                     </svg> Mạng lưới tuyến ống
                                 </div>
-                                <div style="padding:8px 12px;font-size:13px;color:#fff;cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
-                                    onmouseover="this.style.background='rgba(255,255,255,.1)'"
+                                <div style="padding:8px 12px;font-size:13px;color:var(--text);cursor:pointer;border-radius:6px;transition:.2s;display:flex;align-items:center;gap:8px"
+                                    onmouseover="this.style.background='var(--bg-hover)'"
                                     onmouseout="this.style.background='transparent'"
                                     onclick="document.getElementById('qwcCatLabel').innerText='Kinh doanh'; this.parentElement.style.display='none'">
                                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -556,7 +554,7 @@
                         <!-- Mic Button -->
                         <button id="stickyMicBtn" onclick="toggleStickyVoice()"
                             style="background:transparent;border:none;color:var(--muted);cursor:pointer;display:flex;align-items:center;padding:0;transition:.2s"
-                            onmouseover="this.style.color='var(--cyan)'" onmouseout="this.style.color='var(--muted)'"
+                            onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--muted)'"
                             title="Voice chat">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2">
@@ -576,7 +574,7 @@
             onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'"
             onclick="const w = document.getElementById('qwcChatWindow'); w.style.display = w.style.display==='none'?'flex':'none'; if(w.style.display==='flex') w.querySelector('input').focus();">
             <div
-                style="position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--cyan);z-index:-1;filter:blur(6px);opacity:0.6;animation:haloPulse 3s infinite">
+                style="position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--primary);z-index:-1;filter:blur(6px);opacity:0.6;animation:haloPulse 3s infinite">
             </div>
             <img src="assets/mascot-hadiwa.svg" alt="Hadiwa AI"
                 style="width:40px;height:40px;object-fit:contain;pointer-events:none;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.2))">

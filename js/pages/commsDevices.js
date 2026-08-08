@@ -76,25 +76,25 @@ function renderCommsDevices() {
 
   <!-- KPI row -->
   <div class="grid-auto" style="margin-bottom:16px">
-    <div class="card kpi-card" style="border-top:2px solid var(--cyan);cursor:pointer" onclick="switchCommsTab('speakers')">
+    <div class="card kpi-card" style="border-top:2px solid var(--primary);cursor:pointer" onclick="switchCommsTab('speakers')">
       <div class="kpi-label">Cụm Loa</div>
-      <div class="kpi-value" style="color:var(--cyan)">${sp.length}</div>
-      <div class="kpi-sub" style="color:${spOnline===sp.length?'var(--green)':'var(--yellow)'}">${spOnline}/${sp.length} Online</div>
+      <div class="kpi-value" style="color:var(--primary)">${sp.length}</div>
+      <div class="kpi-sub" style="color:${spOnline===sp.length?'var(--success)':'var(--warning)'}">${spOnline}/${sp.length} Online</div>
     </div>
-    <div class="card kpi-card" style="border-top:2px solid var(--blue);cursor:pointer" onclick="switchCommsTab('radios')">
+    <div class="card kpi-card" style="border-top:2px solid var(--info);cursor:pointer" onclick="switchCommsTab('radios')">
       <div class="kpi-label">Bộ đàm</div>
-      <div class="kpi-value" style="color:var(--blue)">${COMMS_RADIOS.length}</div>
-      <div class="kpi-sub" style="color:var(--green)">${radOnline} đang sử dụng</div>
+      <div class="kpi-value" style="color:var(--info)">${COMMS_RADIOS.length}</div>
+      <div class="kpi-sub" style="color:var(--success)">${radOnline} đang sử dụng</div>
     </div>
-    <div class="card kpi-card" style="border-top:2px solid var(--green);cursor:pointer" onclick="switchCommsTab('phones')">
+    <div class="card kpi-card" style="border-top:2px solid var(--success);cursor:pointer" onclick="switchCommsTab('phones')">
       <div class="kpi-label">Điện thoại IP</div>
-      <div class="kpi-value" style="color:var(--green)">${COMMS_PHONES.length}</div>
-      <div class="kpi-sub" style="color:${phOnline>=COMMS_PHONES.length-1?'var(--green)':'var(--yellow)'}">${phOnline} Online</div>
+      <div class="kpi-value" style="color:var(--success)">${COMMS_PHONES.length}</div>
+      <div class="kpi-sub" style="color:${phOnline>=COMMS_PHONES.length-1?'var(--success)':'var(--warning)'}">${phOnline} Online</div>
     </div>
     <div class="card kpi-card" style="border-top:2px solid var(--purple);cursor:pointer" onclick="switchCommsTab('displays')">
       <div class="kpi-label">Màn hình & LED</div>
       <div class="kpi-value" style="color:var(--purple)">${COMMS_DISPLAYS.length}</div>
-      <div class="kpi-sub" style="color:var(--green)">${dispOn} đang hoạt động</div>
+      <div class="kpi-sub" style="color:var(--success)">${dispOn} đang hoạt động</div>
     </div>
   </div>
 
@@ -135,16 +135,16 @@ function renderCdSpeakers() {
 // ── TAB: BỘ ĐÀM ──────────────────────────────────────────────────
 function renderCdRadios() {
   const statusLabel = { active:'Đang dùng', standby:'Dự phòng', low_bat:'Pin yếu', charging:'Đang sạc' };
-  const statusColor = { active:'var(--green)', standby:'var(--cyan)', low_bat:'var(--red)', charging:'var(--yellow)' };
+  const statusColor = { active:'var(--success)', standby:'var(--primary)', low_bat:'var(--danger)', charging:'var(--warning)' };
   const active   = COMMS_RADIOS.filter(r => r.status === 'active').length;
   const lowBat   = COMMS_RADIOS.filter(r => r.status === 'low_bat').length;
 
   return `
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-    ${[{l:'Tổng bộ đàm',v:COMMS_RADIOS.length,c:'var(--cyan)'},{l:'Đang sử dụng',v:active,c:'var(--green)'},{l:'Pin yếu',v:lowBat,c:'var(--red)'},{l:'Đang sạc',v:COMMS_RADIOS.filter(r=>r.status==='charging').length,c:'var(--yellow)'}].map(k=>`
+    ${[{l:'Tổng bộ đàm',v:COMMS_RADIOS.length,c:'var(--primary)'},{l:'Đang sử dụng',v:active,c:'var(--success)'},{l:'Pin yếu',v:lowBat,c:'var(--danger)'},{l:'Đang sạc',v:COMMS_RADIOS.filter(r=>r.status==='charging').length,c:'var(--warning)'}].map(k=>`
     <div class="card" style="padding:14px 16px"><div style="font-size:11px;color:var(--muted)">${k.l}</div><div style="font-size:22px;font-weight:800;color:${k.c}">${k.v}</div></div>`).join('')}
   </div>
-  ${lowBat>0?`<div style="padding:10px 14px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:9px;margin-bottom:14px;font-size:12px;color:var(--red)">
+  ${lowBat>0?`<div style="padding:10px 14px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:9px;margin-bottom:14px;font-size:12px;color:var(--danger)">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:5px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
     <strong>${lowBat} bộ đàm có pin yếu</strong> — cần sạc hoặc thay pin trước ca trực tiếp theo.
   </div>`:''}
@@ -172,16 +172,16 @@ function renderCdRadios() {
             <td style="font-size:12px;color:var(--muted)">${r.model}</td>
             <td style="font-size:12px">${r.team}</td>
             <td style="font-size:12px">${r.assignee}</td>
-            <td><code style="font-size:10px;color:var(--cyan)">${r.channel}</code></td>
+            <td><code style="font-size:10px;color:var(--primary)">${r.channel}</code></td>
             <td>
               <div style="display:flex;align-items:center;gap:6px">
                 <div style="width:50px;height:6px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden">
-                  <div style="width:${r.battery}%;height:100%;background:${r.battery>50?'var(--green)':r.battery>20?'var(--yellow)':'var(--red)'};transition:.3s"></div>
+                  <div style="width:${r.battery}%;height:100%;background:${r.battery>50?'var(--success)':r.battery>20?'var(--warning)':'var(--danger)'};transition:.3s"></div>
                 </div>
-                <span style="font-size:11px;color:${r.battery>50?'var(--green)':r.battery>20?'var(--yellow)':'var(--red)'}">${r.battery}%</span>
+                <span style="font-size:11px;color:${r.battery>50?'var(--success)':r.battery>20?'var(--warning)':'var(--danger)'}">${r.battery}%</span>
               </div>
             </td>
-            <td><span class="badge" style="font-size:9px;color:${statusColor[r.status]};border:1px solid ${statusColor[r.status]};background:rgba(0,0,0,.2)">${statusLabel[r.status]}</span></td>
+            <td><span class="badge" style="font-size:9px;color:${statusColor[r.status]};border:1px solid ${statusColor[r.status]};background:var(--bg-secondary)">${statusLabel[r.status]}</span></td>
             <td>
               <div style="display:flex;gap:3px">
                 <button class="btn btn-ghost btn-xs" title="Phân công" onclick="assignRadio('${r.id}','${r.name}')">
@@ -204,7 +204,7 @@ function renderCdPhones() {
   const online = COMMS_PHONES.filter(p => p.status === 'online').length;
   return `
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-    ${[{l:'Tổng máy',v:COMMS_PHONES.length,c:'var(--green)'},{l:'Online',v:online,c:'var(--green)'},{l:'Offline',v:COMMS_PHONES.length-online,c:'var(--red)'},{l:'Đường dây nóng',v:1,c:'var(--yellow)'}].map(k=>`
+    ${[{l:'Tổng máy',v:COMMS_PHONES.length,c:'var(--success)'},{l:'Online',v:online,c:'var(--success)'},{l:'Offline',v:COMMS_PHONES.length-online,c:'var(--danger)'},{l:'Đường dây nóng',v:1,c:'var(--warning)'}].map(k=>`
     <div class="card" style="padding:14px 16px"><div style="font-size:11px;color:var(--muted)">${k.l}</div><div style="font-size:22px;font-weight:800;color:${k.c}">${k.v}</div></div>`).join('')}
   </div>
   <div class="card" style="padding:0">
@@ -227,15 +227,15 @@ function renderCdPhones() {
         <tbody>
           ${COMMS_PHONES.map(p => `
           <tr>
-            <td><strong style="font-size:14px;color:${p.ext==='1800'?'var(--yellow)':'var(--cyan)'}">${p.ext}</strong></td>
+            <td><strong style="font-size:14px;color:${p.ext==='1800'?'var(--warning)':'var(--primary)'}">${p.ext}</strong></td>
             <td style="font-size:12px;font-weight:500">${p.name}</td>
             <td style="font-size:12px;color:var(--muted)">${p.user}</td>
             <td><code style="font-size:11px;color:var(--muted)">${p.ip}</code></td>
             <td style="font-size:11px;color:var(--muted)">${p.model}</td>
             <td>
               <div style="display:flex;align-items:center;gap:5px">
-                <div style="width:7px;height:7px;border-radius:50%;background:${p.status==='online'?'var(--green)':'var(--muted)'};${p.status==='online'?'box-shadow:0 0 5px var(--green)':''}"></div>
-                <span style="font-size:11px;color:${p.status==='online'?'var(--green)':'var(--muted)'}">${p.status==='online'?'Online':'Offline'}</span>
+                <div style="width:7px;height:7px;border-radius:50%;background:${p.status==='online'?'var(--success)':'var(--muted)'};${p.status==='online'?'box-shadow:0 0 5px var(--success)':''}"></div>
+                <span style="font-size:11px;color:${p.status==='online'?'var(--success)':'var(--muted)'}">${p.status==='online'?'Online':'Offline'}</span>
               </div>
             </td>
             <td style="font-size:11px;color:var(--muted)">${p.lastCall}</td>
@@ -259,10 +259,10 @@ function renderCdPhones() {
 // ── TAB: MÀN HÌNH & BẢNG LED ──────────────────────────────────────
 function renderCdDisplays() {
   const typeLabel = { led_wall:'LED Wall', signage:'Digital Signage', outdoor_led:'Bảng LED ngoài trời', smarttv:'Smart TV' };
-  const typeColor = { led_wall:'var(--cyan)', signage:'var(--blue)', outdoor_led:'var(--green)', smarttv:'var(--purple)' };
+  const typeColor = { led_wall:'var(--primary)', signage:'var(--info)', outdoor_led:'var(--success)', smarttv:'var(--purple)' };
   return `
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-    ${[{l:'Tổng thiết bị',v:COMMS_DISPLAYS.length,c:'var(--purple)'},{l:'Đang hiển thị',v:COMMS_DISPLAYS.filter(d=>d.status==='online').length,c:'var(--green)'},{l:'Standby',v:COMMS_DISPLAYS.filter(d=>d.status==='standby').length,c:'var(--muted)'},{l:'Offline',v:COMMS_DISPLAYS.filter(d=>d.status==='offline').length,c:'var(--red)'}].map(k=>`
+    ${[{l:'Tổng thiết bị',v:COMMS_DISPLAYS.length,c:'var(--purple)'},{l:'Đang hiển thị',v:COMMS_DISPLAYS.filter(d=>d.status==='online').length,c:'var(--success)'},{l:'Standby',v:COMMS_DISPLAYS.filter(d=>d.status==='standby').length,c:'var(--muted)'},{l:'Offline',v:COMMS_DISPLAYS.filter(d=>d.status==='offline').length,c:'var(--danger)'}].map(k=>`
     <div class="card" style="padding:14px 16px"><div style="font-size:11px;color:var(--muted)">${k.l}</div><div style="font-size:22px;font-weight:800;color:${k.c}">${k.v}</div></div>`).join('')}
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">
@@ -274,8 +274,8 @@ function renderCdDisplays() {
           <div style="font-size:11px;color:var(--muted);margin-top:2px">${d.location}</div>
         </div>
         <div style="display:flex;align-items:center;gap:5px">
-          <div style="width:7px;height:7px;border-radius:50%;background:${d.status==='online'?'var(--green)':d.status==='standby'?'var(--yellow)':'var(--muted)'};${d.status==='online'?'box-shadow:0 0 5px var(--green)':''}"></div>
-          <span style="font-size:10px;color:${d.status==='online'?'var(--green)':d.status==='standby'?'var(--yellow)':'var(--muted)'}">${d.status==='online'?'Online':d.status==='standby'?'Standby':'Offline'}</span>
+          <div style="width:7px;height:7px;border-radius:50%;background:${d.status==='online'?'var(--success)':d.status==='standby'?'var(--warning)':'var(--muted)'};${d.status==='online'?'box-shadow:0 0 5px var(--success)':''}"></div>
+          <span style="font-size:10px;color:${d.status==='online'?'var(--success)':d.status==='standby'?'var(--warning)':'var(--muted)'}">${d.status==='online'?'Online':d.status==='standby'?'Standby':'Offline'}</span>
         </div>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
@@ -323,14 +323,14 @@ function openCdBroadcastAll() {
         </select>
       </div>
       <div class="form-group">
-        <label class="form-label">Nội dung phát thanh <span style="color:var(--red)">*</span></label>
+        <label class="form-label">Nội dung phát thanh <span style="color:var(--danger)">*</span></label>
         <textarea id="bcText" class="form-control" rows="4" placeholder="Nhập nội dung thông báo cần phát..."></textarea>
       </div>
       <div class="form-group">
         <label class="form-label">Chọn cụm loa</label>
         <div style="display:flex;flex-wrap:wrap;gap:6px">
           ${online.map(s => `<label style="display:flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid var(--border);border-radius:7px;font-size:12px;cursor:pointer">
-            <input type="checkbox" checked style="accent-color:var(--cyan)"> ${s.name}
+            <input type="checkbox" checked style="accent-color:var(--primary)"> ${s.name}
           </label>`).join('')}
         </div>
       </div>
@@ -518,14 +518,14 @@ function editRadio(id) {
       <div class="form-group">
         <label class="form-label">Pin hiện tại (%)</label>
         <div style="display:flex;align-items:center;gap:10px">
-          <input type="range" id="er_bat" min="0" max="100" value="${r.battery}" style="flex:1;accent-color:var(--cyan)"
+          <input type="range" id="er_bat" min="0" max="100" value="${r.battery}" style="flex:1;accent-color:var(--primary)"
             oninput="document.getElementById('er_bat_val').textContent=this.value+'%'">
-          <span id="er_bat_val" style="font-size:13px;color:var(--cyan);min-width:36px">${r.battery}%</span>
+          <span id="er_bat_val" style="font-size:13px;color:var(--primary);min-width:36px">${r.battery}%</span>
         </div>
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-ghost btn-sm" style="color:var(--red);margin-right:auto" onclick="if(confirm('Xoá bộ đàm ${r.name}?')){COMMS_RADIOS.splice(COMMS_RADIOS.indexOf(COMMS_RADIOS.find(x=>x.id==='${r.id}')),1);closeModal();showToast('Đã xoá bộ đàm: ${r.name}');document.getElementById('commsContent').innerHTML=getCommsTabContent();}">
+      <button class="btn btn-ghost btn-sm" style="color:var(--danger);margin-right:auto" onclick="if(confirm('Xoá bộ đàm ${r.name}?')){COMMS_RADIOS.splice(COMMS_RADIOS.indexOf(COMMS_RADIOS.find(x=>x.id==='${r.id}')),1);closeModal();showToast('Đã xoá bộ đàm: ${r.name}');document.getElementById('commsContent').innerHTML=getCommsTabContent();}">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6M9 6V4h6v2"/></svg> Xoá
       </button>
       <button class="btn btn-ghost" onclick="closeModal()">
@@ -579,11 +579,11 @@ window.openPhoneCallLog = function(extId) {
           <tbody>
             ${logs.map(l=>`<tr>
               <td style="font-size:12px;color:var(--muted)">${l.time}</td>
-              <td><span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(${l.type==='external'?'239,68,68':'0,200,255'},.1);color:${l.type==='external'?'var(--red)':'var(--cyan)'};">${l.type==='external'?'Ngoại tuyến':'Nội bộ'}</span></td>
+              <td><span style="font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(${l.type==='external'?'239,68,68':'0,200,255'},.1);color:${l.type==='external'?'var(--danger)':'var(--primary)'};">${l.type==='external'?'Ngoại tuyến':'Nội bộ'}</span></td>
               <td style="font-size:12px">${l.to}</td>
-              <td style="font-size:12px;color:var(--cyan)">${l.dur}</td>
+              <td style="font-size:12px;color:var(--primary)">${l.dur}</td>
               <td>
-                <div style="display:flex;align-items:center;gap:4px;font-size:11px;color:${l.dir==='in'?'var(--green)':'var(--blue)'}">
+                <div style="display:flex;align-items:center;gap:4px;font-size:11px;color:${l.dir==='in'?'var(--success)':'var(--info)'}">
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">${l.dir==='in'?'<polyline points="23 7 13 17 8 12 2 18"/><polyline points="17 7 23 7 23 13"/>':'<polyline points="1 17 11 7 16 12 22 6"/><polyline points="7 6 1 6 1 12"/>'}</svg>
                   ${l.dir==='in'?'Đến':'Đi'}
                 </div>
@@ -708,9 +708,9 @@ window.openDisplayContent = function(id, name) {
           <div class="form-group">
             <label class="form-label">Độ sáng màn hình (%)</label>
             <div style="display:flex;align-items:center;gap:8px">
-              <input type="range" min="10" max="100" value="80" style="flex:1;accent-color:var(--cyan)"
+              <input type="range" min="10" max="100" value="80" style="flex:1;accent-color:var(--primary)"
                 oninput="document.getElementById('dc_bri_val').textContent=this.value+'%'">
-              <span id="dc_bri_val" style="font-size:12px;color:var(--cyan);min-width:36px">80%</span>
+              <span id="dc_bri_val" style="font-size:12px;color:var(--primary);min-width:36px">80%</span>
             </div>
           </div>
           <div class="form-group" style="margin-bottom:0">
@@ -732,8 +732,8 @@ window.openDisplayContent = function(id, name) {
           <div id="dc_playlist" style="display:flex;flex-direction:column;gap:5px;max-height:220px;overflow-y:auto;margin-bottom:10px">
             ${pl.length===0?'<div style="color:var(--muted);font-size:12px;text-align:center;padding:20px">Chưa có playlist</div>':pl.map((item,i)=>`
             <div style="display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:7px;background:rgba(255,255,255,.04);border:1px solid var(--border)">
-              <div style="width:20px;height:20px;border-radius:4px;background:${item.type==='live'?'rgba(0,200,255,.15)':item.type==='slide'?'rgba(99,102,241,.15)':'rgba(239,68,68,.15)'};display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="${item.type==='live'?'var(--cyan)':item.type==='slide'?'var(--blue)':'var(--red)'}" stroke-width="2">${item.type==='live'?'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>':'<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>'}</svg>
+              <div style="width:20px;height:20px;border-radius:4px;background:${item.type==='live'?'rgba(0,200,255,.15)':item.type==='slide'?'rgba(41,132,238,.15)':'rgba(239,68,68,.15)'};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="${item.type==='live'?'var(--primary)':item.type==='slide'?'var(--info)':'var(--danger)'}" stroke-width="2">${item.type==='live'?'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/>':'<rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>'}</svg>
               </div>
               <div style="flex:1;min-width:0">
                 <div style="font-size:11px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${item.content}</div>
@@ -780,14 +780,14 @@ function renderCdPhones() {
   return `
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
     ${[
-      {l:'Tổng máy',v:COMMS_PHONES.length,c:'var(--green)'},
-      {l:'Online',v:online,c:'var(--green)'},
-      {l:'Offline',v:COMMS_PHONES.length-online,c:'var(--red)'},
-      {l:'Đường dây nóng',v:hotline?hotline.ext:'N/A',c:'var(--yellow)'}
+      {l:'Tổng máy',v:COMMS_PHONES.length,c:'var(--success)'},
+      {l:'Online',v:online,c:'var(--success)'},
+      {l:'Offline',v:COMMS_PHONES.length-online,c:'var(--danger)'},
+      {l:'Đường dây nóng',v:hotline?hotline.ext:'N/A',c:'var(--warning)'}
     ].map(k=>`<div class="card" style="padding:14px 16px"><div style="font-size:11px;color:var(--muted)">${k.l}</div><div style="font-size:22px;font-weight:800;color:${k.c}">${k.v}</div></div>`).join('')}
   </div>
   ${COMMS_PHONES.filter(p=>p.status==='offline').length>0?`
-  <div style="padding:10px 14px;background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);border-radius:9px;font-size:12px;color:var(--red);margin-bottom:14px">
+  <div style="padding:10px 14px;background:rgba(239,68,68,.07);border:1px solid rgba(239,68,68,.2);border-radius:9px;font-size:12px;color:var(--danger);margin-bottom:14px">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:5px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
     <strong>${COMMS_PHONES.filter(p=>p.status==='offline').length} máy điện thoại đang offline</strong> — kiểm tra kết nối mạng hoặc nguồn điện.
   </div>`:''} 
@@ -816,15 +816,15 @@ function renderCdPhones() {
         <tbody>
           ${COMMS_PHONES.map(p => `
           <tr>
-            <td><strong style="font-size:14px;color:${p.ext==='1800'?'var(--yellow)':'var(--cyan)'}">${p.ext}</strong>${p.ext==='1800'?'<div style="font-size:9px;color:var(--yellow)">HOTLINE</div>':''}</td>
+            <td><strong style="font-size:14px;color:${p.ext==='1800'?'var(--warning)':'var(--primary)'}">${p.ext}</strong>${p.ext==='1800'?'<div style="font-size:9px;color:var(--warning)">HOTLINE</div>':''}</td>
             <td style="font-size:12px;font-weight:500">${p.name}</td>
             <td style="font-size:12px;color:var(--muted)">${p.user}</td>
             <td><code style="font-size:10px;color:var(--muted)">${p.ip}</code></td>
             <td style="font-size:11px;color:var(--muted)">${p.model}</td>
             <td>
               <div style="display:flex;align-items:center;gap:5px">
-                <div style="width:7px;height:7px;border-radius:50%;background:${p.status==='online'?'var(--green)':'var(--muted)'};${p.status==='online'?'box-shadow:0 0 5px var(--green)':''}"></div>
-                <span style="font-size:11px;color:${p.status==='online'?'var(--green)':'var(--muted)'}">${p.status==='online'?'Online':'Offline'}</span>
+                <div style="width:7px;height:7px;border-radius:50%;background:${p.status==='online'?'var(--success)':'var(--muted)'};${p.status==='online'?'box-shadow:0 0 5px var(--success)':''}"></div>
+                <span style="font-size:11px;color:${p.status==='online'?'var(--success)':'var(--muted)'}">${p.status==='online'?'Online':'Offline'}</span>
               </div>
             </td>
             <td style="font-size:11px;color:var(--muted)">${p.lastCall}</td>

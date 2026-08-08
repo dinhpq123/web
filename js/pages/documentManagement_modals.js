@@ -30,8 +30,8 @@ function dmDocView(id) {
   const cats = typeof DM_CATEGORIES !== 'undefined' ? DM_CATEGORIES : {};
   const d = docs.find(x => x.id === id);
   if (!d) return;
-  const cat = cats[d.type] || { label: d.type, color: '#6b7280' };
-  const sc = { signed:'#10b981', pending:'#f59e0b', draft:'#6b7280' }[d.status];
+  const cat = cats[d.type] || { label: d.type, color: 'var(--text-subtle)' };
+  const sc = { signed:'var(--success)', pending:'#f59e0b', draft:'var(--text-subtle)' }[d.status];
   const sl = { signed:'Đã ký ban hành', pending:'Chờ ký duyệt', draft:'Bản nháp' }[d.status];
 
   // Increment downloads counter on view
@@ -46,7 +46,7 @@ function dmDocView(id) {
     </div>
     <div style="flex:1;min-width:0">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px">
-        <span style="font-family:monospace;font-size:12px;color:#a78bfa;font-weight:700">${d.id}</span>
+        <span style="font-family:monospace;font-size:12px;color:#5BA9FF;font-weight:700">${d.id}</span>
         <span style="padding:1px 8px;border-radius:20px;font-size:10px;font-weight:800;background:${cat.color}20;color:${cat.color};border:1px solid ${cat.color}40">${cat.label}</span>
         <span style="padding:1px 8px;border-radius:20px;font-size:10px;font-weight:800;background:${sc}20;color:${sc};border:1px solid ${sc}40">${sl}</span>
         ${d.urgent ? `<span style="font-size:10px;font-weight:800;color:#ef4444;padding:1px 8px;border-radius:20px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.4)">KHẨN</span>` : ''}
@@ -63,8 +63,8 @@ function dmDocView(id) {
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px">
       ${[
         ['Phiên bản', 'v' + d.version, '#38bdf8'],
-        ['Người ký', d.signer || '— chưa ký —', d.signer ? '#10b981' : '#6b7280'],
-        ['Lượt xem/tải', d.downloads, '#a78bfa'],
+        ['Người ký', d.signer || '— chưa ký —', d.signer ? 'var(--success)' : 'var(--text-subtle)'],
+        ['Lượt xem/tải', d.downloads, '#5BA9FF'],
       ].map(([l,v,c]) => `<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:10px 12px">
         <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px">${l}</div>
         <div style="font-size:14px;font-weight:800;color:${c};font-family:monospace">${v}</div>
@@ -88,7 +88,7 @@ function dmDocView(id) {
       <p style="font-style:italic;margin-bottom:8px">Nội dung chi tiết của văn bản "${d.title}" được lưu trữ trong hệ thống tài liệu điện tử của Chi cục TT-PCTT Hà Nội.</p>
       ${d.status === 'signed' ? `<div style="text-align:right;margin-top:20px;padding-top:12px;border-top:1px solid rgba(255,255,255,.07)">
         <div style="font-size:11px;color:rgba(255,255,255,.4)">Đã ký và đóng dấu</div>
-        <div style="font-size:13px;font-weight:800;color:#10b981;margin-top:4px">${d.signer}</div>
+        <div style="font-size:13px;font-weight:800;color:var(--success);margin-top:4px">${d.signer}</div>
         <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:2px">Ngày ký: ${d.date}</div>
       </div>` : ''}
     </div>
@@ -97,7 +97,7 @@ function dmDocView(id) {
   <!-- Footer -->
   <div style="padding:14px 24px;border-top:1px solid rgba(255,255,255,.07);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap">
     ${d.status === 'draft'    ? `<button onclick="_dmDocClose();dmDocSubmit('${d.id}')" style="padding:7px 14px;border-radius:8px;border:none;background:#38bdf8;color:#0e1220;font-size:12px;font-weight:800;cursor:pointer">Trình ký duyệt</button>` : ''}
-    ${d.status === 'pending'  ? `<button onclick="_dmDocClose();dmDocSign('${d.id}')"   style="padding:7px 14px;border-radius:8px;border:none;background:#10b981;color:#fff;font-size:12px;font-weight:800;cursor:pointer">Ký ban hành</button>` : ''}
+    ${d.status === 'pending'  ? `<button onclick="_dmDocClose();dmDocSign('${d.id}')"   style="padding:7px 14px;border-radius:8px;border:none;background:var(--success);color:#fff;font-size:12px;font-weight:800;cursor:pointer">Ký ban hành</button>` : ''}
     ${d.status === 'signed'   ? `<button onclick="dmDocDownload('${d.id}')" style="padding:7px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Tải về</button>` : ''}
     <button onclick="dmDocEditVersion('${d.id}')" style="padding:7px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:rgba(255,255,255,.7);font-size:12px;cursor:pointer">Chỉnh sửa</button>
@@ -115,7 +115,7 @@ function dmDocNew() {
 <div style="background:#0e1220;border:1px solid rgba(255,255,255,.1);border-radius:16px;width:600px;max-width:100%;max-height:92vh;overflow:hidden;display:flex;flex-direction:column">
   <div style="padding:18px 22px 14px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between">
     <h3 style="font-size:15px;font-weight:800;color:#fff;margin:0;display:flex;align-items:center;gap:8px">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       Tạo văn bản mới
     </h3>
     <button onclick="_dmDocClose()" style="background:transparent;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:20px">✕</button>
@@ -150,7 +150,7 @@ function dmDocNew() {
     <div style="margin-bottom:14px">
       <label style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);display:block;margin-bottom:8px">Tình trạng</label>
       <div style="display:flex;gap:8px">
-        ${[['draft','Bản nháp','#6b7280'],['pending','Trình ký ngay','#38bdf8']].map(([v,l,c]) =>
+        ${[['draft','Bản nháp','var(--text-subtle)'],['pending','Trình ký ngay','#38bdf8']].map(([v,l,c]) =>
           `<label style="display:flex;align-items:center;gap:6px;font-size:12px;color:${c};cursor:pointer;padding:6px 12px;border-radius:8px;border:1px solid ${c}44;background:${c}12">
             <input type="radio" name="docNewStatus" value="${v}" ${v==='draft'?'checked':''} style="accent-color:${c}"/> ${l}
           </label>`).join('')}
@@ -164,7 +164,7 @@ function dmDocNew() {
     </div>
     <div style="display:flex;gap:8px;justify-content:flex-end">
       <button type="button" onclick="_dmDocClose()" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.6);font-size:12px;cursor:pointer">Hủy</button>
-      <button type="submit" style="padding:8px 18px;border-radius:8px;border:none;background:#7c3aed;color:#fff;font-size:12px;font-weight:800;cursor:pointer">Tạo văn bản</button>
+      <button type="submit" style="padding:8px 18px;border-radius:8px;border:none;background:var(--purple);color:#fff;font-size:12px;font-weight:800;cursor:pointer">Tạo văn bản</button>
     </div>
   </form>
 </div>`);
@@ -206,8 +206,8 @@ function dmDocSign(id) {
 <div style="background:#0e1220;border:1px solid rgba(255,255,255,.1);border-radius:16px;width:460px;max-width:100%">
   <div style="padding:20px 24px 16px;border-bottom:1px solid rgba(255,255,255,.07)">
     <div style="text-align:center;margin-bottom:14px">
-      <div style="width:50px;height:50px;border-radius:14px;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);margin:0 auto 10px;display:flex;align-items:center;justify-content:center">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
+      <div style="width:50px;height:50px;border-radius:14px;background:rgba(41,132,238,.15);border:1px solid rgba(41,132,238,.3);margin:0 auto 10px;display:flex;align-items:center;justify-content:center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><polyline points="9 15 11 17 15 13"/></svg>
       </div>
       <h3 style="font-size:15px;font-weight:800;color:#fff;margin:0 0 4px">Xác nhận Ký ban hành</h3>
       <p style="font-size:12px;color:rgba(255,255,255,.45);margin:0">Văn bản sẽ có hiệu lực ngay sau khi ký</p>
@@ -233,7 +233,7 @@ function dmDocSign(id) {
   </div>
   <div style="padding:14px 22px;display:flex;gap:8px;justify-content:flex-end;">
     <button onclick="_dmDocClose()" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.5);font-size:12px;cursor:pointer">Hủy</button>
-    <button onclick="_doSign('${id}')" style="padding:8px 18px;border-radius:8px;border:none;background:#10b981;color:#fff;font-size:12px;font-weight:800;cursor:pointer">Ký ban hành</button>
+    <button onclick="_doSign('${id}')" style="padding:8px 18px;border-radius:8px;border:none;background:var(--success);color:#fff;font-size:12px;font-weight:800;cursor:pointer">Ký ban hành</button>
   </div>
 </div>`);
 }
@@ -261,7 +261,7 @@ function dmDocSubmit(id) {
 <div style="background:#0e1220;border:1px solid rgba(255,255,255,.1);border-radius:16px;width:420px;max-width:100%;padding:24px">
   <div style="text-align:center;margin-bottom:18px">
     <div style="width:48px;height:48px;border-radius:14px;background:rgba(56,189,248,.12);border:1px solid rgba(56,189,248,.3);margin:0 auto 10px;display:flex;align-items:center;justify-content:center">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
     </div>
     <h3 style="font-size:15px;font-weight:800;color:#fff;margin:0 0 6px">Trình ký văn bản</h3>
     <p style="font-size:12px;color:rgba(255,255,255,.45);margin:0">Văn bản sẽ được gửi đến lãnh đạo để phê duyệt</p>
@@ -364,7 +364,7 @@ function dmDocEditVersion(id) {
     </div>
     <div style="display:flex;gap:8px;justify-content:flex-end">
       <button type="button" onclick="_dmDocClose()" style="padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.6);font-size:12px;cursor:pointer">Hủy</button>
-      <button type="submit" style="padding:8px 18px;border-radius:8px;border:none;background:#7c3aed;color:#fff;font-size:12px;font-weight:800;cursor:pointer">Lưu</button>
+      <button type="submit" style="padding:8px 18px;border-radius:8px;border:none;background:var(--purple);color:#fff;font-size:12px;font-weight:800;cursor:pointer">Lưu</button>
     </div>
   </form>
 </div>`);

@@ -9,7 +9,7 @@ function renderQuality() {
   }
   function cell(val, min, max, decs = 2) {
     const s = ck(val, min, max);
-    const c = s === 'ok' ? 'var(--green)' : 'var(--red)';
+    const c = s === 'ok' ? 'var(--success)' : 'var(--danger)';
     return `<td class="mono" style="color:${c}">${val.toFixed(decs)} ${s !== 'ok' ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>' : ''}</td>`;
   }
 
@@ -38,9 +38,9 @@ function renderQuality() {
       ['Arsenic', '≤ 0.01 mg/L', ''],
       ['Coliform', '= 0 CFU/100mL', '']
     ].map(([k, v]) => `
-        <div style="background:rgba(0,0,0,.2);border-radius:8px;padding:10px 14px;min-width:130px">
+        <div style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:8px;padding:10px 14px;min-width:130px">
           <div style="font-size:11px;color:var(--muted)">${k}</div>
-          <div style="font-size:13px;font-weight:600;color:var(--cyan)">${v}</div>
+          <div style="font-size:13px;font-weight:600;color:var(--primary)">${v}</div>
         </div>`).join('')}
       </div>
     </div>
@@ -71,7 +71,7 @@ function renderQuality() {
               ${cell(q.turbidity, undefined, L.turbidity.max, 1)}
               ${cell(q.TDS, undefined, L.TDS.max, 0)}
               ${cell(q.arsenic, undefined, L.arsenic.max, 3)}
-              <td class="mono" style="color:${q.coliform === 0 ? 'var(--green)' : 'var(--red)'}">${q.coliform === 0 ? '0 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>' : 'Phát hiện <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'}</td>
+              <td class="mono" style="color:${q.coliform === 0 ? 'var(--success)' : 'var(--danger)'}">${q.coliform === 0 ? '0 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>' : 'Phát hiện <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'}</td>
               <td style="font-size:12px;color:var(--muted)">${q.time}</td>
               <td>${overall ? '<span class="badge badge-green">Đạt chuẩn</span>' : '<span class="badge badge-red">Vượt ngưỡng</span>'}</td>
             </tr>`;
@@ -138,26 +138,26 @@ function renderQualityMonitoringGrid(L) {
             </div>
             
             <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px">
-                <div style="background:rgba(255,255,255,0.03); border-radius:6px; padding:8px; border:1px solid var(--border)">
+                <div style="background:var(--bg-card); border-radius:6px; padding:8px; border:1px solid var(--border)">
                     <div style="font-size:10px; color:var(--muted); margin-bottom:2px">pH</div>
-                    <div style="font-size:14px; font-weight:700; font-family:'Roboto Mono',monospace; color:${pHok ? 'var(--green)' : 'var(--red)'}">${q.pH.toFixed(1)}</div>
+                    <div style="font-size:14px; font-weight:700; font-family:'Roboto Mono',monospace; color:${pHok ? 'var(--success)' : 'var(--danger)'}">${q.pH.toFixed(1)}</div>
                 </div>
-                <div style="background:rgba(255,255,255,0.03); border-radius:6px; padding:8px; border:1px solid var(--border)">
+                <div style="background:var(--bg-card); border-radius:6px; padding:8px; border:1px solid var(--border)">
                     <div style="font-size:10px; color:var(--muted); margin-bottom:2px">Clo dư</div>
-                    <div style="font-size:14px; font-weight:700; font-family:'Roboto Mono',monospace; color:${Clok ? 'var(--green)' : 'var(--red)'}">${q.chlorine.toFixed(2)} <span style="font-size:9px; font-weight:400">mg/L</span></div>
+                    <div style="font-size:14px; font-weight:700; font-family:'Roboto Mono',monospace; color:${Clok ? 'var(--success)' : 'var(--danger)'}">${q.chlorine.toFixed(2)} <span style="font-size:9px; font-weight:400">mg/L</span></div>
                 </div>
-                <div style="background:rgba(255,255,255,0.03); border-radius:6px; padding:8px; border:1px solid var(--border)">
+                <div style="background:var(--bg-card); border-radius:6px; padding:8px; border:1px solid var(--border)">
                     <div style="font-size:10px; color:var(--muted); margin-bottom:2px">Độ đục</div>
-                    <div style="font-size:14px; font-weight:700; font-family:'Roboto Mono',monospace; color:${Tok ? 'var(--green)' : 'var(--red)'}">${q.turbidity.toFixed(1)} <span style="font-size:9px; font-weight:400">NTU</span></div>
+                    <div style="font-size:14px; font-weight:700; font-family:'Roboto Mono',monospace; color:${Tok ? 'var(--success)' : 'var(--danger)'}">${q.turbidity.toFixed(1)} <span style="font-size:9px; font-weight:400">NTU</span></div>
                 </div>
-                <div style="background:rgba(255,255,255,0.03); border-radius:6px; padding:8px; border:1px solid var(--border)">
+                <div style="background:var(--bg-card); border-radius:6px; padding:8px; border:1px solid var(--border)">
                     <div style="font-size:10px; color:var(--muted); margin-bottom:2px">TDS</div>
-                    <div style="font-size:14px; font-weight:700; font-family:'Roboto Mono',monospace; color:${TDSok ? 'var(--green)' : 'var(--red)'}">${q.TDS} <span style="font-size:9px; font-weight:400">mg/L</span></div>
+                    <div style="font-size:14px; font-weight:700; font-family:'Roboto Mono',monospace; color:${TDSok ? 'var(--success)' : 'var(--danger)'}">${q.TDS} <span style="font-size:9px; font-weight:400">mg/L</span></div>
                 </div>
             </div>
             
             ${!overall ? `
-            <div style="position:absolute; bottom:-10px; right:-10px; opacity:0.1; color:var(--red)">
+            <div style="position:absolute; bottom:-10px; right:-10px; opacity:0.1; color:var(--danger)">
                 <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
             </div>` : ''}
         </div>`;

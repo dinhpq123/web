@@ -9,8 +9,8 @@ const DM_CATEGORIES = {
   qd: { label: 'Quyết định',    color: '#ef4444' },
   cv: { label: 'Công văn',      color: '#3b82f6' },
   tb: { label: 'Thông báo',     color: '#f59e0b' },
-  pa: { label: 'Phương án PCTT',color: '#8b5cf6' },
-  bb: { label: 'Biên bản',      color: '#10b981' },
+  pa: { label: 'Phương án PCTT',color: 'var(--purple)' },
+  bb: { label: 'Biên bản',      color: 'var(--success)' },
   bc: { label: 'Báo cáo',       color: '#06b6d4' },
   ke: { label: 'Kế hoạch',      color: '#f97316' },
 };
@@ -63,7 +63,7 @@ function renderDocManagement() {
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;flex-wrap:wrap;gap:10px">
     <div>
       <h1 style="font-size:20px;font-weight:800;color:#fff;margin:0 0 4px;display:flex;align-items:center;gap:8px">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
           <polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/>
         </svg>
@@ -88,7 +88,7 @@ function renderDocManagement() {
     ${[
       ['Tổng văn bản', DM_DOCUMENTS.length, '#38bdf8',
        `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`],
-      ['Đã ký ban hành', signed, '#10b981',
+      ['Đã ký ban hành', signed, 'var(--success)',
        `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>`],
       ['Chờ phê duyệt', pending, '#f59e0b',
        `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`],
@@ -142,12 +142,12 @@ function renderDocManagement() {
           ${filtered.length === 0
             ? `<tr><td colspan="9" style="text-align:center;padding:32px;color:rgba(255,255,255,.3)">Không có văn bản nào phù hợp</td></tr>`
             : filtered.map(d => {
-              const cat = DM_CATEGORIES[d.type] || { label: d.type, color: '#6b7280' };
-              const sc  = { signed:'#10b981', pending:'#f59e0b', draft:'#6b7280' }[d.status];
+              const cat = DM_CATEGORIES[d.type] || { label: d.type, color: 'var(--text-subtle)' };
+              const sc  = { signed:'var(--success)', pending:'#f59e0b', draft:'var(--text-subtle)' }[d.status];
               const sl  = { signed:'Đã ký', pending:'Chờ ký', draft:'Bản nháp' }[d.status];
               return `<tr>
                 <td>
-                  <div style="font-family:monospace;font-size:11px;font-weight:700;color:#a78bfa">${d.id}</div>
+                  <div style="font-family:monospace;font-size:11px;font-weight:700;color:#5BA9FF">${d.id}</div>
                   ${d.urgent ? `<div style="font-size:9px;font-weight:800;color:#ef4444;margin-top:2px">KHẨN</div>` : ''}
                 </td>
                 <td>

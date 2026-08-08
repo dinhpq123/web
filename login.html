@@ -8,6 +8,25 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap"
     rel="stylesheet">
+  <script src="js/themeEngine.js?v=20260808-adaptive-evg-26"></script>
+  <script>
+    // Only brand-identity colors flow onto this screen (multi-brand support);
+    // --text/--bg/--surface stay fixed for the dark-glass splash design below.
+    (function initLoginBrand() {
+      const presetId = localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
+      const seed = (window.BRAND_SEEDS && (window.BRAND_SEEDS[presetId] || window.BRAND_SEEDS['evg-emerald']));
+      if (!seed) return;
+      const root = document.documentElement;
+      root.style.setProperty('--primary', seed.activeBlue || '#2984EE');
+      root.style.setProperty('--info', seed.activeBlue || '#2984EE');
+      root.style.setProperty('--cyan', seed.sidebarCyan || '#1EF5DF');
+      root.style.setProperty(
+        '--login-background',
+        `linear-gradient(180deg, ${seed.sidebarTop || seed.sidebarNavy} 0%, ${seed.sidebarBottom || seed.sidebarNavy} 100%)`
+      );
+      root.style.setProperty('--login-surface', seed.surfaceDark || '#142D52');
+    })();
+  </script>
   <style>
     *,
     *::before,
@@ -17,21 +36,28 @@
       padding: 0
     }
 
+    /* Login remains dark for stable authentication contrast while its
+       navigation background and primary action follow the active preset. */
     :root {
-      --bg: #030e1c;
-      --surface: #071629;
-      --cyan: #00c8ff;
-      --blue: #0050cc;
-      --green: #00e676;
-      --yellow: #ffca28;
-      --red: #ff1744;
-      --text: #e3f2fd;
-      --muted: #546e7a;
+      --bg: #0B1D33;
+      --surface: #193A6D;
+      --login-background: linear-gradient(180deg, #1E3883 0%, #192B54 100%);
+      --login-surface: #142D52;
+      --primary: #2984EE;
+      --info: #2984EE;
+      --success: #5BA9FF;
+      --status-online: #45D483;
+      --status-online-glow: rgba(69, 212, 131, .52);
+      --warning: #F6C000;
+      --danger: #E14E54;
+      --text: #F8FBFF;
+      --muted: #A4B8CD;
+      --cyan: #1EF5DF;
     }
 
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
+      background: var(--login-background);
       min-height: 100vh;
       display: flex;
       align-items: center;
@@ -44,7 +70,7 @@
       position: fixed;
       inset: 0;
       z-index: 0;
-      opacity: .35;
+      display: none;
     }
 
     .grid {
@@ -61,13 +87,13 @@
       filter: blur(80px);
       opacity: .12;
       z-index: 1;
-      animation: of 8s ease-in-out infinite;
+      display: none;
     }
 
     .o1 {
       width: 500px;
       height: 500px;
-      background: #0050cc;
+      background: var(--info);
       top: -150px;
       left: -100px
     }
@@ -75,7 +101,7 @@
     .o2 {
       width: 350px;
       height: 350px;
-      background: #00c8ff;
+      background: var(--cyan);
       bottom: -100px;
       right: -50px;
       animation-delay: -4s
@@ -102,12 +128,12 @@
     }
 
     .card {
-      background: rgba(7, 22, 41, .88);
-      border: 1px solid rgba(0, 200, 255, .18);
-      border-radius: 20px;
+      background: color-mix(in srgb, var(--login-surface) 96%, transparent);
+      border: 1px solid rgba(91, 169, 255, .24);
+      border-radius: 12px;
       padding: 44px 38px;
       backdrop-filter: blur(20px);
-      box-shadow: 0 0 40px rgba(0, 200, 255, .07), 0 25px 60px rgba(0, 0, 0, .6);
+      box-shadow: 0 16px 40px rgba(2, 10, 24, .28);
       animation: ca .6s ease-out;
     }
 
@@ -134,7 +160,7 @@
     .logo-icon {
       width: 52px;
       height: 52px;
-      background: linear-gradient(135deg, #0050cc, #00c8ff);
+      background: var(--primary);
       border-radius: 14px;
       display: flex;
       align-items: center;
@@ -165,23 +191,20 @@
       font-size: 24px;
       font-weight: 700;
       letter-spacing: 3px;
-      background: linear-gradient(90deg, #e3f2fd, #00c8ff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: #FFFFFF;
     }
 
     .logo-text span {
       font-size: 10px;
       letter-spacing: 4px;
-      color: var(--cyan);
+      color: var(--primary);
       text-transform: uppercase;
       font-family: 'Roboto Mono', monospace;
     }
 
     .divider {
       height: 1px;
-      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+      background: rgba(91, 169, 255, .24);
       margin: 18px 0 26px;
       opacity: .35
     }
@@ -198,7 +221,7 @@
       display: block;
       font-size: 11px;
       font-weight: 500;
-      color: var(--cyan);
+      color: var(--primary);
       letter-spacing: 1px;
       text-transform: uppercase;
       margin-bottom: 7px
@@ -223,8 +246,8 @@
     input.inp {
       width: 100%;
       padding: 13px 13px 13px 42px;
-      background: rgba(0, 200, 255, .04);
-      border: 1px solid rgba(0, 200, 255, .14);
+      background: #18355F;
+      border: 1px solid rgba(91, 169, 255, .24);
       border-radius: 9px;
       color: var(--text);
       font-family: 'Inter', sans-serif;
@@ -235,13 +258,13 @@
     }
 
     input.inp:focus {
-      border-color: var(--cyan);
-      box-shadow: 0 0 0 3px rgba(0, 200, 255, .1);
-      background: rgba(0, 200, 255, .07);
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(91, 169, 255, .16);
+      background: #1D4076;
     }
 
     input.inp::placeholder {
-      color: #233044
+      color: #71849A
     }
 
     .extras {
@@ -261,11 +284,11 @@
     }
 
     .rem input {
-      accent-color: var(--cyan)
+      accent-color: var(--primary)
     }
 
     .forgot {
-      color: var(--cyan);
+      color: var(--primary);
       text-decoration: none;
       font-size: 12px
     }
@@ -273,7 +296,7 @@
     .btn-main {
       width: 100%;
       padding: 14px;
-      background: linear-gradient(135deg, #0050cc, #00c8ff);
+      background: #285CAA;
       border: none;
       border-radius: 9px;
       color: #fff;
@@ -284,12 +307,13 @@
       text-transform: uppercase;
       cursor: pointer;
       transition: all .3s;
-      box-shadow: 0 4px 20px rgba(0, 200, 255, .28);
+      box-shadow: none;
     }
 
     .btn-main:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(0, 200, 255, .5)
+      transform: translateY(-1px);
+      background: #3371C6;
+      box-shadow: 0 6px 16px rgba(2, 10, 24, .20)
     }
 
     .btn-ghost {
@@ -308,7 +332,7 @@
 
     .btn-ghost:hover {
       border-color: rgba(0, 200, 255, .4);
-      color: var(--cyan)
+      color: var(--primary)
     }
 
     .status {
@@ -326,7 +350,8 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--green);
+      background: var(--status-online);
+      box-shadow: 0 0 7px var(--status-online-glow);
       animation: bk 2s ease-in-out infinite
     }
 
@@ -370,7 +395,7 @@
       border-radius: 8px;
       padding: 11px 14px;
       font-size: 13px;
-      color: var(--cyan);
+      color: var(--primary);
       margin-bottom: 16px
     }
 
@@ -383,12 +408,12 @@
       width: 56px;
       height: 56px;
       border-radius: 14px;
-      background: linear-gradient(135deg, #0050cc, #00c8ff);
+      background: #285CAA !important;
       display: flex;
       align-items: center;
       justify-content: center;
       margin: 0 auto 14px;
-      box-shadow: 0 0 20px rgba(0, 200, 255, .35)
+      box-shadow: none
     }
 
     .tfa-methods {
@@ -405,22 +430,21 @@
       cursor: pointer;
       text-align: center;
       transition: all .2s;
-      background: rgba(0, 200, 255, .03)
+      background: #18355F
     }
 
     .tfa-m:hover,
     .tfa-m.sel {
-      border-color: var(--cyan);
-      background: rgba(0, 200, 255, .09);
-      outline: 2px solid rgba(0, 200, 255, .15);
-      outline-offset: -1px
+      border-color: var(--primary);
+      background: #1D4076;
+      outline: none
     }
 
     .tfa-m svg {
       width: 22px;
       height: 22px;
       margin-bottom: 7px;
-      color: var(--cyan)
+      color: var(--primary)
     }
 
     .tfa-m .mn {
@@ -451,13 +475,13 @@
       font-size: 22px;
       font-weight: 700;
       font-family: 'Roboto Mono', monospace;
-      color: var(--cyan);
+      color: var(--primary);
       outline: none;
       transition: all .2s
     }
 
     .otp-d:focus {
-      border-color: var(--cyan);
+      border-color: var(--primary);
       background: rgba(0, 200, 255, .08);
       box-shadow: 0 0 0 3px rgba(0, 200, 255, .12)
     }
@@ -471,7 +495,7 @@
     }
 
     .otp-timer b {
-      color: var(--yellow)
+      color: var(--warning)
     }
 
     .back-ln {
@@ -482,7 +506,7 @@
     }
 
     .back-ln a {
-      color: var(--cyan);
+      color: var(--primary);
       cursor: pointer
     }
 
@@ -496,6 +520,44 @@
       display: flex;
       align-items: center;
       justify-content: center
+    }
+
+    .quick-user {
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 7px;
+      border: 1px solid color-mix(in srgb, var(--quick-color) 28%, transparent);
+      background: color-mix(in srgb, #18355F 94%, var(--quick-color) 6%);
+      font-size: 11px;
+      transition: background .2s, border-color .2s, box-shadow .2s;
+    }
+
+    .quick-user:hover {
+      border-color: color-mix(in srgb, var(--quick-color) 70%, transparent);
+      background: color-mix(in srgb, #1D4076 88%, var(--quick-color) 12%);
+    }
+
+    .quick-user.selected {
+      border-color: var(--quick-color);
+      background: color-mix(in srgb, #1D4076 82%, var(--quick-color) 18%);
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--quick-color) 18%, transparent);
+    }
+
+    .quick-avatar {
+      display: inline-flex;
+      margin-right: 4px;
+      color: var(--quick-color);
+      vertical-align: middle;
+    }
+
+    .quick-role {
+      margin-left: 4px;
+      color: #fff;
+      background: var(--quick-color);
+      border: 1px solid color-mix(in srgb, var(--quick-color) 82%, #fff 18%);
+      border-radius: 4px;
+      padding: 1px 5px;
+      font-size: 9px;
     }
   </style>
 </head>
@@ -527,7 +589,7 @@
         <div style="margin-bottom:18px">
           <div
             style="font-size:10px;letter-spacing:1px;color:var(--muted);text-transform:uppercase;font-family:'Roboto Mono',monospace;margin-bottom:8px">
-            🎭 Demo — Chọn tài khoản nhanh</div>
+            Tài khoản truy cập nhanh</div>
           <div style="display:flex;flex-wrap:wrap;gap:6px" id="quickUsers"></div>
         </div>
 
@@ -695,7 +757,7 @@
         <!-- fp-2: OTP verify -->
         <div id="fp2" style="display:none">
           <div style="text-align:center;margin-bottom:18px">
-            <div class="tfa-ic" style="background:linear-gradient(135deg,#00796b,#00c8ff)">
+            <div class="tfa-ic" style="background:linear-gradient(135deg,var(--success),var(--cyan))">
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                 <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                 <polyline points="22,6 12,13 2,6" />
@@ -736,7 +798,7 @@
         <!-- fp-3: New Password -->
         <div id="fp3" style="display:none">
           <div style="text-align:center;margin-bottom:18px">
-            <div class="tfa-ic" style="background:linear-gradient(135deg,#1565c0,#00c8ff)">
+            <div class="tfa-ic" style="background:linear-gradient(135deg,var(--info),var(--cyan))">
               <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
                 <rect x="3" y="11" width="18" height="11" rx="2" />
                 <path d="M7 11V7a5 5 0 0110 0v4" />
@@ -776,7 +838,7 @@
         <!-- fp-4: Success -->
         <div id="fp4" style="display:none;text-align:center">
           <div
-            style="width:64px;height:64px;background:linear-gradient(135deg,#00796b,#00e676);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 0 24px rgba(0,230,118,.4)">
+            style="width:64px;height:64px;background:var(--success);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;box-shadow:0 0 24px rgba(91,169,255,.28)">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
               <polyline points="20 6 9 17 4 12" />
             </svg>
@@ -795,7 +857,7 @@
       <div class="foot"><span>Hadiwa IOC v1.0.0</span><span>© 2026 Chi cục TT-PCTT TP. Hà Nội</span></div>
     </div>
   </div>
-  <script src="js/rbac.js"></script>
+  <script src="js/rbac.js?v=20260808-adaptive-evg-26"></script>
   <script>
     setInterval(() => document.getElementById('t').textContent = new Date().toLocaleTimeString('vi-VN'), 1000);
     document.getElementById('t').textContent = new Date().toLocaleTimeString('vi-VN');
@@ -803,12 +865,21 @@
     // Build quick-select user cards
     let selectedUser = MOCK_USERS[0];
     (function buildQuickUsers() {
-      const badgeColors = { SUPERADMIN: '#ff1744', SYSADMIN: '#ff1744', CHI_CUC_TRUONG: '#7c3aed', DIEU_HANH: '#f59e0b', KY_THUAT: '#0066cc', QUAN_LY_DE: '#00b4d8', HR: '#00a86b', VIEWER: '#718096' };
+      const roleColors = {
+        SUPERADMIN: '#ff1744',
+        SYSADMIN: '#ff1744',
+        CHI_CUC_TRUONG: '#7c3aed',
+        DIEU_HANH: '#f59e0b',
+        KY_THUAT: '#0066cc',
+        QUAN_LY_DE: '#00b4d8',
+        HR: '#00a86b',
+        VIEWER: '#718096'
+      };
       const html = MOCK_USERS.map(u => `
-        <div id="qu-${u.id}" onclick="selectUser(${u.id})" style="cursor:pointer;padding:6px 10px;border-radius:8px;border:1px solid rgba(0,200,255,.15);background:rgba(0,200,255,.04);font-size:11px;transition:all .2s">
-          <span style="margin-right:4px">${u.avatar}</span>
+        <div id="qu-${u.id}" class="quick-user" style="--quick-color:${roleColors[u.role]}" onclick="selectUser(${u.id})">
+          <span class="quick-avatar">${u.avatar}</span>
           <span style="color:var(--text)">${u.name.split(' ').pop()}</span>
-          <span style="margin-left:4px;background:${badgeColors[u.role]};color:#fff;border-radius:4px;padding:1px 5px;font-size:9px">${ROLE_LABELS[u.role]}</span>
+          <span class="quick-role">${ROLE_LABELS[u.role]}</span>
         </div>`).join('');
       document.getElementById('quickUsers').innerHTML = html;
       selectUser(0); // default: admin
@@ -816,9 +887,9 @@
 
     function selectUser(id) {
       selectedUser = MOCK_USERS.find(u => u.id === id) || MOCK_USERS[0];
-      document.querySelectorAll('[id^="qu-"]').forEach(el => el.style.borderColor = 'rgba(0,200,255,.15)');
+      document.querySelectorAll('[id^="qu-"]').forEach(el => el.classList.remove('selected'));
       const el = document.getElementById('qu-' + id);
-      if (el) el.style.borderColor = 'var(--cyan)';
+      if (el) el.classList.add('selected');
       document.getElementById('u').value = selectedUser.email;
       document.getElementById('p').value = selectedUser.password;
     }
@@ -860,10 +931,45 @@
       document.getElementById('qrArea').style.display = selM === 'totp' ? 'block' : 'none';
       startTimer(); setupOtp();
     }
-    function setupOtp() { const ds = document.querySelectorAll('.otp-d'); ds.forEach((d, i) => { d.value = ''; d.oninput = () => { if (d.value.length === 1 && i < ds.length - 1) ds[i + 1].focus(); }; d.onkeydown = e => { if (e.key === 'Backspace' && !d.value && i > 0) ds[i - 1].focus(); }; }); ds[0].focus(); }
-    function startTimer() { clearInterval(timerI); let s = 299; const el = document.getElementById('otpT'); timerI = setInterval(() => { if (s <= 0) { clearInterval(timerI); el.textContent = 'Hết hạn'; el.style.color = 'var(--red)'; return; } s--; el.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; el.style.color = s < 30 ? 'var(--red)' : 'var(--yellow)'; }, 1000); }
+    function setupOtp() {
+      const ds = document.querySelectorAll('.otp-d');
+      ds.forEach((d, i) => {
+        d.value = '';
+        d.oninput = (e) => {
+          const val = d.value.replace(/\D/g, '');
+          d.value = val.slice(0, 1);
+          if (d.value && i < ds.length - 1) {
+            ds[i + 1].focus();
+          }
+          const currentCode = Array.from(ds).map(x => x.value).join('');
+          if (currentCode.length === 6) verifyOtp();
+        };
+        d.onkeydown = (e) => {
+          if (e.key === 'Backspace' && !d.value && i > 0) {
+            ds[i - 1].focus();
+          }
+        };
+        d.onpaste = (e) => {
+          e.preventDefault();
+          const pasteData = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
+          if (pasteData) {
+            pasteData.split('').forEach((char, index) => {
+              if (ds[index]) ds[index].value = char;
+            });
+            if (pasteData.length === 6) {
+              ds[5].focus();
+              verifyOtp();
+            } else if (ds[pasteData.length]) {
+              ds[pasteData.length].focus();
+            }
+          }
+        };
+      });
+      if (ds[0]) ds[0].focus();
+    }
+    function startTimer() { clearInterval(timerI); let s = 299; const el = document.getElementById('otpT'); timerI = setInterval(() => { if (s <= 0) { clearInterval(timerI); el.textContent = 'Hết hạn'; el.style.color = 'var(--danger)'; return; } s--; el.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; el.style.color = s < 30 ? 'var(--danger)' : 'var(--warning)'; }, 1000); }
     function verifyOtp() { const code = Array.from(document.querySelectorAll('.otp-d')).map(d => d.value).join(''); const btn = document.getElementById('vBtn'); if (code.length < 6) { document.getElementById('otpErr').style.display = 'block'; return; } document.getElementById('otpErr').style.display = 'none'; btn.textContent = 'ĐANG XÁC THỰC...'; btn.style.opacity = '.7'; setTimeout(() => { clearInterval(timerI); setCurrentUser(selectedUser); sessionStorage.setItem('qwc_fresh_login','1'); location.href = 'app.html'; }, 1000); }
-    function resend() { document.querySelectorAll('.otp-d').forEach(d => d.value = ''); startTimer(); document.getElementById('otpErr').style.display = 'none'; document.getElementById('infoBox').style.color = 'var(--green)'; document.getElementById('infoBox').textContent = '✅ Mã OTP mới đã gửi thành công!'; setTimeout(() => goOtp(), 1500); }
+    function resend() { document.querySelectorAll('.otp-d').forEach(d => d.value = ''); startTimer(); document.getElementById('otpErr').style.display = 'none'; document.getElementById('infoBox').style.color = 'var(--success)'; document.getElementById('infoBox').textContent = '✅ Mã OTP mới đã gửi thành công!'; setTimeout(() => goOtp(), 1500); }
     function backMethod() { document.getElementById('oStep').style.display = 'none'; document.getElementById('mStep').style.display = 'block'; clearInterval(timerI); document.getElementById('tfaDesc').textContent = 'Chọn phương thức xác thực'; }
     function backLogin() { document.getElementById('step2').style.display = 'none'; document.getElementById('step1').style.display = 'block'; document.getElementById('mStep').style.display = 'block'; document.getElementById('oStep').style.display = 'none'; clearInterval(timerI); }
 
@@ -895,12 +1001,12 @@
       if (!val) { hint.style.display = 'none'; btn.style.opacity = '.5'; btn.style.pointerEvents = 'none'; return; }
       if (found) {
         hint.style.display = 'block';
-        hint.style.color = 'var(--green)';
+        hint.style.color = 'var(--success)';
         hint.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg> Tài khoản được tìm thấy: <b>${found.name}</b>`;
         btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
       } else if (val.includes('@')) {
         hint.style.display = 'block';
-        hint.style.color = 'var(--red)';
+        hint.style.color = 'var(--danger)';
         hint.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle;margin-right:4px"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Không tìm thấy tài khoản này`;
         btn.style.opacity = '.5'; btn.style.pointerEvents = 'none';
       } else {
@@ -920,11 +1026,11 @@
       // countdown
       clearInterval(_fpTimer);
       let s = 299; const el = document.getElementById('fpOtpT');
-      el.textContent = '4:59'; el.style.color = 'var(--yellow)';
+      el.textContent = '4:59'; el.style.color = 'var(--warning)';
       _fpTimer = setInterval(() => {
-        if (s <= 0) { clearInterval(_fpTimer); el.textContent = 'Hết hạn'; el.style.color = 'var(--red)'; return; }
+        if (s <= 0) { clearInterval(_fpTimer); el.textContent = 'Hết hạn'; el.style.color = 'var(--danger)'; return; }
         s--; el.textContent = `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
-        el.style.color = s < 30 ? 'var(--red)' : 'var(--yellow)';
+        el.style.color = s < 30 ? 'var(--danger)' : 'var(--warning)';
       }, 1000);
     }
     function fpVerifyOtp() {
@@ -956,14 +1062,14 @@
       if (/[A-Z]/.test(pw)) score++;
       if (/[0-9]/.test(pw)) score++;
       if (/[^A-Za-z0-9]/.test(pw)) score++;
-      const colors = ['var(--red)', 'var(--yellow)', 'var(--cyan)', 'var(--green)'];
+      const colors = ['var(--danger)', 'var(--warning)', 'var(--primary)', 'var(--success)'];
       const labels = ['Yếu', 'Trung bình', 'Mạnh', 'Rất mạnh'];
       const fill = document.getElementById('fpStrengthFill');
       const label = document.getElementById('fpStrengthLabel');
       fill.style.width = (score * 25) + '%';
-      fill.style.background = colors[score - 1] || 'var(--red)';
+      fill.style.background = colors[score - 1] || 'var(--danger)';
       label.textContent = pw ? (labels[score - 1] || 'Yếu') : '';
-      label.style.color = colors[score - 1] || 'var(--red)';
+      label.style.color = colors[score - 1] || 'var(--danger)';
     }
     function fpResetPassword() {
       const pw1 = document.getElementById('fpPw1').value;
@@ -974,12 +1080,6 @@
       err.style.display = 'none';
       _fpShowOnly('fp4');
     }
-
-    // Init Theme
-    (function initLoginTheme() {
-      const t = localStorage.getItem('ioc_theme') || 'dark';
-      if (t === 'light') document.body.classList.add('light');
-    })();
   </script>
 </body>
 

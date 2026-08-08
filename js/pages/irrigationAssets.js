@@ -85,22 +85,22 @@ window.rerenderAssets = function() {
 function _renderAssetListTab(assets, byStatus) {
   return `
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px">
-    <div class="kpi-card" style="--accent-color:var(--cyan)">
+    <div class="kpi-card" style="--accent-color:var(--primary)">
       <div class="kpi-label">Tổng số công trình</div>
       <div class="kpi-value">${assets.length}</div>
       <div class="kpi-sub">${(window.RESERVOIR_DATA||[]).length} hồ chứa · ${assets.filter(a=>a.category==='pump').length} trạm bơm · ${assets.filter(a=>a.category==='sluice').length} cống</div>
     </div>
-    <div class="kpi-card" style="--accent-color:var(--green)">
+    <div class="kpi-card" style="--accent-color:var(--success)">
       <div class="kpi-label">Đang vận hành tốt</div>
       <div class="kpi-value">${byStatus('ok')}</div>
       <div class="kpi-sub">${Math.round(byStatus('ok')/assets.length*100)}% tổng số công trình</div>
     </div>
-    <div class="kpi-card" style="--accent-color:var(--yellow)">
+    <div class="kpi-card" style="--accent-color:var(--warning)">
       <div class="kpi-label">Cần bảo trì / Cảnh báo</div>
       <div class="kpi-value">${byStatus('warning')}</div>
       <div class="kpi-sub">Theo dõi đặc biệt</div>
     </div>
-    <div class="kpi-card" style="--accent-color:var(--red)">
+    <div class="kpi-card" style="--accent-color:var(--danger)">
       <div class="kpi-label">Xung yếu / Sự cố</div>
       <div class="kpi-value">${byStatus('critical')}</div>
       <div class="kpi-sub">Ưu tiên xử lý khẩn cấp</div>
@@ -145,7 +145,7 @@ function _renderAssetListTab(assets, byStatus) {
         <tbody id="assetTableBody">
           ${assets.map(a => `
             <tr>
-              <td><span class="mono" style="font-size:12px;color:var(--cyan)">${a.id}</span></td>
+              <td><span class="mono" style="font-size:12px;color:var(--primary)">${a.id}</span></td>
               <td><strong>${a.name}</strong></td>
               <td><span class="badge badge-gray" style="font-size:10px">${a.typeLabel}</span></td>
               <td style="font-size:12px">${a.district}</td>
@@ -154,8 +154,8 @@ function _renderAssetListTab(assets, byStatus) {
               <td style="font-size:12px;color:var(--muted)">${a.lastInspect || '—'}</td>
               <td style="text-align:center">
                 ${(a.issues||0) > 0
-                  ? `<span style="color:var(--red);font-weight:700">${a.issues}</span>`
-                  : `<span style="color:var(--green)">0</span>`}
+                  ? `<span style="color:var(--danger);font-weight:700">${a.issues}</span>`
+                  : `<span style="color:var(--success)">0</span>`}
               </td>
               <td>${statusBadge(a.status)}</td>
               <td>
@@ -186,11 +186,11 @@ function _renderInvestTab() {
   const done   = INVEST_PROJECTS.filter(p=>p.status==='done').length;
   const active = INVEST_PROJECTS.filter(p=>['ontrack','delayed','nearclose'].includes(p.status)).length;
   const statusCfg = {
-    ontrack:   { label:'Đúng tiến độ', color:'#10b981', bg:'rgba(16,185,129,.1)' },
+    ontrack:   { label:'Đúng tiến độ', color:'var(--success)', bg:'rgba(41,132,238,.1)' },
     nearclose: { label:'Sắp hoàn thành', color:'#38bdf8', bg:'rgba(56,189,248,.1)' },
-    done:      { label:'Đã hoàn thành', color:'#6b7280', bg:'rgba(107,114,128,.1)' },
+    done:      { label:'Đã hoàn thành', color:'var(--text-subtle)', bg:'rgba(107,114,128,.1)' },
     delayed:   { label:'Chậm tiến độ', color:'#ef4444', bg:'rgba(239,68,68,.1)' },
-    pending:   { label:'Chuẩn bị', color:'#a855f7', bg:'rgba(168,85,247,.1)' },
+    pending:   { label:'Chuẩn bị', color:'#3699FF', bg:'rgba(54,153,255,.1)' },
   };
   return `
   <!-- KPI row -->
@@ -198,8 +198,8 @@ function _renderInvestTab() {
     ${[
       [`${INVEST_PROJECTS.length}`, 'Tổng dự án', '#38bdf8'],
       [`${active}`, 'Đang triển khai', '#f59e0b'],
-      [`${done}`, 'Đã hoàn thành', '#10b981'],
-      [`${totalBudget.toFixed(1)} tỷ`, 'Tổng vốn đầu tư', '#a855f7'],
+      [`${done}`, 'Đã hoàn thành', 'var(--success)'],
+      [`${totalBudget.toFixed(1)} tỷ`, 'Tổng vốn đầu tư', '#3699FF'],
     ].map(([v,l,c])=>`<div class="rsv-kpi"><div class="rsv-kpi-val" style="color:${c}">${v}</div><div class="rsv-kpi-lbl">${l}</div></div>`).join('')}
   </div>
   <!-- Budget used bar -->
@@ -209,7 +209,7 @@ function _renderInvestTab() {
       <span style="font-size:12px;font-weight:800;color:#38bdf8">${totalSpent.toFixed(1)} / ${totalBudget.toFixed(1)} tỷ đồng (${Math.round(totalSpent/totalBudget*100)}%)</span>
     </div>
     <div style="height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden">
-      <div style="height:100%;width:${Math.round(totalSpent/totalBudget*100)}%;background:linear-gradient(90deg,#38bdf8,#818cf8);border-radius:4px"></div>
+      <div style="height:100%;width:${Math.round(totalSpent/totalBudget*100)}%;background:linear-gradient(90deg,#38bdf8,#5BA9FF);border-radius:4px"></div>
     </div>
   </div>
   <!-- Project list -->
@@ -221,7 +221,7 @@ function _renderInvestTab() {
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
           <div style="flex:1;min-width:0">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-              <span class="mono" style="font-size:11px;color:var(--cyan)">${p.id}</span>
+              <span class="mono" style="font-size:11px;color:var(--primary)">${p.id}</span>
               <span class="badge badge-gray" style="font-size:10px">${p.type}</span>
               <span style="padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:${cfg.bg};color:${cfg.color}">${cfg.label}</span>
             </div>
@@ -293,7 +293,7 @@ window.viewAssetDetail = function(id) {
   if (!a) return;
 
   const statusLabel = { ok: 'Bình thường', warning: 'Cảnh báo', critical: 'Xung yếu / Sự cố', offline: 'Ngừng hoạt động' }[a.status] || a.status;
-  const statusColor = { ok: 'var(--green)', warning: 'var(--yellow)', critical: 'var(--red)', offline: 'var(--muted)' }[a.status] || 'var(--muted)';
+  const statusColor = { ok: 'var(--success)', warning: 'var(--warning)', critical: 'var(--danger)', offline: 'var(--muted)' }[a.status] || 'var(--muted)';
 
   openModal(`
   <div class="modal-header">
@@ -336,13 +336,13 @@ window.viewAssetDetail = function(id) {
     <!-- Sự cố đang mở -->
     ${(a.issues||0) > 0 ? `
     <div style="padding:12px 14px;background:rgba(255,23,68,.06);border:1px solid rgba(255,23,68,.2);border-radius:10px;margin-bottom:16px">
-      <div style="font-size:12px;font-weight:700;color:var(--red);margin-bottom:8px">⚠ ${a.issues} sự cố đang theo dõi</div>
+      <div style="font-size:12px;font-weight:700;color:var(--danger);margin-bottom:8px">⚠ ${a.issues} sự cố đang theo dõi</div>
       <div style="font-size:12px;color:var(--muted)">Tham chiếu trang <strong>Sự cố &amp; Báo cáo</strong> để xem chi tiết và cập nhật trạng thái xử lý.</div>
     </div>` : ''}
 
     <!-- Ghi chú kỹ thuật -->
     <div style="padding:14px;background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);border-radius:10px">
-      <div style="font-size:12px;font-weight:700;color:var(--cyan);margin-bottom:8px">Ghi chú kỹ thuật</div>
+      <div style="font-size:12px;font-weight:700;color:var(--primary);margin-bottom:8px">Ghi chú kỹ thuật</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.7">
         ${a.category === 'reservoir'
           ? `Hồ chứa nội địa. Tổng dung tích: ${(a.capacity/1000000).toFixed(1)} triệu m³. Mực nước thiết kế: ${a.designLevel || '—'} m. Mực nước chết: ${a.deadLevel || '—'} m.`
@@ -456,7 +456,7 @@ function riskLabel(s) {
   if (s >= 16) return { label:'Rất cao', color:'#dc2626', bg:'rgba(220,38,38,.12)' };
   if (s >= 12) return { label:'Cao', color:'#ea580c', bg:'rgba(234,88,12,.1)' };
   if (s >=  6) return { label:'Trung bình', color:'#ca8a04', bg:'rgba(202,138,4,.1)' };
-  return         { label:'Thấp', color:'#16a34a', bg:'rgba(22,163,74,.1)' };
+  return         { label:'Thấp', color:'var(--success)', bg:'var(--success-soft)' };
 }
 
 function renderRiskMatrix() {
@@ -480,7 +480,7 @@ function renderRiskMatrix() {
         Ma trận rủi ro theo khu vực / công trình
       </span>
       <div style="display:flex;gap:8px;align-items:center">
-        ${[['Rất cao','#dc2626'],['Cao','#ea580c'],['Trung bình','#ca8a04'],['Thấp','#16a34a']].map(([l,c])=>`
+        ${[['Rất cao','#dc2626'],['Cao','#ea580c'],['Trung bình','#ca8a04'],['Thấp','var(--success)']].map(([l,c])=>`
         <div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:50%;background:${c}"></div><span style="font-size:10px;color:var(--muted)">${l}</span></div>`).join('')}
       </div>
     </div>

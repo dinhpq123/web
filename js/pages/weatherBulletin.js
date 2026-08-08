@@ -88,7 +88,7 @@ function renderWeatherBulletin() {
     </div>
     <div class="card kpi-card">
       <div class="kpi-label">Cảnh báo đang hiệu lực</div>
-      <div class="kpi-value" style="color:var(--red)">${active.length}</div>
+      <div class="kpi-value" style="color:var(--danger)">${active.length}</div>
       <div class="kpi-sub">Cấp độ 2 trở lên</div>
     </div>
     <div class="card kpi-card">
@@ -101,14 +101,14 @@ function renderWeatherBulletin() {
   <!-- Channel distribution -->
   <div class="card" style="margin-bottom:20px;padding:16px 20px">
     <div style="font-size:13px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:6px">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
       Phân phối theo kênh hôm nay
     </div>
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
       ${[
-        { ch: 'Website Hadiwa', icon: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>', val: '14,600', pct: 46, color: 'var(--cyan)' },
-        { ch: 'App Hadiwa Mobile', icon: '<rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>', val: '8,720', pct: 28, color: 'var(--blue)' },
-        { ch: 'SMS Brandname', icon: '<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>', val: '4,120', pct: 13, color: 'var(--green)' },
+        { ch: 'Website Hadiwa', icon: '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>', val: '14,600', pct: 46, color: 'var(--primary)' },
+        { ch: 'App Hadiwa Mobile', icon: '<rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>', val: '8,720', pct: 28, color: 'var(--info)' },
+        { ch: 'SMS Brandname', icon: '<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>', val: '4,120', pct: 13, color: 'var(--success)' },
         { ch: 'Zalo OA (Coming)', icon: '<path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/>', val: '—', pct: 0, color: 'var(--muted)' },
       ].map(c => `
       <div style="text-align:center;padding:12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px">
@@ -162,7 +162,7 @@ function renderWeatherBulletin() {
               <td style="font-weight:600;max-width:280px;line-height:1.4">${b.title}</td>
               <td style="font-size:12px;color:var(--muted);white-space:nowrap">${b.issued || '—'}</td>
               <td style="font-size:12px;color:var(--muted);white-space:nowrap">${b.validUntil || '—'}</td>
-              <td class="mono" style="color:var(--cyan)">${total > 0 ? total.toLocaleString('vi-VN') : '—'}</td>
+              <td class="mono" style="color:var(--primary)">${total > 0 ? total.toLocaleString('vi-VN') : '—'}</td>
               <td>${statusBadge(b.status)}</td>
               <td>
                 <div style="display:flex;gap:4px">
@@ -233,7 +233,7 @@ function showWbHistory() {
                 <td class="mono" style="font-size:11px;color:var(--muted)">${b.id}</td>
                 <td style="font-size:13px;font-weight:500">${b.title}</td>
                 <td style="font-size:12px;color:var(--muted)">${b.issued}</td>
-                <td class="mono" style="color:var(--cyan)">${t.toLocaleString('vi-VN')}</td>
+                <td class="mono" style="color:var(--primary)">${t.toLocaleString('vi-VN')}</td>
               </tr>`;
             }).join('')}
           </tbody>
@@ -250,7 +250,7 @@ function viewBulletin(id) {
   const b = WB_BULLETINS.find(x => x.id === id);
   if (!b) return;
   const total = b.reach.web + b.reach.app + b.reach.sms + b.reach.zalo;
-  const levelColor = { 1: 'var(--yellow)', 2: 'var(--orange)', 3: 'var(--red)' }[b.level] || 'var(--muted)';
+  const levelColor = { 1: 'var(--warning)', 2: 'var(--orange)', 3: 'var(--danger)' }[b.level] || 'var(--muted)';
 
   openModal(`
     <div class="modal-header">
@@ -290,9 +290,9 @@ function viewBulletin(id) {
           <div class="card" style="padding:14px">
             <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">Thống kê tiếp cận</div>
             ${[
-              { label: 'Website', val: b.reach.web, color: 'var(--cyan)' },
-              { label: 'App Mobile', val: b.reach.app, color: 'var(--blue)' },
-              { label: 'SMS', val: b.reach.sms, color: 'var(--green)' },
+              { label: 'Website', val: b.reach.web, color: 'var(--primary)' },
+              { label: 'App Mobile', val: b.reach.app, color: 'var(--info)' },
+              { label: 'SMS', val: b.reach.sms, color: 'var(--success)' },
               { label: 'Zalo OA', val: b.reach.zalo, color: 'var(--muted)' },
             ].map(r => `
             <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border)">
@@ -301,7 +301,7 @@ function viewBulletin(id) {
             </div>`).join('')}
             <div style="display:flex;justify-content:space-between;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">
               <span style="font-size:12px;font-weight:700">Tổng cộng</span>
-              <span style="font-size:14px;font-weight:800;color:var(--cyan)">${total > 0 ? total.toLocaleString('vi-VN') : '—'}</span>
+              <span style="font-size:14px;font-weight:800;color:var(--primary)">${total > 0 ? total.toLocaleString('vi-VN') : '—'}</span>
             </div>
           </div>
         </div>
@@ -346,7 +346,7 @@ function openCreateBulletin(editId) {
         <!-- Left -->
         <div style="display:flex;flex-direction:column;gap:14px">
           <div class="form-group">
-            <label class="form-label">Loại bản tin <span style="color:var(--red)">*</span></label>
+            <label class="form-label">Loại bản tin <span style="color:var(--danger)">*</span></label>
             <select class="form-control" id="wbCreateType">
               <option value="lu" ${b?.type==='lu'?'selected':''}>Cảnh báo Lũ</option>
               <option value="bao" ${b?.type==='bao'?'selected':''}>Tin bão khẩn cấp</option>
@@ -356,7 +356,7 @@ function openCreateBulletin(editId) {
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Cấp độ nguy hiểm <span style="color:var(--red)">*</span></label>
+            <label class="form-label">Cấp độ nguy hiểm <span style="color:var(--danger)">*</span></label>
             <div style="display:flex;gap:8px">
               ${[1,2,3].map(lvl => {
                 const col = lvl===3?'#ff3d57':lvl===2?'#ff9500':'#ffdb4d';
@@ -369,11 +369,11 @@ function openCreateBulletin(editId) {
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Tiêu đề bản tin <span style="color:var(--red)">*</span></label>
+            <label class="form-label">Tiêu đề bản tin <span style="color:var(--danger)">*</span></label>
             <input type="text" class="form-control" id="wbCreateTitle" value="${b?.title || ''}" placeholder="VD: Cảnh báo lũ sông Hồng rạng sáng 13/3 — Cấp độ 2">
           </div>
           <div class="form-group">
-            <label class="form-label">Nội dung chi tiết <span style="color:var(--red)">*</span></label>
+            <label class="form-label">Nội dung chi tiết <span style="color:var(--danger)">*</span></label>
             <textarea class="form-control" rows="7" id="wbCreateContent" style="resize:vertical;font-size:13px;line-height:1.6" placeholder="Nhập nội dung chi tiết bản tin, dự báo diễn biến, khu vực ảnh hưởng và khuyến cáo người dân...">${b?.content !== '[Bản nháp đang soạn thảo]' ? (b?.content || '') : ''}</textarea>
           </div>
         </div>
@@ -384,7 +384,7 @@ function openCreateBulletin(editId) {
             <div style="max-height:180px;overflow-y:auto;padding:10px;border:1px solid var(--border);border-radius:8px;background:rgba(255,255,255,.02)">
               ${hnDistricts.map(d => `
               <label style="display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px;cursor:pointer">
-                <input type="checkbox" ${b?.districts?.includes(d)?'checked':''} style="accent-color:var(--cyan)">
+                <input type="checkbox" ${b?.districts?.includes(d)?'checked':''} style="accent-color:var(--primary)">
                 <span>${d}</span>
               </label>`).join('')}
             </div>
@@ -404,8 +404,8 @@ function openCreateBulletin(editId) {
                 { id:'ch_zalo', label:'Zalo OA (sắp ra mắt)', checked: false, icon: 'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z' },
               ].map(ch => `
               <label style="display:flex;align-items:center;gap:10px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;cursor:pointer;background:rgba(255,255,255,.02)">
-                <input type="checkbox" id="${ch.id}" ${ch.checked?'checked':''} style="accent-color:var(--cyan)">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="${ch.icon}"/></svg>
+                <input type="checkbox" id="${ch.id}" ${ch.checked?'checked':''} style="accent-color:var(--primary)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="${ch.icon}"/></svg>
                 <span style="font-size:12px">${ch.label}</span>
               </label>`).join('')}
             </div>
@@ -414,10 +414,10 @@ function openCreateBulletin(editId) {
             <label class="form-label">Lên lịch phát hành</label>
             <div style="display:flex;gap:8px">
               <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
-                <input type="radio" name="wbSchedule" value="now" checked style="accent-color:var(--cyan)"> Phát ngay
+                <input type="radio" name="wbSchedule" value="now" checked style="accent-color:var(--primary)"> Phát ngay
               </label>
               <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
-                <input type="radio" name="wbSchedule" value="schedule" style="accent-color:var(--cyan)"> Đặt lịch
+                <input type="radio" name="wbSchedule" value="schedule" style="accent-color:var(--primary)"> Đặt lịch
               </label>
             </div>
             <input type="datetime-local" class="form-control" style="margin-top:8px;display:none" id="wbScheduleTime">

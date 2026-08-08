@@ -104,13 +104,13 @@ function renderCustomers() {
         <tbody>
           ${pageData.map(c => `
           <tr onclick="viewCustomerDetail('${c.id}')">
-            <td class="mono" style="color:var(--cyan)">${c.id}</td>
+            <td class="mono" style="color:var(--primary)">${c.id}</td>
             <td style="font-weight:600">${c.name}</td>
             <td style="font-size:12px;color:var(--muted)">${c.address}</td>
             <td><span class="badge ${c.type === 'household' ? 'badge-blue' : 'badge-gray'}">${c.type === 'household' ? 'Hộ dân' : 'DN'}</span></td>
             <td>${statusBadge(c.status)}</td>
             <td class="mono">${c.consumption > 0 ? c.consumption + ' m³' : '—'}</td>
-            <td class="mono" style="color:${c.debt > 0 ? 'var(--red)' : 'var(--green)'}">${c.debt > 0 ? formatNum(c.debt) + ' đ' : 'Không nợ'}</td>
+            <td class="mono" style="color:${c.debt > 0 ? 'var(--danger)' : 'var(--success)'}">${c.debt > 0 ? formatNum(c.debt) + ' đ' : 'Không nợ'}</td>
             <td style="text-align:right">
               <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();viewCustomerDetail('${c.id}')">Chi tiết</button>
             </td>
@@ -165,8 +165,8 @@ function renderBilling() {
     <div class="card" style="padding:14px 20px;flex:1;display:flex;align-items:center;gap:16px">
       <div style="font-size:12px;color:var(--muted)">Tháng 2/2026</div>
       <div style="flex:1;display:flex;gap:24px;justify-content:center">
-        <div style="text-align:center"><div style="font-size:11px;color:var(--muted)">Đã thu (mẫu)</div><div style="font-size:20px;font-weight:700;color:var(--green)">${formatNum(totalPaid)} đ</div></div>
-        <div style="text-align:center"><div style="font-size:11px;color:var(--muted)">Còn nợ (mẫu)</div><div style="font-size:20px;font-weight:700;color:var(--red)">${formatNum(totalUnpaid)} đ</div></div>
+        <div style="text-align:center"><div style="font-size:11px;color:var(--muted)">Đã thu (mẫu)</div><div style="font-size:20px;font-weight:700;color:var(--success)">${formatNum(totalPaid)} đ</div></div>
+        <div style="text-align:center"><div style="font-size:11px;color:var(--muted)">Còn nợ (mẫu)</div><div style="font-size:20px;font-weight:700;color:var(--danger)">${formatNum(totalUnpaid)} đ</div></div>
       </div>
       <button class="btn btn-ghost btn-sm" onclick="exportInvoicesToExcel()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="7 10 12 15 17 10" /><line x1="12" y1="15" x2="12" y2="3" /></svg> Xuất Excel</button>
     </div>
@@ -181,10 +181,10 @@ function renderBilling() {
           <td style="font-size:11px;color:var(--muted)">${i.address}</td>
           <td style="font-size:12px">${i.period}</td>
           <td class="mono" style="font-size:12px">${i.consumption > 0 ? i.consumption : '-'}</td>
-          <td class="mono" style="font-size:12px;font-weight:600;color:${i.status === 'paid' ? 'var(--green)' : i.amount > 0 ? 'var(--yellow)' : 'var(--muted)'}">${i.amount > 0 ? formatNum(i.amount) + ' đ' : '—'}</td>
+          <td class="mono" style="font-size:12px;font-weight:600;color:${i.status === 'paid' ? 'var(--success)' : i.amount > 0 ? 'var(--warning)' : 'var(--muted)'}">${i.amount > 0 ? formatNum(i.amount) + ' đ' : '—'}</td>
           <td>${i.status === 'paid' ? '<span class="badge badge-green">Đã thu</span>' : i.status === 'partial' ? '<span class="badge badge-yellow">Một phần</span>' : i.status === 'unpaid' ? '<span class="badge badge-red">Chưa thu</span>' : '<span class="badge badge-gray">Tạm khóa</span>'}</td>
           <td class="mono" style="font-size:11px;color:var(--muted)">${i.issuedDate}</td>
-          <td class="mono" style="font-size:11px;color:${i.paidDate !== '—' ? 'var(--green)' : 'var(--muted)'}">${i.paidDate}</td>
+          <td class="mono" style="font-size:11px;color:${i.paidDate !== '—' ? 'var(--success)' : 'var(--muted)'}">${i.paidDate}</td>
           <td style="font-size:11px;color:var(--muted)">${i.method}</td>
           <td><button class="btn btn-ghost btn-sm" onclick="showToast('Xem hóa đơn ${i.id}')">Xem</button></td>
         </tr>`).join('')}
@@ -234,10 +234,10 @@ function renderMetering() {
           <td class="mono" style="font-size:11px;color:var(--muted)">${r.meter}</td>
           <td class="mono">${r.prevReading.toFixed(1)}</td>
           <td class="mono">${r.currReading.toFixed(1)}</td>
-          <td class="mono" style="font-weight:700;color:${r.status === 'suspect' ? 'var(--red)' : r.consumption > 1000 ? 'var(--yellow)' : 'var(--green)'}">${r.consumption.toFixed(1)}</td>
+          <td class="mono" style="font-weight:700;color:${r.status === 'suspect' ? 'var(--danger)' : r.consumption > 1000 ? 'var(--warning)' : 'var(--success)'}">${r.consumption.toFixed(1)}</td>
           <td class="mono" style="font-size:12px;color:var(--muted)">${r.readDate}</td>
           <td style="font-size:12px;color:var(--muted)">${r.reader}</td>
-          <td style="text-align:center">${r.photo ? '<span style="color:var(--green);font-size:14px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></span>' : '<span style="color:var(--red);font-size:14px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2.5" style="vertical-align:middle"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>'}</td>
+          <td style="text-align:center">${r.photo ? '<span style="color:var(--success);font-size:14px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg></span>' : '<span style="color:var(--danger);font-size:14px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2.5" style="vertical-align:middle"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>'}</td>
           <td>${r.status === 'confirmed' ? '<span class="badge badge-green">Xác nhận</span>' : '<span class="badge badge-red">Nghi vấn <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>'}</td>
         </tr>`).join('')}
       </tbody>
@@ -311,9 +311,9 @@ window.importCustomerData = function () {
   openModal(`
   <div class="modal-header"><span class="modal-title">Import dữ liệu khách hàng</span><button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div class="modal-body">
-    <div style="border:2px dashed var(--border); border-radius:12px; padding:40px; text-align:center; background:rgba(255,255,255,0.02); cursor:pointer" onclick="this.querySelector('input').click()">
+    <div style="border:2px dashed var(--border); border-radius:12px; padding:40px; text-align:center; background:var(--bg-card); cursor:pointer" onclick="this.querySelector('input').click()">
       <input type="file" style="display:none" onchange="closeModal(); showToast('Đang tải lên file ' + this.files[0].name + '...'); setTimeout(()=>showToast('Import thành công 1,240 bản ghi!'), 2000)">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.5" style="margin-bottom:12px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5" style="margin-bottom:12px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
       <div style="font-weight:600">Kéo thả file Excel/CSV vào đây</div>
       <div style="font-size:12px; color:var(--muted); margin-top:4px">Dung lượng tối đa 20MB. Sử dụng file mẫu để tránh lỗi định dạng.</div>
     </div>

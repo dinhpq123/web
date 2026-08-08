@@ -49,27 +49,27 @@ function renderEarlyWarning() {
 /* ── EW Page layout ── */
 .ew-page{padding:20px 24px;max-width:1280px;margin:0 auto}
 .ew-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px}
-.ew-title{font-size:21px;font-weight:800;background:linear-gradient(135deg,#fff 30%,#ef4444);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:flex;align-items:center;gap:9px}
-.ew-subtitle{font-size:12px;color:rgba(255,255,255,.38);margin-top:3px}
+.ew-title{font-size:21px;font-weight:800;color:var(--text);display:flex;align-items:center;gap:9px}
+.ew-subtitle{font-size:12px;color:var(--muted);margin-top:3px}
 
 /* KPI row */
 .ew-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
-.ew-kpi{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 16px;position:relative;overflow:hidden;transition:border-color .2s}
-.ew-kpi:hover{border-color:rgba(255,255,255,.16)}
+.ew-kpi{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;position:relative;overflow:hidden;transition:border-color .2s}
+.ew-kpi:hover{border-color:var(--border-active)}
 .ew-kpi::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--kc,.1) 0%,transparent 60%);opacity:.5;pointer-events:none}
 .ew-kpi-val{font-size:32px;font-weight:900;line-height:1;margin-bottom:4px}
-.ew-kpi-lbl{font-size:11px;color:rgba(255,255,255,.4);font-weight:500}
-.ew-kpi-sub{font-size:10px;color:rgba(255,255,255,.28);margin-top:4px}
+.ew-kpi-lbl{font-size:11px;color:var(--text-2);font-weight:500}
+.ew-kpi-sub{font-size:10px;color:var(--muted);margin-top:4px}
 
 /* Tabs */
-.ew-tabs{display:flex;gap:4px;margin-bottom:16px;background:rgba(255,255,255,.04);border-radius:10px;padding:4px;width:fit-content}
-.ew-tab{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.45);border:none;background:transparent;transition:all .2s;display:flex;align-items:center;gap:6px}
-.ew-tab.active{background:rgba(255,255,255,.1);color:#fff}
+.ew-tabs{display:flex;gap:4px;margin-bottom:16px;background:var(--segmented-bg);border:1px solid var(--border);border-radius:10px;padding:4px;width:fit-content}
+.ew-tab{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;color:var(--muted);border:none;background:transparent;transition:all .2s;display:flex;align-items:center;gap:6px}
+.ew-tab.active{background:var(--segmented-active-bg);color:var(--primary-text)}
 .ew-tab-badge{background:rgba(239,68,68,.7);color:#fff;font-size:9px;border-radius:20px;padding:1px 5px;font-weight:800}
 
 /* Live alerts */
-.ew-alert-item{display:flex;gap:14px;padding:14px 16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;margin-bottom:8px;transition:all .2s;align-items:flex-start}
-.ew-alert-item:hover{border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.05)}
+.ew-alert-item{display:flex;gap:14px;padding:14px 16px;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;margin-bottom:8px;transition:all .2s;align-items:flex-start}
+.ew-alert-item:hover{border-color:var(--border-active);background:var(--bg-hover)}
 .ew-alert-item.sev-critical{border-left:3px solid #ef4444}
 .ew-alert-item.sev-warning{border-left:3px solid #f59e0b}
 .ew-alert-item.sev-info{border-left:3px solid #3b82f6}
@@ -78,40 +78,40 @@ function renderEarlyWarning() {
 .ew-alert-dot.warning{background:#f59e0b;box-shadow:0 0 6px #f59e0b66}
 .ew-alert-dot.info{background:#3b82f6}
 .ew-alert-dot.done{background:#374151}
-.ew-alert-station{font-size:11px;font-weight:700;color:rgba(255,255,255,.7);margin-bottom:2px}
-.ew-alert-desc{font-size:11px;color:rgba(255,255,255,.42);line-height:1.5}
+.ew-alert-station{font-size:11px;font-weight:700;color:var(--text);margin-bottom:2px}
+.ew-alert-desc{font-size:11px;color:var(--muted);line-height:1.5}
 .ew-alert-meta{display:flex;gap:8px;margin-top:5px;flex-wrap:wrap;align-items:center}
-.ew-alert-val{font-size:13px;font-weight:800;color:#fff}
-.ew-alert-thresh{font-size:10px;color:rgba(255,255,255,.35)}
-.ew-alert-time{font-size:10px;color:rgba(255,255,255,.3);margin-left:auto}
+.ew-alert-val{font-size:13px;font-weight:800;color:var(--text)}
+.ew-alert-thresh{font-size:10px;color:var(--muted)}
+.ew-alert-time{font-size:10px;color:var(--text-subtle);margin-left:auto}
 
 /* Rule engine table */
 .ew-rules-table{width:100%;border-collapse:collapse}
-.ew-rules-table th{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;padding:8px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07)}
-.ew-rules-table td{padding:10px 12px;font-size:12px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:middle}
-.ew-rules-table tr:hover td{background:rgba(255,255,255,.03)}
-.ew-channel-chip{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;margin:1px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.6)}
+.ew-rules-table th{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.ew-rules-table td{padding:10px 12px;font-size:12px;border-bottom:1px solid var(--border);vertical-align:middle}
+.ew-rules-table tr:hover td{background:var(--bg-hover)}
+.ew-channel-chip{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;margin:1px;background:var(--bg-secondary);color:var(--text-2)}
 
 /* Risk matrix */
 .ew-matrix-wrap{overflow-x:auto}
 .ew-matrix{border-collapse:collapse;min-width:600px;width:100%}
-.ew-matrix th{font-size:11px;font-weight:700;color:rgba(255,255,255,.45);padding:8px 16px;text-align:center;border-bottom:1px solid rgba(255,255,255,.07)}
+.ew-matrix th{font-size:11px;font-weight:700;color:var(--muted);padding:8px 16px;text-align:center;border-bottom:1px solid var(--border)}
 .ew-matrix th:first-child{text-align:left}
-.ew-matrix td{padding:9px 16px;text-align:center;border-bottom:1px solid rgba(255,255,255,.05);font-size:12px;font-weight:700}
-.ew-matrix td:first-child{text-align:left;font-weight:500;color:rgba(255,255,255,.7)}
+.ew-matrix td{padding:9px 16px;text-align:center;border-bottom:1px solid var(--border);font-size:12px;font-weight:700}
+.ew-matrix td:first-child{text-align:left;font-weight:500;color:var(--text-2)}
 .ew-risk-cell{display:inline-flex;align-items:center;justify-content:center;width:38px;height:24px;border-radius:6px;font-size:12px;font-weight:800}
-.risk-1{background:rgba(16,185,129,.18);color:#34d399}
+.risk-1{background:rgba(41,132,238,.18);color:var(--success-text)}
 .risk-2{background:rgba(234,179,8,.12);color:#facc15}
 .risk-3{background:rgba(251,146,60,.18);color:#fb923c}
 .risk-4{background:rgba(239,68,68,.22);color:#f87171}
 .risk-5{background:rgba(239,68,68,.4);color:#fff;animation:bk 2s infinite}
 
 /* Channels */
-.ew-channel-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:16px;margin-bottom:12px}
+.ew-channel-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:12px}
 .ew-channel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.ew-channel-name{font-size:13px;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px}
+.ew-channel-name{font-size:13px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px}
 .ew-toggle{width:38px;height:22px;border-radius:11px;border:none;cursor:pointer;position:relative;transition:background .2s;flex-shrink:0}
-.ew-toggle.on{background:rgba(16,185,129,.7)}
+.ew-toggle.on{background:rgba(41,132,238,.7)}
 .ew-toggle.off{background:rgba(100,116,139,.4)}
 .ew-toggle::after{content:'';position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;transition:left .2s}
 .ew-toggle.on::after{left:19px}
@@ -119,16 +119,16 @@ function renderEarlyWarning() {
 
 /* Trend mini spark */
 .ew-spark{display:flex;align-items:flex-end;gap:2px;height:32px}
-.ew-spark-bar{width:6px;border-radius:2px 2px 0 0;background:rgba(139,92,246,.5);transition:height .3s}
+.ew-spark-bar{width:6px;border-radius:2px 2px 0 0;background:rgba(41,132,238,.5);transition:height .3s}
 
 /* Decision panel */
-.ew-decision-card{background:linear-gradient(135deg,rgba(239,68,68,.08) 0%,rgba(139,92,246,.08) 100%);border:1px solid rgba(239,68,68,.25);border-radius:14px;padding:16px;margin-bottom:12px}
+.ew-decision-card{background:linear-gradient(135deg,rgba(239,68,68,.08) 0%,rgba(41,132,238,.08) 100%);border:1px solid rgba(239,68,68,.25);border-radius:14px;padding:16px;margin-bottom:12px}
 .ew-decision-title{font-size:13px;font-weight:800;color:#f87171;margin-bottom:8px;display:flex;align-items:center;gap:7px}
-.ew-decision-step{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.ew-decision-step{display:flex;align-items:flex-start;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
 .ew-decision-step:last-child{border:none}
-.ew-step-num{width:20px;height:20px;border-radius:50%;background:rgba(139,92,246,.3);color:#a78bfa;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ew-step-text{font-size:12px;color:rgba(255,255,255,.7);line-height:1.5}
-.ew-step-action{display:inline-block;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:700;margin-top:3px;background:rgba(139,92,246,.2);color:#a78bfa}
+.ew-step-num{width:20px;height:20px;border-radius:50%;background:rgba(41,132,238,.3);color:#5BA9FF;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ew-step-text{font-size:12px;color:var(--text-2);line-height:1.5}
+.ew-step-action{display:inline-block;padding:2px 8px;border-radius:5px;font-size:10px;font-weight:700;margin-top:3px;background:rgba(41,132,238,.2);color:#5BA9FF}
 </style>
 
 <div class="ew-page">
@@ -136,7 +136,7 @@ function renderEarlyWarning() {
   <div class="ew-topbar">
     <div>
       <div class="ew-title">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" fill="rgba(239,68,68,.15)"/>
           <line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
         </svg>
@@ -158,17 +158,17 @@ function renderEarlyWarning() {
       <div class="ew-kpi-sub">Cần xử lý ngay</div>
     </div>
     <div class="ew-kpi" style="--kc:rgba(239,68,68,.08)">
-      <div class="ew-kpi-val" style="color:#fca5a5">${criticalCount}</div>
+      <div class="ew-kpi-val" style="color:var(--danger)">${criticalCount}</div>
       <div class="ew-kpi-lbl">Mức Nghiêm trọng</div>
       <div class="ew-kpi-sub">Đang xử lý: ${handlingCount} sự cố</div>
     </div>
-    <div class="ew-kpi" style="--kc:rgba(139,92,246,.08)">
-      <div class="ew-kpi-val" style="color:#a78bfa">${EW_RULES.filter(r=>r.active).length}</div>
+    <div class="ew-kpi" style="--kc:rgba(41,132,238,.08)">
+      <div class="ew-kpi-val" style="color:#5BA9FF">${EW_RULES.filter(r=>r.active).length}</div>
       <div class="ew-kpi-lbl">Quy tắc đang giám sát</div>
       <div class="ew-kpi-sub">${EW_RULES.length} quy tắc tổng cộng</div>
     </div>
     <div class="ew-kpi" style="--kc:rgba(14,165,233,.08)">
-      <div class="ew-kpi-val" style="color:#38bdf8">1.2s</div>
+      <div class="ew-kpi-val" style="color:var(--primary)">1.2s</div>
       <div class="ew-kpi-lbl">Độ trễ truyền tin</div>
       <div class="ew-kpi-sub">Sensor → Trung tâm</div>
     </div>
@@ -212,11 +212,11 @@ function ewRenderTab() {
 
 // ── Tab: Live Alerts ───────────────────────────────────────────────
 function ewRenderAlerts() {
-  const statusLabel = { new:'<span style="color:#f87171;font-weight:700;font-size:10px">MỚI</span>', handling:'<span style="color:#fbbf24;font-weight:700;font-size:10px">ĐANG XỬ LÝ</span>', done:'<span style="color:#6b7280;font-weight:700;font-size:10px">XONG</span>' };
+  const statusLabel = { new:'<span style="color:var(--danger);font-weight:700;font-size:10px">MỚI</span>', handling:'<span style="color:var(--warning-text);font-weight:700;font-size:10px">ĐANG XỬ LÝ</span>', done:'<span style="color:var(--text-subtle);font-weight:700;font-size:10px">XONG</span>' };
   return `
   <div style="display:grid;grid-template-columns:1fr 300px;gap:16px;align-items:start">
     <div>
-      <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.38);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">
+      <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">
         Phiên trực hôm nay — ${new Date().toLocaleDateString('vi-VN')}
       </div>
       ${EW_ALERTS.map(a => `
@@ -232,7 +232,7 @@ function ewRenderAlerts() {
             <span class="ew-alert-val">${a.value}</span>
             <span class="ew-alert-thresh">/ Ngưỡng: ${a.threshold}</span>
             ${a.severity==='critical'?'<span style="background:rgba(239,68,68,.2);color:#f87171;padding:1px 7px;border-radius:20px;font-size:10px;font-weight:700">Nghiêm trọng</span>':''}
-            ${a.severity==='warning'?'<span style="background:rgba(245,158,11,.15);color:#fbbf24;padding:1px 7px;border-radius:20px;font-size:10px;font-weight:700">Cảnh báo</span>':''}
+            ${a.severity==='warning'?'<span style="background:var(--warning-soft);color:var(--warning-text);padding:1px 7px;border-radius:20px;font-size:10px;font-weight:700">Cảnh báo</span>':''}
           </div>
           <div class="ew-alert-desc">${a.desc}</div>
         </div>
@@ -284,20 +284,20 @@ function ewRenderAlerts() {
 
       <!-- Trend spark mini chart (9h qua) -->
       <div class="card" style="padding:14px">
-        <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);margin-bottom:10px;display:flex;align-items:center;gap:6px">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <div style="font-size:11px;font-weight:700;color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:6px">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
           Xu hướng mực nước — Sông Hồng (9h)
         </div>
         <div class="ew-spark" style="align-items:flex-end;padding:4px 0">
           ${[35,38,42,41,48,52,58,65,72,78,85,89,91,95,98].map((v,i) => `
-            <div class="ew-spark-bar" style="height:${v*0.3}px;width:${100/15}%;background:${v>=90?'rgba(239,68,68,.7)':v>=60?'rgba(245,158,11,.6)':'rgba(139,92,246,.45)'}"></div>
+            <div class="ew-spark-bar" style="height:${v*0.3}px;width:${100/15}%;background:${v>=90?'rgba(239,68,68,.7)':v>=60?'rgba(245,158,11,.6)':'rgba(41,132,238,.45)'}"></div>
           `).join('')}
         </div>
-        <div style="display:flex;justify-content:space-between;font-size:9px;color:rgba(255,255,255,.25);margin-top:4px">
+        <div style="display:flex;justify-content:space-between;font-size:9px;color:var(--text-subtle);margin-top:4px">
           <span>−9h</span><span>−6h</span><span>−3h</span><span>Hiện tại: <b style="color:#f87171">9.82m</b></span>
         </div>
-        <div style="font-size:10px;color:rgba(255,255,255,.35);margin-top:8px">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+        <div style="font-size:10px;color:var(--muted);margin-top:8px">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--warning-text)" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
           Ngưỡng BĐ I: 9.5m — Ngưỡng BĐ II: 11.5m
         </div>
       </div>
@@ -331,10 +331,10 @@ function ewRenderRules() {
         <tbody>
           ${EW_RULES.map(r=>`
           <tr>
-            <td style="font-weight:600;color:#fff">${r.name}</td>
+            <td style="font-weight:600;color:var(--text)">${r.name}</td>
             <td><span class="badge badge-gray" style="font-size:10px">${r.station}</span></td>
-            <td style="font-size:11px;color:rgba(255,255,255,.6)">${r.param}</td>
-            <td style="font-family:monospace;color:var(--cyan);font-size:12px;font-weight:700">${r.op} ${r.val}</td>
+            <td style="font-size:11px;color:var(--text-2)">${r.param}</td>
+            <td style="font-family:monospace;color:var(--primary);font-size:12px;font-weight:700">${r.op} ${r.val}</td>
             <td>${r.severity==='critical'?'<span class="badge badge-red">Nghiêm trọng</span>':'<span class="badge badge-yellow">Cảnh báo</span>'}</td>
             <td>${r.channels.map(c=>`<span class="ew-channel-chip">${chanIcons[c]||''} ${c}</span>`).join('')}</td>
             <td>
@@ -366,9 +366,9 @@ function ewRenderMatrix() {
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
         Ma trận Rủi ro theo Quận/Huyện × Loại thiên tai
       </span>
-      <div style="font-size:11px;color:rgba(255,255,255,.35)">
+      <div style="font-size:11px;color:var(--muted)">
         ${legend}
-        <span style="color:rgba(255,255,255,.35);font-size:10px"> 1=Thấp → 5=Rất cao</span>
+        <span style="color:var(--muted);font-size:10px"> 1=Thấp → 5=Rất cao</span>
       </div>
     </div>
     <div class="ew-matrix-wrap">
@@ -376,19 +376,19 @@ function ewRenderMatrix() {
         <thead><tr>
           <th>Quận / Huyện</th>
           <th>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
             Lũ lụt
           </th>
           <th>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M12 2v20M2 8h20M2 16h20"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M12 2v20M2 8h20M2 16h20"/></svg>
             Ngập úng
           </th>
           <th>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M2.5 21l19-9L2.5 3v7l15 2-15 2v7z"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M2.5 21l19-9L2.5 3v7l15 2-15 2v7z"/></svg>
             Sạt lở
           </th>
           <th>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#facc15" stroke-width="2" style="vertical-align:middle;margin-right:4px"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--warning-text)" stroke-width="2" style="vertical-align:middle;margin-right:4px"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
             Hạn hán
           </th>
           <th style="text-align:center;font-size:10px">Tổng điểm rủi ro</th>
@@ -396,17 +396,17 @@ function ewRenderMatrix() {
         <tbody>
           ${EW_RISK.map(r=>{
             const total = r.flood+r.waterlog+r.landslide+r.drought;
-            const totalColor = total>=14?'#f87171':total>=10?'#fbbf24':'#34d399';
+            const totalColor = total>=14?'var(--danger)':total>=10?'var(--warning-text)':'var(--success-text)';
             return `<tr>
               <td>${r.district}</td>
               ${cell(r.flood)}${cell(r.waterlog)}${cell(r.landslide)}${cell(r.drought)}
-              <td><span style="font-weight:900;color:${totalColor};font-size:15px">${total}</span><span style="font-size:10px;color:rgba(255,255,255,.3)">/20</span></td>
+              <td><span style="font-weight:900;color:${totalColor};font-size:15px">${total}</span><span style="font-size:10px;color:var(--text-subtle)">/20</span></td>
             </tr>`;
           }).join('')}
         </tbody>
       </table>
     </div>
-    <div style="padding:12px 16px;font-size:11px;color:rgba(255,255,255,.35);border-top:1px solid rgba(255,255,255,.06)">
+    <div style="padding:12px 16px;font-size:11px;color:var(--muted);border-top:1px solid var(--border)">
       Cập nhật theo dữ liệu lịch sử 10 năm và dự báo khí tượng thủy văn. Màu đỏ blink = mức rất cao, ưu tiên bố trí lực lượng.
     </div>
   </div>`;
@@ -426,13 +426,13 @@ function ewRenderChannels() {
   <div class="ew-channel-card">
     <div class="ew-channel-header">
       <div class="ew-channel-name">
-        <span style="color:rgba(255,255,255,.6)">${ch.icon}</span>
+        <span style="color:var(--text-2)">${ch.icon}</span>
         ${ch.name}
       </div>
       <button class="ew-toggle ${ch.on?'on':'off'}" onclick="ewToggleChan(this)" title="Bật/tắt kênh cảnh báo này"></button>
     </div>
-    <div style="font-size:12px;color:rgba(255,255,255,.45);margin-bottom:6px;line-height:1.6">${ch.desc}</div>
-    <div style="font-size:11px;color:rgba(255,255,255,.3);font-family:monospace">${ch.extra}</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:6px;line-height:1.6">${ch.desc}</div>
+    <div style="font-size:11px;color:var(--text-subtle);font-family:monospace">${ch.extra}</div>
   </div>`).join('');
 }
 

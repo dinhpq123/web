@@ -29,7 +29,7 @@ HTML = r"""<!DOCTYPE html>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
   background:var(--bg);color:var(--text);line-height:1.7;font-size:14px}
-a{color:var(--cyan);text-decoration:none}
+a{color:var(--primary);text-decoration:none}
 a:hover{text-decoration:underline}
 
 /* ── Layout ── */
@@ -39,39 +39,39 @@ a:hover{text-decoration:underline}
 .toc h2{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);
   padding:0 16px 8px;border-bottom:1px solid var(--border);margin-bottom:8px}
 .toc a{display:block;padding:5px 16px;font-size:12px;color:var(--muted);border-left:2px solid transparent}
-.toc a:hover,.toc a.active{color:var(--cyan);border-left-color:var(--cyan);background:rgba(0,200,255,.05)}
+.toc a:hover,.toc a.active{color:var(--primary);border-left-color:var(--primary);background:rgba(0,200,255,.05)}
 .toc .toc-group{font-size:10px;color:var(--muted);padding:12px 16px 2px;text-transform:uppercase;letter-spacing:.08em}
 main{padding:40px 48px;max-width:960px}
 
 /* ── Typography ── */
 h1{font-size:28px;font-weight:800;color:var(--text);margin-bottom:8px}
-h2{font-size:20px;font-weight:700;color:var(--cyan);margin:40px 0 16px;
+h2{font-size:20px;font-weight:700;color:var(--primary);margin:40px 0 16px;
   padding-bottom:8px;border-bottom:1px solid var(--border)}
-h3{font-size:15px;font-weight:700;color:var(--blue);margin:24px 0 10px}
-h4{font-size:13px;font-weight:700;color:var(--yellow);margin:18px 0 8px}
+h3{font-size:15px;font-weight:700;color:var(--info);margin:24px 0 10px}
+h4{font-size:13px;font-weight:700;color:var(--warning);margin:18px 0 8px}
 p{margin-bottom:12px;color:var(--muted)}
 strong{color:var(--text)}
 code{font-family:'Roboto Mono',monospace;font-size:12px;background:rgba(255,255,255,.06);
-  padding:1px 6px;border-radius:4px;color:var(--cyan)}
+  padding:1px 6px;border-radius:4px;color:var(--primary)}
 pre{background:var(--bg2);border:1px solid var(--border);border-radius:8px;
-  padding:16px;overflow-x:auto;margin:12px 0;font-size:12px;color:var(--green)}
+  padding:16px;overflow-x:auto;margin:12px 0;font-size:12px;color:var(--success)}
 pre code{background:none;padding:0;color:inherit}
 
 /* ── Components ── */
 .hero{background:linear-gradient(135deg,rgba(0,200,255,.08),rgba(124,58,237,.08));
   border:1px solid rgba(0,200,255,.2);border-radius:12px;padding:24px 28px;margin-bottom:32px}
-.hero h1{background:linear-gradient(135deg,#fff 30%,var(--cyan));-webkit-background-clip:text;
+.hero h1{background:linear-gradient(135deg,#fff 30%,var(--primary));-webkit-background-clip:text;
   -webkit-text-fill-color:transparent;background-clip:text}
 .hero p{color:var(--muted);margin:0}
 .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:700}
-.badge-red{background:rgba(248,81,73,.15);color:var(--red)}
-.badge-yellow{background:rgba(227,179,65,.15);color:var(--yellow)}
-.badge-green{background:rgba(63,185,80,.15);color:var(--green)}
-.badge-blue{background:rgba(88,166,255,.15);color:var(--blue)}
+.badge-red{background:rgba(248,81,73,.15);color:var(--danger)}
+.badge-yellow{background:rgba(227,179,65,.15);color:var(--warning)}
+.badge-green{background:rgba(63,185,80,.15);color:var(--success)}
+.badge-blue{background:rgba(88,166,255,.15);color:var(--info)}
 .badge-purple{background:rgba(163,113,247,.15);color:var(--purple)}
 .badge-gray{background:rgba(139,148,158,.15);color:var(--muted)}
 .badge-orange{background:rgba(240,136,62,.15);color:var(--orange)}
-.badge-cyan{background:rgba(0,200,255,.15);color:var(--cyan)}
+.badge-cyan{background:rgba(0,200,255,.15);color:var(--primary)}
 
 table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}
 th{background:rgba(255,255,255,.04);color:var(--muted);font-weight:600;font-size:11px;
@@ -80,10 +80,10 @@ td{padding:8px 12px;border:1px solid var(--border);vertical-align:top}
 tr:hover td{background:rgba(255,255,255,.02)}
 
 .callout{border-radius:8px;padding:14px 16px;margin:14px 0;font-size:13px;border-left:3px solid}
-.callout.warning{background:rgba(227,179,65,.07);border-color:var(--yellow);color:var(--yellow)}
-.callout.info   {background:rgba(0,200,255,.07); border-color:var(--cyan);  color:var(--cyan)}
-.callout.danger {background:rgba(248,81,73,.07); border-color:var(--red);   color:var(--red)}
-.callout.tip    {background:rgba(63,185,80,.07); border-color:var(--green); color:var(--green)}
+.callout.warning{background:rgba(227,179,65,.07);border-color:var(--warning);color:var(--warning)}
+.callout.info   {background:rgba(0,200,255,.07); border-color:var(--primary);  color:var(--primary)}
+.callout.danger {background:rgba(248,81,73,.07); border-color:var(--danger);   color:var(--danger)}
+.callout.tip    {background:rgba(63,185,80,.07); border-color:var(--success); color:var(--success)}
 .callout strong{color:inherit}
 .callout p{color:inherit;margin:0}
 

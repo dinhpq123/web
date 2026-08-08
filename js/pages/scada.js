@@ -10,7 +10,7 @@ function renderScada() {
       <div style="display:flex;align-items:center;gap:8px;padding:5px 12px;background:rgba(0,200,255,.06);border:1px solid rgba(0,200,255,.15);border-radius:8px">
         <div class="pulse-dot green"></div>
         <span style="font-size:12px;color:var(--muted)">LIVE</span>
-        <span id="scadaRefresh" style="font-size:12px;font-family:'Roboto Mono',monospace;color:var(--cyan)"></span>
+        <span id="scadaRefresh" style="font-size:12px;font-family:'Roboto Mono',monospace;color:var(--primary)"></span>
       </div>
       <button class="btn btn-outline btn-sm" onclick="refreshScada()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg> Làm mới
@@ -20,8 +20,8 @@ function renderScada() {
 
   <div class="station-grid" style="margin-bottom:24px">
     ${DATA.stations.map(s => {
-    const pressColor = s.status === 'offline' ? '#546e7a' : s.pressure < 2 ? 'var(--red)' : s.pressure < 2.5 ? 'var(--yellow)' : 'var(--green)';
-    const levelColor = s.status === 'offline' ? '#546e7a' : s.level > 60 ? 'var(--green)' : s.level > 30 ? 'var(--yellow)' : 'var(--red)';
+    const pressColor = s.status === 'offline' ? 'var(--muted)' : s.pressure < 2 ? 'var(--danger)' : s.pressure < 2.5 ? 'var(--warning)' : 'var(--success)';
+    const levelColor = s.status === 'offline' ? 'var(--muted)' : s.level > 60 ? 'var(--success)' : s.level > 30 ? 'var(--warning)' : 'var(--danger)';
     const pressurePct = s.status !== 'offline' ? Math.min(Math.round(s.pressure / 6 * 100), 100) : 0;
     return `
     <div class="card kpi-card ${s.status}" onclick="openStationDetail('${s.id}')" style="cursor:pointer; padding:16px;">
@@ -37,7 +37,7 @@ function renderScada() {
         </div>
         <div class="metric">
           <div style="font-size:10px; color:var(--muted); text-transform:uppercase">Lưu lượng</div>
-          <div style="font-size:18px; font-weight:700; color:var(--cyan)">${s.status !== 'offline' ? s.flow : '—'} <span style="font-size:11px; font-weight:400; color:var(--muted)">m³/h</span></div>
+          <div style="font-size:18px; font-weight:700; color:var(--primary)">${s.status !== 'offline' ? s.flow : '—'} <span style="font-size:11px; font-weight:400; color:var(--muted)">m³/h</span></div>
         </div>
       </div>
       
@@ -46,7 +46,7 @@ function renderScada() {
           <span>Mực nước bể</span>
           <span>${s.status !== 'offline' ? s.level + '%' : '—'}</span>
         </div>
-        <div style="height:4px; background:rgba(255,255,255,0.05); border-radius:2px; overflow:hidden">
+        <div style="height:4px; background:var(--bg-card); border-radius:2px; overflow:hidden">
           <div style="height:100%; width:${s.level}%; background:${levelColor}; border-radius:2px"></div>
         </div>
       </div>
@@ -69,7 +69,7 @@ function renderScada() {
             ${DATA.stations.map(s => `
             <tr>
               <td><div style="font-weight:600">${s.name}</div><div style="font-size:10px;color:var(--muted)">${s.id}</div></td>
-              <td class="mono">${s.status !== 'offline' ? `<span style="color:${s.pressure < 2 ? 'var(--red)' : s.pressure < 2.5 ? 'var(--yellow)' : 'var(--green)'}">${s.pressure}</span>` : '—'}</td>
+              <td class="mono">${s.status !== 'offline' ? `<span style="color:${s.pressure < 2 ? 'var(--danger)' : s.pressure < 2.5 ? 'var(--warning)' : 'var(--success)'}">${s.pressure}</span>` : '—'}</td>
               <td class="mono">${s.status !== 'offline' ? s.flow : '—'}</td>
               <td>${statusBadge(s.status)}</td>
               <td><button class="btn btn-ghost btn-sm" onclick="openStationDetail('${s.id}')">Chi tiết</button></td>
@@ -99,7 +99,7 @@ function renderScada() {
               <td><div style="font-weight:500">${log.device}</div><div style="font-size:10px;color:var(--muted)">${DATA.stations.find(st => st.id === log.station)?.name}</div></td>
               <td>
                 <span class="badge ${log.action === 'Bật' || log.action === 'Mở' ? 'badge-green' : 'badge-red'}">${log.action}</span>
-                <div style="font-size:10px;color:${log.status === 'success' ? 'var(--green)' : 'var(--red)'};margin-top:4px">${log.status === 'success' ? 'Thành công' : 'Thất bại'}</div>
+                <div style="font-size:10px;color:${log.status === 'success' ? 'var(--success)' : 'var(--danger)'};margin-top:4px">${log.status === 'success' ? 'Thành công' : 'Thất bại'}</div>
               </td>
               <td style="font-size:12px">${log.user}</td>
             </tr>`;
@@ -129,8 +129,8 @@ function openStationDetail(id, tab = 'info') {
   </div>
   
   <div class="modal-tabs" style="display:flex; gap:20px; padding:0 24px; border-bottom:1px solid var(--border); margin-top:16px">
-     <div class="modal-tab ${tab === 'info' ? 'active' : ''}" onclick="openStationDetail('${id}', 'info')" style="padding:10px 0; font-size:13px; font-weight:600; cursor:pointer; color:${tab === 'info' ? 'var(--cyan)' : 'var(--muted)'}; border-bottom:2px solid ${tab === 'info' ? 'var(--cyan)' : 'transparent'}; transition:.2s">Thông tin trạm</div>
-     <div class="modal-tab ${tab === 'control' ? 'active' : ''}" onclick="openStationDetail('${id}', 'control')" style="padding:10px 0; font-size:13px; font-weight:600; cursor:pointer; color:${tab === 'control' ? 'var(--cyan)' : 'var(--muted)'}; border-bottom:2px solid ${tab === 'control' ? 'var(--cyan)' : 'transparent'}; transition:.2s">Điều khiển SCADA</div>
+     <div class="modal-tab ${tab === 'info' ? 'active' : ''}" onclick="openStationDetail('${id}', 'info')" style="padding:10px 0; font-size:13px; font-weight:600; cursor:pointer; color:${tab === 'info' ? 'var(--primary)' : 'var(--muted)'}; border-bottom:2px solid ${tab === 'info' ? 'var(--primary)' : 'transparent'}; transition:.2s">Thông tin trạm</div>
+     <div class="modal-tab ${tab === 'control' ? 'active' : ''}" onclick="openStationDetail('${id}', 'control')" style="padding:10px 0; font-size:13px; font-weight:600; cursor:pointer; color:${tab === 'control' ? 'var(--primary)' : 'var(--muted)'}; border-bottom:2px solid ${tab === 'control' ? 'var(--primary)' : 'transparent'}; transition:.2s">Điều khiển SCADA</div>
   </div>
 
   <div class="modal-body" style="padding:24px">
@@ -144,7 +144,7 @@ function openStationDetail(id, tab = 'info') {
 function renderStationInfo(s) {
   return `
     <div class="grid-2" style="margin-bottom:24px">
-      ${[['Áp lực', s.pressure, 'bar', 'var(--cyan)'], ['Lưu lượng', s.flow, 'm³/h', 'var(--green)'], ['Mực nước', s.level, '%', 'var(--yellow)'], ['Công suất', s.power, 'kW', 'var(--purple)']].map(([l, v, u, c]) => `
+      ${[['Áp lực', s.pressure, 'bar', 'var(--primary)'], ['Lưu lượng', s.flow, 'm³/h', 'var(--success)'], ['Mực nước', s.level, '%', 'var(--warning)'], ['Công suất', s.power, 'kW', 'var(--purple)']].map(([l, v, u, c]) => `
       <div style="background:var(--bg-elevated); border:1px solid var(--border); border-radius:12px; padding:16px;">
         <div style="font-size:11px; color:var(--muted); text-transform:uppercase; margin-bottom:8px">${l}</div>
         <div style="font-size:24px; font-weight:700; color:${c}; font-family:'Roboto Mono',monospace">${s.status !== 'offline' ? v : '—'}<span style="font-size:13px; margin-left:4px; font-weight:400; color:var(--muted)">${u}</span></div>
@@ -178,7 +178,7 @@ function initStationMap(s) {
 
     // Marker styling based on status
     const isError = s.status === 'offline' || s.pressure < 2 || s.level < 30;
-    const color = isError ? '#ff4757' : '#00e676';
+    const color = isError ? 'var(--danger)' : 'var(--success)';
     const pulseClass = isError ? 'pulse-red' : 'pulse-green';
 
     // Create custom marker with animation
@@ -203,7 +203,7 @@ function renderStationControl(s) {
 
   return `
     <div style="margin-bottom:20px; padding:12px; background:rgba(255,190,0,0.05); border:1px solid rgba(255,190,0,0.1); border-radius:8px; display:flex; gap:12px; align-items:flex-start">
-       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
        <div style="font-size:12px; color:var(--text-2)">Cảnh báo: Lệnh điều khiển trực tiếp sẽ tác động ngay lập tức đến vận hành mạng lưới. Yêu cầu xác nhận 2 bước.</div>
     </div>
 
@@ -211,7 +211,7 @@ function renderStationControl(s) {
       ${(s.devices || []).map(dev => `
       <div style="background:var(--bg-elevated); border:1px solid var(--border); border-radius:12px; padding:16px; display:flex; justify-content:space-between; align-items:center">
         <div style="display:flex; gap:12px; align-items:center">
-          <div style="width:40px; height:40px; border-radius:10px; background:rgba(255,255,255,0.05); display:flex; align-items:center; justify-content:center; color:${dev.type === 'pump' ? 'var(--cyan)' : 'var(--green)'}">
+          <div style="width:40px; height:40px; border-radius:10px; background:var(--bg-card); display:flex; align-items:center; justify-content:center; color:${dev.type === 'pump' ? 'var(--primary)' : 'var(--success)'}">
             ${dev.type === 'pump'
       ? `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v9"/><path d="M12 12l6 6"/></svg>`
       : `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>`}
@@ -225,7 +225,7 @@ function renderStationControl(s) {
           </div>
         </div>
         <div style="display:flex; gap:8px; align-items:center">
-          <a href="#" onclick="openDeviceHistory('${s.id}', '${dev.name}'); return false;" style="font-size:12px; color:var(--cyan); margin-right:12px; text-decoration:none">Lịch sử</a>
+          <a href="#" onclick="openDeviceHistory('${s.id}', '${dev.name}'); return false;" style="font-size:12px; color:var(--primary); margin-right:12px; text-decoration:none">Lịch sử</a>
           ${dev.type === 'pump' ? `
             <button class="btn btn-sm ${dev.status === 'running' ? 'btn-ghost' : 'btn-primary'}" ${dev.status === 'running' ? 'disabled' : ''} onclick="controlDevice('${s.id}', '${dev.id}', 'start')">Bật</button>
             <button class="btn btn-sm ${dev.status === 'running' ? 'btn-red' : 'btn-ghost'}" ${dev.status !== 'running' ? 'disabled' : ''} onclick="controlDevice('${s.id}', '${dev.id}', 'stop')">Dừng</button>
@@ -260,7 +260,7 @@ function openDeviceHistory(stationId, deviceName) {
               <tr>
                 <td style="font-size:11px;color:var(--muted);font-family:'Roboto Mono',monospace">${dateStr} ${timeStr}</td>
                 <td><span class="badge ${log.action === 'Bật' || log.action === 'Mở' ? 'badge-green' : 'badge-red'}">${log.action}</span></td>
-                <td><div style="font-size:11px;color:${log.status === 'success' ? 'var(--green)' : 'var(--red)'}">${log.status === 'success' ? 'Thành công' : 'Thất bại'}</div></td>
+                <td><div style="font-size:11px;color:${log.status === 'success' ? 'var(--success)' : 'var(--danger)'}">${log.status === 'success' ? 'Thành công' : 'Thất bại'}</div></td>
                 <td style="font-size:12px">${log.user}</td>
               </tr>`;
   }).join('')}
@@ -283,13 +283,13 @@ function controlDevice(stationId, deviceId, action) {
       <button class="modal-close" onclick="openStationDetail('${stationId}', 'control')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
     <div class="modal-body" style="padding:24px; text-align:center">
-      <div style="width:60px; height:60px; border-radius:50%; background:rgba(0,210,255,0.1); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:var(--cyan)">
+      <div style="width:60px; height:60px; border-radius:50%; background:var(--primary-soft); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:var(--primary)">
          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </div>
       <div style="font-size:16px; font-weight:600; margin-bottom:12px">Xác nhận lệnh ${actionText}</div>
       <div style="font-size:13px; color:var(--text-2); margin-bottom:24px">Bạn có chắc chắn muốn thực hiện lệnh <strong>${actionText.toUpperCase()}</strong> cho <strong>${dev.name}</strong> tại <strong>${s.name}</strong>?</div>
       
-      <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:8px; padding:12px; margin-bottom:20px">
+      <div style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:12px; margin-bottom:20px">
          <div style="font-size:11px; color:var(--muted); margin-bottom:8px">Mã xác thực 2 bước (Giả lập)</div>
          <div style="display:flex; gap:8px; justify-content:center">
             ${[0, 0, 0, 0, 0, 0].map(() => `<div style="width:36px; height:44px; background:var(--bg-elevated); border:1px solid var(--border-active); border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Roboto Mono',monospace; font-size:20px; font-weight:700">•</div>`).join('')}
@@ -314,7 +314,7 @@ function confirmControl(stationId, deviceId, action) {
   // Update UI to loading
   openModal(`
     <div class="modal-body" style="padding:60px 24px; text-align:center">
-      <div class="spinner" style="width:40px; height:40px; border:3px solid rgba(0,210,255,0.1); border-top-color:var(--cyan); border-radius:50%; animation:spin 1s linear infinite; margin:0 auto 20px"></div>
+      <div class="spinner" style="width:40px; height:40px; border:3px solid var(--border); border-top-color:var(--primary); border-radius:50%; animation:spin 1s linear infinite; margin:0 auto 20px"></div>
       <div style="font-size:15px; font-weight:600">Đang gửi lệnh...</div>
       <div style="font-size:12px; color:var(--muted); margin-top:8px">Đang kết nối đến gateway trạm ${s.id}</div>
     </div>
@@ -340,7 +340,7 @@ function confirmControl(stationId, deviceId, action) {
     // Show success
     openModal(`
       <div class="modal-body" style="padding:40px 24px; text-align:center">
-        <div style="width:60px; height:60px; border-radius:50%; background:rgba(0,240,128,0.1); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:var(--green)">
+      <div style="width:60px; height:60px; border-radius:50%; background:var(--success-soft); display:flex; align-items:center; justify-content:center; margin:0 auto 20px; color:var(--success)">
            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
         </div>
         <div style="font-size:18px; font-weight:700; margin-bottom:8px">Lệnh đã thực thi!</div>
@@ -518,7 +518,7 @@ function renderScadaFullTable() {
               <td style="font-weight:500">${stName}</td>
               <td>${l.device}</td>
               <td><span class="badge ${l.action === 'Bật' || l.action === 'Mở' ? 'badge-green' : 'badge-red'}">${l.action}</span></td>
-              <td><span style="font-weight:600; color:${l.status === 'success' ? 'var(--green)' : 'var(--red)'}; font-size:12px">${l.status === 'success' ? 'Thành công' : 'Thất bại'}</span></td>
+              <td><span style="font-weight:600; color:${l.status === 'success' ? 'var(--success)' : 'var(--danger)'}; font-size:12px">${l.status === 'success' ? 'Thành công' : 'Thất bại'}</span></td>
               <td style="padding-right:24px; font-size:13px">${l.user}</td>
             </tr>`;
     }).join('')}

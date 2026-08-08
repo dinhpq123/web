@@ -21,9 +21,9 @@ const WX_DISTRICT_RISK = [
   { name:'H. Mỹ Đức',      rainfall:98,  riverLevel:5.4, tlevel:'Vượt MD1', floodArea:1600, risk:82, riskLabel:'Rất cao',   color:'#ea580c' },
   { name:'H. Thanh Oai',   rainfall:88,  riverLevel:4.8, tlevel:'Vượt MD1', floodArea:920,  risk:74, riskLabel:'Cao',       color:'#ca8a04' },
   { name:'H. Ba Vì',       rainfall:75,  riverLevel:4.1, tlevel:'Cận MD1',  floodArea:540,  risk:58, riskLabel:'Trung bình',color:'#d97706' },
-  { name:'H. Phúc Thọ',    rainfall:62,  riverLevel:3.6, tlevel:'Bình thường', floodArea:120, risk:35, riskLabel:'Thấp',    color:'#16a34a' },
-  { name:'H. Đan Phượng',  rainfall:55,  riverLevel:3.2, tlevel:'Bình thường', floodArea:0,   risk:22, riskLabel:'Thấp',    color:'#16a34a' },
-  { name:'H. Đông Anh',    rainfall:48,  riverLevel:3.0, tlevel:'Bình thường', floodArea:80,  risk:30, riskLabel:'Thấp',    color:'#16a34a' },
+  { name:'H. Phúc Thọ',    rainfall:62,  riverLevel:3.6, tlevel:'Bình thường', floodArea:120, risk:35, riskLabel:'Thấp',    color:'#2984EE' },
+  { name:'H. Đan Phượng',  rainfall:55,  riverLevel:3.2, tlevel:'Bình thường', floodArea:0,   risk:22, riskLabel:'Thấp',    color:'#2984EE' },
+  { name:'H. Đông Anh',    rainfall:48,  riverLevel:3.0, tlevel:'Bình thường', floodArea:80,  risk:30, riskLabel:'Thấp',    color:'#2984EE' },
   { name:'Q. Hà Đông',     rainfall:40,  riverLevel:2.8, tlevel:'Bình thường', floodArea:0,   risk:18, riskLabel:'Rất thấp',color:'#0891b2' },
 ];
 
@@ -110,7 +110,7 @@ function renderWeatherForecastWidget() {
         ${WX_DISTRICT_RISK.map(d => `
         <tr style="transition:background .15s" onmouseover="this.style.background='rgba(255,255,255,.025)'" onmouseout="this.style.background=''">
           <td style="padding:10px 14px;font-weight:600;font-size:12px">${d.name}</td>
-          <td style="padding:10px 14px;text-align:right;font-family:monospace;font-size:12px;color:${d.rainfall>80?'#f87171':d.rainfall>50?'#fbbf24':'#34d399'}">${d.rainfall}</td>
+          <td style="padding:10px 14px;text-align:right;font-family:monospace;font-size:12px;color:${d.rainfall>80?'#f87171':d.rainfall>50?'#fbbf24':'var(--success-text)'}">${d.rainfall}</td>
           <td style="padding:10px 14px;text-align:right;font-family:monospace;font-size:12px;color:${d.riverLevel>5?'#f87171':d.riverLevel>4?'#fbbf24':'rgba(255,255,255,.6)'}">${d.riverLevel}</td>
           <td style="padding:10px 14px;font-size:11px;color:${d.tlevel.includes('Vượt')?'#fbbf24':d.tlevel.includes('Cận')?'#fed7aa':'rgba(255,255,255,.4)'}">${d.tlevel}</td>
           <td style="padding:10px 14px;text-align:right;font-size:11px;color:${d.floodArea>500?'#f87171':'rgba(255,255,255,.5)'}">${d.floodArea > 0 ? d.floodArea.toLocaleString('vi-VN') + ' ha' : '—'}</td>

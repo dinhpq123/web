@@ -13,12 +13,12 @@ const ORG_STRUCTURE = {
             ]
         },
         {
-            id: 'd2', type: 'dept', name: 'Phòng Quản lý Đê điều', color: '#8b5cf6',
+            id: 'd2', type: 'dept', name: 'Phòng Quản lý Đê điều', color: 'var(--purple)',
             head: { name: 'Phạm Thị Ngọc', title: 'Trưởng phòng', initials: 'PN' },
             deputies: [],
             children: [
-                { id: 'd2a', type: 'team', name: 'Đội Tuần tra Đê Hữu Hồng', color: '#8b5cf6', headName: 'Vũ Quang Khải', staff: 16 },
-                { id: 'd2b', type: 'team', name: 'Đội Tuần tra Đê Hữu Đáy', color: '#8b5cf6', headName: 'Ngô Văn Hải', staff: 16 },
+                { id: 'd2a', type: 'team', name: 'Đội Tuần tra Đê Hữu Hồng', color: 'var(--purple)', headName: 'Vũ Quang Khải', staff: 16 },
+                { id: 'd2b', type: 'team', name: 'Đội Tuần tra Đê Hữu Đáy', color: 'var(--purple)', headName: 'Ngô Văn Hải', staff: 16 },
             ]
         },
         {
@@ -31,11 +31,11 @@ const ORG_STRUCTURE = {
             ]
         },
         {
-            id: 'd4', type: 'dept', name: 'Phòng Kỹ thuật & CNTT', color: '#10b981',
+            id: 'd4', type: 'dept', name: 'Phòng Kỹ thuật & CNTT', color: 'var(--success)',
             head: { name: 'Đỗ Mạnh Tuân', title: 'Trưởng phòng', initials: 'DT' },
             deputies: [],
             children: [
-                { id: 'd4a', type: 'team', name: 'Tổ IoT/SCADA & Hadiwa IOC', color: '#10b981', headName: 'Lâm Văn Phúc', staff: 5 },
+                { id: 'd4a', type: 'team', name: 'Tổ IoT/SCADA & Hadiwa IOC', color: 'var(--success)', headName: 'Lâm Văn Phúc', staff: 5 },
             ]
         },
         {
@@ -105,7 +105,7 @@ function renderOrgChart() {
           <div style="font-size:11px;color:rgba(255,255,255,.4);margin-top:2px">${ceo.name}</div>
         </div>
         <div style="margin-left:auto;text-align:right">
-          <div style="font-size:20px;font-weight:700;color:var(--cyan)">${DATA.employees.length}</div>
+          <div style="font-size:20px;font-weight:700;color:var(--primary)">${DATA.employees.length}</div>
           <div style="font-size:10px;color:rgba(255,255,255,.4)">Tổng NV</div>
         </div>
       </div>
@@ -132,9 +132,9 @@ function renderOrgChart() {
 if (!window.deptList) {
     window.deptList = [
         { id: 'd1', name: 'Phòng Điều hành PCTT', code: 'PCTT', head: 'Trần Thị Hương', deputies: ['Trần Văn Minh (Phó CCT)'], staff: 14, color: '#ef4444', desc: 'Điều phối kịch bản PCTT, ứng cứu sự cố, BCH PCTT' },
-        { id: 'd2', name: 'Phòng Quản lý Đê điều', code: 'PĐĐ', head: 'Phạm Thị Ngọc', deputies: [], staff: 18, color: '#8b5cf6', desc: 'Kiểm tra, tuần tra, bảo trì hệ thống đê; cấp phép' },
+        { id: 'd2', name: 'Phòng Quản lý Đê điều', code: 'PĐĐ', head: 'Phạm Thị Ngọc', deputies: [], staff: 18, color: 'var(--purple)', desc: 'Kiểm tra, tuần tra, bảo trì hệ thống đê; cấp phép' },
         { id: 'd3', name: 'Phòng Quản lý Thủy lợi', code: 'PTL', head: 'Lê Hùng Cường', deputies: [], staff: 16, color: '#06b6d4', desc: 'Quản lý hồ chứa, cống, trạm bơm tiêu, hệ thống tưới' },
-        { id: 'd4', name: 'Phòng Kỹ thuật & CNTT', code: 'PKT', head: 'Đỗ Mạnh Tuân', deputies: [], staff: 10, color: '#10b981', desc: 'Giám sát kỹ thuật, IoT/SCADA, vận hành Hadiwa IOC' },
+        { id: 'd4', name: 'Phòng Kỹ thuật & CNTT', code: 'PKT', head: 'Đỗ Mạnh Tuân', deputies: [], staff: 10, color: 'var(--success)', desc: 'Giám sát kỹ thuật, IoT/SCADA, vận hành Hadiwa IOC' },
         { id: 'd5', name: 'Phòng Hành chính - TC', code: 'PHC', head: 'Hoàng Văn Bình', deputies: [], staff: 8, color: '#94a3b8', desc: 'Văn thư, nhân sự, tài chính, quản lý Quỹ PCTT' },
         { id: 'd6', name: 'Đội Tuần tra Đê (HH+HĐ)', code: 'ĐTT', head: 'Vũ Quang Khải', deputies: [], staff: 32, color: '#f97316', desc: 'Tuần tra thường xuyên tuyến đê Hữu Hồng, Hữu Đáy' },
         { id: 'd7', name: 'Đội ƯCSC & Xung kích', code: 'ĐUC', head: 'Bùi Anh Tuấn', deputies: ['Lý Thị Thảo (Phó CCT)'], staff: 24, color: '#f43f5e', desc: 'Ứng cứu sự cố khẩn cấp, xung kích phòng chống lụt bão' },
@@ -181,7 +181,7 @@ function renderDeptManagement() {
 }
 
 function openAddDept() {
-    const colors = ['#00c8ff', '#00e676', '#0066ff', '#7c4dff', '#ffca28', '#ff6d00', '#e91e63', '#00bcd4'];
+    const colors = ['var(--primary)', 'var(--success)', 'var(--info)', 'var(--purple)', 'var(--warning)', '#f28c28', 'var(--danger)', '#0284c7'];
     openModal(`
   <div class="modal-header"><span class="modal-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Thêm phòng ban mới</span><button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div class="modal-body">
@@ -235,14 +235,14 @@ function saveDept() {
     };
     window.deptList.push(newDept);
     closeModal();
-    showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã tạo phòng ban "${newDept.name}" thành công!`);
+    showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã tạo phòng ban "${newDept.name}" thành công!`);
     document.getElementById('hrmContent').innerHTML = renderDeptManagement();
 }
 
 function openEditDept(id) {
     const d = window.deptList.find(x => x.id === id);
     if (!d) return;
-    const colors = ['#00c8ff', '#00e676', '#0066ff', '#7c4dff', '#ffca28', '#ff6d00', '#e91e63', '#00bcd4'];
+    const colors = ['var(--primary)', 'var(--success)', 'var(--info)', 'var(--purple)', 'var(--warning)', '#f28c28', 'var(--danger)', '#0284c7'];
     openModal(`
   <div class="modal-header"><span class="modal-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Sửa: ${d.name}</span><button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div class="modal-body">
@@ -269,7 +269,7 @@ function openEditDept(id) {
   </div>
   <div class="modal-footer">
     <button class="btn btn-ghost" onclick="closeModal()">Hủy</button>
-    <button class="btn btn-primary" onclick="updateDept('${id}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Lưu thay đổi</button>
+    <button class="btn btn-primary" onclick="updateDept('${id}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Lưu thay đổi</button>
   </div>`);
 }
 
@@ -284,7 +284,7 @@ function updateDept(id) {
     d.color = document.getElementById('ed_color')?.value || d.color;
     d.desc = document.getElementById('ed_desc')?.value || d.desc;
     closeModal();
-    showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã cập nhật phòng ban "${d.name}"!`);
+    showToast(`<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã cập nhật phòng ban "${d.name}"!`);
     document.getElementById('hrmContent').innerHTML = renderDeptManagement();
 }
 

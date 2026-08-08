@@ -32,17 +32,17 @@ CSS = """
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6}
-h1{font-size:2.4rem;font-weight:800;background:linear-gradient(135deg,#fff,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
+h1{font-size:2.4rem;font-weight:800;background:linear-gradient(135deg,#fff,var(--primary));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
 h2{font-size:1.5rem;font-weight:700;color:#fff;margin:0}
-h3{font-size:1.1rem;font-weight:600;color:var(--cyan);margin:1.5rem 0 .6rem}
+h3{font-size:1.1rem;font-weight:600;color:var(--primary);margin:1.5rem 0 .6rem}
 p{color:#b0c8e0;margin:.6rem 0 1rem;line-height:1.7}
 ul{padding-left:1.4rem;color:#b0c8e0}
 li{margin:.3rem 0}
-a{color:var(--cyan);text-decoration:none}
+a{color:var(--primary);text-decoration:none}
 a:hover{text-decoration:underline}
 
 /* Layout */
-.cover{background:linear-gradient(135deg,#030e1c 0%,#051a35 60%,#0a1f3e 100%);padding:80px 60px 60px;border-bottom:2px solid var(--cyan);position:relative;overflow:hidden}
+.cover{background:linear-gradient(135deg,#030e1c 0%,#051a35 60%,#0a1f3e 100%);padding:80px 60px 60px;border-bottom:2px solid var(--primary);position:relative;overflow:hidden}
 .cover::before{content:'';position:absolute;right:-100px;top:-100px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(0,200,255,.08),transparent 70%)}
 .cover-meta{display:flex;gap:10px;flex-wrap:wrap;margin-top:2rem}
 .tag{display:inline-block;padding:4px 14px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.5px}
@@ -50,15 +50,15 @@ a:hover{text-decoration:underline}
 main{max-width:1200px;margin:0 auto;padding:40px 40px 80px}
 section{margin-bottom:60px;padding-bottom:40px;border-bottom:1px solid var(--border)}
 
-.sec-header{display:flex;align-items:center;gap:18px;margin-bottom:24px;padding:20px 24px;background:var(--bg2);border-radius:12px;border-left:4px solid var(--cyan)}
+.sec-header{display:flex;align-items:center;gap:18px;margin-bottom:24px;padding:20px 24px;background:var(--bg2);border-radius:12px;border-left:4px solid var(--primary)}
 .sec-icon{font-size:2rem}
-.sec-num{font-size:10px;font-weight:700;color:var(--cyan);letter-spacing:2px;text-transform:uppercase;display:block}
+.sec-num{font-size:10px;font-weight:700;color:var(--primary);letter-spacing:2px;text-transform:uppercase;display:block}
 
 /* TOC */
 #toc{position:fixed;top:20px;right:20px;width:230px;background:rgba(13,31,53,.95);border:1px solid var(--border);border-radius:12px;padding:16px;z-index:9999;max-height:calc(100vh - 40px);overflow-y:auto;backdrop-filter:blur(12px)}
-#toc h4{font-size:10px;letter-spacing:2px;color:var(--cyan);text-transform:uppercase;margin-bottom:10px;font-weight:700}
+#toc h4{font-size:10px;letter-spacing:2px;color:var(--primary);text-transform:uppercase;margin-bottom:10px;font-weight:700}
 #toc a{display:block;font-size:11px;color:#b0c8e0;padding:4px 8px;border-radius:6px;transition:.2s}
-#toc a:hover{background:rgba(0,200,255,.1);color:var(--cyan);text-decoration:none}
+#toc a:hover{background:rgba(0,200,255,.1);color:var(--primary);text-decoration:none}
 #toc .toc-group{font-size:9px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin:8px 0 2px 8px}
 
 /* Cards */
@@ -77,7 +77,7 @@ figcaption{margin-top:10px;font-size:12px;color:var(--muted);font-style:italic;t
 
 /* RBAC Table */
 .rbac-table{width:100%;border-collapse:collapse;font-size:12px;margin:20px 0}
-.rbac-table th{background:var(--bg3);color:var(--cyan);font-weight:700;padding:10px 8px;text-align:center;border:1px solid var(--border)}
+.rbac-table th{background:var(--bg3);color:var(--primary);font-weight:700;padding:10px 8px;text-align:center;border:1px solid var(--border)}
 .rbac-table td{padding:8px 10px;border:1px solid var(--border);text-align:center}
 .rbac-table tr:nth-child(even) td{background:rgba(0,200,255,.03)}
 .rbac-table td.mod{text-align:left;font-weight:600;color:#fff;background:var(--bg2)}
@@ -99,7 +99,7 @@ figcaption{margin-top:10px;font-size:12px;color:var(--muted);font-style:italic;t
 
 /* Feature list */
 .feat-list{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-.feat{background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:6px;padding:4px 12px;font-size:12px;color:var(--cyan)}
+.feat{background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:6px;padding:4px 12px;font-size:12px;color:var(--primary)}
 
 /* Info box */
 .info-box{background:rgba(0,80,204,.15);border:1px solid rgba(0,80,204,.4);border-radius:10px;padding:16px 20px;margin:16px 0}
@@ -479,7 +479,7 @@ def build_html():
     body = f"""
 <div id="cover" class="cover">
 <div class="cover-inner">
-<p style="font-size:11px;letter-spacing:2px;color:var(--cyan);font-family:'Roboto Mono',monospace;margin-bottom:12px">QUAWACO · IOC CENTER · V1.0 · 2026</p>
+<p style="font-size:11px;letter-spacing:2px;color:var(--primary);font-family:'Roboto Mono',monospace;margin-bottom:12px">QUAWACO · IOC CENTER · V1.0 · 2026</p>
 <h1>Đặc tả Tính năng & Giới thiệu Hệ thống</h1>
 <p style="font-size:1.1rem;color:#b0c8e0;max-width:720px;margin:.5rem 0 1.5rem">Trung tâm Điều hành Thông minh – Công ty Cổ phần Nước sạch Quảng Ninh (Quawaco). Tài liệu này trình bày đầy đủ các tính năng, phân hệ, kiến trúc và phân quyền của hệ thống IOC Center và ứng dụng khách hàng Smart Water Care.</p>
 <div class="cover-meta">

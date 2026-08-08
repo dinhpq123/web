@@ -9,16 +9,16 @@ let dmPages = { registry: 1, patrol: 1, vulnerable: 1, violations: 1 };
 
 // ── Helpers ────────────────────────────────────────────────────────
 const DIKE_TYPE_LABEL = { cap1:'Đê cấp I', cap2:'Đê cấp II', local:'Đê địa phương' };
-const DIKE_TYPE_COLOR = { cap1:'#ef4444', cap2:'#f59e0b', local:'#3b82f6' };
-const DIKE_STATUS_COLOR = { ok:'#10b981', warning:'#f59e0b', danger:'#ef4444', critical:'#ef4444' };
-const SEV_COLOR = { emergency:'#ef4444', critical:'#ef4444', warning:'#f59e0b', info:'#3b82f6' };
+const DIKE_TYPE_COLOR = { cap1:'var(--danger-text)', cap2:'var(--warning-text)', local:'var(--info-text)' };
+const DIKE_STATUS_COLOR = { ok:'var(--success-text)', warning:'var(--warning-text)', danger:'var(--danger-text)', critical:'var(--danger-text)' };
+const SEV_COLOR = { emergency:'var(--danger-text)', critical:'var(--danger-text)', warning:'var(--warning-text)', info:'var(--info-text)' };
 const SEV_LABEL = { emergency:'Khẩn cấp', critical:'Nghiêm trọng', warning:'Cảnh báo', info:'Thông tin' };
 const VULN_STATUS_LABEL = { monitoring:'Đang theo dõi', fixing:'Đang xử lý', emergency_response:'Ứng phó khẩn cấp', pending_violation:'Chờ xử phạt', resolved:'Đã xử lý' };
-const VULN_STATUS_COLOR = { monitoring:'#f59e0b', fixing:'#38bdf8', emergency_response:'#ef4444', pending_violation:'#a78bfa', resolved:'#10b981' };
+const VULN_STATUS_COLOR = { monitoring:'var(--warning-text)', fixing:'var(--info-text)', emergency_response:'var(--danger-text)', pending_violation:'var(--info-text)', resolved:'var(--success-text)' };
 
 function _sv(sev) {
-  const c = SEV_COLOR[sev] || '#6b7280';
-  return `<span style="padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;background:${c}22;color:${c};border:1px solid ${c}44">${SEV_LABEL[sev]||sev}</span>`;
+  const c = SEV_COLOR[sev] || 'var(--text-subtle)';
+  return `<span style="padding:2px 9px;border-radius:20px;font-size:10px;font-weight:700;background:color-mix(in srgb, ${c} 22%, transparent);color:${c};border:1px solid color-mix(in srgb, ${c} 44%, transparent)">${SEV_LABEL[sev]||sev}</span>`;
 }
 
 // ── Mock Data: Danh mục tuyến đê ───────────────────────────────────
@@ -84,14 +84,14 @@ function dmPagination(total, current, tabKey) {
   if (totalPages <= 1) return '';
   const start = (current - 1) * DM_PAGE_SIZE;
   const nums = Array.from({ length: totalPages }, (_, i) => i + 1).map(p =>
-    `<button onclick="dmSetPage('${tabKey}',${p})" style="min-width:30px;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:600;border:1px solid ${p===current?'var(--cyan)':'rgba(255,255,255,.12)'};background:${p===current?'rgba(0,200,255,.15)':'transparent'};color:${p===current?'var(--cyan)':'rgba(255,255,255,.5)'};cursor:pointer">${p}</button>`
+    `<button onclick="dmSetPage('${tabKey}',${p})" style="min-width:30px;padding:4px 8px;border-radius:6px;font-size:12px;font-weight:600;border:1px solid ${p===current?'var(--primary)':'var(--border)'};background:${p===current?'var(--primary-soft)':'transparent'};color:${p===current?'var(--primary-text)':'var(--text-secondary)'};cursor:pointer">${p}</button>`
   ).join('');
-  return `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid rgba(255,255,255,.07);margin-top:4px">
-    <span style="font-size:11px;color:rgba(255,255,255,.35)">Hiển thị ${start+1}–${Math.min(start+DM_PAGE_SIZE,total)} / ${total} mục</span>
+  return `<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid var(--border);margin-top:4px">
+    <span style="font-size:11px;color:var(--text-muted)">Hiển thị ${start+1}–${Math.min(start+DM_PAGE_SIZE,total)} / ${total} mục</span>
     <div style="display:flex;gap:4px">
-      <button onclick="dmSetPage('${tabKey}',${current-1})" ${current===1?'disabled':''} style="padding:4px 10px;border-radius:6px;font-size:12px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.5);cursor:pointer;opacity:${current===1?0.4:1}">‹</button>
+      <button onclick="dmSetPage('${tabKey}',${current-1})" ${current===1?'disabled':''} style="padding:4px 10px;border-radius:6px;font-size:12px;border:1px solid var(--border);background:transparent;color:var(--text-secondary);cursor:pointer;opacity:${current===1?0.4:1}">‹</button>
       ${nums}
-      <button onclick="dmSetPage('${tabKey}',${current+1})" ${current===totalPages?'disabled':''} style="padding:4px 10px;border-radius:6px;font-size:12px;border:1px solid rgba(255,255,255,.12);background:transparent;color:rgba(255,255,255,.5);cursor:pointer;opacity:${current===totalPages?0.4:1}">›</button>
+      <button onclick="dmSetPage('${tabKey}',${current+1})" ${current===totalPages?'disabled':''} style="padding:4px 10px;border-radius:6px;font-size:12px;border:1px solid var(--border);background:transparent;color:var(--text-secondary);cursor:pointer;opacity:${current===totalPages?0.4:1}">›</button>
     </div>
   </div>`;
 }
@@ -114,28 +114,28 @@ function renderDikeManagement() {
 <style>
 .dm-page{padding:20px 24px;max-width:1280px;margin:0 auto}
 .dm-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
-.dm-kpi{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px 16px}
+.dm-kpi{background:var(--bg-secondary);border:1px solid var(--border);border-radius:14px;padding:14px 16px}
 .dm-kpi-val{font-size:30px;font-weight:900;line-height:1;margin-bottom:4px}
-.dm-kpi-lbl{font-size:11px;color:rgba(255,255,255,.4);font-weight:500}
-.dm-tabs{display:flex;gap:4px;margin-bottom:16px;background:rgba(255,255,255,.04);border-radius:10px;padding:4px;width:fit-content}
-.dm-tab{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;color:rgba(255,255,255,.45);border:none;background:transparent;transition:all .2s;display:flex;align-items:center;gap:6px}
-.dm-tab.active{background:rgba(255,255,255,.1);color:#fff}
-.dm-badge{background:rgba(239,68,68,.7);color:#fff;font-size:9px;border-radius:20px;padding:1px 5px;font-weight:800}
+.dm-kpi-lbl{font-size:11px;color:var(--text-muted);font-weight:500}
+.dm-tabs{display:flex;gap:4px;margin-bottom:16px;background:var(--bg-secondary);border-radius:10px;padding:4px;width:fit-content}
+.dm-tab{padding:7px 16px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;color:var(--text-muted);border:none;background:transparent;transition:all .2s;display:flex;align-items:center;gap:6px}
+.dm-tab.active{background:var(--primary-soft);color:var(--primary-text)}
+.dm-badge{background:var(--danger);color:var(--text-on-primary);font-size:9px;border-radius:20px;padding:1px 5px;font-weight:800}
 .dm-table{width:100%;border-collapse:collapse}
-.dm-table th{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);text-transform:uppercase;letter-spacing:.07em;padding:8px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07)}
-.dm-table td{padding:10px 12px;font-size:12px;border-bottom:1px solid rgba(255,255,255,.05);vertical-align:middle}
-.dm-table tr:hover td{background:rgba(255,255,255,.025)}
-.dm-vuln-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:12px;padding:14px;margin-bottom:8px;transition:all .2s;cursor:pointer}
-.dm-vuln-card:hover{border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.05)}
+.dm-table th{font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.07em;padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.dm-table td{padding:10px 12px;font-size:12px;border-bottom:1px solid var(--border-light);vertical-align:middle}
+.dm-table tr:hover td{background:var(--bg-hover)}
+.dm-vuln-card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:8px;transition:all .2s;cursor:pointer}
+.dm-vuln-card:hover{border-color:var(--border-active);background:var(--bg-hover)}
 </style>
 <div class="dm-page">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;flex-wrap:wrap;gap:12px">
     <div>
-      <h1 style="font-size:21px;font-weight:800;color:#fff;margin:0 0 4px;display:flex;align-items:center;gap:9px">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
+      <h1 style="font-size:21px;font-weight:800;color:var(--text);margin:0 0 4px;display:flex;align-items:center;gap:9px">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2.5"><path d="M3 7h18M3 12h18M3 17h18"/></svg>
         Quản lý Đê điều
       </h1>
-      <div style="font-size:12px;color:rgba(255,255,255,.38)">${DIKE_REGISTRY.length} tuyến đê · Tổng ${DIKE_REGISTRY.reduce((s,d)=>s+d.length,0).toFixed(1)} km · ${issues} điểm cần xử lý</div>
+      <div style="font-size:12px;color:var(--text-muted)">${DIKE_REGISTRY.length} tuyến đê · Tổng ${DIKE_REGISTRY.reduce((s,d)=>s+d.length,0).toFixed(1)} km · ${issues} điểm cần xử lý</div>
     </div>
     <button class="btn btn-primary" onclick="dmOpenPatrolLog()">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
@@ -143,10 +143,10 @@ function renderDikeManagement() {
     </button>
   </div>
   <div class="dm-kpis">
-    <div class="dm-kpi"><div class="dm-kpi-val" style="color:#a78bfa">${DIKE_REGISTRY.length}</div><div class="dm-kpi-lbl">Tuyến đê quản lý</div></div>
-    <div class="dm-kpi"><div class="dm-kpi-val" style="color:#ef4444">${emergency}</div><div class="dm-kpi-lbl">Điểm khẩn cấp</div></div>
-    <div class="dm-kpi"><div class="dm-kpi-val" style="color:#f59e0b">${DIKE_VULNERABLE.filter(v=>v.status!=='resolved').length}</div><div class="dm-kpi-lbl">Điểm xung yếu</div></div>
-    <div class="dm-kpi"><div class="dm-kpi-val" style="color:#3b82f6">${openViol}</div><div class="dm-kpi-lbl">Vi phạm chưa xử lý</div></div>
+    <div class="dm-kpi"><div class="dm-kpi-val" style="color:var(--primary-text)">${DIKE_REGISTRY.length}</div><div class="dm-kpi-lbl">Tuyến đê quản lý</div></div>
+    <div class="dm-kpi"><div class="dm-kpi-val" style="color:var(--danger)">${emergency}</div><div class="dm-kpi-lbl">Điểm khẩn cấp</div></div>
+    <div class="dm-kpi"><div class="dm-kpi-val" style="color:var(--warning)">${DIKE_VULNERABLE.filter(v=>v.status!=='resolved').length}</div><div class="dm-kpi-lbl">Điểm xung yếu</div></div>
+    <div class="dm-kpi"><div class="dm-kpi-val" style="color:var(--info)">${openViol}</div><div class="dm-kpi-lbl">Vi phạm chưa xử lý</div></div>
   </div>
   <div class="dm-tabs">
     <button class="dm-tab ${dikeState.tab==='registry'?'active':''}" onclick="dmTab('registry')">
@@ -185,22 +185,22 @@ function dmRenderTab() {
 function dmRegistry() {
   const pg=dmPages.registry, data=DIKE_REGISTRY;
   const rows=data.slice((pg-1)*DM_PAGE_SIZE,pg*DM_PAGE_SIZE);
-  return `<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden">
+  return `<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
     <div style="overflow-x:auto"><table class="dm-table">
       <thead><tr><th>Mã</th><th>Tên tuyến đê</th><th>Cấp</th><th>Sông</th><th>Dài (km)</th><th>Cao trình</th><th>Tình trạng</th><th>Điểm XL</th><th>Kiểm tra gần nhất</th><th></th></tr></thead>
       <tbody>${rows.map(d=>`<tr>
-        <td style="font-family:monospace;color:#a78bfa;font-weight:700;font-size:11px">${d.id}</td>
-        <td style="font-weight:600;color:#fff">${d.name}<br><span style="font-size:10px;color:rgba(255,255,255,.35)">${d.district}</span></td>
-        <td><span style="padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:${DIKE_TYPE_COLOR[d.type]}22;color:${DIKE_TYPE_COLOR[d.type]}">${DIKE_TYPE_LABEL[d.type]}</span></td>
-        <td style="font-size:11px;color:rgba(255,255,255,.5)">${d.river}</td>
-        <td style="font-weight:700;color:#38bdf8">${d.length}</td>
-        <td style="font-family:monospace;color:#a3e635;font-size:11px">${d.elevation}</td>
+        <td style="font-family:monospace;color:var(--info-text);font-weight:700;font-size:11px">${d.id}</td>
+        <td style="font-weight:600;color:var(--text)">${d.name}<br><span style="font-size:10px;color:var(--text-muted)">${d.district}</span></td>
+        <td><span style="padding:2px 8px;border-radius:20px;font-size:10px;font-weight:700;background:color-mix(in srgb, ${DIKE_TYPE_COLOR[d.type]} 22%, transparent);color:${DIKE_TYPE_COLOR[d.type]}">${DIKE_TYPE_LABEL[d.type]}</span></td>
+        <td style="font-size:11px;color:var(--text-secondary)">${d.river}</td>
+        <td style="font-weight:700;color:var(--info-text)">${d.length}</td>
+        <td style="font-family:monospace;color:var(--info-text);font-size:11px">${d.elevation}</td>
         <td><div style="display:flex;align-items:center;gap:6px">
           <div class="pulse-dot ${d.status==='ok'?'green':d.status==='warning'?'yellow':'red'}"></div>
-          <span style="font-size:11px;color:${DIKE_STATUS_COLOR[d.status]||'#6b7280'}">${d.condition}</span>
+          <span style="font-size:11px;color:${DIKE_STATUS_COLOR[d.status]||'var(--text-subtle)'}">${d.condition}</span>
         </div></td>
-        <td style="text-align:center"><span style="font-size:15px;font-weight:900;color:${d.issues>5?'#ef4444':d.issues>0?'#f59e0b':'#10b981'}">${d.issues}</span></td>
-        <td style="font-size:11px;color:rgba(255,255,255,.45)">${d.lastInspect}</td>
+        <td style="text-align:center"><span style="font-size:15px;font-weight:900;color:${d.issues>5?'var(--danger-text)':d.issues>0?'var(--warning-text)':'var(--success-text)'}">${d.issues}</span></td>
+        <td style="font-size:11px;color:var(--text-muted)">${d.lastInspect}</td>
         <td><button class="btn btn-ghost btn-sm" onclick="dmViewDike('${d.id}')">Chi tiết</button></td>
       </tr>`).join('')}</tbody>
     </table></div>
@@ -211,10 +211,10 @@ function dmRegistry() {
 function dmPatrol() {
   const pg=dmPages.patrol, data=DIKE_PATROLS;
   const rows=data.slice((pg-1)*DM_PAGE_SIZE,pg*DM_PAGE_SIZE);
-  const alertSvg=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2.5" style="vertical-align:middle;margin-right:3px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>`;
-  return `<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden">
-    <div style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center">
-      <span style="font-size:13px;font-weight:700;color:#fff">Nhật ký Tuần tra Kiểm tra Đê (${data.length} bản ghi)</span>
+  const alertSvg=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--warning-text)" stroke-width="2.5" style="vertical-align:middle;margin-right:3px"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>`;
+  return `<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+    <div style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:13px;font-weight:700;color:var(--text)">Nhật ký Tuần tra Kiểm tra Đê (${data.length} bản ghi)</span>
       <button class="btn btn-primary btn-sm" onclick="dmOpenPatrolLog()">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Ghi nhật ký mới
@@ -226,13 +226,13 @@ function dmPatrol() {
         const dk=DIKE_REGISTRY.find(d=>d.id===p.dikeId)||{};
         const preview=p.result.length>75?p.result.substring(0,75)+'…':p.result;
         return `<tr style="${p.hasAlert?'background:rgba(251,191,36,.025)':''}">
-          <td style="font-family:monospace;font-size:11px;color:#a78bfa">${p.id}</td>
+          <td style="font-family:monospace;font-size:11px;color:var(--info-text)">${p.id}</td>
           <td style="font-size:11px;font-weight:600;max-width:150px">${dk.name||p.dikeId}</td>
           <td style="font-size:12px">${p.officer}</td>
-          <td style="font-size:11px;color:rgba(255,255,255,.5)">${p.post}</td>
-          <td><span style="padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(167,139,250,.15);color:#a78bfa">${p.shift}</span></td>
-          <td style="font-size:11px;color:rgba(255,255,255,.4);white-space:nowrap">${p.date}</td>
-          <td style="font-size:11px;line-height:1.5;max-width:230px;color:${p.hasAlert?'#fbbf24':'rgba(255,255,255,.6)'}">${p.hasAlert?alertSvg:''}${preview}</td>
+          <td style="font-size:11px;color:var(--text-secondary)">${p.post}</td>
+          <td><span style="padding:2px 7px;border-radius:20px;font-size:10px;font-weight:700;background:rgba(91,169,255,.15);color:var(--info-text)">${p.shift}</span></td>
+          <td style="font-size:11px;color:var(--text-muted);white-space:nowrap">${p.date}</td>
+          <td style="font-size:11px;line-height:1.5;max-width:230px;color:${p.hasAlert?'var(--warning-text)':'var(--text-secondary)'}">${p.hasAlert?alertSvg:''}${preview}</td>
           <td><button class="btn btn-ghost btn-sm" onclick="dmViewPatrol('${p.id}')">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
             Xem
@@ -248,7 +248,7 @@ function dmVulnerable() {
   const rows=data.slice((pg-1)*DM_PAGE_SIZE,pg*DM_PAGE_SIZE);
   return `<div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
-      <div style="font-size:13px;font-weight:700;color:#fff">Điểm xung yếu Đê điều (${data.length} điểm)</div>
+      <div style="font-size:13px;font-weight:700;color:var(--text)">Điểm xung yếu Đê điều (${data.length} điểm)</div>
       <button class="btn btn-primary btn-sm" onclick="dmCreateVulnerable()">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Thêm điểm xung yếu
@@ -256,35 +256,35 @@ function dmVulnerable() {
     </div>
     ${rows.map(v=>{
       const dk=DIKE_REGISTRY.find(d=>d.id===v.dikeId)||{};
-      const sc=SEV_COLOR[v.severity]||'#6b7280';
-      const stc=VULN_STATUS_COLOR[v.status]||'#6b7280';
+      const sc=SEV_COLOR[v.severity]||'var(--text-subtle)';
+      const stc=VULN_STATUS_COLOR[v.status]||'var(--text-subtle)';
       return `<div class="dm-vuln-card" style="border-left:3px solid ${sc}">
         <div style="display:flex;align-items:flex-start;gap:14px">
           <div style="flex:1;min-width:0">
             <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap">
               ${_sv(v.severity)}
-              <span style="font-size:12px;font-weight:700;color:#fff">${v.type}</span>
-              <span style="font-size:11px;color:rgba(255,255,255,.4)">· ${v.id}</span>
+              <span style="font-size:12px;font-weight:700;color:var(--text)">${v.type}</span>
+              <span style="font-size:11px;color:var(--text-muted)">· ${v.id}</span>
             </div>
-            <div style="font-size:12px;color:rgba(255,255,255,.7);margin-bottom:4px;display:flex;align-items:center;gap:5px">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px;display:flex;align-items:center;gap:5px">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--info-text)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
               ${v.location}
             </div>
-            <div style="font-size:11px;color:rgba(255,255,255,.45);line-height:1.5;margin-bottom:8px">${v.desc}</div>
-            <div style="display:flex;gap:14px;font-size:11px;color:rgba(255,255,255,.35)">
-              <span>Tuyến: <b style="color:rgba(255,255,255,.6)">${dk.name||v.dikeId}</b></span>
-              <span>Phát hiện: <b style="color:rgba(255,255,255,.6)">${v.found}</b></span>
-              <span>CB phụ trách: <b style="color:rgba(255,255,255,.6)">${v.inspector}</b></span>
+            <div style="font-size:11px;color:var(--text-muted);line-height:1.5;margin-bottom:8px">${v.desc}</div>
+            <div style="display:flex;gap:14px;font-size:11px;color:var(--text-muted)">
+              <span>Tuyến: <b style="color:var(--text-secondary)">${dk.name||v.dikeId}</b></span>
+              <span>Phát hiện: <b style="color:var(--text-secondary)">${v.found}</b></span>
+              <span>CB phụ trách: <b style="color:var(--text-secondary)">${v.inspector}</b></span>
             </div>
           </div>
           <div style="flex-shrink:0;text-align:right;display:flex;flex-direction:column;gap:6px">
-            <div style="font-size:10px;font-weight:700;color:${stc};padding:4px 10px;border-radius:20px;border:1px solid ${stc}44;background:${stc}15;white-space:nowrap">${VULN_STATUS_LABEL[v.status]||v.status}</div>
+            <div style="font-size:10px;font-weight:700;color:${stc};padding:4px 10px;border-radius:20px;border:1px solid color-mix(in srgb, ${stc} 44%, transparent);background:color-mix(in srgb, ${stc} 15%, transparent);white-space:nowrap">${VULN_STATUS_LABEL[v.status]||v.status}</div>
             <div style="display:flex;gap:6px;justify-content:flex-end">
               <button class="btn btn-ghost btn-sm" onclick="dmViewVulnerable('${v.id}')">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                 Xem
               </button>
-              ${v.status!=='resolved'?`<button class="btn btn-ghost btn-sm" style="color:#fbbf24;border-color:rgba(251,191,36,.3)" onclick="dmCreateTicket('${v.id}')">
+              ${v.status!=='resolved'?`<button class="btn btn-ghost btn-sm" style="color:var(--warning-text);border-color:rgba(251,191,36,.3)" onclick="dmCreateTicket('${v.id}')">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                 Lập phiếu
               </button>`:''}
@@ -301,12 +301,12 @@ function dmVulnerable() {
 function dmViolations() {
   const pg=dmPages.violations, data=DIKE_VIOLATIONS;
   const rows=data.slice((pg-1)*DM_PAGE_SIZE,pg*DM_PAGE_SIZE);
-  const stColor={pending:'#f59e0b',fined:'#a78bfa',resolved:'#10b981'};
+  const stColor={pending:'var(--warning-text)',fined:'var(--info-text)',resolved:'var(--success-text)'};
   const stLabel={pending:'Chờ xử lý',fined:'Đã xử phạt',resolved:'Đã giải quyết'};
-  return `<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:14px;overflow:hidden">
-    <div style="padding:12px 16px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;justify-content:space-between;align-items:center">
-      <span style="font-size:13px;font-weight:700;color:#fff">Biên bản Vi phạm Hành lang Bảo vệ Đê (${data.length} hồ sơ)</span>
-      <button class="btn btn-sm" style="background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.3)" onclick="dmNewViolation()">
+  return `<div style="background:var(--bg-card);border:1px solid var(--border);border-radius:14px;overflow:hidden">
+    <div style="padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:13px;font-weight:700;color:var(--text)">Biên bản Vi phạm Hành lang Bảo vệ Đê (${data.length} hồ sơ)</span>
+      <button class="btn btn-sm" style="background:rgba(239,68,68,.1);color:var(--danger-text);border:1px solid rgba(239,68,68,.3)" onclick="dmNewViolation()">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Tạo biên bản
       </button>
@@ -315,16 +315,16 @@ function dmViolations() {
       <thead><tr><th>Mã BB</th><th>Loại vi phạm</th><th>Tuyến đê / Vị trí</th><th>Đối tượng vi phạm</th><th>Ngày lập</th><th>Hình thức xử lý</th><th>Trạng thái</th><th>Cán bộ</th><th></th></tr></thead>
       <tbody>${rows.map(v=>{
         const dk=DIKE_REGISTRY.find(d=>d.id===v.dikeId)||{};
-        const sc=stColor[v.status]||'#6b7280';
+        const sc=stColor[v.status]||'var(--text-subtle)';
         return `<tr>
-          <td style="font-family:monospace;font-size:11px;color:#a78bfa;font-weight:700">${v.id}</td>
-          <td style="font-size:11px;font-weight:600;color:#fff;max-width:140px">${v.type}</td>
-          <td style="font-size:11px;color:rgba(255,255,255,.5)">${dk.name||v.dikeId}<br><span style="font-size:10px;color:rgba(255,255,255,.35)">${v.location}</span></td>
+          <td style="font-family:monospace;font-size:11px;color:var(--info-text);font-weight:700">${v.id}</td>
+          <td style="font-size:11px;font-weight:600;color:var(--text);max-width:140px">${v.type}</td>
+          <td style="font-size:11px;color:var(--text-secondary)">${dk.name||v.dikeId}<br><span style="font-size:10px;color:var(--text-muted)">${v.location}</span></td>
           <td style="font-size:11px;max-width:180px">${v.violator}</td>
-          <td style="font-size:11px;color:rgba(255,255,255,.4);white-space:nowrap">${v.date}</td>
-          <td style="font-size:11px;color:#fbbf24;max-width:160px">${v.fine}</td>
-          <td><span style="padding:2px 10px;border-radius:20px;font-size:10px;font-weight:700;background:${sc}20;color:${sc};border:1px solid ${sc}44">${stLabel[v.status]||v.status}</span></td>
-          <td style="font-size:11px;color:rgba(255,255,255,.5)">${v.officer}</td>
+          <td style="font-size:11px;color:var(--text-muted);white-space:nowrap">${v.date}</td>
+          <td style="font-size:11px;color:var(--warning-text);max-width:160px">${v.fine}</td>
+          <td><span style="padding:2px 10px;border-radius:20px;font-size:10px;font-weight:700;background:color-mix(in srgb, ${sc} 20%, transparent);color:${sc};border:1px solid color-mix(in srgb, ${sc} 44%, transparent)">${stLabel[v.status]||v.status}</span></td>
+          <td style="font-size:11px;color:var(--text-secondary)">${v.officer}</td>
           <td><button class="btn btn-ghost btn-sm" onclick="dmViewViolation('${v.id}')">Xem BB</button></td>
         </tr>`;
       }).join('')}</tbody>
@@ -343,35 +343,35 @@ window.dmViewPatrol = function(id) {
   const dk=DIKE_REGISTRY.find(d=>d.id===p.dikeId)||{};
   const fields=[
     ['Tuyến đê',dk.name||p.dikeId],['Điếm canh',p.post],
-    ['Ca trực',`<span style="padding:2px 8px;border-radius:20px;font-size:11px;background:rgba(167,139,250,.15);color:#a78bfa">${p.shift}</span>`],
+    ['Ca trực',`<span style="padding:2px 8px;border-radius:20px;font-size:11px;background:rgba(91,169,255,.15);color:var(--info-text)">${p.shift}</span>`],
     ['Cán bộ tuần tra',p.officer],['Thời gian',p.date],
-    ['Thời tiết',p.weather],['Mực nước ghi nhận',`<span style="font-weight:700;color:#38bdf8">${p.waterLevel}</span>`],
+    ['Thời tiết',p.weather],['Mực nước ghi nhận',`<span style="font-weight:700;color:var(--info-text)">${p.waterLevel}</span>`],
   ];
   openModal(`
   <div class="modal-header">
     <span class="modal-title" style="display:flex;align-items:center;gap:8px">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--info-text)" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
       Nhật ký Tuần tra: ${p.id}
     </span>${_mcls}
   </div>
   <div class="modal-body">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px">
-      ${fields.map(([l,v])=>`<div style="padding:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px">
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em">${l}</div>
+      ${fields.map(([l,v])=>`<div style="padding:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px">
+        <div style="font-size:10px;color:var(--text-muted);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em">${l}</div>
         <div style="font-size:13px;font-weight:600">${v}</div>
       </div>`).join('')}
     </div>
-    <div style="padding:14px;background:${p.hasAlert?'rgba(251,191,36,.06)':'rgba(255,255,255,.03)'};border:1px solid ${p.hasAlert?'rgba(251,191,36,.25)':'rgba(255,255,255,.08)'};border-radius:10px;margin-bottom:12px">
-      <div style="font-size:11px;font-weight:700;color:${p.hasAlert?'#fbbf24':'rgba(255,255,255,.5)'};margin-bottom:6px;display:flex;align-items:center;gap:6px">
-        ${p.hasAlert?`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg> CÓ CẢNH BÁO`:`GHI NHẬN`}
+    <div style="padding:14px;background:${p.hasAlert?'rgba(251,191,36,.06)':'var(--bg-card)'};border:1px solid ${p.hasAlert?'rgba(251,191,36,.25)':'var(--border)'};border-radius:10px;margin-bottom:12px">
+      <div style="font-size:11px;font-weight:700;color:${p.hasAlert?'var(--warning-text)':'var(--text-secondary)'};margin-bottom:6px;display:flex;align-items:center;gap:6px">
+        ${p.hasAlert?`<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--warning-text)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg> CÓ CẢNH BÁO`:`GHI NHẬN`}
       </div>
-      <div style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.85)">${p.result}</div>
+      <div style="font-size:13px;line-height:1.7;color:var(--text)">${p.result}</div>
     </div>
     ${p.action?`<div style="padding:12px 14px;background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.15);border-radius:8px;margin-bottom:10px">
-      <div style="font-size:10px;font-weight:700;color:#38bdf8;margin-bottom:5px;text-transform:uppercase">BIỆN PHÁP ĐÃ XỬ LÝ</div>
-      <div style="font-size:12px;line-height:1.6;color:rgba(255,255,255,.75)">${p.action}</div>
+      <div style="font-size:10px;font-weight:700;color:var(--info-text);margin-bottom:5px;text-transform:uppercase">BIỆN PHÁP ĐÃ XỬ LÝ</div>
+      <div style="font-size:12px;line-height:1.6;color:var(--text-secondary)">${p.action}</div>
     </div>`:''}
-    ${p.note?`<div style="font-size:12px;color:rgba(255,255,255,.4);padding:8px 12px;background:rgba(255,255,255,.02);border-radius:6px;border-left:2px solid rgba(255,255,255,.1)">Ghi chú: ${p.note}</div>`:''}
+    ${p.note?`<div style="font-size:12px;color:var(--text-muted);padding:8px 12px;background:var(--bg-secondary);border-radius:6px;border-left:2px solid var(--border)">Ghi chú: ${p.note}</div>`:''}
   </div>
   <div class="modal-footer">
     <button class="btn btn-ghost" onclick="closeModal()">Đóng</button>
@@ -384,8 +384,8 @@ window.dmViewPatrol = function(id) {
 window.dmViewVulnerable = function(id) {
   const v=DIKE_VULNERABLE.find(x=>x.id===id); if(!v) return;
   const dk=DIKE_REGISTRY.find(d=>d.id===v.dikeId)||{};
-  const sc=SEV_COLOR[v.severity]||'#6b7280';
-  const stc=VULN_STATUS_COLOR[v.status]||'#6b7280';
+  const sc=SEV_COLOR[v.severity]||'var(--text-subtle)';
+  const stc=VULN_STATUS_COLOR[v.status]||'var(--text-subtle)';
   const fields=[
     ['Mã điểm xung yếu',v.id],['Loại sự cố',`<strong>${v.type}</strong>`],
     ['Tuyến đê',dk.name||v.dikeId],['CB phụ trách',v.inspector],
@@ -402,23 +402,23 @@ window.dmViewVulnerable = function(id) {
   </div>
   <div class="modal-body">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-      ${fields.map(([l,val])=>`<div style="padding:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px">
-        <div style="font-size:10px;color:rgba(255,255,255,.4);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em">${l}</div>
+      ${fields.map(([l,val])=>`<div style="padding:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px">
+        <div style="font-size:10px;color:var(--text-muted);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em">${l}</div>
         <div style="font-size:13px;font-weight:600">${val}</div>
       </div>`).join('')}
     </div>
-    <div style="padding:12px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px;margin-bottom:12px">
-      <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);margin-bottom:6px;text-transform:uppercase">MÔ TẢ HIỆN TRẠNG</div>
-      <div style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.85)">${v.desc}</div>
+    <div style="padding:12px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;margin-bottom:12px">
+      <div style="font-size:11px;font-weight:700;color:var(--text-secondary);margin-bottom:6px;text-transform:uppercase">MÔ TẢ HIỆN TRẠNG</div>
+      <div style="font-size:13px;line-height:1.7;color:var(--text)">${v.desc}</div>
     </div>
     <div style="padding:12px 14px;background:rgba(56,189,248,.05);border:1px solid rgba(56,189,248,.15);border-radius:10px;margin-bottom:12px">
-      <div style="font-size:11px;font-weight:700;color:#38bdf8;margin-bottom:6px;text-transform:uppercase">BIỆN PHÁP XỬ LÝ</div>
-      <div style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.75)">${v.action}</div>
+      <div style="font-size:11px;font-weight:700;color:var(--info-text);margin-bottom:6px;text-transform:uppercase">BIỆN PHÁP XỬ LÝ</div>
+      <div style="font-size:13px;line-height:1.7;color:var(--text-secondary)">${v.action}</div>
     </div>
-    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:12px;color:rgba(255,255,255,.4)">
-      <span>Cập nhật lần cuối: <b style="color:rgba(255,255,255,.6)">${v.lastUpdate||'—'}</b></span>
-      ${v.lat?`<a style="color:#a78bfa;cursor:pointer" onclick="window.open('https://maps.google.com/?q=${v.lat},${v.lng}','_blank')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" style="vertical-align:middle;margin-right:3px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:12px;color:var(--text-muted)">
+      <span>Cập nhật lần cuối: <b style="color:var(--text-secondary)">${v.lastUpdate||'—'}</b></span>
+      ${v.lat?`<a style="color:var(--info-text);cursor:pointer" onclick="window.open('https://maps.google.com/?q=${v.lat},${v.lng}','_blank')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--info-text)" stroke-width="2" style="vertical-align:middle;margin-right:3px"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
         Xem trên bản đồ</a>`:''}
     </div>
   </div>
@@ -436,13 +436,13 @@ window.dmCreateTicket = function(id) {
   openModal(`
   <div class="modal-header">
     <span class="modal-title" style="display:flex;align-items:center;gap:8px">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--warning-text)" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
       Lập phiếu xử lý: ${v.id||'Điểm xung yếu'}
     </span>${_mcls}
   </div>
   <div class="modal-body">
     <div style="padding:10px 14px;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.2);border-radius:8px;margin-bottom:16px;font-size:12px">
-      <b style="color:#fbbf24">${v.type||''}</b> · ${v.location||''} · Tuyến: <b>${dk.name||v.dikeId||''}</b>
+      <b style="color:var(--warning-text)">${v.type||''}</b> · ${v.location||''} · Tuyến: <b>${dk.name||v.dikeId||''}</b>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div class="form-group"><label class="form-label">Mã điểm xung yếu</label>
@@ -581,18 +581,18 @@ window.dmViewDike = function(id) {
   const d=DIKE_REGISTRY.find(x=>x.id===id); if(!d) return;
   const patrolCount=DIKE_PATROLS.filter(p=>p.dikeId===id).length;
   const vulnList=DIKE_VULNERABLE.filter(v=>v.dikeId===id);
-  const sc=DIKE_STATUS_COLOR[d.status]||'#6b7280';
+  const sc=DIKE_STATUS_COLOR[d.status]||'var(--text-subtle)';
   openModal(`
   <div class="modal-header">
     <span class="modal-title">${d.id} — ${d.name}</span>${_mcls}
   </div>
   <div class="modal-body">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-      ${[['Loại đê',`<span style="padding:2px 8px;border-radius:20px;font-size:11px;background:${DIKE_TYPE_COLOR[d.type]}22;color:${DIKE_TYPE_COLOR[d.type]}">${DIKE_TYPE_LABEL[d.type]}</span>`],['Sông',d.river],['Chiều dài',`<b style="color:#38bdf8">${d.length} km</b>`],['Cao trình thiết kế',`<b style="color:#a3e635">${d.elevation}</b>`],['Địa bàn quản lý',d.district],['Kiểm tra gần nhất',d.lastInspect],['Tình trạng',`<span style="color:${sc};font-weight:700">${d.condition}</span>`],['Lịch sử tuần tra',`${patrolCount} lần ghi nhận`]].map(([l,v])=>`<div style="padding:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px"><div style="font-size:10px;color:rgba(255,255,255,.4);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em">${l}</div><div style="font-size:13px;font-weight:600">${v}</div></div>`).join('')}
+      ${[['Loại đê',`<span style="padding:2px 8px;border-radius:20px;font-size:11px;background:color-mix(in srgb, ${DIKE_TYPE_COLOR[d.type]} 22%, transparent);color:${DIKE_TYPE_COLOR[d.type]}">${DIKE_TYPE_LABEL[d.type]}</span>`],['Sông',d.river],['Chiều dài',`<b style="color:var(--info-text)">${d.length} km</b>`],['Cao trình thiết kế',`<b style="color:var(--info-text)">${d.elevation}</b>`],['Địa bàn quản lý',d.district],['Kiểm tra gần nhất',d.lastInspect],['Tình trạng',`<span style="color:${sc};font-weight:700">${d.condition}</span>`],['Lịch sử tuần tra',`${patrolCount} lần ghi nhận`]].map(([l,v])=>`<div style="padding:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px"><div style="font-size:10px;color:var(--text-muted);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em">${l}</div><div style="font-size:13px;font-weight:600">${v}</div></div>`).join('')}
     </div>
-    ${vulnList.length?`<div style="margin-top:8px"><div style="font-size:11px;font-weight:700;color:rgba(255,255,255,.5);margin-bottom:8px;text-transform:uppercase">Điểm xung yếu trên tuyến (${vulnList.length})</div>
-    ${vulnList.map(v=>`<div style="display:flex;justify-content:space-between;padding:8px 12px;background:rgba(255,255,255,.03);border-radius:8px;margin-bottom:6px">
-      <div><span style="font-size:11px;font-weight:700;color:#fff">${v.type}</span> <span style="font-size:11px;color:rgba(255,255,255,.5)">· ${v.location}</span></div>
+    ${vulnList.length?`<div style="margin-top:8px"><div style="font-size:11px;font-weight:700;color:var(--text-secondary);margin-bottom:8px;text-transform:uppercase">Điểm xung yếu trên tuyến (${vulnList.length})</div>
+    ${vulnList.map(v=>`<div style="display:flex;justify-content:space-between;padding:8px 12px;background:var(--bg-card);border-radius:8px;margin-bottom:6px">
+      <div><span style="font-size:11px;font-weight:700;color:var(--text)">${v.type}</span> <span style="font-size:11px;color:var(--text-secondary)">· ${v.location}</span></div>
       <div style="display:flex;gap:8px;align-items:center">${_sv(v.severity)}</div>
     </div>`).join('')}</div>`:''}
   </div>
@@ -606,7 +606,7 @@ window.dmViewDike = function(id) {
 // ── Modal: Tạo biên bản vi phạm mới ──────────────────────────────
 window.dmNewViolation = function() {
   openModal(`
-  <div class="modal-header"><span class="modal-title" style="color:#f87171">Tạo biên bản Vi phạm Hành lang Đê điều</span>${_mcls}</div>
+  <div class="modal-header"><span class="modal-title" style="color:var(--danger-text)">Tạo biên bản Vi phạm Hành lang Đê điều</span>${_mcls}</div>
   <div class="modal-body">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div class="form-group"><label class="form-label">Tuyến đê</label>
@@ -632,7 +632,7 @@ window.dmNewViolation = function() {
   </div>
   <div class="modal-footer">
     <button class="btn btn-ghost" onclick="closeModal()">Hủy</button>
-    <button class="btn btn-sm" style="background:rgba(239,68,68,.1);color:#f87171;border:1px solid rgba(239,68,68,.3)" onclick="closeModal();showToast('Đã tạo biên bản vi phạm thành công!')">
+    <button class="btn btn-sm" style="background:rgba(239,68,68,.1);color:var(--danger-text);border:1px solid rgba(239,68,68,.3)" onclick="closeModal();showToast('Đã tạo biên bản vi phạm thành công!')">
       <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
       Lập biên bản
     </button>
@@ -643,18 +643,18 @@ window.dmNewViolation = function() {
 window.dmViewViolation = function(id) {
   const v=DIKE_VIOLATIONS.find(x=>x.id===id); if(!v) return;
   const dk=DIKE_REGISTRY.find(d=>d.id===v.dikeId)||{};
-  const stColor={pending:'#f59e0b',fined:'#a78bfa',resolved:'#10b981'};
+  const stColor={pending:'var(--warning-text)',fined:'var(--info-text)',resolved:'var(--success-text)'};
   const stLabel={pending:'Chờ xử lý',fined:'Đã xử phạt',resolved:'Đã giải quyết'};
-  const sc=stColor[v.status]||'#6b7280';
+  const sc=stColor[v.status]||'var(--text-subtle)';
   openModal(`
   <div class="modal-header">
-    <span class="modal-title" style="color:#f87171">Biên bản Vi phạm: ${v.id}</span>${_mcls}
+    <span class="modal-title" style="color:var(--danger-text)">Biên bản Vi phạm: ${v.id}</span>${_mcls}
   </div>
   <div class="modal-body">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
-      ${[['Đối tượng vi phạm',`<b>${v.violator}</b>`],['Loại vi phạm',`<b>${v.type}</b>`],['Tuyến đê',dk.name||v.dikeId],['Vị trí vi phạm',v.location],['Ngày lập BB',v.date],['Cán bộ lập BB',v.officer],['Hình thức xử lý',`<span style="color:#fbbf24">${v.fine}</span>`],['Trạng thái',`<span style="color:${sc};font-weight:700">${stLabel[v.status]||v.status}</span>`]].map(([l,val])=>`<div style="padding:10px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px"><div style="font-size:10px;color:rgba(255,255,255,.4);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em">${l}</div><div style="font-size:13px">${val}</div></div>`).join('')}
+      ${[['Đối tượng vi phạm',`<b>${v.violator}</b>`],['Loại vi phạm',`<b>${v.type}</b>`],['Tuyến đê',dk.name||v.dikeId],['Vị trí vi phạm',v.location],['Ngày lập BB',v.date],['Cán bộ lập BB',v.officer],['Hình thức xử lý',`<span style="color:var(--warning-text)">${v.fine}</span>`],['Trạng thái',`<span style="color:${sc};font-weight:700">${stLabel[v.status]||v.status}</span>`]].map(([l,val])=>`<div style="padding:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px"><div style="font-size:10px;color:var(--text-muted);margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em">${l}</div><div style="font-size:13px">${val}</div></div>`).join('')}
     </div>
-    ${v.notes?`<div style="padding:12px 14px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:8px;font-size:12px;color:rgba(255,255,255,.6);line-height:1.7"><b style="color:rgba(255,255,255,.5);font-size:10px;text-transform:uppercase;display:block;margin-bottom:5px">Ghi chú xử lý</b>${v.notes}</div>`:''}
+    ${v.notes?`<div style="padding:12px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--text-secondary);line-height:1.7"><b style="color:var(--text-secondary);font-size:10px;text-transform:uppercase;display:block;margin-bottom:5px">Ghi chú xử lý</b>${v.notes}</div>`:''}
   </div>
   <div class="modal-footer">
     <button class="btn btn-ghost" onclick="closeModal()">Đóng</button>

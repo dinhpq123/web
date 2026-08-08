@@ -66,10 +66,10 @@ function renderDikePermit() {
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px">
     ${
       [
-      { label: 'GP Đê điều còn HLực', val: allPermits, color: 'var(--green)', sub: 'giấy phép hoạt động' },
-      { label: 'CP Thủy lợi còn HLực', val: tlPermits, color: 'var(--cyan)', sub: 'hồ sơ cấp phép CTTL' },
-      { label: 'Vi phạm đang xử lý', val: ddViol + tlViol, color: 'var(--red)', sub: `${ddViol} đê · ${tlViol} thủy lợi` },
-      { label: 'Tiền phạt đã thu (tr.)', val: allFines, color: 'var(--yellow)', sub: 'triệu VNĐ tổng hợp' },
+      { label: 'GP Đê điều còn HLực', val: allPermits, color: 'var(--success)', sub: 'giấy phép hoạt động' },
+      { label: 'CP Thủy lợi còn HLực', val: tlPermits, color: 'var(--primary)', sub: 'hồ sơ cấp phép CTTL' },
+      { label: 'Vi phạm đang xử lý', val: ddViol + tlViol, color: 'var(--danger)', sub: `${ddViol} đê · ${tlViol} thủy lợi` },
+      { label: 'Tiền phạt đã thu (tr.)', val: allFines, color: 'var(--warning)', sub: 'triệu VNĐ tổng hợp' },
     ].map(k => `
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px 20px">
       <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">${k.label}</div>
@@ -115,12 +115,12 @@ function _renderPermitTable() {
         <tbody>
           ${PERMITS_DATA.map(p => `
           <tr>
-            <td class="mono" style="color:var(--cyan);font-size:12px">${p.id}</td>
+            <td class="mono" style="color:var(--primary);font-size:12px">${p.id}</td>
             <td><strong>${p.entity}</strong></td>
             <td style="font-size:12px;max-width:200px">${p.activity}</td>
             <td style="font-size:12px;color:var(--muted)">${p.location}</td>
             <td style="font-size:12px">${p.issuedDate}</td>
-            <td style="font-size:12px;color:${p.status==='expiring'?'var(--yellow)':'inherit'}">${p.expiryDate}</td>
+            <td style="font-size:12px;color:${p.status==='expiring'?'var(--warning)':'inherit'}">${p.expiryDate}</td>
             <td>${p.status === 'approved' ? '<span class="badge badge-green">Còn hiệu lực</span>' : '<span class="badge badge-yellow">⚠ Sắp hết hạn</span>'}</td>
             <td><button class="btn btn-ghost btn-sm" onclick="viewPermitDetail('${p.id}')">Xem GP</button></td>
           </tr>`).join('')}
@@ -142,12 +142,12 @@ function _renderViolationTable() {
         <tbody>
           ${VIOLATIONS_DATA.map(v => `
           <tr style="${v.status==='new'?'background:rgba(255,23,68,.03)':''}">
-            <td class="mono" style="color:var(--red);font-size:12px">${v.id}</td>
+            <td class="mono" style="color:var(--danger);font-size:12px">${v.id}</td>
             <td style="font-size:12px">${v.entity}</td>
             <td style="font-size:12px;font-weight:600">${v.type}</td>
             <td style="font-size:12px;color:var(--muted)">${v.location}</td>
             <td style="font-size:12px">${v.reportedDate}</td>
-            <td class="mono" style="font-size:12px;color:${v.fine>0?'var(--yellow)':'var(--muted)'}">${v.fine>0?Math.round(v.fine/1000000):'—'}</td>
+            <td class="mono" style="font-size:12px;color:${v.fine>0?'var(--warning)':'var(--muted)'}">${v.fine>0?Math.round(v.fine/1000000):'—'}</td>
             <td>${statusBadge(v.severity)}</td>
             <td>${statusBadge(v.status)}</td>
             <td><button class="btn btn-ghost btn-sm" onclick="viewViolationDetail('${v.id}')">Hồ sơ</button></td>
@@ -203,13 +203,13 @@ function _renderTLPermitTable() {
       <tbody>
         ${TL_PERMITS_DATA.map(p => `
         <tr data-comp="${p.companyTL}" data-type="${p.type}" data-text="${(p.entity+p.location+p.commune).toLowerCase()}">
-          <td class="mono" style="color:var(--cyan);font-size:12px">${p.id}</td>
+          <td class="mono" style="color:var(--primary);font-size:12px">${p.id}</td>
           <td><strong>${p.entity}</strong></td>
           <td><span class="badge badge-gray" style="font-size:10px">${p.type}</span></td>
           <td style="font-size:12px;color:var(--muted)">${p.companyTL}</td>
           <td style="font-size:12px">${p.commune}</td>
           <td style="font-size:12px">${p.issuedDate}</td>
-          <td style="font-size:12px;color:${p.status==='expiring'?'var(--yellow)':'inherit'}">${p.expiryDate}</td>
+          <td style="font-size:12px;color:${p.status==='expiring'?'var(--warning)':'inherit'}">${p.expiryDate}</td>
           <td>${statusBadgeTL(p.status)}</td>
           <td><button class="btn btn-ghost btn-sm" onclick="viewTLPermitDetail('${p.id}')">Xem GP</button></td>
         </tr>`).join('')}
@@ -251,13 +251,13 @@ window.viewTLPermitDetail = function(id) {
         {label:'Công ty TL quản lý', val:p.companyTL},
         {label:'Xã', val:p.commune},
         {label:'Ngày cấp', val:p.issuedDate},
-        {label:'Hết hạn', val:`<span style="color:${p.status==='expiring'?'var(--yellow)':'inherit'}">${p.expiryDate}</span>`},
+        {label:'Hết hạn', val:`<span style="color:${p.status==='expiring'?'var(--warning)':'inherit'}">${p.expiryDate}</span>`},
       ].map(f=>`<div style="padding:10px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px"><div style="font-size:11px;color:var(--muted);margin-bottom:3px">${f.label}</div><div style="font-size:13px;font-weight:600">${f.val}</div></div>`).join('')}
     </div>
     <div style="padding:10px 14px;background:rgba(0,200,255,.05);border:1px solid rgba(0,200,255,.15);border-radius:8px;margin-bottom:12px">
-      <div style="font-size:11px;font-weight:700;color:var(--cyan);margin-bottom:4px">Tọa độ vị trí</div>
+      <div style="font-size:11px;font-weight:700;color:var(--primary);margin-bottom:4px">Tọa độ vị trí</div>
       <div style="font-size:13px">Lat: ${p.lat}°N · Lng: ${p.lng}°E
-        <a style="color:var(--cyan);cursor:pointer;margin-left:12px" onclick="window.open('https://maps.google.com/?q=${p.lat},${p.lng}','_blank')">📍 Xem Google Maps</a>
+        <a style="color:var(--primary);cursor:pointer;margin-left:12px" onclick="window.open('https://maps.google.com/?q=${p.lat},${p.lng}','_blank')">📍 Xem Google Maps</a>
       </div>
     </div>
     <div style="padding:10px 14px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px">
@@ -316,8 +316,8 @@ window.showTLPermitReport = function(level) {
     <div class="table-wrap"><table>
       <thead><tr><th>${level==='Xã'?'Xã':'Đơn vị'}</th><th>Số GP còn HLực</th><th>Sắp HHạn</th><th>Chờ duyệt</th><th>Tổng</th></tr></thead>
       <tbody>
-        ${Object.entries(byComp).map(([k,v])=>`<tr><td><strong>${k}</strong></td><td style="color:var(--green)">${Math.floor(v*.7)}</td><td style="color:var(--yellow)">${Math.floor(v*.15)}</td><td style="color:var(--muted)">${Math.floor(v*.15)}</td><td style="font-weight:700">${v}</td></tr>`).join('')}
-        <tr style="border-top:2px solid var(--border);font-weight:700"><td>TỔNG CỘNG</td><td style="color:var(--green)">${TL_PERMITS_DATA.filter(p=>p.status==='approved').length}</td><td style="color:var(--yellow)">${TL_PERMITS_DATA.filter(p=>p.status==='expiring').length}</td><td style="color:var(--muted)">${TL_PERMITS_DATA.filter(p=>p.status==='pending').length}</td><td>${TL_PERMITS_DATA.length}</td></tr>
+        ${Object.entries(byComp).map(([k,v])=>`<tr><td><strong>${k}</strong></td><td style="color:var(--success)">${Math.floor(v*.7)}</td><td style="color:var(--warning)">${Math.floor(v*.15)}</td><td style="color:var(--muted)">${Math.floor(v*.15)}</td><td style="font-weight:700">${v}</td></tr>`).join('')}
+        <tr style="border-top:2px solid var(--border);font-weight:700"><td>TỔNG CỘNG</td><td style="color:var(--success)">${TL_PERMITS_DATA.filter(p=>p.status==='approved').length}</td><td style="color:var(--warning)">${TL_PERMITS_DATA.filter(p=>p.status==='expiring').length}</td><td style="color:var(--muted)">${TL_PERMITS_DATA.filter(p=>p.status==='pending').length}</td><td>${TL_PERMITS_DATA.length}</td></tr>
       </tbody>
     </table></div>
   </div>
@@ -354,13 +354,13 @@ function _renderTLViolationTable() {
       <tbody>
         ${TL_VIOLATIONS_DATA.map(v => `
         <tr data-comp="${v.companyTL}" data-status="${v.status}" data-text="${(v.entity+v.location+v.commune).toLowerCase()}" style="${v.status==='new'?'background:rgba(255,23,68,.03)':''}">
-          <td class="mono" style="color:var(--red);font-size:12px">${v.id}</td>
+          <td class="mono" style="color:var(--danger);font-size:12px">${v.id}</td>
           <td style="font-size:12px">${v.entity}</td>
           <td style="font-size:12px;font-weight:600">${v.type}</td>
           <td style="font-size:12px;color:var(--muted)">${v.companyTL}</td>
           <td style="font-size:12px">${v.commune}</td>
           <td style="font-size:12px">${v.reportedDate}</td>
-          <td class="mono" style="font-size:12px;color:${v.fine>0?'var(--yellow)':'var(--muted)'}">${v.fine>0?(v.fine/1000000).toFixed(0)+' tr.':'—'}</td>
+          <td class="mono" style="font-size:12px;color:${v.fine>0?'var(--warning)':'var(--muted)'}">${v.fine>0?(v.fine/1000000).toFixed(0)+' tr.':'—'}</td>
           <td>${statusBadge(v.status)}</td>
           <td><button class="btn btn-ghost btn-sm" onclick="viewTLViolDetail('${v.id}')">Hồ sơ</button></td>
         </tr>`).join('')}
@@ -391,7 +391,7 @@ window.viewTLViolDetail = function(id) {
   ];
   openModal(`
   <div class="modal-header">
-    <span class="modal-title" style="color:var(--red)">VP Thủy lợi: ${v.id}</span>
+    <span class="modal-title" style="color:var(--danger)">VP Thủy lợi: ${v.id}</span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="modal-body">
@@ -403,22 +403,22 @@ window.viewTLViolDetail = function(id) {
         {label:'Cán bộ lập BB', val:v.inspector},
         {label:'Công ty TL', val:v.companyTL},
         {label:'Xã', val:v.commune},
-        {label:'Tiền phạt', val:`<span style="color:var(--yellow);font-weight:700">${v.fine>0?(v.fine/1000000).toFixed(0)+' triệu VNĐ':'Chưa xác định'}</span>`},
+        {label:'Tiền phạt', val:`<span style="color:var(--warning);font-weight:700">${v.fine>0?(v.fine/1000000).toFixed(0)+' triệu VNĐ':'Chưa xác định'}</span>`},
         {label:'Mức độ', val:statusBadge(v.severity)},
       ].map(f=>`<div style="padding:10px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px"><div style="font-size:11px;color:var(--muted);margin-bottom:3px">${f.label}</div><div style="font-size:13px">${f.val}</div></div>`).join('')}
     </div>
     <div style="padding:10px 14px;background:rgba(0,200,255,.05);border:1px solid rgba(0,200,255,.15);border-radius:8px;margin-bottom:12px">
-      <div style="font-size:11px;font-weight:700;color:var(--cyan);margin-bottom:4px">Tọa độ vi phạm</div>
+      <div style="font-size:11px;font-weight:700;color:var(--primary);margin-bottom:4px">Tọa độ vi phạm</div>
       <div style="font-size:13px">Lat: ${v.lat}°N · Lng: ${v.lng}°E
-        <a style="color:var(--cyan);cursor:pointer;margin-left:12px" onclick="window.open('https://maps.google.com/?q=${v.lat},${v.lng}','_blank')">📍 Xem Google Maps</a>
+        <a style="color:var(--primary);cursor:pointer;margin-left:12px" onclick="window.open('https://maps.google.com/?q=${v.lat},${v.lng}','_blank')">📍 Xem Google Maps</a>
       </div>
     </div>
     <div style="font-size:12px;font-weight:700;color:var(--muted);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px">Timeline xử lý</div>
     <div style="display:flex;gap:0;margin-bottom:14px">
       ${steps.map((s,i)=>`
       <div style="flex:1;text-align:center;position:relative">
-        ${i<steps.length-1?`<div style="position:absolute;top:16px;left:50%;width:100%;height:2px;background:${s.done&&steps[i+1].done?'var(--green)':'rgba(255,255,255,.1)'}"></div>`:''}
-        <div style="width:32px;height:32px;border-radius:50%;background:${s.done?'var(--green)':'rgba(255,255,255,.08)'};border:2px solid ${s.done?'var(--green)':'rgba(255,255,255,.15)'};margin:0 auto;display:flex;align-items:center;justify-content:center;z-index:1;position:relative">
+        ${i<steps.length-1?`<div style="position:absolute;top:16px;left:50%;width:100%;height:2px;background:${s.done&&steps[i+1].done?'var(--success)':'rgba(255,255,255,.1)'}"></div>`:''}
+        <div style="width:32px;height:32px;border-radius:50%;background:${s.done?'var(--success)':'rgba(255,255,255,.08)'};border:2px solid ${s.done?'var(--success)':'rgba(255,255,255,.15)'};margin:0 auto;display:flex;align-items:center;justify-content:center;z-index:1;position:relative">
           ${s.done?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>':'<div style="width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.2)"></div>'}
         </div>
         <div style="font-size:11px;font-weight:600;margin-top:6px;color:${s.done?'#fff':'rgba(255,255,255,.35)'}">${s.label}</div>
@@ -426,7 +426,7 @@ window.viewTLViolDetail = function(id) {
       </div>`).join('')}
     </div>
     <div style="padding:12px 14px;background:rgba(255,23,68,.04);border:1px solid rgba(255,23,68,.15);border-radius:8px">
-      <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:5px">Ghi chú xử lý</div>
+      <div style="font-size:11px;font-weight:700;color:var(--danger);margin-bottom:5px">Ghi chú xử lý</div>
       <div style="font-size:12px;line-height:1.7">${v.notes}</div>
     </div>
   </div>
@@ -439,7 +439,7 @@ window.viewTLViolDetail = function(id) {
 
 window.openReportTLViolModal = function() {
   openModal(`
-  <div class="modal-header"><span class="modal-title" style="color:var(--red)">Lập biên bản Vi phạm Thủy lợi</span>
+  <div class="modal-header"><span class="modal-title" style="color:var(--danger)">Lập biên bản Vi phạm Thủy lợi</span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div class="modal-body">
     <div class="form-row">
@@ -486,7 +486,7 @@ window.viewPermitDetail = function(id) {
         { label: 'Vị trí trên đê', val: p.location },
         { label: 'Cán bộ phụ trách', val: p.inspector },
         { label: 'Ngày cấp phép', val: p.issuedDate },
-        { label: 'Ngày hết hạn', val: `<span style="color:${p.status==='expiring'?'var(--yellow)':'inherit'}">${p.expiryDate}</span>` },
+        { label: 'Ngày hết hạn', val: `<span style="color:${p.status==='expiring'?'var(--warning)':'inherit'}">${p.expiryDate}</span>` },
       ].map(f => `
       <div style="padding:10px 14px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px">
         <div style="font-size:11px;color:var(--muted);margin-bottom:3px">${f.label}</div>
@@ -494,7 +494,7 @@ window.viewPermitDetail = function(id) {
       </div>`).join('')}
     </div>
     <div style="padding:12px 14px;background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.15);border-radius:8px">
-      <div style="font-size:11px;font-weight:700;color:var(--cyan);margin-bottom:6px">Điều kiện cấp phép</div>
+      <div style="font-size:11px;font-weight:700;color:var(--primary);margin-bottom:6px">Điều kiện cấp phép</div>
       <div style="font-size:13px;line-height:1.7">${p.conditions}</div>
     </div>
   </div>
@@ -512,7 +512,7 @@ window.viewViolationDetail = function(id) {
   const fineStr = v.fine > 0 ? `${(v.fine/1000000).toFixed(0)} triệu VNĐ` : 'Chưa xác định';
   openModal(`
   <div class="modal-header">
-    <span class="modal-title" style="color:var(--red)">Biên bản Vi phạm: ${v.id}</span>
+    <span class="modal-title" style="color:var(--danger)">Biên bản Vi phạm: ${v.id}</span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="modal-body">
@@ -523,7 +523,7 @@ window.viewViolationDetail = function(id) {
         { label: 'Vị trí vi phạm', val: v.location },
         { label: 'Cán bộ lập biên bản', val: v.inspector },
         { label: 'Ngày phát hiện', val: v.reportedDate },
-        { label: 'Tiền phạt', val: `<span style="color:var(--yellow);font-weight:700">${fineStr}</span>` },
+        { label: 'Tiền phạt', val: `<span style="color:var(--warning);font-weight:700">${fineStr}</span>` },
       ].map(f => `
       <div style="padding:10px 14px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px">
         <div style="font-size:11px;color:var(--muted);margin-bottom:3px">${f.label}</div>
@@ -531,7 +531,7 @@ window.viewViolationDetail = function(id) {
       </div>`).join('')}
     </div>
     <div style="padding:12px 14px;background:rgba(255,23,68,.04);border:1px solid rgba(255,23,68,.15);border-radius:8px;margin-bottom:14px">
-      <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:6px">Ghi chú xử lý</div>
+      <div style="font-size:11px;font-weight:700;color:var(--danger);margin-bottom:6px">Ghi chú xử lý</div>
       <div style="font-size:13px;line-height:1.7">${v.notes}</div>
     </div>
     <div style="display:flex;gap:8px;align-items:center">
@@ -545,7 +545,7 @@ window.viewViolationDetail = function(id) {
     <button class="btn btn-ghost btn-sm" onclick="closeModal();showToast('Đang in biên bản vi phạm...')">In BB</button>
     ${v.status !== 'done'
       ? `<button class="btn btn-primary" onclick="closeModal();showToast('✅ Đã cập nhật trạng thái xử lý!')">Cập nhật xử lý</button>`
-      : `<button class="btn btn-ghost" style="color:var(--green)"  onclick="closeModal()">✅ Đã hoàn thành</button>`}
+      : `<button class="btn btn-ghost" style="color:var(--success)"  onclick="closeModal()">✅ Đã hoàn thành</button>`}
   </div>`);
 };
 
@@ -602,7 +602,7 @@ window.openAddPermitModal = function() {
 window.openReportViolationModal = function() {
   openModal(`
   <div class="modal-header">
-    <span class="modal-title" style="color:var(--red)">Báo cáo vi phạm hành lang đê</span>
+    <span class="modal-title" style="color:var(--danger)">Báo cáo vi phạm hành lang đê</span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="modal-body">
@@ -647,7 +647,7 @@ window.openReportViolationModal = function() {
       <textarea class="form-control" rows="3" placeholder="Mô tả tình huống, bằng chứng phát hiện..."></textarea>
     </div>
     <div style="padding:10px 12px;background:rgba(255,202,40,.06);border:1px solid rgba(255,202,40,.2);border-radius:8px;font-size:12px;color:var(--muted)">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Ảnh bằng chứng: <a style="color:var(--cyan);cursor:pointer" onclick="showToast('Upload ảnh sẽ được tích hợp sau.')">Đính kèm ảnh</a>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> Ảnh bằng chứng: <a style="color:var(--primary);cursor:pointer" onclick="showToast('Upload ảnh sẽ được tích hợp sau.')">Đính kèm ảnh</a>
     </div>
   </div>
   <div class="modal-footer">

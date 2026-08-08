@@ -9,7 +9,7 @@ function renderCrm() {
   const totalVehicles = d.phuongtien.reduce((s, v) => s + v.count, 0);
   const readyVehicles = d.phuongtien.reduce((s, v) => s + v.ready, 0);
 
-  const alertColors = { normal: 'var(--green)', warning: 'var(--yellow)', emergency: 'var(--red)' };
+  const alertColors = { normal: 'var(--success)', warning: 'var(--warning)', emergency: 'var(--danger)' };
   const alertLabels = { normal: 'Bình thường', warning: 'Cảnh báo lũ', emergency: 'Khẩn cấp' };
   const alertColor = alertColors[fosAlertLevel];
 
@@ -38,17 +38,17 @@ function renderCrm() {
 
   <!-- KPI Overview -->
   <div class="kpi-grid" style="margin-bottom:20px">
-    <div class="kpi-card" style="--accent-color:var(--cyan)">
+    <div class="kpi-card" style="--accent-color:var(--primary)">
       <div class="kpi-label">Tổng lực lượng đăng ký</div>
       <div class="kpi-value">${totalForce.toLocaleString()}</div>
       <div class="kpi-sub">${onCallForce.toLocaleString()} người đang sẵn sàng trực chiến</div>
     </div>
-    <div class="kpi-card" style="--accent-color:var(--green)">
+    <div class="kpi-card" style="--accent-color:var(--success)">
       <div class="kpi-label">Phương tiện sẵn sàng</div>
       <div class="kpi-value">${readyVehicles}<span style="font-size:14px;color:var(--muted)">/${totalVehicles}</span></div>
       <div class="kpi-sub">${((readyVehicles/totalVehicles)*100).toFixed(0)}% phương tiện hoạt động tốt</div>
     </div>
-    <div class="kpi-card" style="--accent-color:var(--yellow)">
+    <div class="kpi-card" style="--accent-color:var(--warning)">
       <div class="kpi-label">Lương thực dự trữ</div>
       <div class="kpi-value">${(d.haugian.food_packs/1000).toFixed(0)}k</div>
       <div class="kpi-sub">suất ăn · ${(d.haugian.water_liters/1000).toFixed(0)}k lít nước sạch</div>
@@ -128,32 +128,32 @@ function renderFosLucLuong() {
         <div style="padding:14px;border:1px solid var(--border);border-radius:10px;margin-bottom:10px;background:rgba(0,200,255,.02)">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
             <div style="width:36px;height:36px;border-radius:8px;background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.2);display:flex;align-items:center;justify-content:center">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
             </div>
             <div style="flex:1">
               <div style="font-weight:600;font-size:14px">${u.unit}</div>
               <div style="font-size:12px;color:var(--muted);margin-top:2px">${u.total.toLocaleString()} người đăng ký · ${u.trained.toLocaleString()} đã huấn luyện PCTT</div>
             </div>
             <div style="text-align:right">
-              <div style="font-size:20px;font-weight:700;color:var(--cyan)">${u.onCall.toLocaleString()}</div>
+              <div style="font-size:20px;font-weight:700;color:var(--primary)">${u.onCall.toLocaleString()}</div>
               <div style="font-size:11px;color:var(--muted)">đang sẵn sàng</div>
             </div>
           </div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
             <div>
-              <div style="font-size:11px;color:var(--muted);margin-bottom:5px">Tỷ lệ sẵn sàng: <span style="color:${pct>=30?'var(--green)':'var(--yellow)'}">  ${pct}%</span></div>
-              <div class="progress-bar" style="height:6px"><div class="progress-fill" style="width:${pct}%;background:${pct>=30?'var(--green)':'var(--yellow)'}"></div></div>
+              <div style="font-size:11px;color:var(--muted);margin-bottom:5px">Tỷ lệ sẵn sàng: <span style="color:${pct>=30?'var(--success)':'var(--warning)'}">  ${pct}%</span></div>
+              <div class="progress-bar" style="height:6px"><div class="progress-fill" style="width:${pct}%;background:${pct>=30?'var(--success)':'var(--warning)'}"></div></div>
             </div>
             <div>
-              <div style="font-size:11px;color:var(--muted);margin-bottom:5px">Đã huấn luyện: <span style="color:var(--cyan)">${trainedPct}%</span></div>
-              <div class="progress-bar" style="height:6px"><div class="progress-fill" style="width:${trainedPct}%;background:var(--cyan)"></div></div>
+              <div style="font-size:11px;color:var(--muted);margin-bottom:5px">Đã huấn luyện: <span style="color:var(--primary)">${trainedPct}%</span></div>
+              <div class="progress-bar" style="height:6px"><div class="progress-fill" style="width:${trainedPct}%;background:var(--primary)"></div></div>
             </div>
           </div>
         </div>`;
       }).join('')}
       <div style="padding:12px 16px;background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.15);border-radius:10px;display:flex;justify-content:space-between;align-items:center">
         <span style="font-size:13px;color:var(--muted)">Tổng cộng toàn thành phố</span>
-        <span style="font-size:18px;font-weight:700;color:var(--cyan)">${totalAll.toLocaleString()} người</span>
+        <span style="font-size:18px;font-weight:700;color:var(--primary)">${totalAll.toLocaleString()} người</span>
       </div>
     </div>
   </div>`;
@@ -173,14 +173,14 @@ function renderFosPhuongTien() {
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px">
     ${d.phuongtien.map(v => {
       const pct = Math.round((v.ready/v.count)*100);
-      const color = pct===100?'var(--green)':pct>=85?'var(--cyan)':pct>=60?'var(--yellow)':'var(--red)';
+      const color = pct===100?'var(--success)':pct>=85?'var(--primary)':pct>=60?'var(--warning)':'var(--danger)';
       const svgPath = vehicleIcons[v.type] || '<rect x="3" y="3" width="18" height="18" rx="2"/>';
       return `
       <div class="card" style="cursor:default">
         <div class="card-body" style="padding:20px">
           <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
             <div style="width:44px;height:44px;border-radius:10px;background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.8">${svgPath}</svg>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8">${svgPath}</svg>
             </div>
             <div>
               <div style="font-weight:600;font-size:14px">${v.type}</div>
@@ -228,13 +228,13 @@ function renderFosVatTu() {
           ${d.vattu.map(v => {
             const remaining = v.quantity - v.allocated;
             const pct = Math.round((v.allocated/v.quantity)*100);
-            const color = pct>=80?'var(--yellow)':pct>=50?'var(--cyan)':'var(--green)';
+            const color = pct>=80?'var(--warning)':pct>=50?'var(--primary)':'var(--success)';
             return `
             <tr>
               <td style="font-weight:600">${v.item}</td>
               <td class="mono">${v.quantity.toLocaleString()}</td>
-              <td class="mono" style="color:var(--yellow)">${v.allocated.toLocaleString()}</td>
-              <td class="mono" style="color:var(--green)">${remaining.toLocaleString()} ${v.unit}</td>
+              <td class="mono" style="color:var(--warning)">${v.allocated.toLocaleString()}</td>
+              <td class="mono" style="color:var(--success)">${remaining.toLocaleString()} ${v.unit}</td>
               <td style="min-width:140px">
                 <div style="display:flex;align-items:center;gap:8px">
                   <div class="progress-bar" style="flex:1;height:6px">
@@ -258,11 +258,11 @@ function renderFosVatTu() {
 function renderFosHauGian() {
   const d = DATA.fourOnSite;
   const items = [
-    { label: 'Suất ăn dự trữ', value: d.haugian.food_packs.toLocaleString(), unit: 'suất', icon: '<path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>', color: 'var(--yellow)' },
-    { label: 'Nước uống sạch', value: (d.haugian.water_liters/1000).toFixed(0)+'k', unit: 'lít', icon: '<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 8v4l3 3"/>', color: 'var(--cyan)' },
-    { label: 'Bộ y tế cấp cứu', value: d.haugian.medical_kits.toLocaleString(), unit: 'bộ', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>', color: 'var(--red)' },
+    { label: 'Suất ăn dự trữ', value: d.haugian.food_packs.toLocaleString(), unit: 'suất', icon: '<path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>', color: 'var(--warning)' },
+    { label: 'Nước uống sạch', value: (d.haugian.water_liters/1000).toFixed(0)+'k', unit: 'lít', icon: '<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 8v4l3 3"/>', color: 'var(--primary)' },
+    { label: 'Bộ y tế cấp cứu', value: d.haugian.medical_kits.toLocaleString(), unit: 'bộ', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>', color: 'var(--danger)' },
     { label: 'Lều bạt tạm thời', value: d.haugian.temporary_shelters.toLocaleString(), unit: 'lều', icon: '<polyline points="23 7 13 17 8 12 1 19"/><polyline points="17 7 23 7 23 13"/>', color: 'var(--purple)' },
-    { label: 'Điểm sơ tán an toàn', value: d.haugian.evacuation_sites.toLocaleString(), unit: 'điểm', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>', color: 'var(--green)' },
+    { label: 'Điểm sơ tán an toàn', value: d.haugian.evacuation_sites.toLocaleString(), unit: 'điểm', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>', color: 'var(--success)' },
   ];
 
   return `
@@ -298,9 +298,9 @@ function renderFosHauGian() {
           ${DATA.fourOnSite.lucluong.map(u => `
           <tr>
             <td style="font-weight:600">${u.unit}</td>
-            <td class="mono" style="color:var(--green)">${Math.floor(u.onCall/180) + 5}</td>
+            <td class="mono" style="color:var(--success)">${Math.floor(u.onCall/180) + 5}</td>
             <td class="mono">${Math.floor(u.onCall/50)}</td>
-            <td class="mono" style="color:var(--yellow)">${(u.onCall * 3).toLocaleString()}</td>
+            <td class="mono" style="color:var(--warning)">${(u.onCall * 3).toLocaleString()}</td>
             <td><span class="badge ${fosAlertLevel==='emergency'?'badge-red':fosAlertLevel==='warning'?'badge-yellow':'badge-green'}">${fosAlertLevel==='emergency'?'Kích hoạt toàn bộ':fosAlertLevel==='warning'?'Cảnh báo':'Dự phòng'}</span></td>
           </tr>`).join('')}
         </tbody>

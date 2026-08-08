@@ -59,7 +59,7 @@ function renderIrrModal() {
   const html = `
     <div class="irr-modal-container" style="display:flex;flex-direction:column;height:680px;background:var(--bg-card);border-radius:12px;overflow:hidden">
       <!-- Modal Header -->
-      <div style="padding:20px 24px;background:linear-gradient(135deg, rgba(0,210,255,0.1), transparent);border-bottom:1px solid rgba(0,210,255,0.15);display:flex;justify-content:space-between;align-items:center">
+      <div style="padding:20px 24px;background:linear-gradient(135deg, var(--primary-soft), transparent);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
         <div>
           <div style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px">${title}</div>
           <div style="font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px">
@@ -79,7 +79,7 @@ function renderIrrModal() {
       </div>
 
       <!-- Tab Navigation -->
-      <div id="irrModalTabs" style="padding:0 24px;background:rgba(0,210,255,0.03);border-bottom:1px solid var(--border);display:flex;gap:20px">
+      <div id="irrModalTabs" style="padding:0 24px;background:var(--bg-hover);border-bottom:1px solid var(--border);display:flex;gap:20px">
         ${renderModalTabBtn('general', 'Tổng quan', IRR_ICONS.info)}
         ${renderModalTabBtn('tech', 'Kỹ thuật', IRR_ICONS.ruler)}
         ${renderModalTabBtn('status', 'Hiện trạng', IRR_ICONS.chart)}
@@ -93,7 +93,7 @@ function renderIrrModal() {
       </div>
 
       <!-- Footer Info -->
-      <div style="padding:12px 24px;border-top:1px solid var(--border);background:rgba(0,0,0,0.2);display:flex;justify-content:space-between;align-items:center">
+      <div style="padding:12px 24px;border-top:1px solid var(--border);background:var(--bg-elevated);display:flex;justify-content:space-between;align-items:center">
         <div style="font-size:11px;color:var(--muted)">© 2026 iClever Hadiwa IOC · Hệ thống CSDL Thủy lợi TP. Hà Nội</div>
         <div style="display:flex;gap:16px;font-size:11px;color:var(--muted)">
           <span>Người phê duyệt: <strong>Nguyễn Văn Thành</strong></span>
@@ -114,9 +114,9 @@ function renderIrrModal() {
 function renderModalTabBtn(id, label, icon) {
   const active = _activeIrrModal.tab === id;
   return `
-    <div onclick="switchIrrModalTab('${id}')" style="padding:14px 4px;font-size:13px;font-weight:600;color:${active ? 'var(--cyan)' : 'var(--muted)'};cursor:pointer;position:relative;display:flex;align-items:center;gap:8px;transition:all .2s">
+    <div onclick="switchIrrModalTab('${id}')" style="padding:14px 4px;font-size:13px;font-weight:600;color:${active ? 'var(--primary)' : 'var(--muted)'};cursor:pointer;position:relative;display:flex;align-items:center;gap:8px;transition:all .2s">
       ${icon} ${label}
-      ${active ? `<div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--cyan);box-shadow:0 0 10px var(--cyan)"></div>` : ''}
+      ${active ? `<div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--primary);box-shadow:0 0 10px var(--primary)"></div>` : ''}
     </div>
   `;
 }
@@ -169,11 +169,11 @@ function renderGeneralTab(rec, type) {
   return `
     <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:24px">
       <div>
-        <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">I. Thông tin cơ bản</div>
-        <div class="card" style="padding:16px;background:rgba(255,255,255,0.02)">
+        <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">I. Thông tin cơ bản</div>
+        <div class="card" style="padding:16px;background:var(--bg-card)">
           <table style="width:100%;font-size:13px;border-collapse:collapse">
             ${meta.map(row => `
-              <tr style="border-bottom:1px solid rgba(255,255,255,0.05)">
+              <tr style="border-bottom:1px solid var(--border)">
                 <td style="padding:10px 0;color:var(--muted);width:140px">${row[0]}</td>
                 <td style="padding:10px 0;font-weight:600;color:var(--text)">${row[1]}</td>
               </tr>
@@ -182,8 +182,8 @@ function renderGeneralTab(rec, type) {
         </div>
       </div>
       <div>
-        <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">II. Phân loại & Pháp lý</div>
-        <div class="card" style="padding:16px;background:rgba(255,255,255,0.02)">
+        <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">II. Phân loại & Pháp lý</div>
+        <div class="card" style="padding:16px;background:var(--bg-card)">
           <div style="display:flex;flex-direction:column;gap:12px">
             <div>
               <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Cấp công trình</div>
@@ -195,13 +195,13 @@ function renderGeneralTab(rec, type) {
             </div>
             <div>
               <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Văn bản phê duyệt</div>
-              <div style="font-size:13px;font-weight:600;color:var(--cyan)">QĐ-UBND 1422/2024</div>
+              <div style="font-size:13px;font-weight:600;color:var(--primary)">QĐ-UBND 1422/2024</div>
             </div>
           </div>
         </div>
         <div style="margin-top:20px">
-          <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">III. Hình ảnh đại diện</div>
-          <div style="width:100%;height:140px;border-radius:8px;background:rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;border:1px dashed var(--border)">
+          <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">III. Hình ảnh đại diện</div>
+          <div style="width:100%;height:140px;border-radius:8px;background:var(--bg-elevated);display:flex;align-items:center;justify-content:center;border:1px dashed var(--border)">
              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
              <span style="font-size:11px;color:var(--muted);margin-left:8px">Chưa có ảnh đại diện</span>
           </div>
@@ -214,18 +214,18 @@ function renderGeneralTab(rec, type) {
 function renderTechTab(rec, type) {
   const specs = getTechSpecs(rec, type);
   return `
-    <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">Chỉ tiêu kỹ thuật chi tiết</div>
+    <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">Chỉ tiêu kỹ thuật chi tiết</div>
     <div style="display:grid;grid-template-columns:repeat(2, 1fr);gap:16px">
       ${specs.map(s => `
-        <div class="card" style="padding:12px 16px;background:rgba(255,255,255,0.02);display:flex;justify-content:space-between;align-items:center">
+        <div class="card" style="padding:12px 16px;background:var(--bg-card);display:flex;justify-content:space-between;align-items:center">
           <span style="font-size:12px;color:var(--muted)">${s[0]}</span>
           <span style="font-size:13px;font-weight:700;color:var(--text)">${s[1]}</span>
         </div>
       `).join('')}
     </div>
     <div style="margin-top:24px">
-      <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">Mô tả kết cấu & Năng lực phục vụ</div>
-      <div class="card" style="padding:16px;background:rgba(255,255,255,0.02);line-height:1.6;font-size:13px;color:var(--text-secondary)">
+      <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">Mô tả kết cấu & Năng lực phục vụ</div>
+      <div class="card" style="padding:16px;background:var(--bg-card);line-height:1.6;font-size:13px;color:var(--text-secondary)">
         Công trình được xây dựng bằng vật liệu bê tông cốt thép mác 250, hệ thống cửa van vận hành cơ giới kết hợp thủ công. 
         Năng lực thiết kế đảm bảo phục vụ tưới cho 150ha đất canh tác và tiêu thoát nước cho khu vực dân cư lân cận với lưu lượng đỉnh thiết kế 
         là 25m3/s. Tình trạng kết cấu hiện tại ổn định, tuân thủ hồ sơ hoàn công năm 2021.
@@ -239,10 +239,10 @@ function renderStatusTab(rec, type) {
   return `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
       <div>
-        <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">IV. Đánh giá hiện trạng</div>
-        <div class="card" style="padding:16px;background:rgba(255,255,255,0.02)">
+        <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">IV. Đánh giá hiện trạng</div>
+        <div class="card" style="padding:16px;background:var(--bg-card)">
           ${assessments.map(a => `
-            <div style="padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+            <div style="padding:10px 0;border-bottom:1px solid var(--border)">
               <div style="font-size:11px;color:var(--muted);margin-bottom:4px">${a[0]}</div>
               <div style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px">
                 ${a[1].includes('✅') ? IRR_ICONS.check : a[1].includes('⚠') ? IRR_ICONS.warn : ''}
@@ -253,11 +253,11 @@ function renderStatusTab(rec, type) {
         </div>
       </div>
       <div>
-        <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">V. Đề xuất & Kế hoạch</div>
-        <div class="card" style="padding:16px;background:rgba(255,255,255,0.02)">
+        <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">V. Đề xuất & Kế hoạch</div>
+        <div class="card" style="padding:16px;background:var(--bg-card)">
           <div style="margin-bottom:16px">
              <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Hướng xử lý</div>
-             <div style="font-size:13px;font-weight:600;color:var(--yellow)">${rec.xu_ly || 'Theo dõi định kỳ, bảo trì thường xuyên'}</div>
+             <div style="font-size:13px;font-weight:600;color:var(--warning)">${rec.xu_ly || 'Theo dõi định kỳ, bảo trì thường xuyên'}</div>
           </div>
           <div>
              <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Kiểm định tiếp theo</div>
@@ -279,11 +279,11 @@ function renderMapTab(rec) {
   return `
     <div style="height:100%;display:flex;flex-direction:column;gap:16px">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;letter-spacing:1px">VỊ TRÍ TRÊN BẢN ĐỒ GIS</div>
+        <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:1px">VỊ TRÍ TRÊN BẢN ĐỒ GIS</div>
         <div style="font-size:12px;color:var(--muted)">Tọa độ: 21°02'45" N — 105°49'12" E</div>
       </div>
-      <div id="irrDetailMap" style="flex:1;background:rgba(0,0,0,0.5);border-radius:12px;border:1px solid var(--border);min-height:400px"></div>
-      <div style="font-size:11px;color:var(--muted);background:rgba(0,210,255,0.05);padding:10px;border-radius:6px;border:1px solid rgba(0,210,255,0.1)">
+      <div id="irrDetailMap" style="flex:1;background:var(--bg-elevated);border-radius:12px;border:1px solid var(--border);min-height:400px"></div>
+      <div style="font-size:11px;color:var(--muted);background:var(--primary-soft);padding:10px;border-radius:6px;border:1px solid var(--border)">
         <strong>Ghi chú:</strong> Bản đồ thể hiện vị trí trung tâm công trình và phạm vi hành lang bảo vệ. Bạn có thể kéo/phóng to để xem chi tiết địa hình xung quanh.
       </div>
     </div>
@@ -294,20 +294,20 @@ function renderFilesTab(rec, type) {
   return `
     <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:24px">
       <div>
-        <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">Hồ sơ pháp lý & Cấp phép</div>
+        <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">Hồ sơ pháp lý & Cấp phép</div>
         <div style="display:flex;flex-direction:column;gap:10px">
           ${renderFileItem('Quyết định cấp phép Thủy lợi', 'ho_so_cap_phep.pdf', 'PDF · 2.4 MB', IRR_ICONS.file)}
           ${renderFileItem('Biên bản nghiệm thu bàn giao', 'ho_so_cap_phep.pdf', 'PDF · 1.8 MB', IRR_ICONS.check)}
           ${renderFileItem('Báo cáo kiểm định an toàn hồ đập', 'bao_cao_kiem_dinh.pdf', 'PDF · 4.2 MB', IRR_ICONS.alert)}
         </div>
-        <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;margin:20px 0 16px;letter-spacing:1px">Bản vẽ kỹ thuật</div>
+        <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;margin:20px 0 16px;letter-spacing:1px">Bản vẽ kỹ thuật</div>
         <div style="display:flex;flex-direction:column;gap:10px">
           ${renderFileItem('Bản vẽ mặt bằng tổng thể', 'ban_ve_ky_thuat.pdf', 'DWG/PDF · 8.5 MB', IRR_ICONS.ruler)}
           ${renderFileItem('Chi tiết kết cấu thân cống', 'ban_ve_ky_thuat.pdf', 'PDF · 3.1 MB', IRR_ICONS.tool)}
         </div>
       </div>
       <div>
-        <div style="font-size:12px;font-weight:700;color:var(--cyan);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">Ảnh thực địa (Realtime & Survey)</div>
+        <div style="font-size:12px;font-weight:700;color:var(--primary);text-transform:uppercase;margin-bottom:16px;letter-spacing:1px">Ảnh thực địa (Realtime & Survey)</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
           ${renderPhotoItem('Toàn cảnh nhìn từ hạ lưu', 'anh_thuc_dia_01.jpg', '26/03/2026')}
           ${renderPhotoItem('Gia cố mái đê đoạn xung yếu', 'anh_thuc_dia_02.jpg', '24/03/2026')}
@@ -327,8 +327,8 @@ function renderFilesTab(rec, type) {
 function renderFileItem(name, path, info, icon) {
   const fullPath = 'assets/docs/irrigation/' + path;
   return `
-    <div class="card" style="padding:12px;background:rgba(255,255,255,0.03);display:flex;align-items:center;gap:12px;transition:background .2s;cursor:pointer" onclick="window.open('${fullPath}', '_blank')" onmouseover="this.style.background='rgba(0,210,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'">
-      <div style="width:36px;height:36px;border-radius:8px;background:rgba(0,210,255,0.1);display:flex;align-items:center;justify-content:center;color:var(--cyan)">
+    <div class="card" style="padding:12px;background:var(--bg-card);display:flex;align-items:center;gap:12px;transition:background .2s;cursor:pointer" onclick="window.open('${fullPath}', '_blank')" onmouseover="this.style.background='var(--primary-soft)'" onmouseout="this.style.background='rgba(255,255,255,0.03)'">
+      <div style="width:36px;height:36px;border-radius:8px;background:var(--primary-soft);display:flex;align-items:center;justify-content:center;color:var(--primary)">
         ${icon}
       </div>
       <div style="flex:1">
@@ -343,11 +343,11 @@ function renderFileItem(name, path, info, icon) {
 function renderPhotoItem(caption, path, date) {
   const fullPath = 'assets/docs/irrigation/' + path;
   return `
-    <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border);background:rgba(0,0,0,0.3);cursor:pointer;transition:transform .2s" onclick="window.open('${fullPath}', '_blank')" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
-      <div style="height:80px;background:rgba(255,255,255,0.05);display:flex;align-items:center;justify-content:center">
+    <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border);background:var(--bg-elevated);cursor:pointer;transition:transform .2s" onclick="window.open('${fullPath}', '_blank')" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+      <div style="height:80px;background:var(--bg-card);display:flex;align-items:center;justify-content:center">
         ${IRR_ICONS.camera}
       </div>
-      <div style="padding:8px;background:rgba(0,0,0,0.5)">
+      <div style="padding:8px;background:var(--bg-elevated)">
         <div style="font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${caption}</div>
         <div style="font-size:9px;color:var(--muted)">${date}</div>
       </div>
@@ -382,8 +382,8 @@ function initIrrDetailMap() {
   const markerIcon = L.divIcon({
     html: `
       <div style="position:relative">
-        <div style="width:20px;height:20px;background:var(--cyan);border:3px solid white;border-radius:50%;box-shadow:0 0 10px var(--cyan)"></div>
-        <div style="position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:10px solid var(--cyan)"></div>
+        <div style="width:20px;height:20px;background:var(--primary);border:3px solid white;border-radius:50%;box-shadow:0 0 10px var(--primary)"></div>
+        <div style="position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:10px solid var(--primary)"></div>
       </div>
     `,
     className: '',
@@ -397,8 +397,8 @@ function initIrrDetailMap() {
 
   // Circle to represent protected area
   L.circle([lat, lng], {
-    color: 'var(--cyan)',
-    fillColor: 'var(--cyan)',
+    color: 'var(--primary)',
+    fillColor: 'var(--primary)',
     fillOpacity: 0.1,
     radius: 500
   }).addTo(map);

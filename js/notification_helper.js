@@ -1,11 +1,11 @@
 // ── NOTIFICATION HELPER — Shared multi-channel send modal ──────────
 // Shared data store (referenced by hrm.js tabs)
 window.NOTIFY_GROUPS = [
-  { id: 'g1', name: 'Ban Chỉ huy PCTT', desc: 'Lãnh đạo + Điều hành PCTT', channels: ['zalo','email','ioc'], members: ['NV001','NV002','NV003'], color: 'var(--red)' },
-  { id: 'g2', name: 'Nhóm Trực ban 24/7', desc: 'Cán bộ trực ca tại IOC', channels: ['ioc','app','speaker'], members: ['NV004','NV005','NV006'], color: 'var(--cyan)' },
-  { id: 'g3', name: 'Nhóm Kỹ thuật hiện trường', desc: 'Kỹ sư vận hành + tuần tra', channels: ['zalo','app'], members: ['NV004','NV007'], color: 'var(--blue)' },
-  { id: 'g4', name: 'Toàn cơ quan', desc: 'Tất cả CBCNV Chi cục TT-PCTT', channels: ['email','ioc','app'], members: [], color: 'var(--green)' },
-  { id: 'g5', name: 'Đội Tuần tra Đê', desc: 'Tuần tra Hữu Hồng + Hữu Đáy', channels: ['zalo','telegram'], members: ['NV005','NV006'], color: 'var(--yellow)' },
+  { id: 'g1', name: 'Ban Chỉ huy PCTT', desc: 'Lãnh đạo + Điều hành PCTT', channels: ['zalo','email','ioc'], members: ['NV001','NV002','NV003'], color: 'var(--danger)' },
+  { id: 'g2', name: 'Nhóm Trực ban 24/7', desc: 'Cán bộ trực ca tại IOC', channels: ['ioc','app','speaker'], members: ['NV004','NV005','NV006'], color: 'var(--primary)' },
+  { id: 'g3', name: 'Nhóm Kỹ thuật hiện trường', desc: 'Kỹ sư vận hành + tuần tra', channels: ['zalo','app'], members: ['NV004','NV007'], color: 'var(--info)' },
+  { id: 'g4', name: 'Toàn cơ quan', desc: 'Tất cả CBCNV Chi cục TT-PCTT', channels: ['email','ioc','app'], members: [], color: 'var(--success)' },
+  { id: 'g5', name: 'Đội Tuần tra Đê', desc: 'Tuần tra Hữu Hồng + Hữu Đáy', channels: ['zalo','telegram'], members: ['NV005','NV006'], color: 'var(--warning)' },
   { id: 'g6', name: 'BCH Quận/Huyện', desc: 'Liên hệ liên đơn vị', channels: ['email','zalo'], members: [], color: 'var(--purple)' },
 ];
 
@@ -20,10 +20,10 @@ window.NOTIFY_SPEAKERS = [
 
 const NOTIFY_CHANNEL_META = {
   zalo:     { label: 'Zalo OA',        icon: '<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>',                                       color: '#0068ff' },
-  email:    { label: 'Email',           icon: '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',  color: 'var(--cyan)' },
-  ioc:      { label: 'IOC Push',        icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',  color: 'var(--green)' },
-  speaker:  { label: 'Phát Loa',        icon: '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07"/>',  color: 'var(--yellow)' },
-  app:      { label: 'App Mobile',      icon: '<rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>',         color: 'var(--blue)' },
+  email:    { label: 'Email',           icon: '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',  color: 'var(--primary)' },
+  ioc:      { label: 'IOC Push',        icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',  color: 'var(--success)' },
+  speaker:  { label: 'Phát Loa',        icon: '<polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07"/>',  color: 'var(--warning)' },
+  app:      { label: 'App Mobile',      icon: '<rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/>',         color: 'var(--info)' },
   telegram: { label: 'Telegram',        icon: '<line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>',                          color: '#29b6f6' },
   sms:      { label: 'SMS Brandname',   icon: '<path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>',                                        color: 'var(--muted)' },
 };
@@ -98,7 +98,7 @@ function openNotifyTargetModal(ctx = {}) {
             <div id="notifyPersonList" style="max-height:160px;overflow-y:auto;display:flex;flex-direction:column;gap:4px">
               ${employees.map(e => `
               <label style="display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;cursor:pointer" class="notify-person-row" data-name="${e.name.toLowerCase()}">
-                <input type="checkbox" id="per_${e.id}" style="accent-color:var(--cyan)">
+                <input type="checkbox" id="per_${e.id}" style="accent-color:var(--primary)">
                 <div style="flex:1">
                   <span style="font-size:12px;font-weight:500">${e.name}</span>
                   <span style="font-size:10px;color:var(--muted);margin-left:6px">${e.dept}</span>
@@ -115,13 +115,13 @@ function openNotifyTargetModal(ctx = {}) {
           <!-- Cụm loa (conditionally shown) -->
           <div id="notifySpeakersSection">
             <div style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" style="vertical-align:middle;margin-right:4px"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14"/><path d="M15.54 8.46a5 5 0 010 7.07"/></svg>
               Cụm Loa Phát Thanh
             </div>
             <div style="display:flex;flex-direction:column;gap:6px">
               ${speakers.map(s => `
               <label style="display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;cursor:pointer;background:rgba(255,255,255,.02);${s.status==='offline'?'opacity:.5':''}">
-                <input type="checkbox" id="spk_${s.id}" ${s.status==='offline'?'disabled':''} style="accent-color:var(--yellow)">
+                <input type="checkbox" id="spk_${s.id}" ${s.status==='offline'?'disabled':''} style="accent-color:var(--warning)">
                 <div style="flex:1">
                   <div style="font-size:12px;font-weight:600">${s.name}</div>
                   <div style="font-size:10px;color:var(--muted)">${s.location}</div>
@@ -236,7 +236,7 @@ function updateNotifySummary() {
     channels.length  ? `<div><span style="color:var(--muted)">Kênh:</span> <strong>${channels.join(' · ')}</strong></div>` : '',
     groups.length    ? `<div><span style="color:var(--muted)">Nhóm (${groups.length}):</span> <strong>${groups.join(', ')}</strong></div>` : '',
     persons          ? `<div><span style="color:var(--muted)">Cá nhân:</span> <strong>${persons} người</strong></div>` : '',
-    speakers.length  ? `<div><span style="color:var(--yellow)">Cụm loa (${speakers.length}):</span> <strong>${speakers.join(', ')}</strong></div>` : '',
+    speakers.length  ? `<div><span style="color:var(--warning)">Cụm loa (${speakers.length}):</span> <strong>${speakers.join(', ')}</strong></div>` : '',
   ].filter(Boolean).join('');
 }
 function sendNotifyNow() {

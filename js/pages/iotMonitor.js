@@ -29,9 +29,9 @@ function renderIotMonitor() {
       <p>Theo dõi realtime từ <strong>${stations.length}</strong> trạm đo · <strong>${totalSensors}</strong> cảm biến · Cập nhật tự động mỗi 5 phút</p>
     </div>
     <div class="page-actions">
-      <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:20px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.25)">
+      <div style="display:flex;align-items:center;gap:8px;padding:6px 14px;border-radius:20px;background:rgba(41,132,238,.1);border:1px solid rgba(41,132,238,.25)">
         <div class="pulse-dot green"></div>
-        <span style="color:var(--green);font-size:12px;font-weight:600">IoT: ${online} trạm online</span>
+        <span style="color:var(--success);font-size:12px;font-weight:600">IoT: ${online} trạm online</span>
       </div>
       <button class="btn btn-ghost btn-sm" onclick="exportIotExcel()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg> Xuất Excel
@@ -47,28 +47,28 @@ function renderIotMonitor() {
   <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px">
     <div style="background:var(--bg-card);border:1px solid rgba(0,200,255,.2);border-radius:12px;padding:16px;text-align:center">
       <div style="font-size:10px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">MN Sông Hồng</div>
-      <div style="font-size:28px;font-weight:800;color:var(--cyan)">${sH?.waterLevel?.toFixed(2) || '4.82'}<span style="font-size:13px;color:var(--muted)">m</span></div>
-      <div style="font-size:10px;margin-top:6px;color:var(--green)">▲ Dưới BĐ1</div>
+      <div style="font-size:28px;font-weight:800;color:var(--primary)">${sH?.waterLevel?.toFixed(2) || '4.82'}<span style="font-size:13px;color:var(--muted)">m</span></div>
+      <div style="font-size:10px;margin-top:6px;color:var(--success)">▲ Dưới BĐ1</div>
     </div>
     <div style="background:var(--bg-card);border:1px solid rgba(255,202,40,.2);border-radius:12px;padding:16px;text-align:center">
       <div style="font-size:10px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Mưa cao nhất/24h</div>
-      <div style="font-size:28px;font-weight:800;color:var(--yellow)">${maxRain.toFixed(0)}<span style="font-size:13px;color:var(--muted)">mm</span></div>
+      <div style="font-size:28px;font-weight:800;color:var(--warning)">${maxRain.toFixed(0)}<span style="font-size:13px;color:var(--muted)">mm</span></div>
       <div style="font-size:10px;margin-top:6px;color:var(--muted)">${maxRainSt?.name?.replace('Trạm ','') || '—'}</div>
     </div>
-    <div style="background:var(--bg-card);border:1px solid rgba(0,230,118,.2);border-radius:12px;padding:16px;text-align:center">
+    <div style="background:var(--bg-card);border:1px solid rgba(41,132,238,.2);border-radius:12px;padding:16px;text-align:center">
       <div style="font-size:10px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Trạm Online</div>
-      <div style="font-size:28px;font-weight:800;color:var(--green)">${online}<span style="font-size:13px;color:var(--muted)">/${stations.length}</span></div>
+      <div style="font-size:28px;font-weight:800;color:var(--success)">${online}<span style="font-size:13px;color:var(--muted)">/${stations.length}</span></div>
       <div style="font-size:10px;margin-top:6px;color:var(--muted)">${Math.round(online/stations.length*100)}% hoạt động</div>
     </div>
     <div style="background:var(--bg-card);border:1px solid rgba(255,202,40,.2);border-radius:12px;padding:16px;text-align:center">
       <div style="font-size:10px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Cảnh báo mức nước</div>
-      <div style="font-size:28px;font-weight:800;color:var(--yellow)">${warning + alertCnt}</div>
-      <div style="font-size:10px;margin-top:6px;color:var(--yellow)">${warning} cảnh báo · ${alertCnt} vượt BĐ1</div>
+      <div style="font-size:28px;font-weight:800;color:var(--warning)">${warning + alertCnt}</div>
+      <div style="font-size:10px;margin-top:6px;color:var(--warning)">${warning} cảnh báo · ${alertCnt} vượt BĐ1</div>
     </div>
     <div style="background:var(--bg-card);border:1px solid rgba(255,23,68,.2);border-radius:12px;padding:16px;text-align:center">
       <div style="font-size:10px;color:var(--muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em">Trạm Offline/Lỗi</div>
-      <div style="font-size:28px;font-weight:800;color:var(--red)">${offline}</div>
-      <div style="font-size:10px;margin-top:6px;color:var(--red)">${offline > 0 ? 'Cần kiểm tra thiết bị!' : 'Không có lỗi'}</div>
+      <div style="font-size:28px;font-weight:800;color:var(--danger)">${offline}</div>
+      <div style="font-size:10px;margin-top:6px;color:var(--danger)">${offline > 0 ? 'Cần kiểm tra thiết bị!' : 'Không có lỗi'}</div>
     </div>
   </div>
 
@@ -94,15 +94,15 @@ function _renderIotTab(stations) {
       const wl = s.waterLevel || 0;
       const alertLvl = s.alertLevel2 && wl >= s.alertLevel2 ? 'critical'
                      : s.alertLevel1 && wl >= s.alertLevel1 ? 'warning' : 'ok';
-      const alertColor = { ok:'var(--green)', warning:'var(--yellow)', critical:'var(--red)' }[alertLvl];
-      const borderColor = { ok:'rgba(0,230,118,.25)', warning:'rgba(255,202,40,.4)', critical:'rgba(255,23,68,.5)' }[alertLvl];
-      const stColor = { online:'var(--green)', warning:'var(--yellow)', offline:'var(--red)' }[s.status] || 'var(--muted)';
+      const alertColor = { ok:'var(--success)', warning:'var(--warning)', critical:'var(--danger)' }[alertLvl];
+      const borderColor = { ok:'rgba(41,132,238,.25)', warning:'rgba(255,202,40,.4)', critical:'rgba(255,23,68,.5)' }[alertLvl];
+      const stColor = { online:'var(--success)', warning:'var(--warning)', offline:'var(--danger)' }[s.status] || 'var(--muted)';
       const typeIcon = { hydro:'~', rain:'≈', reservoir:'▣' }[s.type] || '◈';
       const trend = s.trend || '—';
       const tUp = trend.startsWith('+');
       const tDn = trend.startsWith('-');
       const pct = s.alertLevel2 && wl > 0 ? Math.min(100, Math.round(wl / s.alertLevel2 * 100)) : 0;
-      const barColor = pct >= 90 ? 'var(--red)' : pct >= 70 ? 'var(--yellow)' : 'var(--cyan)';
+      const barColor = pct >= 90 ? 'var(--danger)' : pct >= 70 ? 'var(--warning)' : 'var(--primary)';
       return `
       <div style="background:var(--bg-card);border:1px solid ${borderColor};border-radius:12px;padding:14px;cursor:pointer;transition:transform .18s,box-shadow .18s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(0,0,0,.3)'" onmouseout="this.style.transform='';this.style.boxShadow=''" onclick="viewIotStationDetail('${s.id}')">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px">
@@ -131,10 +131,10 @@ function _renderIotTab(stations) {
             <span>BĐ1: ${s.alertLevel1||'—'}m</span><span>${pct}% BĐ2</span>
           </div>
         </div>`: `
-        <div style="font-size:18px;font-weight:700;color:var(--cyan);margin-bottom:8px">${s.rainfall||0}<span style="font-size:11px;color:var(--muted)"> mm</span></div>`}
+        <div style="font-size:18px;font-weight:700;color:var(--primary);margin-bottom:8px">${s.rainfall||0}<span style="font-size:11px;color:var(--muted)"> mm</span></div>`}
         <div style="display:flex;justify-content:space-between;font-size:10px;border-top:1px solid var(--border);padding-top:8px;margin-top:4px">
-          <span style="color:var(--muted)">Mưa: <b style="color:${(s.rainfall||0)>=50?'var(--yellow)':'var(--text)'}">${s.rainfall||0}mm</b></span>
-          <span style="color:${tUp?'var(--red)':tDn?'var(--cyan)':'var(--muted)'}">
+          <span style="color:var(--muted)">Mưa: <b style="color:${(s.rainfall||0)>=50?'var(--warning)':'var(--text)'}">${s.rainfall||0}mm</b></span>
+          <span style="color:${tUp?'var(--danger)':tDn?'var(--primary)':'var(--muted)'}">
             ${tUp?'↑':tDn?'↓':'→'} ${trend} m/h
           </span>
         </div>
@@ -150,9 +150,9 @@ function _renderIotTab(stations) {
           <span style="font-size:11px;font-weight:400;color:var(--muted);margin-left:8px">${hydro.length} thủy văn · ${rain.length} đo mưa · ${rsv.length} hồ chứa</span>
         </div>
         <div style="display:flex;gap:10px;font-size:11px">
-          <span style="color:var(--green)">● ${stations.filter(s=>s.status==='online').length} Online</span>
-          <span style="color:var(--yellow)">● ${stations.filter(s=>s.status==='warning').length} Cảnh báo</span>
-          <span style="color:var(--red)">● ${stations.filter(s=>s.status==='offline').length} Offline</span>
+          <span style="color:var(--success)">● ${stations.filter(s=>s.status==='online').length} Online</span>
+          <span style="color:var(--warning)">● ${stations.filter(s=>s.status==='warning').length} Cảnh báo</span>
+          <span style="color:var(--danger)">● ${stations.filter(s=>s.status==='offline').length} Offline</span>
         </div>
       </div>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px">
@@ -203,18 +203,18 @@ function _renderIotTab(stations) {
               const alert = s.alertLevel2 && wl >= s.alertLevel2 ? 'critical' :
                             s.alertLevel1 && wl >= s.alertLevel1 ? 'warning' : 'ok';
               const alertLabel = { ok:'Bình thường', warning:'CẢnh báo BĐ1', critical:'Vượt BĐ2 !' }[alert];
-              const alertColor = { ok:'var(--green)', warning:'var(--yellow)', critical:'var(--red)' }[alert];
+              const alertColor = { ok:'var(--success)', warning:'var(--warning)', critical:'var(--danger)' }[alert];
               const typeLabel = { hydro:'Thủy văn', rain:'Đo mưa', reservoir:'Hồ chứa' }[s.type] || s.type;
               const trend = s.trend || '—';
-              const trendColor = trend.startsWith('+') ? 'var(--red)' : trend.startsWith('-') ? 'var(--cyan)' : 'var(--muted)';
+              const trendColor = trend.startsWith('+') ? 'var(--danger)' : trend.startsWith('-') ? 'var(--primary)' : 'var(--muted)';
               return `<tr style="${alert==='critical'?'background:rgba(255,23,68,.04)':alert==='warning'?'background:rgba(255,202,40,.03)':''}">
-                <td class="mono" style="color:var(--cyan);font-size:11px">${s.id}</td>
+                <td class="mono" style="color:var(--primary);font-size:11px">${s.id}</td>
                 <td style="font-weight:600">${s.name}</td>
                 <td style="font-size:12px;color:var(--muted)">${s.river||'—'}</td>
                 <td style="font-size:12px;color:var(--muted)">${s.factory}</td>
                 <td><span class="badge badge-gray" style="font-size:9px">${typeLabel}</span></td>
                 <td style="font-weight:700;color:${alertColor};font-size:13px">${wl > 0 ? wl.toFixed(2) : s.type==='rain'?'—':'—'}</td>
-                <td style="color:${(s.rainfall||0)>=50?'var(--yellow)':'var(--muted)'};font-weight:${(s.rainfall||0)>=50?'700':'400'}">${s.rainfall || 0}</td>
+                <td style="color:${(s.rainfall||0)>=50?'var(--warning)':'var(--muted)'};font-weight:${(s.rainfall||0)>=50?'700':'400'}">${s.rainfall || 0}</td>
                 <td style="color:${trendColor};font-size:12px;font-weight:600">${trend} m/h</td>
                 <td class="mono" style="font-size:11px;color:var(--muted)">${s.alertLevel1||'—'} / ${s.alertLevel2||'—'}</td>
                 <td><span style="font-size:11px;color:${alertColor};font-weight:700">${alertLabel}</span></td>
@@ -234,9 +234,9 @@ function _renderIotTab(stations) {
     return `
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px">
       ${[
-        { label:'Cảnh báo chưa xử lý', val:unacked.length, color:'var(--red)' },
-        { label:'Đã xác nhận', val:alarms.filter(a=>a.ack).length, color:'var(--green)' },
-        { label:'Tổng cảnh báo hôm nay', val:alarms.length, color:'var(--cyan)' },
+        { label:'Cảnh báo chưa xử lý', val:unacked.length, color:'var(--danger)' },
+        { label:'Đã xác nhận', val:alarms.filter(a=>a.ack).length, color:'var(--success)' },
+        { label:'Tổng cảnh báo hôm nay', val:alarms.length, color:'var(--primary)' },
       ].map(k=>`<div class="card kpi-card"><div class="kpi-label">${k.label}</div><div class="kpi-value" style="color:${k.color}">${k.val}</div></div>`).join('')}
     </div>
     <div class="card" style="padding:0;margin-bottom:20px">
@@ -244,7 +244,7 @@ function _renderIotTab(stations) {
       <div style="display:flex;flex-direction:column;gap:0">
         ${alarms.map(a => `
         <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);background:${a.ack?'transparent':'rgba(255,23,68,.02)'}">
-          <div style="width:10px;height:10px;border-radius:50%;background:${{critical:'var(--red)',high:'var(--red)',warning:'var(--yellow)'}[a.severity]||'var(--muted)'};flex-shrink:0;${!a.ack?'animation:pulse-dot 1.5s infinite':''}"></div>
+          <div style="width:10px;height:10px;border-radius:50%;background:${{critical:'var(--danger)',high:'var(--danger)',warning:'var(--warning)'}[a.severity]||'var(--muted)'};flex-shrink:0;${!a.ack?'animation:pulse-dot 1.5s infinite':''}"></div>
           <div style="flex:1">
             <div style="font-size:13px;${a.ack?'opacity:.55':''}">${a.msg}</div>
             <div style="font-size:11px;color:var(--muted);margin-top:3px">${a.time} · Nguồn: ${a.source}</div>
@@ -253,7 +253,7 @@ function _renderIotTab(stations) {
             ${statusBadge(a.severity)}
             ${a.ack
               ? `<span class="badge badge-green" style="font-size:10px">✓ Đã xác nhận</span>`
-              : `<button class="btn btn-sm" style="font-size:10px;background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.25)" onclick="ackIotAlert('${a.id}')">Xác nhận</button>`
+              : `<button class="btn btn-sm" style="font-size:10px;background:rgba(41,132,238,.1);color:var(--success);border:1px solid rgba(41,132,238,.25)" onclick="ackIotAlert('${a.id}')">Xác nhận</button>`
             }
           </div>
         </div>`).join('')}
@@ -284,7 +284,8 @@ function switchIotTab(tab) {
 function _renderIotCharts() {
   if (typeof Chart === 'undefined') return;
   const stations = window.DATA?.stations || [];
-  const DEF = { color:'rgba(255,255,255,.65)', grid:'rgba(255,255,255,.06)', font:"'Inter',sans-serif" };
+  const palette = getChartPalette();
+  const DEF = { color: palette.textMuted, grid: hexToRgba(palette.cyan, .06), font:"'Inter',sans-serif" };
   const ax = () => ({ ticks:{color:DEF.color,font:{family:DEF.font,size:10}}, grid:{color:DEF.grid} });
   const mk = (id, cfg) => {
     const el = document.getElementById(id); if (!el) return;
@@ -298,11 +299,11 @@ function _renderIotCharts() {
       labels: rainSt.map(s => s.name.replace('Trạm ','').substring(0,14)),
       datasets:[{
         label:'Mưa (mm/24h)', data:rainSt.map(s=>s.rainfall||0),
-        backgroundColor:rainSt.map(s=>(s.rainfall||0)>=50?'rgba(255,202,40,.65)':'rgba(0,200,255,.5)'),
-        borderColor:rainSt.map(s=>(s.rainfall||0)>=50?'#ffca28':'#00c8ff'), borderWidth:1.5, borderRadius:5,
+        backgroundColor:rainSt.map(s=>(s.rainfall||0)>=50?hexToRgba(palette.warning,.65):hexToRgba(palette.cyan,.5)),
+        borderColor:rainSt.map(s=>(s.rainfall||0)>=50?palette.warning:palette.cyan), borderWidth:1.5, borderRadius:5,
       }],
     }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false},
-      annotation:{annotations:{ line1:{ type:'line', yMin:50, yMax:50, borderColor:'rgba(255,202,40,.5)', borderWidth:1.5, borderDash:[5,5] } }}},
+      annotation:{annotations:{ line1:{ type:'line', yMin:50, yMax:50, borderColor:hexToRgba(palette.warning,.5), borderWidth:1.5, borderDash:[5,5] } }}},
       scales:{ x:{...ax(),ticks:{...ax().ticks,maxRotation:40}}, y:{...ax(),beginAtZero:true} } } });
 
     // Chart 2: Water level vs alert thresholds (hydro only)
@@ -311,10 +312,10 @@ function _renderIotCharts() {
       labels: hydroSt.map(s => s.name.replace('Trạm ','').substring(0,12)),
       datasets:[
         { label:'MN hiện tại (m)', data:hydroSt.map(s=>s.waterLevel),
-          backgroundColor:hydroSt.map(s=>s.waterLevel>=(s.alertLevel2||999)?'rgba(255,23,68,.6)':s.waterLevel>=(s.alertLevel1||999)?'rgba(255,202,40,.6)':'rgba(0,230,118,.5)'),
+          backgroundColor:hydroSt.map(s=>s.waterLevel>=(s.alertLevel2||999)?hexToRgba(palette.danger,.6):s.waterLevel>=(s.alertLevel1||999)?hexToRgba(palette.warning,.6):hexToRgba(palette.success,.5)),
           borderWidth:1.5, borderRadius:4 },
-        { label:'Báo động 1', data:hydroSt.map(s=>s.alertLevel1), type:'line', borderColor:'rgba(255,202,40,.7)', borderWidth:1.5, borderDash:[5,4], pointRadius:0, fill:false },
-        { label:'Báo động 2', data:hydroSt.map(s=>s.alertLevel2), type:'line', borderColor:'rgba(255,23,68,.7)', borderWidth:1.5, borderDash:[5,4], pointRadius:0, fill:false },
+        { label:'Báo động 1', data:hydroSt.map(s=>s.alertLevel1), type:'line', borderColor:hexToRgba(palette.warning,.7), borderWidth:1.5, borderDash:[5,4], pointRadius:0, fill:false },
+        { label:'Báo động 2', data:hydroSt.map(s=>s.alertLevel2), type:'line', borderColor:hexToRgba(palette.danger,.7), borderWidth:1.5, borderDash:[5,4], pointRadius:0, fill:false },
       ],
     }, options:{ responsive:true, maintainAspectRatio:false,
       plugins:{legend:{labels:{color:DEF.color,font:{family:DEF.font,size:10}}}},
@@ -329,7 +330,7 @@ function _renderIotCharts() {
         datasets:[{
           label:'Dung tích hiện tại (%)',
           data: rPct,
-          backgroundColor:rPct.map(p=>p>=90?'rgba(255,23,68,.6)':p>=70?'rgba(255,202,40,.5)':'rgba(0,200,255,.5)'),
+          backgroundColor:rPct.map(p=>p>=90?hexToRgba(palette.danger,.6):p>=70?hexToRgba(palette.warning,.5):hexToRgba(palette.cyan,.5)),
           borderWidth:1.5, borderRadius:4,
         }],
       }, options:{ responsive:true, maintainAspectRatio:false,
@@ -346,7 +347,7 @@ function _renderIotCharts() {
     const off = stations.filter(s=>s.status==='offline').length;
     mk('iotStatusChart', { type:'doughnut', data:{
       labels:['Online','Cảnh báo','Offline/Lỗi'],
-      datasets:[{ data:[online,warn,off], backgroundColor:['rgba(0,230,118,.7)','rgba(255,202,40,.7)','rgba(255,23,68,.7)'], borderWidth:0, hoverOffset:8 }],
+      datasets:[{ data:[online,warn,off], backgroundColor:[hexToRgba(palette.success,.7),hexToRgba(palette.warning,.7),hexToRgba(palette.danger,.7)], borderWidth:0, hoverOffset:8 }],
     }, options:{ responsive:true, maintainAspectRatio:false,
       plugins:{legend:{position:'bottom',labels:{color:DEF.color,font:{family:DEF.font,size:11},padding:12}}},
       cutout:'60%' } });
@@ -361,11 +362,11 @@ function _renderIotCharts() {
       labels: hours,
       datasets:[{
         label:'Mực nước sông Hồng (m)', data:levels,
-        borderColor:'#00c8ff', backgroundColor:'rgba(0,200,255,.08)', borderWidth:2,
+        borderColor:palette.cyan, backgroundColor:hexToRgba(palette.cyan,.08), borderWidth:2,
         pointRadius:0, pointHoverRadius:4, fill:true, tension:0.4,
       },{
         label:'BĐ1 (9.5m)', data:Array(25).fill(9.5),
-        borderColor:'rgba(255,202,40,.5)', borderWidth:1.5, borderDash:[5,4], pointRadius:0, fill:false,
+        borderColor:hexToRgba(palette.warning,.5), borderWidth:1.5, borderDash:[5,4], pointRadius:0, fill:false,
       }],
     }, options:{ responsive:true, maintainAspectRatio:false,
       plugins:{legend:{labels:{color:DEF.color,font:{family:DEF.font,size:10}}}},
@@ -391,15 +392,15 @@ window.viewIotStationDetail = function(id) {
     </div>
     ${wl > 0 ? `<div style="margin-bottom:14px">
       <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:6px">
-        <span>Mức độ báo động</span><span style="color:${{ok:'var(--green)',warning:'var(--yellow)',critical:'var(--red)'}[alert]}">${pct}% đến BĐ2</span>
+        <span>Mức độ báo động</span><span style="color:${{ok:'var(--success)',warning:'var(--warning)',critical:'var(--danger)'}[alert]}">${pct}% đến BĐ2</span>
       </div>
-      <div class="progress-bar"><div class="progress-fill" style="width:${Math.min(pct,100)}%;background:${{ok:'var(--green)',warning:'var(--yellow)',critical:'var(--red)'}[alert]}"></div></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${Math.min(pct,100)}%;background:${{ok:'var(--success)',warning:'var(--warning)',critical:'var(--danger)'}[alert]}"></div></div>
     </div>`:''}
     <div style="font-size:12px;font-weight:700;margin-bottom:8px">Thiết bị (${s.devices?.length||0})</div>
     <div style="display:flex;flex-direction:column;gap:6px">
       ${(s.devices||[]).map(d=>`
       <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px">
-        <div style="width:8px;height:8px;border-radius:50%;background:${{running:'var(--green)',fault:'var(--red)',open:'var(--yellow)',partial:'var(--orange)'}[d.status]||'var(--muted)'}"></div>
+        <div style="width:8px;height:8px;border-radius:50%;background:${{running:'var(--success)',fault:'var(--danger)',open:'var(--warning)',partial:'var(--orange)'}[d.status]||'var(--muted)'}"></div>
         <span style="flex:1;font-size:12px">${d.name}</span>
         <span class="badge badge-gray" style="font-size:9px">${d.type}</span>
         ${statusBadge(d.status)}

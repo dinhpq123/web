@@ -40,7 +40,7 @@ window.fosDetailVehicle = function(typeName) {
 <div style="background:#0e1220;border:1px solid rgba(255,255,255,.1);border-radius:16px;width:480px;max-width:100%">
   <div style="padding:18px 22px 14px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between">
     <h3 style="font-size:15px;font-weight:800;color:#fff;margin:0;display:flex;align-items:center;gap:8px">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2.5"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
       ${typeName}
     </h3>
     <button onclick="_fosClose()" style="background:transparent;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:20px">✕</button>
@@ -48,10 +48,10 @@ window.fosDetailVehicle = function(typeName) {
   <div style="padding:20px 22px">
     <!-- Deployment gauge -->
     <div style="text-align:center;margin-bottom:18px">
-      <div style="font-size:40px;font-weight:900;color:${pct>80?'#ef4444':pct>50?'#f59e0b':'#10b981'}">${v.deployed}<span style="font-size:16px;color:rgba(255,255,255,.4)">/${v.total}</span></div>
+      <div style="font-size:40px;font-weight:900;color:${pct>80?'#ef4444':pct>50?'#f59e0b':'var(--success)'}">${v.deployed}<span style="font-size:16px;color:rgba(255,255,255,.4)">/${v.total}</span></div>
       <div style="font-size:11px;color:rgba(255,255,255,.38);margin-bottom:8px">Đang triển khai / Tổng số</div>
       <div style="height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden">
-        <div style="height:100%;width:${pct}%;background:${pct>80?'#ef4444':pct>50?'#f59e0b':'#10b981'};border-radius:3px;transition:width .5s"></div>
+        <div style="height:100%;width:${pct}%;background:${pct>80?'#ef4444':pct>50?'#f59e0b':'var(--success)'};border-radius:3px;transition:width .5s"></div>
       </div>
       <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:4px">${pct}% năng lực đang hoạt động</div>
     </div>
@@ -59,9 +59,9 @@ window.fosDetailVehicle = function(typeName) {
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px">
       ${[
         ['Tổng số', v.total, '#38bdf8'],
-        ['Sẵn sàng', v.ready, '#10b981'],
+        ['Sẵn sàng', v.ready, 'var(--success)'],
         ['Đang triển khai', v.deployed, '#f59e0b'],
-        ['Đơn vị quản lý', v.unit, '#a78bfa'],
+        ['Đơn vị quản lý', v.unit, '#5BA9FF'],
       ].map(([l,val,c]) => `<div style="background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:10px 12px">
         <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.07em;margin-bottom:3px">${l}</div>
         <div style="font-size:16px;font-weight:900;color:${c};font-family:monospace">${val??'—'}</div>
@@ -103,7 +103,7 @@ window.fosXuatKhoKhan = function() {
 <div style="background:#0e1220;border:1px solid rgba(255,255,255,.1);border-radius:16px;width:540px;max-width:100%">
   <div style="padding:18px 22px 14px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;justify-content:space-between">
     <h3 style="font-size:15px;font-weight:800;color:#fff;margin:0;display:flex;align-items:center;gap:8px">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg>
       Phiếu Xuất kho Khẩn cấp
     </h3>
     <button onclick="_fosClose()" style="background:transparent;border:none;color:rgba(255,255,255,.4);cursor:pointer;font-size:20px">✕</button>
@@ -189,7 +189,7 @@ window.fosUpdateVatTu = function(item) {
     </div>
     <div style="display:flex;gap:8px;justify-content:flex-end">
       <button type="button" onclick="_fosClose()" style="padding:7px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.5);font-size:12px;cursor:pointer">Hủy</button>
-      <button type="submit" style="padding:7px 16px;border-radius:8px;border:none;background:#10b981;color:#fff;font-size:12px;font-weight:800;cursor:pointer">Lưu số liệu</button>
+      <button type="submit" style="padding:7px 16px;border-radius:8px;border:none;background:var(--success);color:#fff;font-size:12px;font-weight:800;cursor:pointer">Lưu số liệu</button>
     </div>
   </form>
 </div>`);
@@ -240,7 +240,7 @@ window.fosXuatPhieu = function(item) {
     </div>
     <div style="display:flex;gap:8px;justify-content:flex-end">
       <button type="button" onclick="_fosClose()" style="padding:7px 14px;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:transparent;color:rgba(255,255,255,.5);font-size:12px;cursor:pointer">Hủy</button>
-      <button type="submit" style="padding:7px 16px;border-radius:8px;border:none;background:#a78bfa;color:#fff;font-size:12px;font-weight:800;cursor:pointer">Tạo phiếu xuất kho</button>
+      <button type="submit" style="padding:7px 16px;border-radius:8px;border:none;background:#5BA9FF;color:#fff;font-size:12px;font-weight:800;cursor:pointer">Tạo phiếu xuất kho</button>
     </div>
   </form>
 </div>`);
@@ -261,7 +261,7 @@ window.fosTrieuTap = function() {
 <div style="background:#0e1220;border:1px solid rgba(255,255,255,.1);border-radius:16px;width:440px;max-width:100%;padding:24px">
   <div style="text-align:center;margin-bottom:18px">
     <div style="width:52px;height:52px;border-radius:14px;background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);margin:0 auto 12px;display:flex;align-items:center;justify-content:center">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.7A2 2 0 012 1h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
     </div>
     <h3 style="font-size:16px;font-weight:800;color:#fff;margin:0 0 6px">Lệnh Triệu tập Lực lượng</h3>
     <p style="font-size:12px;color:rgba(255,255,255,.45);margin:0">Thông báo sẽ được gửi đa kênh đến tất cả đơn vị</p>

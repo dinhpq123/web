@@ -31,9 +31,9 @@ function renderDataHub() {
           <span class="badge badge-${c === 'green' ? 'green' : c === 'red' ? 'red' : 'yellow'}">${l}</span>
         </div>
         <div style="font-size:12px;color:var(--muted);margin-bottom:4px">Protocol: <span style="color:var(--text-2)">${s.protocol}</span></div>
-        <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Host: <code style="color:var(--cyan);font-size:11px">${s.host}</code></div>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:8px">Host: <code style="color:var(--primary);font-size:11px">${s.host}</code></div>
         <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--muted)">
-          <span>Latency: <span class="mono" style="color:${s.latency === '—' ? 'var(--red)' : 'var(--green)'}">${s.latency}</span></span>
+          <span>Latency: <span class="mono" style="color:${s.latency === '—' ? 'var(--danger)' : 'var(--success)'}">${s.latency}</span></span>
           <span>Sync: ${s.lastSync}</span>
         </div>
         <div style="margin-top:10px;display:flex;gap:6px">
@@ -50,7 +50,7 @@ function renderDataHub() {
       { id: 'apikeys',    label: 'Quản lý API Key',    icon: '<path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 11-7.778 7.778 5.5 5.5 0 017.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>',  extra: '' },
       { id: 'templates',  label: 'Template Nhập liệu', icon: '<path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/>',                                       extra: '' },
       { id: 'synclog',    label: 'Lịch sử đồng bộ',  icon: '<path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',  extra: '' },
-      { id: 'kpiimport',  label: 'Nhập liệu KPI',    icon: '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',          extra: ' <span style="background:#0066ff;color:#fff;font-size:9px;padding:1px 5px;border-radius:4px;margin-left:4px;font-weight:700">Mới</span>' },
+      { id: 'kpiimport',  label: 'Nhập liệu KPI',    icon: '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',          extra: ' <span style="background:var(--info);color:var(--text-on-primary);font-size:9px;padding:1px 5px;border-radius:4px;margin-left:4px;font-weight:700">Mới</span>' },
       { id: 'kpihistory', label: 'Lịch sử Import KPI', icon: '<polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/>',                                                       extra: '' },
       { id: 'rag',        label: 'AI Chatbot & RAG',  icon: '<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/>',  extra: '' },
       { id: 'aimodels',   label: 'AI & Mô hình',      icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',       extra: '' },
@@ -87,9 +87,9 @@ function renderApiKeys() {
     <thead><tr><th>API Key</th><th>Tên</th><th>Scope</th><th>Ngày tạo</th><th>Dùng lần cuối</th><th>Trạng thái</th><th></th></tr></thead>
     <tbody>
       ${keys.map(k => `<tr>
-        <td class="mono" style="font-size:12px;color:var(--cyan)">${k.key}</td>
+        <td class="mono" style="font-size:12px;color:var(--primary)">${k.key}</td>
         <td style="font-weight:500">${k.name}</td>
-        <td><code style="font-size:11px;background:rgba(0,200,255,.08);padding:2px 7px;border-radius:4px;color:var(--text-2)">${k.scope}</code></td>
+        <td><code style="font-size:11px;background:var(--info-soft);padding:2px 7px;border-radius:4px;color:var(--text-2)">${k.scope}</code></td>
         <td class="mono" style="font-size:12px;color:var(--muted)">${k.created}</td>
         <td class="mono" style="font-size:12px;color:var(--muted)">${k.lastUsed}</td>
         <td>${k.status === 'active' ? '<span class="badge badge-green">Hoạt động</span>' : '<span class="badge badge-gray">Tắt</span>'}</td>
@@ -117,7 +117,7 @@ function renderTemplates() {
     ${tmpls.map(t => `
     <div class="card" style="padding:16px;cursor:pointer" onclick="showToast('Đang tải xuống ${t.name}...')">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
-        <div style="width:40px;height:40px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.2);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <div style="width:40px;height:40px;background:var(--success-soft);border:1px solid var(--success-soft);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
         <div>
           <div style="font-size:13px;font-weight:600">${t.name}</div>
           <div style="font-size:11px;color:var(--muted)">${t.rows}</div>
@@ -168,7 +168,7 @@ function openNewApiKey() {
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px">
         ${['read:scada', 'write:scada', 'read:customers', 'write:customers', 'read:revenue', 'read:hrm', 'write:alerts', 'read:reports'].map(s => `
         <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px">
-          <input type="checkbox" style="accent-color:var(--cyan)"> ${s}
+          <input type="checkbox" style="accent-color:var(--primary)"> ${s}
         </label>`).join('')}
       </div>
     </div>
@@ -186,15 +186,15 @@ let kpiUploadedFiles = [];
 
 function renderKpiImport() {
   return `
-  <div style="background:linear-gradient(135deg,rgba(0,102,255,.12),rgba(0,200,255,.06));border:1px solid rgba(0,102,255,.25);border-radius:12px;padding:18px 22px;margin-bottom:20px;display:flex;align-items:flex-start;gap:16px">
-    <div style="width:44px;height:44px;background:linear-gradient(135deg,#0050cc,#00c8ff);border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px rgba(0,102,255,.35)">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+  <div style="background:linear-gradient(135deg,var(--info-soft),transparent);border:1px solid var(--info);border-radius:12px;padding:18px 22px;margin-bottom:20px;display:flex;align-items:flex-start;gap:16px">
+    <div style="width:44px;height:44px;background:linear-gradient(135deg,var(--info),var(--primary));border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px var(--info)">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--text-on-primary)" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
     </div>
     <div style="flex:1">
-      <div style="font-size:15px;font-weight:700;color:#e2e8f0;margin-bottom:5px">Nhập liệu KPI / Báo cáo PCTT</div>
+      <div style="font-size:15px;font-weight:700;color:var(--text-on-primary);margin-bottom:5px">Nhập liệu KPI / Báo cáo PCTT</div>
       <div style="font-size:13px;color:var(--muted);line-height:1.6">Upload file báo cáo, bảng số liệu từ các nguồn (Excel, PDF, CSV, DOCX, ảnh...). AI tự động bóc tách chỉ số PCTT, chuẩn hóa và cho bạn xác nhận trước khi import vào Dashboard và báo cáo định kỳ.</div>
     </div>
-    <button onclick="kpiGuideModal()" style="flex-shrink:0;padding:8px 14px;background:rgba(0,102,255,.15);border:1px solid rgba(0,102,255,.3);border-radius:8px;color:#60a5fa;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px">
+    <button onclick="kpiGuideModal()" style="flex-shrink:0;padding:8px 14px;background:var(--info-soft);border:1px solid var(--info);border-radius:8px;color:var(--info);font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
       Hướng dẫn &amp; Template
     </button>
@@ -202,15 +202,15 @@ function renderKpiImport() {
 
   <div class="card" style="margin-bottom:16px">
     <div class="card-header">
-      <span class="card-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2" style="vertical-align:middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Bước 1 — Chọn kỳ báo cáo &amp; chỉ số KPI</span>
-      <span style="font-size:11px;color:var(--muted);background:rgba(0,200,255,.08);padding:3px 9px;border-radius:5px">Bắt buộc</span>
+      <span class="card-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="vertical-align:middle"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Bước 1 — Chọn kỳ báo cáo &amp; chỉ số KPI</span>
+      <span style="font-size:11px;color:var(--muted);background:var(--info-soft);padding:3px 9px;border-radius:5px">Bắt buộc</span>
     </div>
     <div class="card-body" style="display:grid;grid-template-columns:220px 1fr;gap:24px">
       <div>
         <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px">Kỳ báo cáo</div>
         ${[['day', 'Theo ngày', 'Hàng ngày'], ['week', 'Theo tuần', '7 ngày'], ['month', 'Theo tháng', 'Phổ biến'], ['quarter', 'Theo quý', 'Q1–Q4'], ['year', 'Cả năm', 'Tổng kết']].map(([v, label, sub]) => `
-        <label style="display:flex;align-items:center;gap:10px;padding:8px 11px;border-radius:8px;cursor:pointer;border:1px solid ${v === 'month' ? 'rgba(0,200,255,.35)' : 'rgba(255,255,255,.06)'};background:${v === 'month' ? 'rgba(0,200,255,.07)' : 'rgba(0,0,0,.12)'};margin-bottom:5px;transition:.2s" id="kpiPeriodLbl_${v}" onclick="kpiSetPeriod('${v}')">
-          <input type="radio" name="kpiPeriod" value="${v}" ${v === 'month' ? 'checked' : ''} style="accent-color:var(--cyan)">
+        <label style="display:flex;align-items:center;gap:10px;padding:8px 11px;border-radius:8px;cursor:pointer;border:1px solid ${v === 'month' ? 'var(--info)' : 'var(--border)'};background:${v === 'month' ? 'var(--info-soft)' : 'var(--bg-surface)'};margin-bottom:5px;transition:.2s" id="kpiPeriodLbl_${v}" onclick="kpiSetPeriod('${v}')">
+          <input type="radio" name="kpiPeriod" value="${v}" ${v === 'month' ? 'checked' : ''} style="accent-color:var(--primary)">
           <div><div style="font-size:12px;font-weight:500">${label}</div><div style="font-size:10px;color:var(--muted)">${sub}</div></div>
         </label>`).join('')}
         <div style="display:flex;gap:6px;margin-top:10px">
@@ -224,12 +224,12 @@ function renderKpiImport() {
         <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase;margin-bottom:10px">Chỉ số KPI cần nhập</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
           ${[['su_co', 'Số vụ sự cố đê', 'Vụ ghi nhận', true], ['muc_nuoc', 'Mực nước max (sông Hồng)', 'm (tại Hà Nội)', true], ['luong_mua', 'Lượng mưa tích lũy', 'mm/24h (bình quân)', true], ['ho_di_doi', 'Số hộ phải di dời', 'Hộ', true], ['thiet_hai', 'Thiệt hại ước tính', 'Triệu VNĐ', false], ['luc_luong', 'Tổng lực lượng tham gia', 'Người', false], ['cong_trinh', 'Công trình xử lý khẩn', 'Điểm xử lý', false], ['chi_phi', 'Chi phí ƯCSC', 'Triệu VNĐ', false], ['van_ban', 'Văn bản chỉ đạo ban hành', 'Văn bản', false], ['nhan_su', 'Nhân sự trực ban', 'Người/ca', false]].map(([id, name, hint, checked]) => `
-          <label style="display:flex;align-items:flex-start;gap:8px;padding:9px;border-radius:8px;cursor:pointer;border:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.12);transition:.2s" onmouseover="this.style.borderColor='rgba(0,200,255,.2)'" onmouseout="this.style.borderColor='rgba(255,255,255,.06)'">
-            <input type="checkbox" id="kpick_${id}" ${checked ? 'checked' : ''} style="accent-color:var(--cyan);margin-top:2px">
+          <label style="display:flex;align-items:flex-start;gap:8px;padding:9px;border-radius:8px;cursor:pointer;border:1px solid var(--border);background:var(--bg-surface);transition:.2s" onmouseover="this.style.borderColor='var(--info)'" onmouseout="this.style.borderColor='var(--border)'">
+            <input type="checkbox" id="kpick_${id}" ${checked ? 'checked' : ''} style="accent-color:var(--primary);margin-top:2px">
             <div><div style="font-size:12px;font-weight:600">${name}</div><div style="font-size:10px;color:var(--muted)">${hint}</div></div>
           </label>`).join('')}
         </div>
-        <div style="margin-top:10px;padding:9px 13px;background:rgba(255,202,40,.05);border:1px solid rgba(255,202,40,.14);border-radius:8px;font-size:11px;color:rgba(255,202,40,.85);line-height:1.6">
+        <div style="margin-top:10px;padding:9px 13px;background:var(--warning-soft);border:1px solid var(--warning-soft);border-radius:8px;font-size:11px;color:var(--warning);line-height:1.6">
           AI sẽ đọc file và cố gắng bóc tách <b>tất cả chỉ số được chọn</b>. Chỉ số không tìm thấy sẽ để trống để nhập thủ công.
         </div>
       </div>
@@ -238,26 +238,26 @@ function renderKpiImport() {
 
   <div class="card" style="margin-bottom:16px">
     <div class="card-header">
-      <span class="card-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2" style="vertical-align:middle"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Bước 2 — Upload file dữ liệu</span>
-      <div style="display:flex;gap:4px;flex-wrap:wrap">${['Excel', 'CSV', 'PDF', 'Word', 'Ảnh JPG/PNG'].map(f => `<span style="font-size:10px;background:rgba(0,200,255,.07);border:1px solid rgba(0,200,255,.14);padding:2px 7px;border-radius:4px;color:var(--muted)">${f}</span>`).join('')}</div>
+      <span class="card-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="vertical-align:middle"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Bước 2 — Upload file dữ liệu</span>
+      <div style="display:flex;gap:4px;flex-wrap:wrap">${['Excel', 'CSV', 'PDF', 'Word', 'Ảnh JPG/PNG'].map(f => `<span style="font-size:10px;background:var(--info-soft);border:1px solid var(--info-soft);padding:2px 7px;border-radius:4px;color:var(--muted)">${f}</span>`).join('')}</div>
     </div>
     <div class="card-body">
-      <div id="kpiDropZone" style="border:2px dashed rgba(0,102,255,.3);border-radius:12px;padding:36px 24px;text-align:center;background:rgba(0,102,255,.04);cursor:pointer;transition:.2s"
+      <div id="kpiDropZone" style="border:2px dashed var(--info);border-radius:12px;padding:36px 24px;text-align:center;background:var(--info-soft);cursor:pointer;transition:.2s"
         onclick="document.getElementById('kpiFileInput').click()"
-        ondragover="event.preventDefault();this.style.borderColor='var(--cyan)';this.style.background='rgba(0,200,255,.08)'"
-        ondragleave="this.style.borderColor='rgba(0,102,255,.3)';this.style.background='rgba(0,102,255,.04)'"
+        ondragover="event.preventDefault();this.style.borderColor='var(--primary)';this.style.background='var(--info-soft)'"
+        ondragleave="this.style.borderColor='var(--info)';this.style.background='var(--info-soft)'"
         ondrop="kpiHandleDrop(event)">
         <input type="file" id="kpiFileInput" multiple accept=".xlsx,.xls,.csv,.pdf,.docx,.doc,.jpg,.jpeg,.png" style="display:none" onchange="kpiHandleFiles(this.files)">
-        <div style="width:52px;height:52px;background:linear-gradient(135deg,rgba(0,102,255,.2),rgba(0,200,255,.1));border-radius:13px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <div style="width:52px;height:52px;background:linear-gradient(135deg,var(--info),var(--info-soft));border-radius:13px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--info)" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
         </div>
-        <div style="font-size:14px;font-weight:600;color:#e2e8f0;margin-bottom:5px">Kéo &amp; thả file vào đây</div>
+        <div style="font-size:14px;font-weight:600;color:var(--text);margin-bottom:5px">Kéo &amp; thả file vào đây</div>
         <div style="font-size:12px;color:var(--muted);margin-bottom:10px">hoặc click để chọn từ máy tính</div>
-        <div style="font-size:11px;color:rgba(96,165,250,.7)">Excel, CSV, PDF, Word, JPG, PNG · Tối đa 20 MB · Nhiều file cùng lúc</div>
+        <div style="font-size:11px;color:var(--info)">Excel, CSV, PDF, Word, JPG, PNG · Tối đa 20 MB · Nhiều file cùng lúc</div>
       </div>
       <div id="kpiFileList" style="margin-top:10px;display:flex;flex-direction:column;gap:5px"></div>
       <div style="margin-top:14px;display:flex;gap:10px;align-items:center">
-        <button onclick="kpiStartAiProcess()" style="padding:10px 22px;background:linear-gradient(135deg,#0050cc,#00c8ff);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 4px 16px rgba(0,102,255,.35);transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+        <button onclick="kpiStartAiProcess()" style="padding:10px 22px;background:linear-gradient(135deg,var(--info),var(--primary));color:var(--text-on-primary);border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 4px 16px var(--info);transition:opacity .2s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           Phân tích &amp; Trích xuất bằng AI
         </button>
@@ -271,8 +271,8 @@ function renderKpiImport() {
 function kpiSetPeriod(v) {
   document.querySelectorAll('[id^="kpiPeriodLbl_"]').forEach(el => {
     const on = el.id === 'kpiPeriodLbl_' + v;
-    el.style.borderColor = on ? 'rgba(0,200,255,.35)' : 'rgba(255,255,255,.06)';
-    el.style.background = on ? 'rgba(0,200,255,.07)' : 'rgba(0,0,0,.12)';
+    el.style.borderColor = on ? 'var(--info)' : 'var(--border)';
+    el.style.background = on ? 'var(--info-soft)' : 'var(--bg-surface)';
   });
   const mw = document.getElementById('kpiMonthWrap');
   if (mw) mw.style.display = ['day', 'week', 'month'].includes(v) ? '' : 'none';
@@ -281,28 +281,28 @@ function kpiSetPeriod(v) {
 function kpiHandleDrop(e) {
   e.preventDefault();
   const z = document.getElementById('kpiDropZone');
-  if (z) { z.style.borderColor = 'rgba(0,102,255,.3)'; z.style.background = 'rgba(0,102,255,.04)'; }
+  if (z) { z.style.borderColor = 'var(--info)'; z.style.background = 'var(--info-soft)'; }
   kpiHandleFiles(e.dataTransfer.files);
 }
 
 function kpiHandleFiles(files) {
   const list = document.getElementById('kpiFileList');
   if (!list) return;
-  const colors = { xlsx: '#00e676', xls: '#00e676', csv: '#00e676', pdf: '#ff6d00', docx: '#60a5fa', doc: '#60a5fa', jpg: '#ff4081', jpeg: '#ff4081', png: '#ff4081' };
+  const colors = { xlsx: 'var(--success)', xls: 'var(--success)', csv: 'var(--success)', pdf: 'var(--warning)', docx: 'var(--info)', doc: 'var(--info)', jpg: 'var(--danger)', jpeg: 'var(--danger)', png: 'var(--danger)' };
   Array.from(files).forEach(f => {
     if (kpiUploadedFiles.find(x => x.name === f.name)) return;
     kpiUploadedFiles.push(f);
     const ext = f.name.split('.').pop().toLowerCase();
-    const c = colors[ext] || 'var(--cyan)';
+    const c = colors[ext] || 'var(--primary)';
     const sz = f.size < 1048576 ? (f.size / 1024).toFixed(0) + ' KB' : (f.size / 1048576).toFixed(1) + ' MB';
     const id = 'kf_' + Date.now() + Math.random().toString(36).slice(2, 5);
     const fn = f.name.replace(/'/g, "\\'");
     const el = document.createElement('div');
     el.id = id;
-    el.style.cssText = 'display:flex;align-items:center;gap:10px;padding:9px 13px;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.07);border-radius:8px';
-    el.innerHTML = `<div style="width:32px;height:32px;background:${c}18;border:1px solid ${c}33;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:${c}">${ext.toUpperCase()}</div>
+    el.style.cssText = 'display:flex;align-items:center;gap:10px;padding:9px 13px;background:var(--bg-surface);border:1px solid var(--border);border-radius:8px';
+    el.innerHTML = `<div style="width:32px;height:32px;background:color-mix(in srgb, ${c} 10%, transparent);border:1px solid color-mix(in srgb, ${c} 20%, transparent);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:${c}">${ext.toUpperCase()}</div>
       <div style="flex:1;min-width:0"><div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${f.name}</div><div style="font-size:10px;color:var(--muted)">${sz}</div></div>
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
       <button onclick="document.getElementById('${id}').remove();kpiUploadedFiles=kpiUploadedFiles.filter(x=>x.name!=='${fn}')" style="background:none;border:none;color:var(--muted);cursor:pointer;padding:3px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>`;
     list.appendChild(el);
   });
@@ -317,19 +317,19 @@ function kpiStartAiProcess() {
     ['<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>', 'Nhận diện các chỉ số KPI bằng NLP...'],
     ['<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>', 'Làm sạch và chuẩn hóa đơn vị đo...'],
     ['<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>', 'Ánh xạ vào schema hệ thống Hadiwa...'],
-    ['<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#00e676" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>', 'Kiểm tra tính nhất quán &amp; phát hiện ngoại lệ...'],
+    ['<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>', 'Kiểm tra tính nhất quán &amp; phát hiện ngoại lệ...'],
   ];
-  result.innerHTML = `<div class="card"><div class="card-header"><span class="card-title" style="color:var(--cyan)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Bước 3 — AI đang phân tích dữ liệu PCTT...</span></div>
+  result.innerHTML = `<div class="card"><div class="card-header"><span class="card-title" style="color:var(--primary)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Bước 3 — AI đang phân tích dữ liệu PCTT...</span></div>
     <div class="card-body"><div id="kpiAiSteps" style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px"></div>
-    <div style="background:rgba(0,0,0,.2);border-radius:8px;height:8px;overflow:hidden;margin-bottom:6px"><div id="kpiAiProg" style="height:100%;width:0%;background:linear-gradient(90deg,#0050cc,#00c8ff);border-radius:8px;transition:width .5s ease"></div></div>
+    <div style="background:var(--bg-surface);border-radius:8px;height:8px;overflow:hidden;margin-bottom:6px"><div id="kpiAiProg" style="height:100%;width:0%;background:linear-gradient(90deg,var(--info),var(--primary));border-radius:8px;transition:width .5s ease"></div></div>
     <div id="kpiAiPct" style="font-size:11px;color:var(--muted);text-align:center">0%</div></div></div>`;
   let i = 0;
   function next() {
     if (i >= steps.length) { setTimeout(kpiShowExtractedData, 500); return; }
     const [icon, text] = steps[i];
     const d = document.createElement('div');
-    d.style.cssText = 'display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(0,200,255,.05);border:1px solid rgba(0,200,255,.12);border-radius:8px;font-size:12px;opacity:0;transition:opacity .3s';
-    d.innerHTML = `<span style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:rgba(0,200,255,.1);border-radius:5px;flex-shrink:0;color:var(--cyan)">${icon}</span><span style="color:var(--text-2)">${text}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="margin-left:auto"><polyline points="20 6 9 17 4 12"/></svg>`;
+    d.style.cssText = 'display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--info-soft);border:1px solid var(--info-soft);border-radius:8px;font-size:12px;opacity:0;transition:opacity .3s';
+    d.innerHTML = `<span style="display:flex;align-items:center;justify-content:center;width:22px;height:22px;background:var(--info-soft);border-radius:5px;flex-shrink:0;color:var(--primary)">${icon}</span><span style="color:var(--text-2)">${text}</span><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="margin-left:auto"><polyline points="20 6 9 17 4 12"/></svg>`;
     document.getElementById('kpiAiSteps').appendChild(d);
     requestAnimationFrame(() => { d.style.opacity = '1'; });
     i++;
@@ -357,28 +357,28 @@ function kpiShowExtractedData() {
   const result = document.getElementById('kpiAiResult');
   if (!result) return;
   result.innerHTML = `<div class="card" style="margin-top:16px">
-    <div class="card-header" style="background:linear-gradient(135deg,rgba(0,230,118,.06),transparent);border-bottom:1px solid rgba(0,230,118,.15)">
-      <span class="card-title" style="color:var(--green)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Bước 3 — Dữ liệu đã trích xuất — Kiểm tra &amp; xác nhận</span>
+    <div class="card-header" style="background:linear-gradient(135deg,var(--success-soft),transparent);border-bottom:1px solid var(--success-soft)">
+      <span class="card-title" style="color:var(--success)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Bước 3 — Dữ liệu đã trích xuất — Kiểm tra &amp; xác nhận</span>
       <div style="display:flex;gap:8px;align-items:center">
         <span style="font-size:11px;color:var(--muted)">Kỳ: <b style="color:var(--text)">${month}/${year}</b></span>
-        <button onclick="kpiConfirmImport()" style="padding:6px 16px;background:var(--green);color:#071629;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer">✓ Xác nhận &amp; Import</button>
+        <button onclick="kpiConfirmImport()" style="padding:6px 16px;background:var(--success);color:var(--bg-surface);border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer">✓ Xác nhận &amp; Import</button>
       </div>
     </div>
-    <div style="background:rgba(255,202,40,.05);border-bottom:1px solid rgba(255,202,40,.12);padding:9px 18px;font-size:12px;color:rgba(255,202,40,.9)">Kiểm tra chỉ số có độ tin cậy thấp. Bạn có thể chỉnh sửa trực tiếp trước khi xác nhận.</div>
+    <div style="background:var(--warning-soft);border-bottom:1px solid var(--warning-soft);padding:9px 18px;font-size:12px;color:var(--warning)">Kiểm tra chỉ số có độ tin cậy thấp. Bạn có thể chỉnh sửa trực tiếp trước khi xác nhận.</div>
     <div class="table-wrap"><table><thead><tr><th>Chỉ số KPI</th><th>Đơn vị</th><th>Giá trị gốc</th><th>Giá trị chuẩn hóa</th><th>Kỳ</th><th>Độ tin cậy AI</th><th>Trạng thái</th></tr></thead><tbody>
       ${ROWS.map((r, idx) => `<tr>
         <td style="font-weight:600">${r.kpi}</td>
         <td><code style="font-size:11px;color:var(--muted)">${r.unit}</code></td>
-        <td class="mono" style="font-size:12px;color:var(--muted)">${r.raw || '<span style="color:var(--red)">Không tìm thấy</span>'}</td>
-        <td><input value="${r.clean}" id="kpiVal_${idx}" style="background:rgba(0,200,255,.07);border:1px solid rgba(0,200,255,.18);border-radius:6px;padding:4px 9px;font-size:12px;color:var(--text);font-family:monospace;width:120px" ${r.st === 'missing' ? 'placeholder="Nhập thủ công..."' : ''}></td>
+        <td class="mono" style="font-size:12px;color:var(--muted)">${r.raw || '<span style="color:var(--danger)">Không tìm thấy</span>'}</td>
+        <td><input value="${r.clean}" id="kpiVal_${idx}" style="background:var(--info-soft);border:1px solid var(--info-soft);border-radius:6px;padding:4px 9px;font-size:12px;color:var(--text);font-family:monospace;width:120px" ${r.st === 'missing' ? 'placeholder="Nhập thủ công..."' : ''}></td>
         <td style="font-size:12px;color:var(--muted)">${month}/${year}</td>
-        <td><div style="display:flex;align-items:center;gap:6px"><div style="flex:1;height:5px;background:rgba(255,255,255,.08);border-radius:3px;min-width:54px"><div style="height:100%;width:${r.conf}%;background:${r.conf >= 90 ? 'var(--green)' : r.conf >= 70 ? 'var(--yellow)' : 'var(--red)'};border-radius:3px"></div></div><span style="font-size:11px;font-family:monospace;color:${r.conf >= 90 ? 'var(--green)' : r.conf >= 70 ? 'var(--yellow)' : 'var(--red)'}">${r.conf}%</span></div></td>
+        <td><div style="display:flex;align-items:center;gap:6px"><div style="flex:1;height:5px;background:var(--border);border-radius:3px;min-width:54px"><div style="height:100%;width:${r.conf}%;background:${r.conf >= 90 ? 'var(--success)' : r.conf >= 70 ? 'var(--warning)' : 'var(--danger)'};border-radius:3px"></div></div><span style="font-size:11px;font-family:monospace;color:${r.conf >= 90 ? 'var(--success)' : r.conf >= 70 ? 'var(--warning)' : 'var(--danger)'}">${r.conf}%</span></div></td>
         <td>${r.st === 'ok' ? '<span class="badge badge-green">Đã trích xuất</span>' : r.st === 'warn' ? '<span class="badge badge-yellow">Cần kiểm tra</span>' : '<span class="badge badge-red">Thiếu – Nhập tay</span>'}</td>
       </tr>`).join('')}
     </tbody></table></div>
     <div class="card-body" style="padding-top:0;display:flex;justify-content:flex-end;gap:10px">
       <button onclick="kpiStartAiProcess()" class="btn btn-ghost"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg> Phân tích lại</button>
-      <button onclick="kpiConfirmImport()" style="padding:9px 22px;background:var(--green);color:#071629;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer">✓ Xác nhận &amp; Import vào hệ thống</button>
+      <button onclick="kpiConfirmImport()" style="padding:9px 22px;background:var(--success);color:var(--bg-surface);border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer">✓ Xác nhận &amp; Import vào hệ thống</button>
     </div>
   </div>`;
 }
@@ -386,16 +386,16 @@ function kpiShowExtractedData() {
 function kpiConfirmImport() {
   const year = document.getElementById('kpiYear')?.value || '2026';
   const month = document.getElementById('kpiMonth')?.value || 'Tháng 2';
-  openModal(`<div class="modal-header"><span class="modal-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Xác nhận Import KPI vào hệ thống</span><button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  openModal(`<div class="modal-header"><span class="modal-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Xác nhận Import KPI vào hệ thống</span><button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div class="modal-body">
-    <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:10px;padding:15px;margin-bottom:16px;font-size:13px;line-height:1.7">
-      <b style="color:var(--green)">Tóm tắt dữ liệu sẽ được import:</b><br>
+    <div style="background:var(--success-soft);border:1px solid var(--success-soft);border-radius:10px;padding:15px;margin-bottom:16px;font-size:13px;line-height:1.7">
+      <b style="color:var(--success)">Tóm tắt dữ liệu sẽ được import:</b><br>
       <span style="color:var(--muted)">· <b>7 chỉ số KPI</b> đã trích xuất thành công<br>· <b>1 chỉ số</b> cần nhập thủ công (Cuộc gọi CSKH)<br>· Kỳ báo cáo: <b>${month}/${year}</b><br>· Dùng cho: Dashboard KPI, Báo cáo định kỳ, Đánh giá mục tiêu</span>
     </div>
-    <div style="padding:10px 14px;background:rgba(255,202,40,.05);border:1px solid rgba(255,202,40,.15);border-radius:8px;font-size:12px;color:rgba(255,202,40,.9);margin-bottom:16px">Hành động này sẽ <b>ghi đè</b> dữ liệu KPI hiện tại cho ${month}/${year}. Dữ liệu cũ được lưu vào lịch sử phiên bản.</div>
+    <div style="padding:10px 14px;background:var(--warning-soft);border:1px solid var(--warning-soft);border-radius:8px;font-size:12px;color:var(--warning);margin-bottom:16px">Hành động này sẽ <b>ghi đè</b> dữ liệu KPI hiện tại cho ${month}/${year}. Dữ liệu cũ được lưu vào lịch sử phiên bản.</div>
     <div class="form-group"><label class="form-label">Ghi chú nhập liệu (tuỳ chọn)</label><textarea class="form-control" rows="2" placeholder="VD: Số liệu từ báo cáo tài chính nội bộ ${month}/${year}, phê duyệt bởi Ban Giám đốc..."></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal()">Hủy, kiểm tra lại</button><button class="btn btn-primary" onclick="closeModal();showKpiOtpModal()" style="background:var(--green);border-color:var(--green)">
+  <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal()">Hủy, kiểm tra lại</button><button class="btn btn-primary" onclick="closeModal();showKpiOtpModal()" style="background:var(--success);border-color:var(--success)">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
     Tiếp tục & Xác thực OTP
   </button></div>`);
@@ -404,7 +404,7 @@ function kpiConfirmImport() {
 function showKpiOtpModal() {
   openModal(`<div class="modal-header">
     <span class="modal-title">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2" style="vertical-align:middle"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="vertical-align:middle"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       Xác thực 2 lớp — Nhập OTP
     </span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
@@ -412,41 +412,41 @@ function showKpiOtpModal() {
   <div class="modal-body">
     <!-- Shield icon + context -->
     <div style="text-align:center;margin-bottom:20px">
-      <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(0,102,255,.2),rgba(0,200,255,.1));border:2px solid rgba(0,102,255,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div style="width:60px;height:60px;background:linear-gradient(135deg,var(--info),var(--info-soft));border:2px solid var(--info);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--info)" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </div>
-      <div style="font-size:14px;font-weight:700;color:#e2e8f0;margin-bottom:5px">Xác thực 2 lớp bắt buộc</div>
-      <div style="font-size:12px;color:var(--muted);line-height:1.6">Hành động <b style="color:var(--yellow)">Import KPI vào hệ thống</b> yêu cầu xác thực 2FA.<br>Mã OTP đã được gửi đến:</div>
+      <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:5px">Xác thực 2 lớp bắt buộc</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.6">Hành động <b style="color:var(--warning)">Import KPI vào hệ thống</b> yêu cầu xác thực 2FA.<br>Mã OTP đã được gửi đến:</div>
     </div>
     <!-- Method selector -->
     <div style="display:flex;gap:8px;margin-bottom:18px;justify-content:center">
       ${[['totp', 'Authenticator App', 'TOTP', true], ['sms', 'SMS', '****1234', false], ['email', 'Email', 'lb***@pctt.hanoi.gov.vn', false]].map(([id, label, dest, active]) => `
-      <button id="kpiOtpMethod_${id}" onclick="kpiSelectOtpMethod('${id}')" style="padding:7px 13px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid ${active ? 'rgba(0,200,255,.4)' : 'rgba(255,255,255,.1)'};background:${active ? 'rgba(0,200,255,.1)' : 'transparent'};color:${active ? 'var(--cyan)' : 'var(--muted)'};transition:.2s">
+      <button id="kpiOtpMethod_${id}" onclick="kpiSelectOtpMethod('${id}')" style="padding:7px 13px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid ${active ? 'var(--info)' : 'var(--border)'};background:${active ? 'var(--info-soft)' : 'transparent'};color:${active ? 'var(--primary)' : 'var(--muted)'};transition:.2s">
         ${label}<br><span style="font-size:10px;font-weight:400;opacity:.7">${dest}</span>
       </button>`).join('')}
     </div>
     <!-- OTP input boxes -->
     <div style="display:flex;gap:10px;justify-content:center;margin-bottom:8px" id="kpiOtpBoxes">
       ${Array.from({ length: 6 }, (_, i) => `<input id="kpiOtp${i}" type="text" maxlength="1" inputmode="numeric"
-        style="width:44px;height:52px;text-align:center;font-size:22px;font-weight:700;font-family:'Roboto Mono',monospace;background:rgba(0,0,0,.25);border:2px solid rgba(0,200,255,.2);border-radius:10px;color:var(--cyan);outline:none;transition:.2s"
-        onfocus="this.style.borderColor='rgba(0,200,255,.7)';this.style.background='rgba(0,200,255,.06)'"
-        onblur="this.style.borderColor='rgba(0,200,255,.2)';this.style.background='rgba(0,0,0,.25)'"
+        style="width:44px;height:52px;text-align:center;font-size:22px;font-weight:700;font-family:'Roboto Mono',monospace;background:var(--bg-surface);border:2px solid var(--info);border-radius:10px;color:var(--primary);outline:none;transition:.2s"
+        onfocus="this.style.borderColor='var(--info)';this.style.background='var(--info-soft)'"
+        onblur="this.style.borderColor='var(--info)';this.style.background='var(--bg-surface)'"
         oninput="kpiOtpInput(this,${i})"
         onkeydown="kpiOtpKeydown(this,${i},event)">`).join('')}
     </div>
     <div style="text-align:center;font-size:11px;color:var(--muted);margin-bottom:6px">Nhập mã 6 chữ số từ ứng dụng Authenticator</div>
     <!-- Error msg -->
-    <div id="kpiOtpError" style="text-align:center;font-size:12px;color:var(--red);min-height:18px;margin-bottom:4px"></div>
+    <div id="kpiOtpError" style="text-align:center;font-size:12px;color:var(--danger);min-height:18px;margin-bottom:4px"></div>
     <!-- Resend -->
     <div style="text-align:center">
       <span style="font-size:12px;color:var(--muted)">Không nhận được mã? </span>
-      <button id="kpiOtpResend" onclick="kpiResendOtp()" style="background:none;border:none;color:var(--cyan);font-size:12px;cursor:pointer;font-weight:600" disabled>Gửi lại (<span id="kpiOtpTimer">60</span>s)</button>
+      <button id="kpiOtpResend" onclick="kpiResendOtp()" style="background:none;border:none;color:var(--primary);font-size:12px;cursor:pointer;font-weight:600" disabled>Gửi lại (<span id="kpiOtpTimer">60</span>s)</button>
     </div>
   </div>
   <div class="modal-footer" style="flex-direction:column;gap:10px">
     <div style="display:flex;gap:10px;width:100%">
       <button class="btn btn-ghost" onclick="closeModal()" style="flex:1">Hủy</button>
-      <button onclick="kpiVerifyOtp()" style="flex:2;padding:10px;background:linear-gradient(135deg,#0050cc,#00c8ff);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer">
+      <button onclick="kpiVerifyOtp()" style="flex:2;padding:10px;background:linear-gradient(135deg,var(--info),var(--primary));color:var(--text-on-primary);border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>
         Xác nhận OTP & Import
       </button>
@@ -470,9 +470,9 @@ function kpiSelectOtpMethod(id) {
     const b = document.getElementById('kpiOtpMethod_' + m);
     if (!b) return;
     const on = m === id;
-    b.style.borderColor = on ? 'rgba(0,200,255,.4)' : 'rgba(255,255,255,.1)';
-    b.style.background = on ? 'rgba(0,200,255,.1)' : 'transparent';
-    b.style.color = on ? 'var(--cyan)' : 'var(--muted)';
+    b.style.borderColor = on ? 'var(--info)' : 'var(--border)';
+    b.style.background = on ? 'var(--info-soft)' : 'transparent';
+    b.style.color = on ? 'var(--primary)' : 'var(--muted)';
   });
   if (id !== 'totp') showToast('Đã gửi lại OTP qua ' + (id === 'sms' ? 'SMS' : 'Email') + '!');
 }
@@ -530,8 +530,8 @@ function kpiVerifyOtp() {
   }
   // Demo: accept "123456" or any 6-digit code starting with 1
   if (code === '000000') {
-    if (errEl) { errEl.textContent = '✕ Mã OTP không đúng. Vui lòng thử lại.'; errEl.style.color = 'var(--red)'; }
-    for (let i = 0; i < 6; i++) { const b = document.getElementById('kpiOtp' + i); if (b) { b.value = ''; b.style.borderColor = 'rgba(255,23,68,.5)'; } }
+    if (errEl) { errEl.textContent = '✕ Mã OTP không đúng. Vui lòng thử lại.'; errEl.style.color = 'var(--danger)'; }
+    for (let i = 0; i < 6; i++) { const b = document.getElementById('kpiOtp' + i); if (b) { b.value = ''; b.style.borderColor = 'var(--danger)'; } }
     const f = document.getElementById('kpiOtp0'); if (f) f.focus();
     return;
   }
@@ -543,35 +543,35 @@ function kpiVerifyOtp() {
 
 
 function kpiImportSuccess() {
-  showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Import KPI thành công! Dashboard đã được cập nhật.');
+  showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Import KPI thành công! Dashboard đã được cập nhật.');
   kpiUploadedFiles = [];
   const r = document.getElementById('kpiAiResult');
-  if (r) r.innerHTML = `<div style="text-align:center;padding:40px;background:rgba(0,230,118,.05);border:1px solid rgba(0,230,118,.15);border-radius:12px;margin-top:16px">
-    <div style="width:52px;height:52px;background:rgba(0,230,118,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
-    <div style="font-size:16px;font-weight:700;color:var(--green);margin-bottom:5px">Import hoàn tất!</div>
+  if (r) r.innerHTML = `<div style="text-align:center;padding:40px;background:var(--success-soft);border:1px solid var(--success-soft);border-radius:12px;margin-top:16px">
+    <div style="width:52px;height:52px;background:var(--success-soft);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+    <div style="font-size:16px;font-weight:700;color:var(--success);margin-bottom:5px">Import hoàn tất!</div>
     <div style="font-size:13px;color:var(--muted)">7 chỉ số KPI đã được lưu vào hệ thống.<br>Dashboard KPI và báo cáo đã được cập nhật tự động.</div>
-    <button onclick="navigate('dashboard')" style="margin-top:16px;padding:9px 22px;background:var(--green);color:#071629;border:none;border-radius:9px;font-weight:700;cursor:pointer">Xem Dashboard KPI</button>
+    <button onclick="navigate('dashboard')" style="margin-top:16px;padding:9px 22px;background:var(--success);color:var(--bg-surface);border:none;border-radius:9px;font-weight:700;cursor:pointer">Xem Dashboard KPI</button>
   </div>`;
 }
 
 function kpiGuideModal() {
-  openModal(`<div class="modal-header"><span class="modal-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Hướng dẫn & Template Nhập liệu KPI</span><button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
+  openModal(`<div class="modal-header"><span class="modal-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> Hướng dẫn & Template Nhập liệu KPI</span><button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>
   <div class="modal-body" style="max-height:70vh;overflow-y:auto">
-    <div style="background:rgba(0,102,255,.08);border:1px solid rgba(0,102,255,.2);border-radius:10px;padding:15px;margin-bottom:18px">
-      <div style="font-size:13px;font-weight:700;color:#60a5fa;margin-bottom:7px">Tại sao cần nhập liệu KPI?</div>
+    <div style="background:var(--info-soft);border:1px solid var(--border);border-radius:10px;padding:15px;margin-bottom:18px">
+      <div style="font-size:13px;font-weight:700;color:var(--info-text);margin-bottom:7px">Tại sao cần nhập liệu KPI?</div>
       <p style="font-size:12px;color:var(--muted);line-height:1.7;margin:0">Hệ thống Hadiwa IOC cần dữ liệu KPI thiên tai thực tế để hiển thị chính xác trên Dashboard lãnh đạo, tạo báo cáo định kỳ và đánh giá tiến độ mục tiêu PCTT. Upload trực tiếp từ nguồn dữ liệu hiện có, không cần nhập tay từng chỉ số.</p>
     </div>
     <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px">Quy trình 3 bước</div>
-    ${[['1', '#0066ff', 'Chọn kỳ & chỉ số', 'Chọn tháng/quý/năm và đánh dấu các chỉ số KPI cần nhập.'], ['2', '#00c8ff', 'Upload file', 'Excel, CSV, PDF, Word, ảnh chụp màn hình. Không cần chuyển đổi định dạng.'], ['3', '#00e676', 'AI xử lý & xác nhận', 'AI tự đọc file, nhận diện và chuẩn hóa. Bạn kiểm tra rồi xác nhận import.']].map(([n, c, t, d]) => `<div style="display:flex;gap:12px;margin-bottom:12px"><div style="width:30px;height:30px;background:${c}22;border:2px solid ${c}44;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:${c};flex-shrink:0">${n}</div><div><div style="font-size:13px;font-weight:600;margin-bottom:2px">${t}</div><div style="font-size:12px;color:var(--muted);line-height:1.6">${d}</div></div></div>`).join('')}
-    <div style="background:rgba(255,202,40,.06);border:1px solid rgba(255,202,40,.15);border-radius:10px;padding:13px;margin-bottom:18px">
-      <div style="font-size:12px;font-weight:700;color:rgba(255,202,40,.9);margin-bottom:7px">Mẹo để AI nhận diện chính xác hơn</div>
+    ${[['1', 'var(--info)', 'Chọn kỳ & chỉ số', 'Chọn tháng/quý/năm và đánh dấu các chỉ số KPI cần nhập.'], ['2', 'var(--primary)', 'Upload file', 'Excel, CSV, PDF, Word, ảnh chụp màn hình. Không cần chuyển đổi định dạng.'], ['3', 'var(--success)', 'AI xử lý & xác nhận', 'AI tự đọc file, nhận diện và chuẩn hóa. Bạn kiểm tra rồi xác nhận import.']].map(([n, c, t, d]) => `<div style="display:flex;gap:12px;margin-bottom:12px"><div style="width:30px;height:30px;background:color-mix(in srgb, ${c} 15%, transparent);border:2px solid color-mix(in srgb, ${c} 27%, transparent);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:${c};flex-shrink:0">${n}</div><div><div style="font-size:13px;font-weight:600;margin-bottom:2px">${t}</div><div style="font-size:12px;color:var(--muted);line-height:1.6">${d}</div></div></div>`).join('')}
+    <div style="background:var(--warning-soft);border:1px solid var(--border);border-radius:10px;padding:13px;margin-bottom:18px">
+      <div style="font-size:12px;font-weight:700;color:var(--warning-text);margin-bottom:7px">Mẹo để AI nhận diện chính xác hơn</div>
       <ul style="font-size:12px;color:var(--muted);line-height:1.8;padding-left:14px;margin:0"><li>Ưu tiên Excel có cấu trúc bảng rõ ràng, tên cột tiếng Việt kèm đơn vị</li><li>Không gộp ô (merge cell) ở hàng tiêu đề</li><li>PDF/ảnh: chụp rõ nét, không bị nhòe</li><li>Nếu file nhiều sheet, AI tự tìm sheet liên quan nhất</li></ul>
     </div>
     <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:12px">Tải về file mẫu chuẩn</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      ${[['Template_KPI_Thang.xlsx', 'KPI theo tháng', 'Doanh thu, sản lượng, NRW', '#00e676', 'XLS'], ['Template_KPI_Quy.xlsx', 'KPI theo quý', 'Tổng hợp Q1–Q4', '#00e676', 'XLS'], ['Template_KPI_Nam.xlsx', 'KPI cả năm', 'Tổng kết & mục tiêu', '#00e676', 'XLS'], ['Template_KPI_Ngay.xlsx', 'KPI theo ngày', 'Sản lượng, áp lực', '#00e676', 'XLS'], ['Huong_Dan_Nhap_KPI.pdf', 'Hướng dẫn PDF', 'Chi tiết có hình ảnh', '#ff6d00', 'PDF'], ['Mau_KPI_Chup.png', 'Ảnh màn hình mẫu', 'Ví dụ báo cáo chụp', '#ff4081', 'IMG']].map(([name, title, desc, color, lbl]) => `
-      <div style="border:1px solid rgba(255,255,255,.08);border-radius:9px;padding:11px;cursor:pointer;transition:.2s" onclick="showToast('Đang tải về ${name}...')" onmouseover="this.style.borderColor='rgba(0,200,255,.2)'" onmouseout="this.style.borderColor='rgba(255,255,255,.08)'">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><div style="width:28px;height:28px;background:${color}18;border:1px solid ${color}33;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:${color}">${lbl}</div><div style="font-size:12px;font-weight:600">${title}</div></div>
+      ${[['Template_KPI_Thang.xlsx', 'KPI theo tháng', 'Doanh thu, sản lượng, NRW', 'var(--success)', 'XLS'], ['Template_KPI_Quy.xlsx', 'KPI theo quý', 'Tổng hợp Q1–Q4', 'var(--success)', 'XLS'], ['Template_KPI_Nam.xlsx', 'KPI cả năm', 'Tổng kết & mục tiêu', 'var(--success)', 'XLS'], ['Template_KPI_Ngay.xlsx', 'KPI theo ngày', 'Sản lượng, áp lực', 'var(--success)', 'XLS'], ['Huong_Dan_Nhap_KPI.pdf', 'Hướng dẫn PDF', 'Chi tiết có hình ảnh', 'var(--warning)', 'PDF'], ['Mau_KPI_Chup.png', 'Ảnh màn hình mẫu', 'Ví dụ báo cáo chụp', 'var(--danger)', 'IMG']].map(([name, title, desc, color, lbl]) => `
+      <div style="border:1px solid var(--border);border-radius:9px;padding:11px;cursor:pointer;transition:.2s" onclick="showToast('Đang tải về ${name}...')" onmouseover="this.style.borderColor='var(--border-active)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px"><div style="width:28px;height:28px;background:color-mix(in srgb, ${color} 10%, transparent);border:1px solid color-mix(in srgb, ${color} 20%, transparent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:${color}">${lbl}</div><div style="font-size:12px;font-weight:600">${title}</div></div>
         <div style="font-size:11px;color:var(--muted);margin-bottom:7px">${desc}</div>
         <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();showToast('Đang tải về ${name}...')" style="width:100%;font-size:11px">⬇ Tải về</button>
       </div>`).join('')}
@@ -650,10 +650,10 @@ function renderKpiHistory() {
   <!-- Stats row -->
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
     ${[
-      { label: 'Tổng lần import', val: KPI_IMPORT_HISTORY.length, color: 'var(--cyan)' },
-      { label: 'Thành công', val: KPI_IMPORT_HISTORY.filter(h => h.status === 'approved').length, color: 'var(--green)' },
-      { label: 'Bị từ chối', val: KPI_IMPORT_HISTORY.filter(h => h.status === 'rejected').length, color: 'var(--red)' },
-      { label: 'Import gần nhất', val: KPI_IMPORT_HISTORY[0]?.period || '—', color: 'var(--yellow)', small: true },
+      { label: 'Tổng lần import', val: KPI_IMPORT_HISTORY.length, color: 'var(--primary)' },
+      { label: 'Thành công', val: KPI_IMPORT_HISTORY.filter(h => h.status === 'approved').length, color: 'var(--success)' },
+      { label: 'Bị từ chối', val: KPI_IMPORT_HISTORY.filter(h => h.status === 'rejected').length, color: 'var(--danger)' },
+      { label: 'Import gần nhất', val: KPI_IMPORT_HISTORY[0]?.period || '—', color: 'var(--warning)', small: true },
     ].map(s => `<div class="card" style="padding:14px;border-top:2px solid ${s.color}">
       <div style="font-size:${s.small ? '14px' : '22px'};font-weight:800;color:${s.color};margin-bottom:4px">${s.val}</div>
       <div style="font-size:11px;color:var(--muted)">${s.label}</div>
@@ -663,7 +663,7 @@ function renderKpiHistory() {
   <!-- History table -->
   <div class="card">
     <div class="card-header">
-      <span class="card-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2" style="vertical-align:middle"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg> Lịch sử Import KPI Thiên tai</span>
+      <span class="card-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="vertical-align:middle"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg> Lịch sử Import KPI Thiên tai</span>
       <button class="btn btn-ghost btn-sm" onclick="showToast('Đang xuất lịch sử...')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Xuất Excel</button>
     </div>
     <div class="table-wrap">
@@ -677,26 +677,26 @@ function renderKpiHistory() {
         </thead>
         <tbody>
           ${KPI_IMPORT_HISTORY.map((h, idx) => `
-          <tr style="${idx === 0 ? 'background:rgba(0,230,118,.04)' : ''}">
+          <tr style="${idx === 0 ? 'background:var(--success-soft)' : ''}">
             <td><code style="font-size:11px;color:var(--muted)">${h.id}</code></td>
             <td><b style="font-size:13px">${h.period}</b>${idx === 0 ? '<br><span class="badge badge-green" style="font-size:9px;margin-top:2px">Gần nhất</span>' : ''}</td>
             <td class="mono" style="font-size:11px;color:var(--muted)">${h.importedAt}</td>
             <td>
               <div style="display:flex;align-items:center;gap:7px">
-                <div style="width:28px;height:28px;background:linear-gradient(135deg,#0050cc,#00c8ff);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0">${h.avatar}</div>
+                <div style="width:28px;height:28px;background:linear-gradient(135deg,var(--info),var(--primary));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--text-on-primary);flex-shrink:0">${h.avatar}</div>
                 <div><div style="font-size:12px;font-weight:600">${h.submitter}</div><div style="font-size:10px;color:var(--muted)">${h.submitterRole}</div></div>
               </div>
             </td>
             <td>
-              ${h.approver !== '—' ? `<div style="font-size:12px;font-weight:600;color:var(--cyan)">${h.approver}</div><div style="font-size:10px;color:var(--muted)">${h.approverRole}</div>` : '<span style="color:var(--muted);font-size:12px">—</span>'}
+              ${h.approver !== '—' ? `<div style="font-size:12px;font-weight:600;color:var(--primary)">${h.approver}</div><div style="font-size:10px;color:var(--muted)">${h.approverRole}</div>` : '<span style="color:var(--muted);font-size:12px">—</span>'}
             </td>
             <td class="mono" style="font-size:11px;color:var(--muted)">${h.approvedAt}</td>
             <td>
               ${h.files.map(f => {
       const ext = f.split('.').pop().toUpperCase();
-      const fc = { XLSX: '#00e676', XLS: '#00e676', PDF: '#ff6d00', PNG: '#ff4081', JPG: '#ff4081' }[ext] || 'var(--cyan)';
+      const fc = { XLSX: 'var(--success)', XLS: 'var(--success)', PDF: 'var(--warning)', PNG: 'var(--danger)', JPG: 'var(--danger)' }[ext] || 'var(--primary)';
       return `<div style="display:flex;align-items:center;gap:5px;margin-bottom:3px;cursor:pointer" onclick="showToast('Đang mở ${f}...')">
-                  <span style="font-size:8px;font-weight:800;color:${fc};background:${fc}18;padding:1px 4px;border-radius:3px">${ext}</span>
+                  <span style="font-size:8px;font-weight:800;color:${fc};background:color-mix(in srgb, ${fc} 10%, transparent);padding:1px 4px;border-radius:3px">${ext}</span>
                   <span style="font-size:11px;color:var(--text-2);white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis">${f}</span>
                 </div>`;
     }).join('')}
@@ -704,9 +704,9 @@ function renderKpiHistory() {
             <td style="text-align:center">
               <div style="font-size:13px;font-weight:700;color:var(--text)">${h.kpiCount}</div>
               <div style="font-size:10px;color:var(--muted)">TB ${h.avgConf}%</div>
-              ${h.missingCount ? `<div style="font-size:10px;color:var(--yellow)">${h.missingCount} thiếu</div>` : ''}
+              ${h.missingCount ? `<div style="font-size:10px;color:var(--warning)">${h.missingCount} thiếu</div>` : ''}
             </td>
-            <td style="text-align:center">${h.otpVerified ? '<span style="color:var(--green)">✓</span>' : '<span style="color:var(--muted)">—</span>'}</td>
+            <td style="text-align:center">${h.otpVerified ? '<span style="color:var(--success)">✓</span>' : '<span style="color:var(--muted)">—</span>'}</td>
             <td>${h.status === 'approved' ? '<span class="badge badge-green">Đã duyệt</span>' : h.status === 'rejected' ? '<span class="badge badge-red">Từ chối</span>' : '<span class="badge badge-yellow">Chờ duyệt</span>'}</td>
             <td>
               <button onclick="kpiHistoryDetail(${idx})" class="btn btn-ghost btn-sm" title="Xem chi tiết">
@@ -725,12 +725,12 @@ function kpiHistoryDetail(idx) {
   const h = KPI_IMPORT_HISTORY[idx];
   if (!h) return;
   openModal(`<div class="modal-header">
-    <span class="modal-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2" style="vertical-align:middle"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg> Chi tiết Import — ${h.id}</span>
+    <span class="modal-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="vertical-align:middle"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg> Chi tiết Import — ${h.id}</span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="modal-body" style="max-height:70vh;overflow-y:auto">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
-      <div style="background:rgba(0,0,0,.15);border-radius:10px;padding:14px">
+      <div style="background:var(--bg-surface);border-radius:10px;padding:14px">
         <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Thông tin chung</div>
         ${[['Kỳ báo cáo', h.period], ['Ngày giờ import', h.importedAt], ['Người thực hiện', h.submitter + ' · ' + h.submitterRole], ['Người duyệt', h.approver !== '—' ? h.approver + ' · ' + h.approverRole : 'Chưa duyệt'], ['Thời gian duyệt', h.approvedAt], ['OTP xác thực', h.otpVerified ? '✓ Đã xác thực' : 'Không'], ['Kết quả', h.status === 'approved' ? '✓ Đã duyệt & import' : h.status === 'rejected' ? '✕ Từ chối' : '⏳ Chờ duyệt']].map(([l, v]) => `
         <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid var(--border);font-size:12px">
@@ -738,18 +738,18 @@ function kpiHistoryDetail(idx) {
           <span style="color:var(--text);font-weight:500;text-align:right;max-width:200px">${v}</span>
         </div>`).join('')}
       </div>
-      <div style="background:rgba(0,0,0,.15);border-radius:10px;padding:14px">
+      <div style="background:var(--bg-surface);border-radius:10px;padding:14px">
         <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">File đính kèm</div>
         ${h.files.map(f => {
     const ext = f.split('.').pop().toUpperCase();
-    const fc = { XLSX: '#00e676', XLS: '#00e676', PDF: '#ff6d00', PNG: '#ff4081', JPG: '#ff4081' }[ext] || 'var(--cyan)';
-    return `<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:rgba(0,0,0,.2);border-radius:7px;margin-bottom:6px;cursor:pointer" onclick="showToast('Đang mở ${f}...')">
-            <span style="font-size:9px;font-weight:800;color:${fc};background:${fc}18;padding:2px 5px;border-radius:4px">${ext}</span>
+    const fc = { XLSX: 'var(--success)', XLS: 'var(--success)', PDF: 'var(--warning)', PNG: 'var(--danger)', JPG: 'var(--danger)' }[ext] || 'var(--primary)';
+    return `<div style="display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--bg-surface);border-radius:7px;margin-bottom:6px;cursor:pointer" onclick="showToast('Đang mở ${f}...')">
+            <span style="font-size:9px;font-weight:800;color:${fc};background:color-mix(in srgb, ${fc} 10%, transparent);padding:2px 5px;border-radius:4px">${ext}</span>
             <span style="font-size:12px;color:var(--text-2)">${f}</span>
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" style="margin-left:auto"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/></svg>
           </div>`;
   }).join('')}
-        ${h.note ? `<div style="margin-top:10px;padding:10px;background:rgba(0,200,255,.05);border-radius:7px;border-left:2px solid rgba(0,200,255,.3);font-size:12px;color:var(--muted);line-height:1.6">${h.note}</div>` : ''}
+        ${h.note ? `<div style="margin-top:10px;padding:10px;background:var(--info-soft);border-radius:7px;border-left:2px solid var(--info);font-size:12px;color:var(--muted);line-height:1.6">${h.note}</div>` : ''}
       </div>
     </div>
     ${h.data.length ? `
@@ -760,7 +760,7 @@ function kpiHistoryDetail(idx) {
         <div style="display:flex;align-items:center;gap:10px">
           <span style="font-size:13px;font-weight:700;color:var(--text)">${d.val}</span>
           <div style="display:flex;align-items:center;gap:4px">
-            <div style="width:40px;height:4px;background:rgba(255,255,255,.1);border-radius:2px"><div style="height:100%;width:${d.conf}%;background:${d.conf >= 90 ? 'var(--green)' : d.conf >= 75 ? 'var(--yellow)' : 'var(--red)'};border-radius:2px"></div></div>
+            <div style="width:40px;height:4px;background:var(--border);border-radius:2px"><div style="height:100%;width:${d.conf}%;background:${d.conf >= 90 ? 'var(--success)' : d.conf >= 75 ? 'var(--warning)' : 'var(--danger)'};border-radius:2px"></div></div>
             <span style="font-size:10px;color:var(--muted)">AI ${d.conf}%</span>
           </div>
         </div>

@@ -69,10 +69,10 @@ function vwGetBlocks(layoutId, scenarioId) {
 function vwRenderContent(block) {
   const t = block.type;
   if (t === 'map') {
-    return `<iframe src="https://gis.hadiwa.com.vn/Home/Gis" style="width:100%;height:100%;border:none;background:#030e1c" allowfullscreen></iframe>`;
+    return `<iframe src="https://gis.hadiwa.com.vn/Home/Gis" style="width:100%;height:100%;border:none;background:var(--bg-base)" allowfullscreen></iframe>`;
   }
   if (t === 'scada_iframe') {
-    return `<iframe src="https://gis.hadiwa.com.vn/Home/Index" style="width:100%;height:100%;border:none;background:#030e1c" allowfullscreen></iframe>`;
+    return `<iframe src="https://gis.hadiwa.com.vn/Home/Index" style="width:100%;height:100%;border:none;background:var(--bg-base)" allowfullscreen></iframe>`;
   }
   if (t.startsWith('camera')) {
     let imgKey = 'gate_online';
@@ -81,7 +81,7 @@ function vwRenderContent(block) {
     else if (t === 'camera_pump' || t === 'camera_lab') imgKey = 'pump_room';
     else imgKey = ['gate_online', 'pump_room', 'reservoir', 'control_room'][Math.floor(Math.random() * 4)];
     const imgUrl = CAM_IMAGES ? CAM_IMAGES[imgKey] : '';
-    return `<div style="width:100%;height:100%;position:relative;background:#030e1c">
+    return `<div style="width:100%;height:100%;position:relative;background:var(--bg-base)">
       <img src="${imgUrl}" style="width:100%;height:100%;object-fit:cover;opacity:0.8">
       <div style="position:absolute;top:8px;left:8px;display:flex;align-items:center;gap:5px"><div class="pulse-dot red" style="width:8px;height:8px"></div><span style="color:#ff1744;font-size:10px;font-weight:700">REC</span></div>
       <div style="position:absolute;bottom:8px;left:8px;color:rgba(255,255,255,.8);font-size:10px;font-family:monospace" class="vw-time">20:26:00</div>
@@ -89,13 +89,13 @@ function vwRenderContent(block) {
   }
   if (t === 'kpi' || t === 'scada_kpi' || t === 'scada_kpi_2' || t === 'water_quality') {
     const vals = [
-      { l: 'Mực nước S.Hồng', v: '4.82 m', c: 'var(--cyan)' },
-      { l: 'Lượng mưa 24h', v: '42 mm', c: 'var(--green)' },
-      { l: 'Hồ Tuy Lai', v: '19.2 m', c: 'var(--yellow)' },
-      { l: 'Cảnh báo Đê', v: '2 Đang mở', c: 'var(--red)' }
+      { l: 'Mực nước S.Hồng', v: '4.82 m', c: 'var(--primary)' },
+      { l: 'Lượng mưa 24h', v: '42 mm', c: 'var(--success)' },
+      { l: 'Hồ Tuy Lai', v: '19.2 m', c: 'var(--warning)' },
+      { l: 'Cảnh báo Đê', v: '2 Đang mở', c: 'var(--danger)' }
     ];
-    return `<div style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:15px;height:100%;align-content:center">
-      ${vals.map(x => `<div style="background:rgba(255,255,255,.03);padding:15px;border-radius:8px;border:1px solid rgba(255,255,255,.05);text-align:center">
+    return `<div style="padding:20px;display:grid;grid-template-columns:1fr 1fr;gap:15px;height:100%;align-content:center;background:var(--bg-card)">
+      ${vals.map(x => `<div style="background:var(--bg-secondary);padding:15px;border-radius:8px;border:1px solid var(--border);text-align:center">
         <div style="font-size:12px;color:var(--muted);margin-bottom:5px">${x.l}</div>
         <div style="font-size:24px;font-weight:700;color:${x.c}">${x.v}</div>
       </div>`).join('')}
@@ -104,23 +104,23 @@ function vwRenderContent(block) {
   if (t === 'incidents') {
     return `<div style="padding:15px;height:100%;display:flex;flex-direction:column;gap:10px;overflow:hidden">
       ${[1, 2, 3, 4, 5].map(i => `
-      <div style="display:flex;align-items:center;padding:10px;background:rgba(255,23,68,.05);border-left:3px solid var(--red);border-radius:4px">
+      <div style="display:flex;align-items:center;padding:10px;background:rgba(255,23,68,.05);border-left:3px solid var(--danger);border-radius:4px">
         <div style="font-size:11px;color:var(--muted);width:50px">10:${50 - i}</div>
         <div style="font-size:12px;color:var(--text);flex:1">Cảnh báo mực nước cao - Trạm ${i}</div>
       </div>`).join('')}
     </div>`;
   }
   if (t === 'scada_chart' || t === 'kpi_nrw') {
-    return `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;background:rgba(0,200,255,.02)">
-      <div style="width:80%;height:60%;border-bottom:1px solid rgba(0,200,255,.2);border-left:1px solid rgba(0,200,255,.2);position:relative">
+    return `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;background:var(--bg-card)">
+      <div style="width:80%;height:60%;border-bottom:1px solid var(--border);border-left:1px solid var(--border);position:relative">
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="width:100%;height:100%;overflow:visible">
-          <polyline points="0,80 20,70 40,75 60,40 80,45 100,20" fill="none" stroke="var(--cyan)" stroke-width="2"/>
-          <polyline points="0,90 20,85 40,88 60,60 80,70 100,50" fill="none" stroke="var(--green)" stroke-width="2"/>
+          <polyline points="0,80 20,70 40,75 60,40 80,45 100,20" fill="none" stroke="var(--primary)" stroke-width="2"/>
+          <polyline points="0,90 20,85 40,88 60,60 80,70 100,50" fill="none" stroke="var(--success)" stroke-width="2"/>
         </svg>
       </div>
       <div style="display:flex;gap:15px;margin-top:10px">
-        <span style="font-size:10px;color:var(--cyan)">● Mực nước</span>
-        <span style="font-size:10px;color:var(--green)">● Lượng mưa</span>
+        <span style="font-size:10px;color:var(--primary)">● Mực nước</span>
+        <span style="font-size:10px;color:var(--success)">● Lượng mưa</span>
       </div>
     </div>`;
   }
@@ -178,9 +178,9 @@ function renderVideoWall() {
       body.vw-kiosk-active .app-header { display: none !important; }
       body.vw-kiosk-active .main-content { margin-left: 0 !important; width: 100vw !important; height: 100vh !important; padding: 0 !important; }
       body.vw-kiosk-active #contentArea { height: 100vh !important; border-radius: 0 !important; margin: 0 !important; max-width: 100% !important; }
-      .vw-grid { display: grid; gap: ${vwIsKiosk ? '8px' : '16px'}; height: ${vwIsKiosk ? '100vh' : 'calc(100vh - 280px)'}; background: #01060d; padding: ${vwIsKiosk ? '8px' : '0'}; }
-      .vw-block { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; position: relative; }
-      .vw-block-header { padding: 8px 12px; background: rgba(3, 14, 28, 0.95); border-bottom: 1px solid rgba(0, 200, 255, 0.2); font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; z-index: 10; position: absolute; top:0; left:0; right:0; backdrop-filter: blur(8px); }
+      .vw-grid { display: grid; gap: ${vwIsKiosk ? '8px' : '12px'}; height: ${vwIsKiosk ? '100vh' : 'calc(100vh - 280px)'}; background: ${vwIsKiosk ? '#0B1D33' : 'transparent'}; padding: ${vwIsKiosk ? '8px' : '0'}; }
+      .vw-block { background: var(--bg-card); border: 1px solid var(--border); border-radius: 6px; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+      .vw-block-header { padding: 8px 12px; background: ${vwIsKiosk ? 'rgba(20,45,82,.94)' : 'var(--bg-secondary)'}; color: ${vwIsKiosk ? '#EAF2FF' : 'var(--text)'}; border-bottom: 1px solid var(--border); font-size: 13px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; z-index: 10; position: absolute; top:0; left:0; right:0; backdrop-filter: blur(8px); }
       .vw-block-content { flex: 1; min-height: 0; }
     </style>
   `;
@@ -209,8 +209,8 @@ function renderVideoWall() {
         <div style="display:flex;gap:10px;flex-wrap:wrap">
           ${VW_LAYOUTS.map(l => `
           <div onclick="vwLayoutMode='${l.id}';vwRefresh()" 
-               style="cursor:pointer;padding:12px 16px;border-radius:8px;border:1px solid ${vwLayoutMode === l.id ? 'var(--cyan)' : 'rgba(255,255,255,.1)'};background:${vwLayoutMode === l.id ? 'rgba(0,200,255,.05)' : 'rgba(255,255,255,.02)'};transition:all .2s">
-            <div style="font-weight:600;color:${vwLayoutMode === l.id ? 'var(--cyan)' : 'var(--text)'};margin-bottom:4px">${l.label}</div>
+               style="cursor:pointer;padding:12px 16px;border-radius:8px;border:1px solid ${vwLayoutMode === l.id ? 'var(--primary)' : 'var(--border)'};background:${vwLayoutMode === l.id ? 'var(--primary-soft)' : 'var(--bg-card)'};transition:all .2s">
+            <div style="font-weight:600;color:${vwLayoutMode === l.id ? 'var(--primary)' : 'var(--text)'};margin-bottom:4px">${l.label}</div>
             <div style="font-size:11px;color:var(--muted)">${l.cols} cột × ${l.rows} hàng</div>
           </div>`).join('')}
         </div>
@@ -222,11 +222,11 @@ function renderVideoWall() {
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
           ${VW_SCENARIOS.map(s => `
           <div onclick="vwScenario='${s.id}';vwRefresh()" 
-               style="cursor:pointer;display:flex;gap:12px;padding:12px;border-radius:8px;border:1px solid ${vwScenario === s.id ? 'var(--green)' : 'rgba(255,255,255,.1)'};background:${vwScenario === s.id ? 'rgba(0,230,118,.05)' : 'rgba(255,255,255,.02)'};transition:all .2s">
-            <div style="font-size:24px">${s.icon}</div>
+               style="cursor:pointer;display:flex;gap:12px;padding:12px;border-radius:8px;border:1px solid ${vwScenario === s.id ? 'var(--border-active)' : 'var(--border)'};background:${vwScenario === s.id ? 'var(--sidebar-item-active)' : 'var(--bg-card)'};transition:all .2s">
+            <div style="font-size:24px;color:${vwScenario === s.id ? 'var(--sidebar-text-active)' : 'var(--text)'}">${s.icon}</div>
             <div>
-              <div style="font-weight:600;color:${vwScenario === s.id ? 'var(--green)' : 'var(--text)'};margin-bottom:2px">${s.title}</div>
-              <div style="font-size:11px;color:var(--muted);line-height:1.4">${s.desc}</div>
+              <div style="font-weight:600;color:${vwScenario === s.id ? 'var(--sidebar-text-active)' : 'var(--text)'};margin-bottom:2px">${s.title}</div>
+              <div style="font-size:11px;color:${vwScenario === s.id ? 'var(--sidebar-text)' : 'var(--muted)'};line-height:1.4;opacity:${vwScenario === s.id ? '.86' : '1'}">${s.desc}</div>
             </div>
           </div>`).join('')}
         </div>
@@ -243,7 +243,7 @@ function renderVideoWall() {
     <div class="vw-block fade-in" style="${isFirst ? layout.firstSpan : ''}">
       <div class="vw-block-header">
         <span>${block.title}</span>
-        <button style="background:rgba(255,255,255,.05);border:none;color:var(--muted);border-radius:4px;width:20px;height:20px;cursor:pointer">⋮</button>
+        <button style="background:${vwIsKiosk ? 'rgba(255,255,255,.08)' : 'var(--bg-tertiary)'};border:1px solid var(--border);color:${vwIsKiosk ? '#EAF2FF' : 'var(--muted)'};border-radius:4px;width:20px;height:20px;cursor:pointer">⋮</button>
       </div>
       <div class="vw-block-content" style="padding-top: ${block.type.startsWith('camera') || block.type === 'map' || block.type === 'scada_iframe' ? '0' : '36px'}">
         ${vwRenderContent(block)}

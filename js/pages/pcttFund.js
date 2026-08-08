@@ -59,8 +59,8 @@ const FUND_CAT = {
   infrastructure: { label: 'Hạ tầng đê điều', color: '#00c8ff', badge: 'badge-blue' },
   emergency:      { label: 'Hỗ trợ khẩn cấp', color: '#ff3c50', badge: 'badge-red' },
   equipment:      { label: 'Trang thiết bị',   color: '#ff9800', badge: 'badge-yellow' },
-  training:       { label: 'Tập huấn, đào tạo',color: '#00e676', badge: 'badge-green' },
-  other:          { label: 'Khác',              color: '#9c27b0', badge: 'badge-gray' },
+  training:       { label: 'Tập huấn, đào tạo',color: 'var(--success)', badge: 'badge-green' },
+  other:          { label: 'Khác',              color: '#2984EE', badge: 'badge-gray' },
 };
 
 let _fundCharts = {};
@@ -104,9 +104,9 @@ function renderPcttFund() {
   <!-- KPI Row -->
   <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:20px">
     ${[
-      { label:'Tổng tồn quỹ', val:`${f.balance.toFixed(1)} tỷ`, sub:`/năm ${f.year}`, color:'var(--cyan)' },
-      { label:'Đã thu (YTD)', val:`${f.collected.toFixed(1)} tỷ`, sub:`${pct}% kế hoạch`, color:'var(--green)' },
-      { label:'Đã chi (YTD)', val:`${f.spent.toFixed(1)} tỷ`, sub:`${spentPct}% số thu`, color:'var(--yellow)' },
+      { label:'Tổng tồn quỹ', val:`${f.balance.toFixed(1)} tỷ`, sub:`/năm ${f.year}`, color:'var(--primary)' },
+      { label:'Đã thu (YTD)', val:`${f.collected.toFixed(1)} tỷ`, sub:`${pct}% kế hoạch`, color:'var(--success)' },
+      { label:'Đã chi (YTD)', val:`${f.spent.toFixed(1)} tỷ`, sub:`${spentPct}% số thu`, color:'var(--warning)' },
       { label:'Dự phòng khẩn cấp', val:`${f.reserved.toFixed(1)} tỷ`, sub:'Sẵn sàng điều động', color:'var(--orange)' },
       { label:'Kế hoạch năm', val:`${f.target.toFixed(1)} tỷ`, sub:`Còn thiếu: ${(f.target-f.collected).toFixed(1)} tỷ`, color:'var(--muted)' },
     ].map(k=>`
@@ -148,7 +148,7 @@ function _renderFundTab() {
         <div style="padding:16px">
           ${f.districts.slice(0,8).map(d => {
             const pct = Math.round(d.collected/d.target*100);
-            const color = pct>=95?'var(--green)':pct>=70?'var(--cyan)':pct>=50?'var(--yellow)':'var(--red)';
+            const color = pct>=95?'var(--success)':pct>=70?'var(--primary)':pct>=50?'var(--warning)':'var(--danger)';
             return `<div style="margin-bottom:12px">
               <div style="display:flex;justify-content:space-between;margin-bottom:4px">
                 <span style="font-size:12px;font-weight:600">${d.name}</span>
@@ -168,7 +168,7 @@ function _renderFundTab() {
               ${f.expenditures.slice(0,5).map(e=>`<tr>
                 <td style="font-size:12px">${e.desc}</td>
                 <td style="font-size:11px;color:var(--muted)">${e.unit}</td>
-                <td class="mono" style="color:var(--yellow);font-weight:700">${e.amount.toFixed(1)}</td>
+                <td class="mono" style="color:var(--warning);font-weight:700">${e.amount.toFixed(1)}</td>
                 <td>${statusBadge(e.status)}</td>
               </tr>`).join('')}
             </tbody>
@@ -192,14 +192,14 @@ function _renderFundTab() {
             ${f.districts.map(d=>{
               const pct=Math.round(d.collected/d.target*100);
               const bal=(d.collected-d.spent).toFixed(1);
-              const color=pct>=95?'var(--green)':pct>=70?'var(--cyan)':pct>=50?'var(--yellow)':'var(--red)';
+              const color=pct>=95?'var(--success)':pct>=70?'var(--primary)':pct>=50?'var(--warning)':'var(--danger)';
               const badge=pct>=95?'badge-green':pct>=70?'badge-blue':pct>=50?'badge-yellow':'badge-red';
               return `<tr>
                 <td style="font-weight:600">${d.name}</td>
                 <td class="mono">${d.target}</td>
-                <td class="mono" style="color:var(--green);font-weight:700">${d.collected}</td>
-                <td class="mono" style="color:var(--yellow)">${d.spent}</td>
-                <td class="mono" style="color:var(--cyan)">${bal}</td>
+                <td class="mono" style="color:var(--success);font-weight:700">${d.collected}</td>
+                <td class="mono" style="color:var(--warning)">${d.spent}</td>
+                <td class="mono" style="color:var(--primary)">${bal}</td>
                 <td style="min-width:140px">
                   <div style="display:flex;align-items:center;gap:8px">
                     <div class="progress-bar" style="flex:1"><div class="progress-fill" style="width:${pct}%;background:${color}"></div></div>
@@ -225,9 +225,9 @@ function _renderFundTab() {
     return `
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px">
       ${[
-        { label:'Tổng dự toán', val:`${Object.values(f.categoryBudget).reduce((a,b)=>a+b,0).toFixed(0)} tỷ`, color:'var(--cyan)' },
-        { label:'Đã phê duyệt', val:`${totalApproved.toFixed(1)} tỷ`, color:'var(--green)' },
-        { label:'Chờ phê duyệt', val:`${totalPending.toFixed(1)} tỷ`, color:'var(--yellow)' },
+        { label:'Tổng dự toán', val:`${Object.values(f.categoryBudget).reduce((a,b)=>a+b,0).toFixed(0)} tỷ`, color:'var(--primary)' },
+        { label:'Đã phê duyệt', val:`${totalApproved.toFixed(1)} tỷ`, color:'var(--success)' },
+        { label:'Chờ phê duyệt', val:`${totalPending.toFixed(1)} tỷ`, color:'var(--warning)' },
         { label:'Số khoản chi', val:f.expenditures.length, color:'var(--muted)' },
       ].map(k=>`<div class="card kpi-card"><div class="kpi-label">${k.label}</div><div class="kpi-value" style="color:${k.color}">${k.val}</div></div>`).join('')}
     </div>
@@ -241,18 +241,18 @@ function _renderFundTab() {
           <thead><tr><th>Mã</th><th>Nội dung</th><th>Hạng mục</th><th>Đơn vị</th><th>Số tiền (tỷ)</th><th>Ngày</th><th>Người duyệt</th><th>Trạng thái</th><th></th></tr></thead>
           <tbody>
             ${f.expenditures.map(e=>`<tr>
-              <td class="mono" style="color:var(--cyan);font-size:11px">${e.id}</td>
+              <td class="mono" style="color:var(--primary);font-size:11px">${e.id}</td>
               <td style="font-size:12px;max-width:200px">${e.desc}</td>
               <td><span class="badge ${FUND_CAT[e.category]?.badge||'badge-gray'}" style="font-size:10px">${FUND_CAT[e.category]?.label||e.category}</span></td>
               <td style="font-size:11px;color:var(--muted)">${e.unit}</td>
-              <td class="mono" style="font-weight:700;color:var(--yellow)">${e.amount.toFixed(1)}</td>
+              <td class="mono" style="font-weight:700;color:var(--warning)">${e.amount.toFixed(1)}</td>
               <td style="font-size:12px">${e.date}</td>
               <td style="font-size:11px;color:var(--muted)">${e.approvedBy}</td>
               <td>${statusBadge(e.status)}</td>
               <td>
                 ${e.status==='pending'?`<div style="display:flex;gap:4px">
-                  <button class="btn btn-sm" style="font-size:10px;background:rgba(0,230,118,.1);color:var(--green);border:1px solid rgba(0,230,118,.25)" onclick="approveFundItem('${e.id}')">Duyệt</button>
-                  <button class="btn btn-ghost btn-xs" style="color:var(--red)" onclick="rejectFundItem('${e.id}')">Từ chối</button>
+                  <button class="btn btn-sm" style="font-size:10px;background:rgba(41,132,238,.1);color:var(--success);border:1px solid rgba(41,132,238,.25)" onclick="approveFundItem('${e.id}')">Duyệt</button>
+                  <button class="btn btn-ghost btn-xs" style="color:var(--danger)" onclick="rejectFundItem('${e.id}')">Từ chối</button>
                 </div>`:`<button class="btn btn-ghost btn-xs" onclick="viewFundExpDetail('${e.id}')">Xem</button>`}
               </td>
             </tr>`).join('')}
@@ -276,7 +276,7 @@ function _renderFundTab() {
             <tbody>
               ${f.collections.map(c=>`<tr>
                 <td style="font-weight:600;font-size:13px">${c.source}</td>
-                <td class="mono" style="color:var(--green);font-weight:700">${c.amount.toFixed(1)}</td>
+                <td class="mono" style="color:var(--success);font-weight:700">${c.amount.toFixed(1)}</td>
                 <td style="font-size:12px;color:var(--muted)">${c.date}</td>
                 <td><span class="badge ${c.type==='budget'?'badge-blue':c.type==='enterprise'?'badge-cyan':c.type==='central'?'badge-green':'badge-gray'}" style="font-size:10px">
                   ${c.type==='budget'?'NSNN':c.type==='enterprise'?'Doanh nghiệp':c.type==='central'?'Trung ương':'Hộ dân'}
@@ -287,7 +287,7 @@ function _renderFundTab() {
         </div>
         <div style="padding:14px 16px;border-top:1px solid var(--border);display:flex;justify-content:space-between">
           <span style="font-size:13px;color:var(--muted)">Tổng thu</span>
-          <span style="font-size:16px;font-weight:800;color:var(--green)">${f.collected.toFixed(1)} tỷ VNĐ</span>
+          <span style="font-size:16px;font-weight:800;color:var(--success)">${f.collected.toFixed(1)} tỷ VNĐ</span>
         </div>
       </div>
       <div class="card">
@@ -314,7 +314,8 @@ function switchFundTab(tab) {
 function _renderFundCharts() {
   if (typeof Chart === 'undefined') return;
   const f = FUND_DATA;
-  const def = { color:'rgba(255,255,255,.65)', grid:'rgba(255,255,255,.06)', font:"'Inter',sans-serif" };
+  const palette = getChartPalette();
+  const def = { color: palette.textMuted, grid: hexToRgba(palette.cyan, .06), font:"'Inter',sans-serif" };
   const ax = () => ({ ticks:{color:def.color,font:{family:def.font,size:10}}, grid:{color:def.grid} });
 
   const mk = (id, cfg) => {
@@ -326,9 +327,9 @@ function _renderFundCharts() {
     mk('fundMonthlyChart', { type:'bar', data:{
       labels: f.monthlyTrend.labels,
       datasets:[
-        { type:'bar', label:'Đã thu (tỷ)', data:f.monthlyTrend.collected2026, backgroundColor:'rgba(0,200,255,.5)', borderColor:'#00c8ff', borderWidth:1.5, borderRadius:4 },
-        { type:'bar', label:'Đã chi (tỷ)', data:f.monthlyTrend.spent2026, backgroundColor:'rgba(255,202,40,.4)', borderColor:'#ffca28', borderWidth:1.5, borderRadius:4 },
-        { type:'line', label:'Kế hoạch thu (tỷ/tháng)', data:f.monthlyTrend.target2026, borderColor:'rgba(0,230,118,.6)', borderWidth:1.5, borderDash:[5,4], pointRadius:0, fill:false },
+        { type:'bar', label:'Đã thu (tỷ)', data:f.monthlyTrend.collected2026, backgroundColor:hexToRgba(palette.cyan,.5), borderColor:palette.cyan, borderWidth:1.5, borderRadius:4 },
+        { type:'bar', label:'Đã chi (tỷ)', data:f.monthlyTrend.spent2026, backgroundColor:hexToRgba(palette.warning,.4), borderColor:palette.warning, borderWidth:1.5, borderRadius:4 },
+        { type:'line', label:'Kế hoạch thu (tỷ/tháng)', data:f.monthlyTrend.target2026, borderColor:hexToRgba(palette.success,.6), borderWidth:1.5, borderDash:[5,4], pointRadius:0, fill:false },
       ]
     }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{color:def.color,font:{family:def.font,size:11}}}}, scales:{x:ax(),y:{...ax(),beginAtZero:true}} } });
 
@@ -342,8 +343,8 @@ function _renderFundCharts() {
     mk('fundDistrictChart', { type:'bar', data:{
       labels: f.districts.map(d=>d.name),
       datasets:[
-        { label:'Kế hoạch (tỷ)', data:f.districts.map(d=>d.target), backgroundColor:'rgba(255,255,255,.1)', borderColor:'rgba(255,255,255,.2)', borderWidth:1, borderRadius:3 },
-        { label:'Đã thu (tỷ)', data:f.districts.map(d=>d.collected), backgroundColor:f.districts.map(d=>d.collected>=d.target?'rgba(0,230,118,.6)':'rgba(0,200,255,.55)'), borderColor:f.districts.map(d=>d.collected>=d.target?'#00e676':'#00c8ff'), borderWidth:1.5, borderRadius:3 },
+        { label:'Kế hoạch (tỷ)', data:f.districts.map(d=>d.target), backgroundColor:hexToRgba(palette.border,.3), borderColor:palette.border, borderWidth:1, borderRadius:3 },
+        { label:'Đã thu (tỷ)', data:f.districts.map(d=>d.collected), backgroundColor:f.districts.map(d=>d.collected>=d.target?hexToRgba(palette.success,.6):hexToRgba(palette.cyan,.55)), borderColor:f.districts.map(d=>d.collected>=d.target?palette.success:palette.cyan), borderWidth:1.5, borderRadius:3 },
       ]
     }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{color:def.color,font:{family:def.font,size:11}}}}, scales:{x:{...ax(),ticks:{...ax().ticks,maxRotation:40}},y:{...ax(),beginAtZero:true}} } });
   }
@@ -351,7 +352,7 @@ function _renderFundCharts() {
   if (fundTab==='collection') {
     mk('fundSourceChart', { type:'pie', data:{
       labels: ['Ngân sách TP','Doanh nghiệp NN','Hộ dân/KD','Hỗ trợ Trung ương'],
-      datasets:[{ data:f.collections.map(c=>c.amount), backgroundColor:['#00c8ff','#ff9800','#00e676','#9c27b0'], borderWidth:0, hoverOffset:8 }]
+      datasets:[{ data:f.collections.map(c=>c.amount), backgroundColor:['#00c8ff','#ff9800','var(--success)','#2984EE'], borderWidth:0, hoverOffset:8 }]
     }, options:{ responsive:true, maintainAspectRatio:false, plugins:{legend:{position:'bottom',labels:{color:def.color,font:{family:def.font,size:11},padding:12}}} } });
   }
 }
@@ -364,14 +365,14 @@ window.openFundSpendModal = function() {
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="modal-body">
-    <div class="form-group"><label class="form-label">Nội dung chi <span style="color:var(--red)">*</span></label>
+    <div class="form-group"><label class="form-label">Nội dung chi <span style="color:var(--danger)">*</span></label>
       <textarea id="fSpendDesc" class="form-control" rows="2" placeholder="Mô tả chi tiết khoản chi..."></textarea></div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">Hạng mục</label>
         <select id="fSpendCat" class="form-control">
           ${Object.entries(FUND_CAT).map(([k,v])=>`<option value="${k}">${v.label}</option>`).join('')}
         </select></div>
-      <div class="form-group"><label class="form-label">Số tiền (tỷ VNĐ) <span style="color:var(--red)">*</span></label>
+      <div class="form-group"><label class="form-label">Số tiền (tỷ VNĐ) <span style="color:var(--danger)">*</span></label>
         <input id="fSpendAmt" type="number" step="0.1" min="0" class="form-control" placeholder="0.0"></div>
     </div>
     <div class="form-row">
@@ -410,7 +411,7 @@ window.openFundCollectModal = function() {
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="modal-body">
-    <div class="form-group"><label class="form-label">Nguồn đóng góp <span style="color:var(--red)">*</span></label>
+    <div class="form-group"><label class="form-label">Nguồn đóng góp <span style="color:var(--danger)">*</span></label>
       <input id="fColSrc" class="form-control" placeholder="Tên tổ chức/cá nhân đóng góp"></div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">Loại nguồn</label>
@@ -421,7 +422,7 @@ window.openFundCollectModal = function() {
           <option value="central">Hỗ trợ Trung ương</option>
           <option value="other">Khác</option>
         </select></div>
-      <div class="form-group"><label class="form-label">Số tiền (tỷ VNĐ) <span style="color:var(--red)">*</span></label>
+      <div class="form-group"><label class="form-label">Số tiền (tỷ VNĐ) <span style="color:var(--danger)">*</span></label>
         <input id="fColAmt" type="number" step="0.01" min="0" class="form-control" placeholder="0.00"></div>
     </div>
     <div class="form-row">

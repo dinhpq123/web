@@ -66,7 +66,7 @@ function renderCommuneReporting() {
   <!-- Tabs -->
   <div class="tabs" style="margin-bottom:16px">
     <button class="tab-btn ${_crTab==='fund'?'active':''}" onclick="switchCrTab('fund')">
-      Quỹ PCTT ${fundComplete===fundTotal?'<span style="color:#10b981;margin-left:4px">✓</span>':'<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#f59e0b;margin-left:4px;vertical-align:middle"></span>'}
+      Quỹ PCTT ${fundComplete===fundTotal?'<span style="color:var(--success);margin-left:4px">✓</span>':'<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#f59e0b;margin-left:4px;vertical-align:middle"></span>'}
     </button>
     <button class="tab-btn ${_crTab==='damage'?'active':''}" onclick="switchCrTab('damage')">
       Báo cáo Thiệt hại
@@ -102,26 +102,26 @@ function _crFundTab() {
   const totalC     = CR_FUND_DATA.reduce((s,d)=>s+d.collected,0);
   const pct        = Math.round(totalC/totalQ*100);
   const statusCfg  = {
-    complete:{ label:'Nộp đủ',  color:'#10b981', bg:'rgba(16,185,129,.1)' },
+    complete:{ label:'Nộp đủ',  color:'var(--success)', bg:'rgba(41,132,238,.1)' },
     partial: { label:'Đang thu', color:'#f59e0b', bg:'rgba(245,158,11,.1)' },
     pending: { label:'Chưa thu', color:'#ef4444', bg:'rgba(239,68,68,.1)' },
   };
   return `
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px">
     ${[
-      [complete+'/'+total, 'Xã nộp đủ', '#10b981'],
+      [complete+'/'+total, 'Xã nộp đủ', 'var(--success)'],
       [totalQ.toFixed(1)+' tr', 'Tổng chỉ tiêu (triệu)', '#38bdf8'],
-      [totalC.toFixed(1)+' tr', 'Đã thu được', '#a855f7'],
-      [pct+'%', 'Tỷ lệ hoàn thành', pct>=80?'#10b981':'#f59e0b'],
+      [totalC.toFixed(1)+' tr', 'Đã thu được', '#3699FF'],
+      [pct+'%', 'Tỷ lệ hoàn thành', pct>=80?'var(--success)':'#f59e0b'],
     ].map(([v,l,c])=>`<div class="rsv-kpi"><div class="rsv-kpi-val" style="color:${c}">${v}</div><div class="rsv-kpi-lbl">${l}</div></div>`).join('')}
   </div>
   <div class="card" style="padding:10px 16px;margin-bottom:14px">
     <div style="display:flex;justify-content:space-between;margin-bottom:5px">
       <span style="font-size:12px;font-weight:600">Tổng thu Quỹ PCTT toàn địa bàn 2026</span>
-      <span style="font-size:13px;font-weight:800;color:#10b981">${totalC.toFixed(1)} / ${totalQ.toFixed(1)} triệu đồng</span>
+      <span style="font-size:13px;font-weight:800;color:var(--success)">${totalC.toFixed(1)} / ${totalQ.toFixed(1)} triệu đồng</span>
     </div>
     <div style="height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden">
-      <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,#10b981,#38bdf8);border-radius:4px"></div>
+      <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--success),#38bdf8);border-radius:4px"></div>
     </div>
   </div>
   <div class="card" style="padding:0">
@@ -187,9 +187,9 @@ function _crDamageTab() {
   const approved = CR_DAMAGE_REPORTS.filter(r=>r.status==='approved').length;
   const totalDmg = CR_DAMAGE_REPORTS.reduce((s,r)=>s+r.totalEstimate,0);
   const statusCfg = {
-    draft:     { label:'Bản nháp',    color:'#6b7280', bg:'rgba(107,114,128,.1)' },
+    draft:     { label:'Bản nháp',    color:'var(--text-subtle)', bg:'rgba(107,114,128,.1)' },
     submitted: { label:'Chờ duyệt',   color:'#f59e0b', bg:'rgba(245,158,11,.1)' },
-    approved:  { label:'Đã duyệt',    color:'#10b981', bg:'rgba(16,185,129,.1)' },
+    approved:  { label:'Đã duyệt',    color:'var(--success)', bg:'rgba(41,132,238,.1)' },
     rejected:  { label:'Trả về',      color:'#ef4444', bg:'rgba(239,68,68,.1)' },
   };
   return `
@@ -197,12 +197,12 @@ function _crDamageTab() {
     ${[
       [CR_DAMAGE_REPORTS.length, 'Tổng báo cáo', '#38bdf8'],
       [pending+'', 'Chờ phê duyệt', '#f59e0b'],
-      [approved+'', 'Đã phê duyệt', '#10b981'],
+      [approved+'', 'Đã phê duyệt', 'var(--success)'],
       [totalDmg.toFixed(0)+' tr.đ', 'Tổng thiệt hại ước tính', '#ef4444'],
     ].map(([v,l,c])=>`<div class="rsv-kpi"><div class="rsv-kpi-val" style="color:${c}">${v}</div><div class="rsv-kpi-lbl">${l}</div></div>`).join('')}
   </div>
   ${pending>0?`<div style="padding:10px 14px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:10px;margin-bottom:14px;display:flex;align-items:center;gap:10px">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
     <span style="font-size:13px;font-weight:600;color:#ef4444">${pending} báo cáo thiệt hại đang chờ phê duyệt cấp huyện/TP!</span>
   </div>`:``}
   <div class="card" style="padding:0">
@@ -216,7 +216,7 @@ function _crDamageTab() {
           const commune = CR_COMMUNES.find(c=>c.id===r.communeId);
           const cfg = statusCfg[r.status]||statusCfg.draft;
           return `<tr>
-            <td class="mono" style="font-size:11px;color:var(--cyan)">${r.id}</td>
+            <td class="mono" style="font-size:11px;color:var(--primary)">${r.id}</td>
             <td style="font-weight:600">${commune?.name||'—'}</td>
             <td style="font-size:12px;white-space:nowrap">${r.date}</td>
             <td style="font-size:12px;max-width:180px">${r.event}</td>
@@ -228,7 +228,7 @@ function _crDamageTab() {
             <td>
               <div style="display:flex;gap:4px">
                 <button class="btn btn-ghost btn-sm" onclick="viewDamageDetail('${r.id}')">Chi tiết</button>
-                ${r.status==='submitted'?`<button class="btn btn-sm" style="background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.3);font-size:10px" onclick="showToast('Phê duyệt ${r.id}...')">Duyệt</button>`:''}
+                ${r.status==='submitted'?`<button class="btn btn-sm" style="background:rgba(41,132,238,.1);color:var(--success);border:1px solid rgba(41,132,238,.3);font-size:10px" onclick="showToast('Phê duyệt ${r.id}...')">Duyệt</button>`:''}
               </div>
             </td>
           </tr>`;
@@ -309,9 +309,9 @@ function _crResourcesTab() {
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:16px">
     ${[
       [totalForce+' người', 'Tổng lực lượng', '#38bdf8'],
-      [totalBoats+' chiếc', 'Phương tiện thủy', '#10b981'],
+      [totalBoats+' chiếc', 'Phương tiện thủy', 'var(--success)'],
       [totalPumps+' máy', 'Máy bơm', '#f59e0b'],
-      [totalFunds+' tr.đ', 'Quỹ dự phòng', '#a855f7'],
+      [totalFunds+' tr.đ', 'Quỹ dự phòng', '#3699FF'],
     ].map(([v,l,c])=>`<div class="rsv-kpi"><div class="rsv-kpi-val" style="color:${c}">${v}</div><div class="rsv-kpi-lbl">${l}</div></div>`).join('')}
   </div>
   <div class="card" style="padding:0">
@@ -324,7 +324,7 @@ function _crResourcesTab() {
         ${CR_RESOURCES_4TC.map(r => {
           const commune = CR_COMMUNES.find(c=>c.id===r.communeId);
           const readyPct = Math.round(r.forceReady/r.forces*100);
-          const scoreColor = readyPct>=80?'#10b981':readyPct>=60?'#f59e0b':'#ef4444';
+          const scoreColor = readyPct>=80?'var(--success)':readyPct>=60?'#f59e0b':'#ef4444';
           return `<tr>
             <td style="font-weight:600">${commune?.name||r.communeId}</td>
             <td>
@@ -338,7 +338,7 @@ function _crResourcesTab() {
             <td class="mono" style="text-align:center">${r.boats}</td>
             <td class="mono" style="text-align:center">${r.pumps}</td>
             <td class="mono" style="text-align:center">${r.food}</td>
-            <td class="mono" style="font-weight:600;color:#a855f7">${r.funds}</td>
+            <td class="mono" style="font-weight:600;color:#3699FF">${r.funds}</td>
             <td>
               <span style="padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;background:${scoreColor}18;color:${scoreColor};border:1px solid ${scoreColor}40">
                 ${readyPct>=80?'Đủ năng lực':readyPct>=60?'Cần bổ sung':'Thiếu hụt'}
@@ -385,7 +385,7 @@ window.openNewReportModal = function() {
   <div class="modal-body">
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
       ${[
-        ['Quỹ PCTT','Thu Quỹ PCTT hàng năm','#10b981','fund'],
+        ['Quỹ PCTT','Thu Quỹ PCTT hàng năm','var(--success)','fund'],
         ['Thiệt hại','Báo cáo thiệt hại thiên tai','#ef4444','damage'],
         ['Nguồn lực','Cập nhật 4 tại chỗ','#f59e0b','resources'],
       ].map(([t,d,c,tab])=>`<div class="card" style="padding:20px;text-align:center;cursor:pointer;border:2px solid ${c}22" onclick="closeModal();switchCrTab('${tab}')">

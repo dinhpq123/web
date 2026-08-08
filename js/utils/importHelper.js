@@ -150,14 +150,14 @@ window.showImportConfirmModal = function(config) {
     const cells = showCols.map(h => {
       const ci = headers.indexOf(h);
       const val = ci>=0 ? (row[ci]||'—') : '—';
-      return `<td style="font-size:11px;${hasErr?'color:var(--yellow)':''}">${val}</td>`;
+      return `<td style="font-size:11px;${hasErr?'color:var(--warning)':''}">${val}</td>`;
     }).join('');
     return `<tr style="border-bottom:1px solid rgba(255,255,255,.05);background:${hasErr?'rgba(255,202,40,.06)':'transparent'}">
       <td style="font-size:11px;color:var(--muted);text-align:center">${ri+1}</td>
       ${cells}
       <td style="max-width:200px">
         ${hasErr
-          ? `<span style="font-size:10px;color:var(--yellow)">${errs.join('; ')}</span>`
+          ? `<span style="font-size:10px;color:var(--warning)">${errs.join('; ')}</span>`
           : `<span class="badge badge-green" style="font-size:9px">OK</span>`}
       </td>
     </tr>`;
@@ -166,7 +166,7 @@ window.showImportConfirmModal = function(config) {
   openModal(`
   <div class="modal-header">
     <span class="modal-title" style="display:flex;align-items:center;gap:8px">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
       AI Kiểm tra dữ liệu — ${title}
     </span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
@@ -174,29 +174,29 @@ window.showImportConfirmModal = function(config) {
   <div class="modal-body" style="max-height:68vh;overflow-y:auto">
 
     <!-- File + summary -->
-    <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(139,92,246,.06);border:1px solid rgba(139,92,246,.2);border-radius:10px;margin-bottom:14px">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:rgba(41,132,238,.06);border:1px solid rgba(41,132,238,.2);border-radius:10px;margin-bottom:14px">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       <div style="flex:1">
         <div style="font-size:12px;font-weight:700;color:var(--text)">${fileName}</div>
         <div style="font-size:11px;color:var(--muted);margin-top:2px">${rows.length} hàng dữ liệu được tìm thấy</div>
       </div>
       <div style="display:flex;gap:10px">
-        <div style="text-align:center;padding:8px 16px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.25);border-radius:8px">
-          <div style="font-size:20px;font-weight:800;color:var(--green)">${validCount}</div>
+        <div style="text-align:center;padding:8px 16px;background:rgba(41,132,238,.1);border:1px solid rgba(41,132,238,.25);border-radius:8px">
+          <div style="font-size:20px;font-weight:800;color:var(--success)">${validCount}</div>
           <div style="font-size:10px;color:var(--muted)">Hợp lệ</div>
         </div>
         <div style="text-align:center;padding:8px 16px;background:rgba(255,202,40,.08);border:1px solid rgba(255,202,40,.25);border-radius:8px">
-          <div style="font-size:20px;font-weight:800;color:var(--yellow)">${errorCount}</div>
+          <div style="font-size:20px;font-weight:800;color:var(--warning)">${errorCount}</div>
           <div style="font-size:10px;color:var(--muted)">Lỗi</div>
         </div>
       </div>
     </div>
 
     <!-- AI analysis -->
-    <div style="padding:10px 14px;background:rgba(139,92,246,.05);border-left:3px solid #7c3aed;border-radius:0 8px 8px 0;margin-bottom:14px;font-size:12px;color:rgba(255,255,255,.7)">
+    <div style="padding:10px 14px;background:rgba(41,132,238,.05);border-left:3px solid var(--purple);border-radius:0 8px 8px 0;margin-bottom:14px;font-size:12px;color:rgba(255,255,255,.7)">
       ${errorCount===0
-        ? `<strong style="color:var(--green)">&#x2705; AI xác nhận:</strong> Toàn bộ ${rows.length} hàng dữ liệu hợp lệ. Có thể nhập vào hệ thống.`
-        : `<strong style="color:var(--yellow)">&#x26a0; AI phát hiện ${errorCount} hàng có lỗi.</strong> Bạn có thể nhập ${validCount} hàng hợp lệ hoặc sửa file và upload lại.`
+        ? `<strong style="color:var(--success)">&#x2705; AI xác nhận:</strong> Toàn bộ ${rows.length} hàng dữ liệu hợp lệ. Có thể nhập vào hệ thống.`
+        : `<strong style="color:var(--warning)">&#x26a0; AI phát hiện ${errorCount} hàng có lỗi.</strong> Bạn có thể nhập ${validCount} hàng hợp lệ hoặc sửa file và upload lại.`
       }
     </div>
 

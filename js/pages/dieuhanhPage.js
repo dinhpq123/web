@@ -87,14 +87,14 @@ function renderDieuhanhPage() {
   <!-- Summary cards -->
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px">
     ${[
-      { label: 'Chờ phê duyệt', val: pending, sub: '', color: '#ff6d00', icon: '<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>' },
-      { label: 'Ưu tiên cao', val: urgent, sub: 'Cần xử lý hôm nay', color: '#ff4444', icon: '<polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>' },
-      { label: 'Đã duyệt tháng này', val: 12, sub: 'Tháng 3/2026', color: 'var(--green)', icon: '<polyline points="20 6 9 17 4 12"/>' },
+      { label: 'Chờ phê duyệt', val: pending, sub: '', color: 'var(--primary)', icon: '<path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>' },
+      { label: 'Ưu tiên cao', val: urgent, sub: 'Cần xử lý hôm nay', color: 'var(--danger)', icon: '<polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>' },
+      { label: 'Đã duyệt tháng này', val: 12, sub: 'Tháng 3/2026', color: 'var(--primary)', icon: '<polyline points="20 6 9 17 4 12"/>' },
       { label: 'Từ chối tháng này', val: 1, sub: 'Tháng 3/2026', color: 'var(--muted)', icon: '<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>' },
     ].map(c => `
-    <div class="card" style="padding:16px;border-left:3px solid ${c.color}">
+    <div class="card" style="padding:16px">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
-        <div style="width:36px;height:36px;background:${c.color}18;border-radius:9px;display:flex;align-items:center;justify-content:center">
+        <div style="width:36px;height:36px;background:${c.color === 'var(--danger)' ? 'var(--danger-soft)' : 'var(--primary-soft)'};border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${c.color}" stroke-width="2">${c.icon}</svg>
         </div>
         <div style="font-size:24px;font-weight:800;color:${c.color}">${c.val}</div>
@@ -108,7 +108,7 @@ function renderDieuhanhPage() {
   <div class="tabs">
     <button class="tab-btn ${dieuhanhTab === 'pending' ? 'active' : ''}" onclick="switchDieuhanhTab(this,'pending')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      Chờ phê duyệt <span style="background:var(--red);color:#fff;font-size:9px;padding:1px 5px;border-radius:4px;margin-left:4px;font-weight:700">${pending}</span>
+      Chờ phê duyệt <span style="background:var(--danger);color:#fff;font-size:9px;padding:1px 5px;border-radius:4px;margin-left:4px;font-weight:700">${pending}</span>
     </button>
     <button class="tab-btn ${dieuhanhTab === 'history' ? 'active' : ''}" onclick="switchDieuhanhTab(this,'history')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
@@ -141,41 +141,41 @@ function getDieuhanhContent() {
 function renderPendingApprovals() {
   const pending = APPROVAL_QUEUE.filter(x => x.status === 'pending');
   if (!pending.length) return `<div style="text-align:center;padding:60px;color:var(--muted)">
-    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.5" style="margin-bottom:14px"><polyline points="20 6 9 17 4 12"/></svg>
-    <div style="font-size:16px;font-weight:600;color:var(--green)">Không có yêu cầu nào đang chờ</div>
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="1.5" style="margin-bottom:14px"><polyline points="20 6 9 17 4 12"/></svg>
+    <div style="font-size:16px;font-weight:600;color:var(--success)">Không có yêu cầu nào đang chờ</div>
   </div>`;
 
   return pending.map((a, qi) => {
     const typeLabels = { kpi_import: 'Import KPI', data_export: 'Export Dữ liệu', scada_ctrl: 'Điều khiển SCADA', role_change: 'Phân quyền', user_mgmt: 'Quản lý TK' };
-    const typeColors = { kpi_import: '#0066ff', data_export: '#ff6d00', scada_ctrl: '#ff4444', role_change: '#9c27b0', user_mgmt: '#00c8ff' };
-    const urgColors = { high: 'var(--red)', med: 'var(--yellow)', low: 'var(--muted)' };
+    const typeColors = { kpi_import: 'var(--primary)', data_export: 'var(--primary)', scada_ctrl: 'var(--primary)', role_change: 'var(--primary)', user_mgmt: 'var(--primary)' };
+    const urgColors = { high: 'var(--danger)', med: 'var(--text-2)', low: 'var(--muted)' };
     const urgLabels = { high: 'Ưu tiên cao', med: 'Bình thường', low: 'Thấp' };
-    const tc = typeColors[a.type] || 'var(--cyan)';
+    const tc = typeColors[a.type] || 'var(--primary)';
     const tl = typeLabels[a.type] || a.type;
     return `
-    <div class="card" style="margin-bottom:16px;border-left:3px solid ${tc}">
+    <div class="card" style="margin-bottom:16px">
       <div class="card-header">
         <div style="display:flex;align-items:flex-start;gap:12px;flex:1">
-          <div style="padding:4px 9px;background:${tc}22;border:1px solid ${tc}44;border-radius:6px;font-size:10px;font-weight:700;color:${tc};white-space:nowrap">${tl}</div>
+          <div style="padding:4px 9px;background:var(--primary-soft);border:1px solid var(--border);border-radius:6px;font-size:10px;font-weight:700;color:var(--primary-text);white-space:nowrap">${tl}</div>
           <div style="flex:1">
             <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:3px">${a.title}</div>
             <div style="font-size:12px;color:var(--muted)">${a.desc}</div>
           </div>
         </div>
         <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
-          <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:${urgColors[a.urgency]}22;color:${urgColors[a.urgency]};border:1px solid ${urgColors[a.urgency]}44">${urgLabels[a.urgency]}</span>
+          <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:${a.urgency === 'high' ? 'var(--danger-soft)' : 'var(--bg-secondary)'};color:${urgColors[a.urgency]};border:1px solid var(--border)">${urgLabels[a.urgency]}</span>
           <code style="font-size:10px;color:var(--muted)">${a.id}</code>
         </div>
       </div>
       <div class="card-body" style="padding-top:0">
         <!-- Submitter + time -->
         <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);margin-bottom:14px">
-          <div style="width:34px;height:34px;background:linear-gradient(135deg,#0050cc,#00c8ff);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0">${a.submitterAvatar}</div>
+          <div style="width:34px;height:34px;background:var(--button-primary-background);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--button-primary-text);flex-shrink:0">${a.submitterAvatar}</div>
           <div>
             <div style="font-size:12px;font-weight:600">${a.submitter}</div>
             <div style="font-size:11px;color:var(--muted)">${a.submitterRole} · Gửi lúc ${a.submittedAt}</div>
           </div>
-          ${a.otp ? `<div style="margin-left:auto;font-size:10px;padding:3px 8px;background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:5px;color:var(--cyan)">
+          ${a.otp ? `<div style="margin-left:auto;font-size:10px;padding:3px 8px;background:var(--primary-soft);border:1px solid var(--border-active);border-radius:5px;color:var(--primary-text)">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             Người thực hiện đã xác thực OTP
           </div>` : ''}
@@ -186,15 +186,15 @@ function renderPendingApprovals() {
           <div>
             ${a.note ? `<div style="margin-bottom:12px">
               <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">Ghi chú người gửi</div>
-              <div style="font-size:12px;color:var(--text-2);line-height:1.7;padding:10px 13px;background:rgba(0,0,0,.15);border-radius:8px;border-left:2px solid ${tc}">${a.note}</div>
+              <div style="font-size:12px;color:var(--text-2);line-height:1.7;padding:10px 13px;background:var(--bg-secondary);border-radius:8px;border:1px solid var(--border)">${a.note}</div>
             </div>` : ''}
             ${a.files.length ? `<div>
               <div style="font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">File đính kèm</div>
               ${a.files.map(f => {
       const ext = f.split('.').pop().toUpperCase();
-      const fc = { XLSX: '#00e676', XLS: '#00e676', PDF: '#ff6d00', PNG: '#ff4081', JPG: '#ff4081' }[ext] || 'var(--cyan)';
-      return `<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:rgba(0,0,0,.15);border-radius:7px;margin-bottom:5px;cursor:pointer" onclick="showToast('Đang mở ${f}...')">
-                  <span style="font-size:8px;font-weight:800;color:${fc};background:${fc}18;padding:2px 5px;border-radius:4px">${ext}</span>
+      const fc = 'var(--primary)';
+      return `<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;background:var(--bg-secondary);border:1px solid var(--border);border-radius:7px;margin-bottom:5px;cursor:pointer" onclick="showToast('Đang mở ${f}...')">
+                  <span style="font-size:8px;font-weight:800;color:${fc};background:var(--primary-soft);padding:2px 5px;border-radius:4px">${ext}</span>
                   <span style="font-size:12px;color:var(--text-2)">${f}</span>
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2" style="margin-left:auto"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 </div>`;
@@ -210,10 +210,10 @@ function renderPendingApprovals() {
                 <span style="font-size:12px;color:var(--muted)">${d.kpi}</span>
                 <div style="display:flex;align-items:center;gap:8px">
                   <span style="font-size:12px;font-weight:600;color:var(--text)">${d.val}</span>
-                  <span style="font-size:10px;color:${d.conf >= 90 ? 'var(--green)' : d.conf >= 75 ? 'var(--yellow)' : 'var(--red)'}">AI ${d.conf}%</span>
+                  <span style="font-size:10px;color:${d.conf >= 75 ? 'var(--primary-text)' : 'var(--danger)'}">AI ${d.conf}%</span>
                 </div>
               </div>`).join('')}
-            </div>` : `<div style="padding:20px;text-align:center;color:var(--muted);font-size:12px;background:rgba(0,0,0,.1);border-radius:8px;border:1px dashed var(--border)">
+            </div>` : `<div style="padding:20px;text-align:center;color:var(--muted);font-size:12px;background:var(--bg-secondary);border-radius:8px;border:1px dashed var(--border)">
               Không có dữ liệu xem trước cho tác vụ này
             </div>`}
           </div>
@@ -221,16 +221,16 @@ function renderPendingApprovals() {
 
         <!-- Action row -->
         <div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:space-between;align-items:center">
-          <button onclick="dieuhanhViewDetail(${qi})" style="padding:9px 18px;background:rgba(0,102,255,.1);border:1px solid rgba(0,102,255,.3);border-radius:9px;color:#60a5fa;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;transition:.2s" onmouseover="this.style.background='rgba(0,102,255,.2)'" onmouseout="this.style.background='rgba(0,102,255,.1)'">
+          <button onclick="dieuhanhViewDetail(${qi})" style="padding:9px 18px;background:var(--primary-soft);border:1px solid var(--border-active);border-radius:8px;color:var(--primary-text);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px;transition:.2s" onmouseover="this.style.background='var(--bg-hover)'" onmouseout="this.style.background='var(--primary-soft)'">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             Xem chi tiết &amp; Phê duyệt
           </button>
           <div style="display:flex;gap:8px">
-            <button onclick="dieuhanhReject('${a.id}',${qi})" style="padding:8px 16px;background:rgba(255,68,68,.1);border:1px solid rgba(255,68,68,.3);border-radius:9px;color:var(--red);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px" onmouseover="this.style.background='rgba(255,68,68,.2)'" onmouseout="this.style.background='rgba(255,68,68,.1)'">
+            <button onclick="dieuhanhReject('${a.id}',${qi})" style="padding:8px 16px;background:rgba(255,68,68,.1);border:1px solid rgba(255,68,68,.3);border-radius:9px;color:var(--danger);font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px" onmouseover="this.style.background='rgba(255,68,68,.2)'" onmouseout="this.style.background='rgba(255,68,68,.1)'">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               Từ chối
             </button>
-            <button onclick="dieuhanhApprove('${a.id}',${qi})" style="padding:8px 18px;background:linear-gradient(135deg,var(--green),#00a854);color:#071629;border:none;border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 4px 12px rgba(0,230,118,.25)" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">
+            <button onclick="dieuhanhApprove('${a.id}',${qi})" style="padding:8px 18px;background:var(--button-primary-background);color:var(--button-primary-text);border:1px solid var(--border-active);border-radius:9px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:var(--shadow)" onmouseover="this.style.opacity='.9'" onmouseout="this.style.opacity='1'">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
               Phê duyệt nhanh
             </button>
@@ -274,8 +274,8 @@ function renderApprovalHistory() {
               <td><code style="font-size:11px;color:var(--muted)">${h.id}</code></td>
               <td>
                 <div style="display:flex;align-items:center;gap:7px">
-                  <div style="width:26px;height:26px;background:rgba(0,200,255,.08);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2">${ic}</svg>
+                  <div style="width:26px;height:26px;background:var(--primary-soft);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">${ic}</svg>
                   </div>
                   <div>
                     <div style="font-size:12px;font-weight:600">${h.title}</div>
@@ -283,7 +283,7 @@ function renderApprovalHistory() {
                 </div>
               </td>
               <td style="font-size:12px">${h.submitter}</td>
-              <td style="font-size:12px;color:var(--cyan)">${h.approver}</td>
+              <td style="font-size:12px;color:var(--primary)">${h.approver}</td>
               <td class="mono" style="font-size:11px;color:var(--muted)">${h.approvedAt}</td>
               <td style="font-size:11px;color:var(--muted);max-width:180px">${h.note || '—'}</td>
               <td>${h.status === 'approved'
@@ -321,7 +321,7 @@ function renderApprovalSettings() {
     { id: 'alert_ack', name: 'Đóng cảnh báo KHẨN CẤP', desc: 'Xác nhận xử lý xong cảnh báo mức 2/3', needApproval: false, approver: 'Trưởng ca trực ban', minApprovers: 1, notify: true },
   ];
   return `
-  <div style="background:rgba(0,102,255,.07);border:1px solid rgba(0,102,255,.2);border-radius:10px;padding:14px 18px;margin-bottom:16px;font-size:12px;color:rgba(96,165,250,.9);line-height:1.7;display:flex;gap:10px">
+  <div style="background:var(--primary-soft);border:1px solid var(--border);border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:12px;color:var(--text-2);line-height:1.7;display:flex;gap:10px">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
     <span>Cấu hình các tác vụ hệ thống nào cần được lãnh đạo/quản lý phê duyệt trước khi thực thi. Khi một tác vụ được bật yêu cầu duyệt, người thực hiện sẽ gửi yêu cầu và người có quyền duyệt sẽ nhận thông báo qua hệ thống + Zalo ZNS.</span>
   </div>
@@ -348,8 +348,8 @@ function renderApprovalSettings() {
           ${ACTIONS.map(a => `<tr style="border-bottom:1px solid var(--border)">
             <td style="padding:13px 18px">
               <div style="display:flex;align-items:center;gap:10px">
-                <div style="width:32px;height:32px;background:rgba(0,200,255,.07);border:1px solid rgba(0,200,255,.14);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2">${ACTION_SVG[a.id] || ''}</svg>
+                <div style="width:32px;height:32px;background:var(--primary-soft);border:1px solid var(--border);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2">${ACTION_SVG[a.id] || ''}</svg>
                 </div>
                 <div>
                   <div style="font-size:13px;font-weight:600">${a.name}</div>
@@ -360,7 +360,7 @@ function renderApprovalSettings() {
             <td style="padding:10px 16px;text-align:center">
               <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer">
                 <input type="checkbox" ${a.needApproval ? 'checked' : ''} style="opacity:0;width:0;height:0" onchange="showToast(this.checked?'Đã bật yêu cầu duyệt cho tác vụ này!':'Đã tắt yêu cầu duyệt!')">
-                <span style="position:absolute;inset:0;background:${a.needApproval ? 'var(--cyan)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${a.needApproval ? '21px' : '3px'};transition:.3s"></span></span>
+                <span style="position:absolute;inset:0;background:${a.needApproval ? 'var(--primary)' : 'var(--bg-tertiary)'};border:1px solid var(--border);border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:2px;left:${a.needApproval ? '21px' : '3px'};transition:.3s"></span></span>
               </label>
             </td>
             <td style="padding:10px 16px">
@@ -384,7 +384,7 @@ function renderApprovalSettings() {
             <td style="padding:10px 16px;text-align:center">
               <label style="position:relative;display:inline-block;width:40px;height:22px;cursor:pointer">
                 <input type="checkbox" ${a.notify ? 'checked' : ''} style="opacity:0;width:0;height:0" onchange="showToast(this.checked?'Đã bật Zalo ZNS!':'Đã tắt Zalo ZNS!')">
-                <span style="position:absolute;inset:0;background:${a.notify ? 'var(--cyan)' : 'rgba(255,255,255,.1)'};border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:3px;left:${a.notify ? '21px' : '3px'};transition:.3s"></span></span>
+                <span style="position:absolute;inset:0;background:${a.notify ? 'var(--primary)' : 'var(--bg-tertiary)'};border:1px solid var(--border);border-radius:22px;transition:.3s"><span style="position:absolute;width:16px;height:16px;background:#fff;border-radius:50%;top:2px;left:${a.notify ? '21px' : '3px'};transition:.3s"></span></span>
               </label>
             </td>
           </tr>`).join('')}
@@ -408,11 +408,11 @@ function dieuhanhViewDetail(qi) {
 function buildApprovalDetailHtml(qi) {
   const a = APPROVAL_QUEUE[qi];
   if (!a) return '';
-  const typeColors = { kpi_import: '#0066ff', data_export: '#ff6d00', scada_ctrl: '#ff4444', role_change: '#9c27b0', user_mgmt: '#00c8ff' };
+  const typeColors = { kpi_import: 'var(--primary)', data_export: 'var(--primary)', scada_ctrl: 'var(--primary)', role_change: 'var(--primary)', user_mgmt: 'var(--primary)' };
   const typeLabels = { kpi_import: 'Import KPI', data_export: 'Export Dữ liệu', scada_ctrl: 'Điều khiển SCADA', role_change: 'Phân quyền', user_mgmt: 'Quản lý TK' };
-  const urgColors = { high: 'var(--red)', med: 'var(--yellow)', low: 'var(--muted)' };
+  const urgColors = { high: 'var(--danger)', med: 'var(--text-2)', low: 'var(--muted)' };
   const urgLabels = { high: 'Ưu tiên cao — cần xử lý hôm nay', med: 'Bình thường', low: 'Thấp' };
-  const tc = typeColors[a.type] || 'var(--cyan)';
+  const tc = typeColors[a.type] || 'var(--primary)';
 
   // Impact description per type
   const impactMap = {
@@ -424,7 +424,7 @@ function buildApprovalDetailHtml(qi) {
   };
   const impact = impactMap[a.type] || { title: 'Tác động', items: ['Thực thi tác vụ và ghi log vào hệ thống.'] };
 
-  return `<div class="modal-header" style="background:linear-gradient(135deg,${tc}22,transparent);border-bottom:1px solid ${tc}33">
+  return `<div class="modal-header" style="background:var(--bg-secondary);border-bottom:1px solid var(--border)">
     <span class="modal-title" style="color:${tc}">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       Chi tiết yêu cầu — ${a.id}
@@ -437,8 +437,8 @@ function buildApprovalDetailHtml(qi) {
     <div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px">
       <div style="flex:1">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px">
-          <span style="padding:3px 9px;background:${tc}22;border:1px solid ${tc}44;border-radius:5px;font-size:10px;font-weight:700;color:${tc}">${typeLabels[a.type] || a.type}</span>
-          <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:${urgColors[a.urgency]}22;color:${urgColors[a.urgency]};border:1px solid ${urgColors[a.urgency]}33">${urgLabels[a.urgency]}</span>
+          <span style="padding:3px 9px;background:var(--primary-soft);border:1px solid var(--border);border-radius:5px;font-size:10px;font-weight:700;color:var(--primary-text)">${typeLabels[a.type] || a.type}</span>
+          <span style="font-size:10px;font-weight:700;padding:3px 8px;border-radius:5px;background:${a.urgency === 'high' ? 'var(--danger-soft)' : 'var(--bg-secondary)'};color:${urgColors[a.urgency]};border:1px solid var(--border)">${urgLabels[a.urgency]}</span>
         </div>
         <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px">${a.title}</div>
         <div style="font-size:12px;color:var(--muted)">${a.desc}</div>
@@ -446,13 +446,13 @@ function buildApprovalDetailHtml(qi) {
     </div>
 
     <!-- Submitter info -->
-    <div style="padding:12px 20px;background:rgba(0,0,0,.15);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
-      <div style="width:38px;height:38px;background:linear-gradient(135deg,#0050cc,#00c8ff);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0">${a.submitterAvatar}</div>
+    <div style="padding:12px 20px;background:var(--bg-secondary);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px">
+      <div style="width:38px;height:38px;background:var(--button-primary-background);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--button-primary-text);flex-shrink:0">${a.submitterAvatar}</div>
       <div style="flex:1">
         <div style="font-size:13px;font-weight:600">${a.submitter}</div>
         <div style="font-size:11px;color:var(--muted)">${a.submitterRole} · Gửi lúc <b>${a.submittedAt}</b></div>
       </div>
-      ${a.otp ? `<div style="font-size:11px;padding:5px 10px;background:rgba(0,200,255,.08);border:1px solid rgba(0,200,255,.2);border-radius:7px;color:var(--cyan);display:flex;align-items:center;gap:6px">
+      ${a.otp ? `<div style="font-size:11px;padding:5px 10px;background:var(--primary-soft);border:1px solid var(--border-active);border-radius:7px;color:var(--primary-text);display:flex;align-items:center;gap:6px">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         Người gửi đã xác thực OTP
       </div>` : ''}
@@ -466,7 +466,7 @@ function buildApprovalDetailHtml(qi) {
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             Ghi chú người gửi
           </div>
-          <div style="font-size:12px;color:var(--text-2);line-height:1.7;padding:10px 13px;background:rgba(0,0,0,.15);border-radius:8px;border-left:3px solid ${tc}">${a.note}</div>
+          <div style="font-size:12px;color:var(--text-2);line-height:1.7;padding:10px 13px;background:var(--bg-secondary);border-radius:8px;border:1px solid var(--border)">${a.note}</div>
         </div>` : ''}
 
         <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px">
@@ -475,30 +475,30 @@ function buildApprovalDetailHtml(qi) {
         </div>
         ${a.files.length ? a.files.map(f => {
     const ext = f.split('.').pop().toUpperCase();
-    const fc = { XLSX: '#00e676', XLS: '#00e676', PDF: '#ff6d00', PNG: '#ff4081', JPG: '#ff4081', DOCX: '#60a5fa', DOC: '#60a5fa' }[ext] || 'var(--cyan)';
+    const fc = 'var(--primary)';
     const isPdf = ext === 'PDF';
     const isImg = ['PNG', 'JPG', 'JPEG'].includes(ext);
     const isXls = ['XLS', 'XLSX'].includes(ext);
-    return `<div style="background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.07);border-radius:9px;overflow:hidden;margin-bottom:8px">
+    return `<div style="background:var(--bg-secondary);border:1px solid var(--border);border-radius:9px;overflow:hidden;margin-bottom:8px">
             <div style="padding:10px 13px;display:flex;align-items:center;gap:9px">
-              <div style="width:34px;height:34px;background:${fc}18;border:1px solid ${fc}33;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:${fc};flex-shrink:0">${ext}</div>
+              <div style="width:34px;height:34px;background:var(--primary-soft);border:1px solid var(--border);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:${fc};flex-shrink:0">${ext}</div>
               <div style="flex:1;min-width:0">
                 <div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${f}</div>
                 <div style="font-size:10px;color:var(--muted)">Đã tải lên · ${a.submittedAt.split(' ')[0]}</div>
               </div>
-              <button onclick="showToast('Đang mở ${f}...')" style="background:rgba(0,200,255,.1);border:1px solid rgba(0,200,255,.25);border-radius:6px;color:var(--cyan);font-size:11px;font-weight:600;cursor:pointer;padding:5px 10px;display:flex;align-items:center;gap:5px;white-space:nowrap">
+              <button onclick="showToast('Đang mở ${f}...')" style="background:var(--primary-soft);border:1px solid var(--border-active);border-radius:6px;color:var(--primary-text);font-size:11px;font-weight:600;cursor:pointer;padding:5px 10px;display:flex;align-items:center;gap:5px;white-space:nowrap">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                 ${isPdf ? 'Mở PDF' : isImg ? 'Xem ảnh' : isXls ? 'Mở Excel' : 'Mở file'}
               </button>
             </div>
-            ${isImg ? `<div style="padding:0 13px 12px"><div style="background:rgba(0,0,0,.3);border-radius:6px;height:80px;display:flex;align-items:center;justify-content:center;border:1px dashed rgba(255,255,255,.1)">
+            ${isImg ? `<div style="padding:0 13px 12px"><div style="background:var(--bg-tertiary);border-radius:6px;height:80px;display:flex;align-items:center;justify-content:center;border:1px dashed var(--border)">
               <div style="text-align:center;color:var(--muted);font-size:11px">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block;margin:0 auto 5px"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
                 Xem trước ảnh
               </div>
             </div></div>` : ''}
           </div>`;
-  }).join('') : `<div style="padding:20px;text-align:center;color:var(--muted);font-size:12px;background:rgba(0,0,0,.1);border-radius:8px;border:1px dashed var(--border)">
+  }).join('') : `<div style="padding:20px;text-align:center;color:var(--muted);font-size:12px;background:var(--bg-secondary);border-radius:8px;border:1px dashed var(--border)">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block;margin:0 auto 8px;opacity:.4"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
           Không có file đính kèm
         </div>`}
@@ -508,11 +508,11 @@ function buildApprovalDetailHtml(qi) {
       <div style="padding:16px 20px">
         ${a.data.length ? `
         <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2" style="vertical-align:middle"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="vertical-align:middle"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
           Đầu ra AI — Dữ liệu sẽ được import
         </div>
         <div style="border:1px solid var(--border);border-radius:9px;overflow:hidden;margin-bottom:14px">
-          <div style="padding:7px 12px;background:rgba(0,102,255,.08);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;font-size:10px;color:var(--muted)">
+          <div style="padding:7px 12px;background:var(--bg-secondary);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;font-size:10px;color:var(--muted)">
             <span>Chỉ số KPI</span><span>Giá trị · Độ tin cậy AI</span>
           </div>
           ${a.data.map((d, di) => `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;${di ? 'border-top:1px solid var(--border)' : ''}">
@@ -520,16 +520,16 @@ function buildApprovalDetailHtml(qi) {
             <div style="display:flex;align-items:center;gap:8px">
               <span style="font-size:13px;font-weight:700;color:var(--text)">${d.val}</span>
               <div style="display:flex;align-items:center;gap:4px">
-                <div style="width:40px;height:4px;background:rgba(255,255,255,.1);border-radius:2px"><div style="height:100%;width:${d.conf}%;background:${d.conf >= 90 ? 'var(--green)' : d.conf >= 75 ? 'var(--yellow)' : 'var(--red)'};border-radius:2px"></div></div>
-                <span style="font-size:10px;color:${d.conf >= 90 ? 'var(--green)' : d.conf >= 75 ? 'var(--yellow)' : 'var(--red)'}">AI ${d.conf}%</span>
+                <div style="width:40px;height:4px;background:var(--bg-tertiary);border-radius:2px"><div style="height:100%;width:${d.conf}%;background:${d.conf >= 75 ? 'var(--primary)' : 'var(--danger)'};border-radius:2px"></div></div>
+                <span style="font-size:10px;color:${d.conf >= 75 ? 'var(--primary-text)' : 'var(--danger)'}">AI ${d.conf}%</span>
               </div>
-              ${d.conf < 80 ? '<span style="font-size:9px;padding:1px 5px;background:rgba(255,202,40,.1);color:var(--yellow);border-radius:3px">Cần kiểm tra</span>' : ''}
+              ${d.conf < 80 ? '<span style="font-size:9px;padding:1px 5px;background:var(--warning-soft);color:var(--warning-text);border-radius:3px">Cần kiểm tra</span>' : ''}
             </div>
           </div>`).join('')}
         </div>` : ''}
 
         <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--warning-text)" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
           ${impact.title}
         </div>
         <div style="border:1px solid rgba(255,202,40,.15);border-radius:9px;overflow:hidden">
@@ -547,25 +547,25 @@ function buildApprovalDetailHtml(qi) {
 
     <!-- Center nav -->
     <div style="display:flex;align-items:center;gap:10px">
-      <button onclick="dieuhanhNavigateDetail(${qi}-1)" ${qi === 0 ? 'disabled' : ''} style="width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:${qi === 0 ? 'rgba(255,255,255,.25)' : 'var(--text)'};cursor:${qi === 0 ? 'not-allowed' : 'pointer'};display:flex;align-items:center;justify-content:center">
+      <button onclick="dieuhanhNavigateDetail(${qi}-1)" ${qi === 0 ? 'disabled' : ''} style="width:34px;height:34px;border-radius:8px;background:var(--bg-secondary);border:1px solid var(--border);color:${qi === 0 ? 'var(--text-disabled)' : 'var(--text)'};cursor:${qi === 0 ? 'not-allowed' : 'pointer'};display:flex;align-items:center;justify-content:center">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
       </button>
       <div style="text-align:center;min-width:110px">
-        <div style="font-size:13px;font-weight:700;color:var(--cyan)">${qi + 1} / ${APPROVAL_QUEUE.filter(x => x.status === 'pending').length}</div>
+        <div style="font-size:13px;font-weight:700;color:var(--primary)">${qi + 1} / ${APPROVAL_QUEUE.filter(x => x.status === 'pending').length}</div>
         <div style="font-size:10px;color:var(--muted)">yêu cầu chờ duyệt</div>
       </div>
-      <button onclick="dieuhanhNavigateDetail(${qi}+1)" ${qi >= APPROVAL_QUEUE.filter(x => x.status === 'pending').length - 1 ? 'disabled' : ''} style="width:34px;height:34px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:${qi >= APPROVAL_QUEUE.filter(x => x.status === 'pending').length - 1 ? 'rgba(255,255,255,.25)' : 'var(--text)'};cursor:${qi >= APPROVAL_QUEUE.filter(x => x.status === 'pending').length - 1 ? 'not-allowed' : 'pointer'};display:flex;align-items:center;justify-content:center">
+      <button onclick="dieuhanhNavigateDetail(${qi}+1)" ${qi >= APPROVAL_QUEUE.filter(x => x.status === 'pending').length - 1 ? 'disabled' : ''} style="width:34px;height:34px;border-radius:8px;background:var(--bg-secondary);border:1px solid var(--border);color:${qi >= APPROVAL_QUEUE.filter(x => x.status === 'pending').length - 1 ? 'var(--text-disabled)' : 'var(--text)'};cursor:${qi >= APPROVAL_QUEUE.filter(x => x.status === 'pending').length - 1 ? 'not-allowed' : 'pointer'};display:flex;align-items:center;justify-content:center">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
     </div>
 
     <!-- Right actions -->
     <div style="display:flex;gap:10px">
-      <button onclick="closeModal();dieuhanhReject('${a.id}',${qi})" style="padding:9px 18px;background:rgba(255,68,68,.1);border:1px solid rgba(255,68,68,.3);border-radius:9px;color:var(--red);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px">
+      <button onclick="closeModal();dieuhanhReject('${a.id}',${qi})" style="padding:9px 18px;background:rgba(255,68,68,.1);border:1px solid rgba(255,68,68,.3);border-radius:9px;color:var(--danger);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:7px">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         Từ chối
       </button>
-      <button onclick="closeModal();dieuhanhApprove('${a.id}',${qi})" style="padding:9px 22px;background:linear-gradient(135deg,var(--green),#00a854);color:#071629;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:0 4px 14px rgba(0,230,118,.3)">
+      <button onclick="closeModal();dieuhanhApprove('${a.id}',${qi})" style="padding:9px 22px;background:var(--button-primary-background);color:var(--button-primary-text);border:1px solid var(--border-active);border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:7px;box-shadow:var(--shadow)">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
         Phê duyệt &amp; OTP
       </button>
@@ -588,25 +588,25 @@ let _dieuhanhApproveNote = '';
 
 function dieuhanhApprove(id, qi) {
   openModal(`<div class="modal-header">
-    <span class="modal-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Phê duyệt yêu cầu ${id}</span>
+    <span class="modal-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Phê duyệt yêu cầu ${id}</span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="modal-body">
-    <div style="background:rgba(0,230,118,.06);border:1px solid rgba(0,230,118,.2);border-radius:10px;padding:14px;margin-bottom:14px;font-size:13px;color:var(--muted);line-height:1.7">
+    <div style="background:var(--primary-soft);border:1px solid var(--border-active);border-radius:10px;padding:14px;margin-bottom:14px;font-size:13px;color:var(--muted);line-height:1.7">
       Bạn đang phê duyệt yêu cầu <b style="color:var(--text)">${APPROVAL_QUEUE[qi]?.title || id}</b>.<br>
-      Sau bước này, hệ thống sẽ yêu cầu <b style="color:var(--cyan)">xác thực OTP 2 lớp</b> trước khi thực thi.
+      Sau bước này, hệ thống sẽ yêu cầu <b style="color:var(--primary)">xác thực OTP 2 lớp</b> trước khi thực thi.
     </div>
     <div class="form-group"><label class="form-label">Ý kiến phê duyệt (tuỳ chọn)</label>
       <textarea class="form-control" rows="2" id="approveNote" placeholder="VD: Đã kiểm tra số liệu, phê duyệt..."></textarea>
     </div>
-    <div style="padding:10px 14px;background:rgba(0,102,255,.06);border:1px solid rgba(0,102,255,.18);border-radius:8px;font-size:12px;color:rgba(96,165,250,.9);display:flex;align-items:center;gap:8px">
+    <div style="padding:10px 14px;background:var(--primary-soft);border:1px solid var(--border);border-radius:8px;font-size:12px;color:var(--text-2);display:flex;align-items:center;gap:8px">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       Hành động phê duyệt được bảo vệ bởi xác thực 2 lớp (2FA) theo chính sách bảo mật hệ thống.
     </div>
   </div>
   <div class="modal-footer">
     <button class="btn btn-ghost" onclick="closeModal()">Hủy</button>
-    <button class="btn btn-primary" onclick="_dieuhanhApproveNote=document.getElementById('approveNote')?.value||'';closeModal();showDieuhanhOtpModal(${qi})" style="background:var(--green);border-color:var(--green)">
+    <button class="btn btn-primary" onclick="_dieuhanhApproveNote=document.getElementById('approveNote')?.value||'';closeModal();showDieuhanhOtpModal(${qi})">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       Tiếp tục &amp; Xác thực OTP
     </button>
@@ -618,43 +618,43 @@ function showDieuhanhOtpModal(qi) {
   const title = APPROVAL_QUEUE[qi]?.title || '';
   openModal(`<div class="modal-header">
     <span class="modal-title">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2" style="vertical-align:middle"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" style="vertical-align:middle"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       Xác thực Lãnh đạo — Nhập OTP
     </span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="modal-body">
     <div style="text-align:center;margin-bottom:20px">
-      <div style="width:60px;height:60px;background:linear-gradient(135deg,rgba(0,200,118,.15),rgba(0,102,255,.1));border:2px solid rgba(0,200,118,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
-        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div style="width:60px;height:60px;background:var(--primary-soft);border:2px solid var(--border-active);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
       </div>
-      <div style="font-size:14px;font-weight:700;color:#e2e8f0;margin-bottom:5px">Xác thực 2 lớp — Quyền Lãnh đạo</div>
+      <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:5px">Xác thực 2 lớp — Quyền Lãnh đạo</div>
       <div style="font-size:12px;color:var(--muted);line-height:1.6">Phê duyệt: <b style="color:var(--text)">${title}</b><br>Nhập mã OTP để xác nhận danh tính và ký duyệt.</div>
     </div>
     <div style="display:flex;gap:8px;margin-bottom:18px;justify-content:center">
       ${[['totp', 'Authenticator', 'TOTP', true], ['sms', 'SMS', '****5678', false], ['email', 'Email', 'lb***@pctt.hanoi.gov.vn', false]].map(([id, label, dest, active]) => `
-      <button id="dhOtpMethod_${id}" onclick="dhSelectOtpMethod('${id}')" style="padding:7px 13px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid ${active ? 'rgba(0,200,255,.4)' : 'rgba(255,255,255,.1)'};background:${active ? 'rgba(0,200,255,.1)' : 'transparent'};color:${active ? 'var(--cyan)' : 'var(--muted)'};transition:.2s">
+      <button id="dhOtpMethod_${id}" onclick="dhSelectOtpMethod('${id}')" style="padding:7px 13px;border-radius:8px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid ${active ? 'var(--border-active)' : 'var(--border)'};background:${active ? 'var(--primary-soft)' : 'transparent'};color:${active ? 'var(--primary-text)' : 'var(--muted)'};transition:.2s">
         ${label}<br><span style="font-size:10px;font-weight:400;opacity:.7">${dest}</span>
       </button>`).join('')}
     </div>
     <div style="display:flex;gap:10px;justify-content:center;margin-bottom:8px">
       ${Array.from({ length: 6 }, (_, i) => `<input id="dhOtp${i}" type="text" maxlength="1" inputmode="numeric"
-        style="width:44px;height:52px;text-align:center;font-size:22px;font-weight:700;font-family:'Roboto Mono',monospace;background:rgba(0,0,0,.25);border:2px solid rgba(0,200,255,.2);border-radius:10px;color:var(--cyan);outline:none;transition:.2s"
-        onfocus="this.style.borderColor='rgba(0,200,255,.7)';this.style.background='rgba(0,200,255,.06)'"
-        onblur="this.style.borderColor='rgba(0,200,255,.2)';this.style.background='rgba(0,0,0,.25)'"
+        style="width:44px;height:52px;text-align:center;font-size:22px;font-weight:700;font-family:'Roboto Mono',monospace;background:var(--bg-secondary);border:2px solid var(--border);border-radius:10px;color:var(--primary);outline:none;transition:.2s"
+        onfocus="this.style.borderColor='var(--border-active)';this.style.background='var(--primary-soft)'"
+        onblur="this.style.borderColor='var(--border)';this.style.background='var(--bg-secondary)'"
         oninput="dhOtpInput(this,${i})" onkeydown="dhOtpKeydown(this,${i},event)">`).join('')}
     </div>
     <div style="text-align:center;font-size:11px;color:var(--muted);margin-bottom:6px">Nhập mã 6 chữ số từ ứng dụng Authenticator</div>
-    <div id="dhOtpError" style="text-align:center;font-size:12px;color:var(--red);min-height:18px;margin-bottom:4px"></div>
+    <div id="dhOtpError" style="text-align:center;font-size:12px;color:var(--danger);min-height:18px;margin-bottom:4px"></div>
     <div style="text-align:center">
       <span style="font-size:12px;color:var(--muted)">Không nhận được mã? </span>
-      <button id="dhOtpResend" onclick="dhResendOtp()" style="background:none;border:none;color:var(--cyan);font-size:12px;cursor:pointer;font-weight:600" disabled>Gửi lại (<span id="dhOtpTimer">60</span>s)</button>
+      <button id="dhOtpResend" onclick="dhResendOtp()" style="background:none;border:none;color:var(--primary);font-size:12px;cursor:pointer;font-weight:600" disabled>Gửi lại (<span id="dhOtpTimer">60</span>s)</button>
     </div>
   </div>
   <div class="modal-footer" style="flex-direction:column;gap:10px">
     <div style="display:flex;gap:10px;width:100%">
       <button class="btn btn-ghost" onclick="closeModal()" style="flex:1">Hủy</button>
-      <button onclick="dhVerifyOtp()" style="flex:2;padding:10px;background:linear-gradient(135deg,var(--green),#00a854);color:#071629;border:none;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer">
+      <button onclick="dhVerifyOtp()" style="flex:2;padding:10px;background:var(--button-primary-background);color:var(--button-primary-text);border:1px solid var(--border-active);border-radius:9px;font-size:13px;font-weight:700;cursor:pointer">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg>
         Xác nhận OTP &amp; Ký duyệt
       </button>
@@ -672,9 +672,9 @@ function dhSelectOtpMethod(id) {
     const b = document.getElementById('dhOtpMethod_' + m);
     if (!b) return;
     const on = m === id;
-    b.style.borderColor = on ? 'rgba(0,200,255,.4)' : 'rgba(255,255,255,.1)';
-    b.style.background = on ? 'rgba(0,200,255,.1)' : 'transparent';
-    b.style.color = on ? 'var(--cyan)' : 'var(--muted)';
+    b.style.borderColor = on ? 'var(--border-active)' : 'var(--border)';
+    b.style.background = on ? 'var(--primary-soft)' : 'transparent';
+    b.style.color = on ? 'var(--primary)' : 'var(--muted)';
   });
   if (id !== 'totp') showToast('Đã gửi OTP qua ' + (id === 'sms' ? 'SMS' : 'Email') + '!');
 }
@@ -710,7 +710,7 @@ function dhVerifyOtp() {
   const err = document.getElementById('dhOtpError');
   if (code.length < 6) { if (err) err.textContent = '⚠ Vui lòng nhập đủ 6 chữ số.'; return; }
   if (code === '000000') {
-    if (err) { err.textContent = '✕ Mã OTP không đúng. Vui lòng thử lại.'; err.style.color = 'var(--red)'; }
+    if (err) { err.textContent = '✕ Mã OTP không đúng. Vui lòng thử lại.'; err.style.color = 'var(--danger)'; }
     for (let i = 0; i < 6; i++) { const b = document.getElementById('dhOtp' + i); if (b) { b.value = ''; b.style.borderColor = 'rgba(255,23,68,.5)'; } }
     const f = document.getElementById('dhOtp0'); if (f) f.focus(); return;
   }
@@ -721,7 +721,7 @@ function dhVerifyOtp() {
 
 function dieuhanhApproveConfirm(qi) {
   if (APPROVAL_QUEUE[qi]) APPROVAL_QUEUE[qi].status = 'approved';
-  showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã phê duyệt thành công! Tác vụ đang được thực thi...');
+  showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5" style="vertical-align:middle"><polyline points="20 6 9 17 4 12"/></svg> Đã phê duyệt thành công! Tác vụ đang được thực thi...');
   setTimeout(() => {
     const c = document.getElementById('dieuhanhContent');
     if (c) c.innerHTML = getDieuhanhContent();
@@ -730,7 +730,7 @@ function dieuhanhApproveConfirm(qi) {
 
 function dieuhanhReject(id, qi) {
   openModal(`<div class="modal-header">
-    <span class="modal-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" style="vertical-align:middle"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Từ chối yêu cầu ${id}</span>
+    <span class="modal-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" style="vertical-align:middle"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Từ chối yêu cầu ${id}</span>
     <button class="modal-close" onclick="closeModal()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="modal-body">
@@ -738,7 +738,7 @@ function dieuhanhReject(id, qi) {
       Bạn đang từ chối yêu cầu <b style="color:var(--text)">${APPROVAL_QUEUE[qi]?.title || id}</b>.<br>
       Người gửi sẽ được thông báo lý do từ chối.
     </div>
-    <div class="form-group"><label class="form-label">Lý do từ chối <span style="color:var(--red)">*</span></label>
+    <div class="form-group"><label class="form-label">Lý do từ chối <span style="color:var(--danger)">*</span></label>
       <textarea class="form-control" rows="3" id="rejectNote" placeholder="Nêu rõ lý do từ chối để người gửi có thể chỉnh sửa và gửi lại..."></textarea>
     </div>
   </div>
@@ -753,10 +753,10 @@ function dieuhanhReject(id, qi) {
 
 function dieuhanhRejectConfirm(qi) {
   const note = document.getElementById('rejectNote')?.value || '';
-  if (!note.trim()) { showToast('<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--yellow)" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg> Vui lòng nhập lý do từ chối!'); return; }
+  if (!note.trim()) { showToast('<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg> Vui lòng nhập lý do từ chối!'); return; }
   if (APPROVAL_QUEUE[qi]) APPROVAL_QUEUE[qi].status = 'rejected';
   closeModal();
-  showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" style="vertical-align:middle"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Đã từ chối yêu cầu. Người gửi sẽ nhận thông báo.');
+  showToast('<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" style="vertical-align:middle"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Đã từ chối yêu cầu. Người gửi sẽ nhận thông báo.');
   setTimeout(() => {
     const c = document.getElementById('dieuhanhContent');
     if (c) c.innerHTML = getDieuhanhContent();

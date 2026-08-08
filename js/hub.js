@@ -7,13 +7,13 @@
 // ══════════════════════════════════════════════════════════════════
 const HUB_CONFIG = {
   // Độ dày border của mỗi icon (px). Mặc định 2.5. Thử: 1 → 4
-  borderWidth: 2.5,
+  borderWidth: 1,
 
   // Border màu nền (opacity hex 00-ff). Mặc định '55' (~33%).
-  borderOpacity: '66',
+  borderOpacity: '55',
 
   // Tỉ lệ phóng to khi hover (scale). Mặc định 1.28. Thử: 1.1 → 1.5
-  hoverScale: 1.18,
+  hoverScale: 1.06,
 
   // ── IC O N SH A PE ──────────────────────────────────────────────
   // 'circle' = Hình tròn | 'square' = Squircle (iOS style)
@@ -147,8 +147,17 @@ const HUB_GROUPS = [
 // ── CSS ────────────────────────────────────────────────────────────
 const HUB_CSS = `
 #moduleHub {
+  --hub-surface: #142D52;
+  --hub-elevated: #20457E;
+  --hub-text: #F8FBFF;
+  --hub-text-secondary: #D1E2F4;
+  --hub-muted: #A4B8CD;
+  --hub-border: rgba(91,169,255,.24);
+  --hub-primary: #5BA9FF;
+  --hub-primary-soft: rgba(91,169,255,.14);
   position: fixed; inset: 0; z-index: 9999;
-  background: radial-gradient(ellipse at 50% 40%, rgba(10,12,30,.92) 0%, rgba(4,6,18,.98) 100%);
+  background: rgba(7, 18, 38, .94);
+  backdrop-filter: blur(8px);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   opacity: 0; transition: opacity .5s ease;
   overflow: hidden;
@@ -156,31 +165,17 @@ const HUB_CSS = `
 #moduleHub.visible { opacity: 1; }
 #moduleHub.hiding  { opacity: 0; pointer-events: none; }
 
-/* animated star-field background */
 #moduleHub::before {
   content: ''; position: absolute; inset: 0;
-  background-image:
-    radial-gradient(1px 1px at 15% 25%, rgba(255,255,255,.35) 0%, transparent 70%),
-    radial-gradient(1px 1px at 38% 72%, rgba(255,255,255,.25) 0%, transparent 70%),
-    radial-gradient(1.5px 1.5px at 60% 18%, rgba(0,200,255,.3) 0%, transparent 70%),
-    radial-gradient(1px 1px at 80% 55%, rgba(255,255,255,.2) 0%, transparent 70%),
-    radial-gradient(1px 1px at 92% 30%, rgba(255,255,255,.3) 0%, transparent 70%),
-    radial-gradient(1px 1px at 25% 85%, rgba(255,255,255,.15) 0%, transparent 70%),
-    radial-gradient(2px 2px at 72% 88%, rgba(167,139,250,.3) 0%, transparent 70%);
-  animation: hubStarDrift 60s linear infinite;
-}
-@keyframes hubStarDrift {
-  0%   { transform: translateY(0); }
-  100% { transform: translateY(-30px); }
+  background: linear-gradient(180deg, rgba(30,56,131,.12), rgba(25,43,84,.06));
 }
 
 .hub-header {
   text-align: center; margin-bottom: 32px; position: relative; z-index: 2;
 }
 .hub-header h1 {
-  font-size: clamp(20px, 3vw, 30px); font-weight: 900; letter-spacing: -.5px;
-  background: linear-gradient(135deg, #fff 30%, #00c8ff 70%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  font-size: clamp(20px, 3vw, 30px); font-weight: 750; letter-spacing: 0;
+  color: var(--hub-text);
   margin: 0 0 6px;
 }
 .hub-header p {
@@ -202,16 +197,11 @@ const HUB_CSS = `
 }
 .hub-orbit-track {
   position: absolute; inset: 0; border-radius: 50%;
-  border: 1px solid rgba(255,255,255,.06);
-  animation: hubOrbitSpin 40s linear infinite;
+  border: 1px solid var(--hub-border);
 }
 .hub-orbit-track::after {
   content: ''; position: absolute; inset: 20px; border-radius: 50%;
-  border: 1px dashed rgba(0,200,255,.08);
-}
-@keyframes hubOrbitSpin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  border: 1px dashed var(--hub-border);
 }
 
 /* Center logo */
@@ -221,12 +211,12 @@ const HUB_CSS = `
 }
 .hub-center-logo {
   width: 80px; height: 80px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(0,200,255,.15) 0%, rgba(4,6,18,.8) 80%);
-  border: 1.5px solid rgba(0,200,255,.25);
+  background: var(--hub-surface);
+  border: 1px solid var(--hub-border);
   display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 0 40px rgba(0,200,255,.12), 0 0 80px rgba(0,200,255,.06);
+  box-shadow: none;
 }
-.hub-center-logo svg { width: 38px; height: 38px; color: rgba(0,200,255,.85); }
+.hub-center-logo svg { width: 38px; height: 38px; color: var(--hub-primary); }
 .hub-center-label {
   font-size: 10px; font-weight: 700; letter-spacing: .12em;
   text-transform: uppercase; color: rgba(255,255,255,.35);
@@ -240,12 +230,11 @@ const HUB_CSS = `
   width: clamp(60px, 7.5vw, 86px); height: clamp(60px, 7.5vw, 86px);
   /* border-radius is set dynamically in JS based on HUB_CONFIG.iconShape */
   border-radius: 50%;
-  background: rgba(10,12,30,.85);
-  border-style: solid; border-color: rgba(255,255,255,.15);
+  background: var(--hub-surface);
+  border-style: solid; border-color: var(--hub-border);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   cursor: pointer; position: relative;
-  transition: transform .28s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease,
-    border-color .3s, border-width .3s, border-radius .4s cubic-bezier(.34,1.56,.64,1);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s, border-radius .2s ease;
   transform: translate(-50%, -50%);
   backdrop-filter: blur(8px);
 }
@@ -258,7 +247,7 @@ const HUB_CSS = `
   content: '';
   position: absolute; inset: 0;
   border-radius: inherit;
-  box-shadow: inset 0 1px 1px rgba(255,255,255,.08), inset 0 -1px 1px rgba(0,0,0,.3);
+  box-shadow: none;
   pointer-events: none;
 }
 .hub-icon-btn svg {
@@ -274,7 +263,7 @@ const HUB_CSS = `
 /* hover scale is applied via JS using HUB_CONFIG.hoverScale */
 .hub-icon-btn:hover { z-index: 10; }
 .hub-icon-btn:hover .hub-node-label {
-  text-shadow: 0 0 10px currentColor;
+  text-shadow: none;
 }
 
 /* skip button */
@@ -306,19 +295,18 @@ const HUB_CSS = `
 .hub-grid-btn {
   width:  var(--hub-icon-size, 104px);
   height: var(--hub-icon-size, 104px);
-  background: rgba(10,12,30,.85);
-  border-style: solid; border-color: rgba(255,255,255,.15);
+  background: var(--hub-surface);
+  border-style: solid; border-color: var(--hub-border);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   cursor: pointer; position: relative;
-  transition: transform .28s cubic-bezier(.34,1.56,.64,1), box-shadow .3s ease,
-    border-color .3s, background .3s;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s, background .2s;
   backdrop-filter: blur(8px);
 }
 .hub-grid-btn.hub-shape-square { border-radius: 22% !important; }
 .hub-grid-btn.hub-shape-circle { border-radius: 50%; }
 .hub-grid-btn.hub-shape-square::after {
   content: ''; position: absolute; inset: 0; border-radius: inherit;
-  box-shadow: inset 0 1px 1px rgba(255,255,255,.08), inset 0 -1px 1px rgba(0,0,0,.3);
+  box-shadow: none;
   pointer-events: none;
 }
 .hub-grid-btn svg { transition: stroke .3s, filter .3s; }
@@ -329,17 +317,13 @@ const HUB_CSS = `
   transition: color .3s, text-shadow .3s;
 }
 .hub-grid-btn:hover { z-index: 10; }
-.hub-grid-btn:hover .hub-grid-label { text-shadow: 0 0 10px currentColor; }
+.hub-grid-btn:hover .hub-grid-label { text-shadow: none; }
 `;
 
 // ── Main entry (called from app.js DOMContentLoaded) ──────────────
 window.showModuleHub = function(onSelect) {
   const user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
   const roleLabel = user ? (ROLE_LABELS?.[user.role] || user.role || '') : '';
-  const roleBadgeColor = {
-    SYSADMIN:'#ff4757', DIRECTOR:'#7c3aed', DISPATCHER:'#f59e0b',
-    TECHNICIAN:'#0066cc', BUSINESS:'#00b4d8', HR:'#00a86b', VIEWER:'#718096',
-  }[user?.role] || '#546e7a';
 
   // Filter by feature access (feature flag must be on)
   const visible = HUB_GROUPS.filter(g =>
@@ -355,8 +339,8 @@ window.showModuleHub = function(onSelect) {
     // Map hub feature ids to RBAC keys (same as MENU_TO_RBAC)
     const rbac = typeof MENU_TO_RBAC !== 'undefined' ? MENU_TO_RBAC : {};
     return g.features.some(f => {
-      const key = rbac[f];
-      return key ? canView(key) : true; // if no mapping, assume allowed
+      const key = rbac[f] || f;
+      return canView(key);
     });
   }
 
@@ -371,12 +355,14 @@ window.showModuleHub = function(onSelect) {
   const hub = document.createElement('div');
   hub.id = 'moduleHub';
 
-  // Pick best page for a group (first enabled feature's page)
+  // Pick best page for a group (first enabled & permitted feature's page)
   function bestPage(g) {
+    const rbac = typeof MENU_TO_RBAC !== 'undefined' ? MENU_TO_RBAC : {};
     for (const f of g.features) {
       const enabled = typeof isFeatureEnabled === 'function' ? isFeatureEnabled(f) : true;
-      if (enabled) {
-        // Map feature to page id (same mostly, handle edge cases)
+      const rbacKey = rbac[f] || f;
+      const allowed = typeof canView === 'function' ? canView(rbacKey) : true;
+      if (enabled && allowed) {
         return f;
       }
     }
@@ -400,7 +386,7 @@ window.showModuleHub = function(onSelect) {
   // Shared: locked state helpers
   function lockIcon() {
     return `<span style="position:absolute;top:-4px;right:-4px;width:18px;height:18px;border-radius:50%;background:#1e293b;border:1.5px solid #64748b;display:flex;align-items:center;justify-content:center">
-      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
     </span>`;
   }
 
@@ -420,11 +406,13 @@ window.showModuleHub = function(onSelect) {
         <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
           <button class="hub-grid-btn hub-shape-${isSquare ? 'square' : 'circle'}" id="hub-btn-${g.id}"
             style="
+              --hub-item-color:${accessible ? g.color : 'var(--hub-muted)'};
+              --hub-item-glow:${accessible ? g.glow : 'transparent'};
               width:${iconPx}px; height:${iconPx}px;
               border-radius:${iconBorderRadius};
               border-width:${HUB_CONFIG.borderWidth}px;
-              border-color:${g.color}${HUB_CONFIG.borderOpacity};
-              ${isSquare ? 'background:linear-gradient(145deg,rgba(15,18,40,.95) 0%,rgba(10,12,30,.85) 100%);' : ''}
+              border-color:${accessible ? g.color : 'var(--hub-border)'};
+              ${isSquare ? `background:color-mix(in srgb, var(--hub-surface) 94%, ${g.color} 6%);` : ''}
               ${lockedStyle}
             "
             onclick="window._hubSelect('${g.id}')"
@@ -432,14 +420,14 @@ window.showModuleHub = function(onSelect) {
             onmouseleave="window._hubHover('${g.id}', false)"
             title="${g.label.replace(/\n/, ' ')}${accessible ? '' : ' (Không có quyền truy cập)'}"
             data-accessible="${accessible}">
-            <span style="color:${accessible ? g.color : '#64748b'};display:flex;align-items:center;justify-content:center">
+            <span style="color:var(--hub-item-color);display:flex;align-items:center;justify-content:center">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
                 stroke-linecap="round" stroke-linejoin="round"
                 width="${svgPx}" height="${svgPx}" style="display:block">
                 ${g.icon.replace(/<svg[^>]*>/,'').replace('</svg>','')}
               </svg>
             </span>
-            <div class="hub-grid-label" style="color:${accessible ? g.color + 'aa' : '#64748b'}">${g.label}</div>
+            <div class="hub-grid-label" style="color:var(--hub-item-color)">${g.label}</div>
             ${accessible ? '' : lockIcon()}
           </button>
         </div>`;
@@ -463,11 +451,13 @@ window.showModuleHub = function(onSelect) {
       <div class="hub-node" style="left:${cx}%;top:${cy}%;">
         <button class="hub-icon-btn${isSquare ? ' hub-shape-square' : ''}" id="hub-btn-${g.id}"
           style="
+            --hub-item-color:${accessible ? g.color : 'var(--hub-muted)'};
+            --hub-item-glow:${accessible ? g.glow : 'transparent'};
             border-radius: ${iconBorderRadius};
             border-width: ${HUB_CONFIG.borderWidth}px;
-            border-color: ${g.color}${HUB_CONFIG.borderOpacity};
+            border-color: ${accessible ? g.color : 'var(--hub-border)'};
             box-shadow: 0 0 0 0 ${g.glow};
-            ${isSquare ? 'background: linear-gradient(145deg, rgba(15,18,40,.95) 0%, rgba(10,12,30,.85) 100%);' : ''}
+            ${isSquare ? `background:color-mix(in srgb, var(--hub-surface) 94%, ${g.color} 6%);` : ''}
             ${lockedStyle}
           "
           onclick="window._hubSelect('${g.id}')"
@@ -475,8 +465,8 @@ window.showModuleHub = function(onSelect) {
           onmouseleave="window._hubHover('${g.id}', false)"
           title="${g.label.replace(/\n/,' ')}${accessible ? '' : ' (Không có quyền truy cập)'}"
           data-accessible="${accessible}">
-          <span style="color:${accessible ? g.color : '#64748b'}">${g.icon}</span>
-          <div class="hub-node-label" style="color:${accessible ? g.color + 'aa' : '#64748b'}">${g.label}</div>
+          <span style="color:var(--hub-item-color)">${g.icon}</span>
+          <div class="hub-node-label" style="color:var(--hub-item-color)">${g.label}</div>
           ${accessible ? '' : lockIcon()}
         </button>
       </div>`;
@@ -505,7 +495,7 @@ window.showModuleHub = function(onSelect) {
     ${user ? `<div class="hub-user-badge">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
       ${user.name || user.username}
-      <span style="padding:1px 7px;border-radius:4px;font-size:10px;font-weight:700;background:${roleBadgeColor}22;color:${roleBadgeColor};border:1px solid ${roleBadgeColor}44">${roleLabel}</span>
+      <span style="padding:1px 7px;border-radius:4px;font-size:10px;font-weight:700;background:var(--hub-primary-soft);color:var(--hub-primary);border:1px solid var(--hub-border)">${roleLabel}</span>
     </div>` : ''}
   </div>
 
@@ -550,21 +540,21 @@ window.showModuleHub = function(onSelect) {
       btn.style.transform = isGridBtn
         ? `scale(${scale})`
         : `translate(-50%, -50%) scale(${scale})`;
-      btn.style.boxShadow = `0 0 0 ${HUB_CONFIG.borderWidth + 1}px ${g.color}33, 0 0 30px ${g.glow}, 0 0 60px ${g.glow}`;
+      btn.style.boxShadow = `0 8px 24px ${g.glow}`;
       btn.style.borderColor = g.color;
-      btn.style.borderWidth  = HUB_CONFIG.borderWidth + 'px';
+      btn.style.borderWidth  = '1px';
       if (isSquare) {
-        btn.style.background = `linear-gradient(145deg, ${g.color}28 0%, rgba(10,12,30,.95) 70%)`;
+        btn.style.background = `color-mix(in srgb, var(--hub-elevated) 88%, ${g.color} 12%)`;
       } else {
-        btn.style.background = `radial-gradient(circle, ${g.color}22 0%, rgba(10,12,30,.9) 80%)`;
+        btn.style.background = `color-mix(in srgb, var(--hub-elevated) 88%, ${g.color} 12%)`;
       }
       _hubSpeak(g.label);
     } else {
       btn.style.transform   = isGridBtn ? 'scale(1)' : 'translate(-50%, -50%) scale(1)';
       btn.style.boxShadow   = '';
-      btn.style.borderColor = g.color + HUB_CONFIG.borderOpacity;
-      btn.style.borderWidth = HUB_CONFIG.borderWidth + 'px';
-      btn.style.background  = isSquare ? `linear-gradient(145deg, rgba(15,18,40,.95) 0%, rgba(10,12,30,.85) 100%)` : '';
+      btn.style.borderColor = g.color;
+      btn.style.borderWidth = '1px';
+      btn.style.background  = `color-mix(in srgb, var(--hub-surface) 94%, ${g.color} 6%)`;
       if (HUB_CONFIG.sound.enabled && window.speechSynthesis) window.speechSynthesis.cancel();
     }
   };

@@ -85,7 +85,7 @@
         .cover-sub {
             font-size: 14px;
             letter-spacing: 4px;
-            color: var(--cyan);
+            color: var(--primary);
             text-transform: uppercase;
             font-family: 'Roboto Mono', monospace;
             margin-bottom: 40px
@@ -105,7 +105,7 @@
         .cover-meta-item .num {
             font-size: 40px;
             font-weight: 800;
-            color: var(--cyan);
+            color: var(--primary);
             line-height: 1
         }
 
@@ -131,7 +131,7 @@
             font-weight: 600;
             letter-spacing: 3px;
             text-transform: uppercase;
-            color: var(--cyan);
+            color: var(--primary);
             font-family: 'Roboto Mono', monospace;
             border-bottom: 1px solid rgba(0, 200, 255, .18);
             padding-bottom: 12px;
@@ -165,11 +165,11 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: linear-gradient(90deg, var(--blue), var(--cyan));
+            background: linear-gradient(90deg, var(--info), var(--primary));
         }
 
         .branch-card.active::before {
-            background: linear-gradient(90deg, var(--green), var(--cyan))
+            background: linear-gradient(90deg, var(--success), var(--primary))
         }
 
         .branch-name {
@@ -193,13 +193,13 @@
 
         .badge-active {
             background: rgba(0, 230, 118, .12);
-            color: var(--green);
+            color: var(--success);
             border: 1px solid rgba(0, 230, 118, .25)
         }
 
         .badge-stable {
             background: rgba(255, 202, 40, .1);
-            color: var(--yellow);
+            color: var(--warning);
             border: 1px solid rgba(255, 202, 40, .25)
         }
 
@@ -237,7 +237,7 @@
         .tag-name {
             font-size: 16px;
             font-weight: 700;
-            color: var(--yellow);
+            color: var(--warning);
             font-family: 'Roboto Mono', monospace;
             flex-shrink: 0;
             min-width: 160px;
@@ -273,7 +273,7 @@
         .tl-date-label {
             font-size: 11px;
             font-family: 'Roboto Mono', monospace;
-            color: var(--cyan);
+            color: var(--primary);
             font-weight: 600;
             letter-spacing: 1px;
             margin-bottom: 10px;
@@ -288,8 +288,8 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background: var(--cyan);
-            box-shadow: 0 0 8px var(--cyan);
+            background: var(--primary);
+            box-shadow: 0 0 8px var(--primary);
             margin-left: -33px;
             flex-shrink: 0;
         }
@@ -337,7 +337,7 @@
             padding: 1px 8px;
             border-radius: 10px;
             background: rgba(255, 202, 40, .12);
-            color: var(--yellow);
+            color: var(--warning);
             border: 1px solid rgba(255, 202, 40, .25);
         }
 
@@ -355,7 +355,7 @@
         /* type chips */
         .chip-feat {
             background: rgba(0, 200, 255, .08);
-            color: var(--cyan);
+            color: var(--primary);
             border: 1px solid rgba(0, 200, 255, .2)
         }
 
@@ -373,13 +373,13 @@
 
         .chip-ref {
             background: rgba(255, 202, 40, .08);
-            color: var(--yellow);
+            color: var(--warning);
             border: 1px solid rgba(255, 202, 40, .2)
         }
 
         .chip-ui {
             background: rgba(0, 230, 118, .07);
-            color: var(--green);
+            color: var(--success);
             border: 1px solid rgba(0, 230, 118, .2)
         }
 
@@ -487,8 +487,8 @@
                     Stable / Production
                 </div>
                 <div class="branch-desc">Nhánh chính, chứa phiên bản ổn định nhất. Được tag <code
-                        style="color:var(--yellow)">v1.0.0-stable</code> tại commit <code
-                        style="color:var(--cyan)">0955d82</code>.</div>
+                        style="color:var(--warning)">v1.0.0-stable</code> tại commit <code
+                        style="color:var(--primary)">0955d82</code>.</div>
                 <div class="branch-stat">HEAD → 0955d82 &nbsp;·&nbsp; 05/03/2026 00:43</div>
             </div>
             <div class="branch-card active">
@@ -537,7 +537,7 @@
             <div class="tag-name">v1.0.0-stable</div>
             <div class="tag-desc">
                 <strong style="color:var(--text)">Quawaco IOC v1.0.0 — First Stable Release (05/03/2026)</strong><br>
-                Commit <code style="color:var(--cyan)">0955d82</code> · master · 05/03/2026 00:43 ICT<br><br>
+                Commit <code style="color:var(--primary)">0955d82</code> · master · 05/03/2026 00:43 ICT<br><br>
                 Dashboard KPI · GIS Map với incident actions · Sự cố & Lệnh CT · NRW Lịch sử · Kinh doanh detail modal ·
                 Animation engine · Forgot Password 4-step flow · Fullscreen toggle · Sidebar collapsed default ·
                 Status labels Tiếng Việt · Pagination cải thiện
@@ -782,21 +782,21 @@
         <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
             <div
                 style="background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);border-radius:10px;padding:14px">
-                <div style="font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:1px;margin-bottom:6px">
+                <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:1px;margin-bottom:6px">
                     OPERATIONS</div>
                 <div style="font-size:12px;color:var(--muted);line-height:1.8">Dashboard KPI<br>GIS Map
                     (Leaflet)<br>SCADA / RTU<br>Camera / CCTV<br>Video Wall<br>Alerts</div>
             </div>
             <div
                 style="background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);border-radius:10px;padding:14px">
-                <div style="font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:1px;margin-bottom:6px">
+                <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:1px;margin-bottom:6px">
                     INCIDENTS</div>
                 <div style="font-size:12px;color:var(--muted);line-height:1.8">Sự cố & Lệnh CT<br>Work Order detail
                     modal<br>NRW Thất thoát<br>Điều hành & Phê duyệt<br>Lịch & Phân công<br>Call Center</div>
             </div>
             <div
                 style="background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);border-radius:10px;padding:14px">
-                <div style="font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:1px;margin-bottom:6px">
+                <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:1px;margin-bottom:6px">
                     BUSINESS & AI</div>
                 <div style="font-size:12px;color:var(--muted);line-height:1.8">Kinh doanh Tổng quan<br>Lịch sử KD
                     detail<br>Data Hub & AI KPI<br>AI Chatbot (sticky+full)<br>Onboarding / Help tour<br>Settings &
@@ -804,14 +804,14 @@
             </div>
             <div
                 style="background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);border-radius:10px;padding:14px">
-                <div style="font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:1px;margin-bottom:6px">
+                <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:1px;margin-bottom:6px">
                     QUALITY & ASSETS</div>
                 <div style="font-size:12px;color:var(--muted);line-height:1.8">Chất lượng nước<br>LIMS Phòng thí
                     nghiệm<br>Quản lý nhà máy<br>Vật tư & Thiết bị<br>Nhân sự (HRM)<br>Khách hàng</div>
             </div>
             <div
                 style="background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);border-radius:10px;padding:14px">
-                <div style="font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:1px;margin-bottom:6px">
+                <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:1px;margin-bottom:6px">
                     SECURITY & AUTH</div>
                 <div style="font-size:12px;color:var(--muted);line-height:1.8">Multi-role RBAC<br>Login 3-step
                     (2FA)<br>Forgot Password flow<br>OTP countdown<br>2FA for SCADA actions<br>Leader approval gate
@@ -819,7 +819,7 @@
             </div>
             <div
                 style="background:rgba(0,200,255,.04);border:1px solid rgba(0,200,255,.12);border-radius:10px;padding:14px">
-                <div style="font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:1px;margin-bottom:6px">UX /
+                <div style="font-size:11px;font-weight:700;color:var(--primary);letter-spacing:1px;margin-bottom:6px">UX /
                     SHELL</div>
                 <div style="font-size:12px;color:var(--muted);line-height:1.8">Dark/Light theme<br>Fullscreen
                     toggle<br>Sidebar collapsed default<br>Status labels i18n VN<br>Animation system<br>Onboarding
