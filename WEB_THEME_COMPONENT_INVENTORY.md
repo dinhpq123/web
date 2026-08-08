@@ -1,6 +1,8 @@
 # Web Theme Component Inventory
 
-Source of truth: shared selectors in `css/main.css`, layout markup in `app.html`, and render helpers under `js/`.
+Source of truth: the verified EVG handoff in `evg-theme-export/`, shared selectors in `css/main.css`, layout markup in `app.html`, and render helpers under `js/`.
+
+The shared foundation is verified in `theme-lab.html`. A `completed` status below means the shared component contract is tokenized and demonstrated; it does not mean every legacy route-specific literal has already been removed.
 
 | Component group | Source | Hard-coded color audit | Portal | Theme status |
 | --- | --- | --- | --- | --- |
@@ -19,5 +21,14 @@ Source of truth: shared selectors in `css/main.css`, layout markup in `app.html`
 | AI/chatbot surfaces | `app.html`, `js/pages/chatbot.js`, `js/pages/aiagent.js` | Semantic surfaces; purple kept as functional AI accent | Yes | completed |
 | Loading, empty and error states | `css/main.css`, page renderers | Semantic text/status variables | No | completed |
 | Scrollbars, focus, hover, selected, disabled | `css/main.css` | Semantic interaction variables | No | completed |
+| Theme Lab coverage harness | `theme-lab.html`, `css/theme-lab.css`, `js/theme-lab.js` | Canonical EVG values plus Hadiwa dark extension | Yes | completed |
 
 Legacy names such as `--cyan`, `--green`, `--red`, and `--muted` remain compatibility aliases for existing render templates. New styling uses role-based tokens.
+
+## Verification snapshot
+
+- Exact EVG sidebar background, active gradient, border, shadow and section-title tokens are imported from `evg-theme-export/tokens/evg-theme.tokens.json`.
+- EVG primary `#30BD6F` is reserved for primary actions and positive state; info remains blue and warning/danger retain semantic colors.
+- Theme Lab viewport checks pass without horizontal overflow at 375, 768, 1440 and 1920 CSS pixels.
+- Dropdown, modal, drawer and toast interactions were exercised in both the shared harness and the application shell.
+- Existing route-specific purple literals remain migration inventory. They must be classified per route as AI-domain accent, visualization series, compatibility alias or replacement candidate before removal.

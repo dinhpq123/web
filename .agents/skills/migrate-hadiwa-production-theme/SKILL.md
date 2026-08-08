@@ -1,6 +1,6 @@
 ---
 name: migrate-hadiwa-production-theme
-description: Migrate a real Hadiwa IOC web application to the approved EVG-derived blue visual system proven in the Hadiwa HTML prototype. Use when Codex must audit, implement, repair, or validate Hadiwa colors, semantic tokens, light/dark modes, sidebar/header, login and 2FA, module launcher, icons, KPIs, charts, GIS, camera, Video Wall, PCTT screens, tables, forms, dialogs, and every routed or role-gated screen without changing production business logic, auth, RBAC, APIs, routes, or workflows.
+description: Migrate a real Hadiwa IOC web application to the verified EVG-derived visual system, using EVG green for brand actions, EVG blue/navy for navigation and information, and semantic status colors only where they carry meaning. Use when Codex must audit, implement, repair, or validate Hadiwa light/dark themes and every routed or role-gated screen without changing production business logic, auth, RBAC, APIs, routes, or workflows.
 ---
 
 # Migrate Hadiwa Production Theme
@@ -18,6 +18,15 @@ Read only what the task phase needs:
 - Read [production-validation.md](references/production-validation.md) before browser validation or the final report.
 
 Run `scripts/audit-theme-coverage.sh <repo-root>` during discovery and after migration. Classify every result; do not blindly replace every literal.
+
+When `evg-theme-export/` exists at the repository root, treat it as verified source evidence and read, in order:
+
+1. `README-HANDOFF.md` for provenance and limitations;
+2. `tokens/evg-theme.tokens.json` for exact extracted values and `status: proposed` markers;
+3. `source-map.md` and `component-contracts.md` before changing a shared component;
+4. `validation-report.md` before claiming parity.
+
+Do not copy licensed EVG source, vendor bundles, fonts, logos, application code, mock data, routes, or business behavior. Import semantic facts and reproduce them through the target application's existing architecture.
 
 ## Non-Negotiable Boundary
 
@@ -38,19 +47,24 @@ If a production behavior bug blocks visual validation, report it separately. Do 
 
 ## Canonical Direction
 
-Use the approved EVG-derived blue system:
+Use the verified EVG-derived system:
 
 - Sidebar parent: `linear-gradient(180deg, #1E3883 0%, #192B54 100%)`.
 - Sidebar section labels: `#1EF5DF`.
-- Sidebar active item: `linear-gradient(135deg, #3371C6 0%, #285CAA 100%)`.
-- Light interaction primary: `#2984EE`.
-- Dark interaction primary: `#5BA9FF`.
+- Sidebar active/hover item: `linear-gradient(180deg, rgba(77,191,252,0.05) 0%, rgba(77,179,252,0.5) 100%)`, border `#41A7FF`, inset shadow `0 0 25px #4C76D6B2`.
+- Light brand/action primary: `#30BD6F`; hover `#1BA05C`; form focus border `#20B970`.
+- Information/neutral processing: `#2984EE`; never substitute it for success or primary action without an explicit component contract.
+- Hadiwa dark extension primary: `#45D483`; this is target-designed because EVG source has no dark mode.
 - Dark workspace uses navy/blue surfaces, never purple-tinted surfaces.
-- Green is not a generic highlight. Reserve it for true online/healthy status and explicitly documented category identity.
+- Green is not a generic highlight. Use it for primary actions, selected controls defined by the contract, and true success/online states. Do not color every KPI, chart series, border, icon, or row green.
 - Red, amber, and orange are status/domain colors, not decoration.
 - Purple is allowed only for documented AI/category/role identity.
 
 Never recreate the old cyan-neon Hadiwa coat of paint. Never turn the entire application into one blue slab. Preserve surface, text, border, information, warning, danger, and domain distinctions.
+
+## Theme Lab Gate
+
+Before broad screen migration, create or update a target-native `theme-lab.html` (or a dev-only route) using fake data and no production API. It must exercise AppShell, typography, buttons, forms, tabs, dropdowns, tables, pagination, semantic statuses, modal, drawer, toast and tooltip in light and dark modes. Verify real interactions and 375px, 768px, 1440px and 1920px viewports. A source-faithful EVG Theme Lab is evidence; it is not a substitute for the target-native lab.
 
 ## Phase 0: Production Preflight
 

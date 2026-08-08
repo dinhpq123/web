@@ -11,19 +11,20 @@ const BRAND_SEEDS = {
     sidebarTop: '#1E3883',
     sidebarBottom: '#192B54',
     sidebarCyan: '#1EF5DF',
-    successLight: '#285CAA',
-    successDark: '#5BA9FF',
-    successTextLight: '#1E4F96',
-    successTextDark: '#A9D3FF',
+    successLight: '#30BD6F',
+    successDark: '#45D483',
+    successTextLight: '#137A43',
+    successTextDark: '#83E8AD',
     activeBlue: '#2984EE',
     activeBlueHover: '#1877E7',
-    primaryDark: '#5BA9FF',
-    navActiveStart: '#3371C6',
-    navActiveEnd: '#285CAA',
-    brandGreen: '#2984EE',
-    brandGreenHover: '#3371C6',
-    brandGreenActive: '#285CAA',
-    appBgLight: '#F6F8F5',
+    primaryDark: '#45D483',
+    primaryDarkHover: '#62DE97',
+    navActiveStart: 'rgba(77,191,252,0.05)',
+    navActiveEnd: 'rgba(77,179,252,0.50)',
+    brandGreen: '#30BD6F',
+    brandGreenHover: '#1BA05C',
+    brandGreenActive: '#168B50',
+    appBgLight: '#F3F6F9',
     appBgDark: '#0B1D33',
     surfaceDark: '#142D52',
     cardDark: '#193A6D',
@@ -147,7 +148,7 @@ function themeHexToRgba(hex, alpha) {
 function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
   const seed = BRAND_SEEDS[presetId] || BRAND_SEEDS['evg-emerald'];
   const sidebarBg = `linear-gradient(180deg, ${seed.sidebarTop || seed.sidebarNavy} 0%, ${seed.sidebarBottom || seed.sidebarNavy} 100%)`;
-  const sidebarActive = `linear-gradient(135deg, ${seed.navActiveStart || seed.activeBlue} 0%, ${seed.navActiveEnd || seed.activeBlueEnd || seed.activeBlue} 100%)`;
+  const sidebarActive = `linear-gradient(180deg, ${seed.navActiveStart || seed.activeBlue} 0%, ${seed.navActiveEnd || seed.activeBlueEnd || seed.activeBlue} 100%)`;
 
   if (!isDark) {
     // ── LIGHT MODE VISUAL HIERARCHY ──
@@ -166,17 +167,17 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
     const sidebarText = '#FFFFFF';
     const sidebarTextActive = '#FFFFFF';
 
-    const brandPrimary = seed.activeBlue || '#2984EE';
-    const primaryHover = seed.activeBlueHover || brandPrimary;
-    const primaryPressed = seed.navActiveEnd || brandPrimary;
+    const brandPrimary = seed.brandGreen || '#30BD6F';
+    const primaryHover = seed.brandGreenHover || '#1BA05C';
+    const primaryPressed = seed.brandGreenActive || '#168B50';
     const primarySoft = themeHexToRgba(brandPrimary, 0.12);
     const success = seed.successLight || '#34C759';
     const successText = seed.successTextLight || ensureContrast(success, surface, 4.5);
     const successSoft = themeHexToRgba(success, 0.12);
-    const buttonPrimaryBackground = seed.navActiveEnd || brandPrimary;
-    const buttonPrimaryHover = seed.navActiveStart || primaryHover;
+    const buttonPrimaryBackground = brandPrimary;
+    const buttonPrimaryHover = primaryHover;
     const buttonPrimaryText = ensureContrast('#FFFFFF', buttonPrimaryBackground, 4.5);
-    const primaryText = ensureContrast(primaryPressed, surface, 4.5);
+    const primaryText = seed.successTextLight || ensureContrast(primaryPressed, surface, 4.5);
     const headerBackground = '#FFFFFF';
     const tickerBackground = '#EEF1FA';
 
@@ -204,7 +205,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
 
       '--color-sidebar-background': sidebarBg,
       '--color-sidebar-border': 'rgba(255, 255, 255, 0.10)',
-      '--color-sidebar-item-hover': 'rgba(30, 245, 223, 0.10)',
+      '--color-sidebar-item-hover': sidebarActive,
       '--color-sidebar-item-active': sidebarItemActive,
       '--color-sidebar-text': sidebarText,
       '--color-sidebar-text-active': sidebarTextActive,
@@ -240,7 +241,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--color-input-text': textPrimary,
       '--color-input-placeholder': textMuted,
       '--color-input-border': cardBorder,
-      '--color-input-border-focus': seed.activeBlue,
+      '--color-input-border-focus': '#20B970',
 
       '--color-table-background': '#FFFFFF',
       '--color-table-header-background': '#F8FAFC',
@@ -284,7 +285,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--bg-dropdown': '#FFFFFF',
       '--bg-dropdown2': '#F9F9F9',
       '--sidebar-background': sidebarBg,
-      '--sidebar-item-hover': 'rgba(30, 245, 223, 0.10)',
+      '--sidebar-item-hover': sidebarActive,
       '--sidebar-item-active': sidebarItemActive,
       '--sidebar-text': sidebarText,
       '--sidebar-text-active': sidebarTextActive,
@@ -304,8 +305,8 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--button-primary-background': buttonPrimaryBackground,
       '--button-primary-hover': buttonPrimaryHover,
       '--button-primary-text': buttonPrimaryText,
-      '--border-focus': brandPrimary,
-      '--focus-ring': `0 0 0 3px ${themeHexToRgba(brandPrimary, 0.18)}`,
+      '--border-focus': '#20B970',
+      '--focus-ring': '0 0 0 3px rgba(32, 185, 112, 0.18)',
       '--info': seed.activeBlue,
       '--purple': seed.activeBlue,
       '--cyan': seed.sidebarCyan,
@@ -331,17 +332,17 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
     const sidebarGroupLabel = seed.sidebarCyan;
     const sidebarItemActive = sidebarActive;
 
-    const brandPrimary = seed.primaryDark || seed.activeBlue || '#5BA9FF';
-    const primaryHover = seed.primaryDarkHover || seed.sidebarCyan || brandPrimary;
-    const primaryPressed = seed.navActiveStart || seed.activeBlue || brandPrimary;
+    const brandPrimary = seed.primaryDark || seed.brandGreen || '#45D483';
+    const primaryHover = seed.primaryDarkHover || '#62DE97';
+    const primaryPressed = seed.brandGreenActive || '#32BA70';
     const primarySoft = themeHexToRgba(brandPrimary, 0.16);
     const success = seed.successDark || '#34C759';
     const successText = seed.successTextDark || ensureContrast(success, surface, 4.5);
     const successSoft = themeHexToRgba(success, 0.16);
-    const buttonPrimaryBackground = seed.navActiveEnd || seed.activeBlue || brandPrimary;
-    const buttonPrimaryHover = seed.navActiveStart || primaryHover;
+    const buttonPrimaryBackground = seed.brandGreen || '#30BD6F';
+    const buttonPrimaryHover = seed.brandGreenHover || '#1BA05C';
     const buttonPrimaryText = ensureContrast('#FFFFFF', buttonPrimaryBackground, 4.5);
-    const primaryText = ensureContrast(brandPrimary, surface, 4.5);
+    const primaryText = seed.successTextDark || ensureContrast(brandPrimary, surface, 4.5);
     const navigationBase = seed.sidebarBottom || seed.sidebarNavy;
     const headerBackground = `linear-gradient(90deg, ${navigationBase} 0%, ${surface} 100%)`;
     const tickerBackground = `linear-gradient(90deg, ${surface} 0%, ${navigationBase} 50%, ${surface} 100%)`;
@@ -370,7 +371,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
 
       '--color-sidebar-background': sidebarBg,
       '--color-sidebar-border': 'rgba(113, 166, 255, 0.28)',
-      '--color-sidebar-item-hover': 'rgba(30, 245, 223, 0.10)',
+      '--color-sidebar-item-hover': sidebarActive,
       '--color-sidebar-item-active': sidebarItemActive,
       '--color-sidebar-text': textPrimary,
       '--color-sidebar-text-active': '#FFFFFF',
@@ -406,7 +407,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--color-input-text': textPrimary,
       '--color-input-placeholder': textMuted,
       '--color-input-border': cardBorder,
-      '--color-input-border-focus': seed.sidebarCyan,
+      '--color-input-border-focus': brandPrimary,
 
       '--color-table-background': surface,
       '--color-table-header-background': '#173762',
@@ -450,7 +451,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--bg-dropdown': elevated,
       '--bg-dropdown2': '#18355F',
       '--sidebar-background': sidebarBg,
-      '--sidebar-item-hover': 'rgba(30, 245, 223, 0.10)',
+      '--sidebar-item-hover': sidebarActive,
       '--sidebar-item-active': sidebarItemActive,
       '--sidebar-text': textPrimary,
       '--sidebar-text-active': '#FFFFFF',

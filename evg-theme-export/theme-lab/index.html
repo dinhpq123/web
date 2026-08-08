@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>EVG Theme Lab</title>
+<link rel="stylesheet" href="../tokens/evg-theme.css" />
+<style>
+  /* Theme Lab shell CSS — uses ONLY tokens from evg-theme.css. No new colors invented here.
+     Font glyphs used below are plain Unicode/CSS-drawn placeholders, not Font Awesome —
+     the real app uses licensed Font Awesome 5 Pro / FA6 / Ki / Flaticon2 fonts (see
+     component-contracts.md "Icons"), which are not redistributed in this handoff package. */
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; max-width: 100%; overflow-x: hidden; }
+  body {
+    font-family: var(--evg-font-family);
+    background: var(--evg-surface-app);
+    color: var(--evg-text-primary);
+    font-size: 14px;
+  }
+  a { color: var(--evg-text-link); text-decoration: none; }
+  h1, h2, h3 { margin: 0 0 8px; }
+  .lab-banner {
+    background: var(--evg-gray-900);
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .lab-shell { display: flex; min-height: calc(100vh - 37px); }
+  .lab-content { flex: 1; min-width: 0; }
+  .lab-topbar {
+    background: var(--evg-header-background);
+    border-bottom: var(--evg-header-border-no-breadcrumb);
+    box-shadow: var(--evg-header-shadow-no-breadcrumb);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 24px; height: 64px; position: relative;
+  }
+  .lab-topbar.with-breadcrumb { border-bottom: var(--evg-header-border-with-breadcrumb); box-shadow: none; }
+  section.lab-section { padding: 28px 24px; border-top: 1px solid var(--evg-border-default); }
+  section.lab-section:first-of-type { border-top: none; }
+  .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--evg-text-muted); margin-bottom: 16px; }
+  .row { display: flex; gap: 16px; flex-wrap: wrap; align-items: flex-start; }
+  .swatch { width: 140px; }
+  .swatch .box { height: 56px; border-radius: var(--evg-radius-control); border: 1px solid var(--evg-border-default); margin-bottom: 6px; }
+  .swatch .label { font-size: 11px; color: var(--evg-text-secondary); }
+  .swatch .value { font-size: 11px; color: var(--evg-text-muted); font-family: var(--evg-font-family-mono); }
+
+  /* Sidebar */
+  .aside-demo {
+    width: var(--evg-sidebar-width-expanded);
+    background: var(--evg-sidebar-background);
+    min-height: 480px;
+    box-shadow: var(--evg-shadow-sidebar);
+    padding: 16px 0;
+    transition: width .3s ease;
+    flex-shrink: 0;
+  }
+  .aside-demo.collapsed { width: var(--evg-sidebar-width-collapsed); }
+  .aside-demo.collapsed .menu-text, .aside-demo.collapsed .menu-section-text { display: none; }
+  .aside-brand { padding: 0 20px 16px; border-bottom: var(--evg-sidebar-divider); margin-bottom: 8px; }
+  .aside-brand .logo { color: #fff; font-weight: 700; font-size: 18px; }
+  .menu-section-text { color: var(--evg-sidebar-section-title); font-size: 11px; text-transform: uppercase; padding: 12px 20px 6px; letter-spacing: .05em; }
+  .menu-link {
+    display: flex; align-items: center; gap: 10px;
+    margin: 2px 10px; padding: 0 15px; height: 42px;
+    border-radius: var(--evg-radius-sidebar-item);
+    border: 1px solid transparent;
+    color: var(--evg-sidebar-item-text);
+    cursor: pointer;
+    transition: var(--evg-transition-menu-item);
+  }
+  .menu-link .ic { width: 16px; text-align: center; color: var(--evg-sidebar-item-icon); }
+  .menu-link:hover, .menu-link.is-active {
+    background: var(--evg-sidebar-item-active-bg);
+    box-shadow: var(--evg-sidebar-item-active-inset-shadow);
+    border-color: var(--evg-sidebar-item-active-border);
+  }
+  .menu-link.is-active .menu-text { color: #fff !important; }
+  .submenu .menu-link { margin-left: 20px; padding-left: 30px; }
+
+  /* Buttons */
+  .btn { display: inline-flex; align-items: center; gap: 6px; height: 38px; padding: 0 16px; border-radius: var(--evg-radius-control); border: 1px solid transparent; font-size: 13px; font-weight: 500; cursor: pointer; }
+  .btn-icon { width: 38px; padding: 0; justify-content: center; }
+  .btn-circle { border-radius: var(--evg-radius-button-circle); }
+  .btn-vendor-primary { background: var(--evg-brand-legacy-vendor-primary); border-color: var(--evg-brand-legacy-vendor-primary); color: #fff; }
+  .btn-vendor-primary:hover { background: #187de4; border-color: #187de4; }
+  .btn-brand-primary { background: var(--evg-brand-primary); border-color: var(--evg-brand-primary); color: #fff; }
+  .btn-brand-primary:hover { background: var(--evg-brand-primary-active); border-color: var(--evg-brand-primary-active); }
+  .btn-vendor-danger { background: var(--evg-status-legacy-vendor-danger); border-color: var(--evg-status-legacy-vendor-danger); color: #fff; }
+  .btn-danger { background: var(--evg-status-danger); border-color: var(--evg-status-danger); color: #fff; }
+  .btn-danger:hover { background: var(--evg-status-danger-active); border-color: var(--evg-status-danger-active); }
+  .btn[disabled] { opacity: .5; cursor: not-allowed; }
+  .btn-table-action { background: transparent; border-color: transparent; color: rgba(126,130,153,1); }
+  .btn-table-action:hover { background: #f3f6f9; color: var(--evg-brand-focus-ring); }
+  .tag { font-size: 10px; padding: 2px 6px; border-radius: 4px; background: var(--evg-gray-200); color: var(--evg-text-secondary); margin-left: 6px; }
+  .tag.legacy { background: var(--evg-status-danger-light); color: var(--evg-status-danger); }
+  .tag.canonical { background: var(--evg-brand-primary-light); color: var(--evg-brand-primary-active); }
+
+  /* Forms */
+  .field { margin-bottom: 16px; width: 240px; }
+  .field label { display: block; font-size: 12px; color: var(--evg-text-secondary); margin-bottom: 4px; }
+  .form-control { width: 100%; height: var(--evg-control-height); border: 1px solid var(--evg-border-default); border-radius: var(--evg-radius-control); padding: 0 12px; font-family: var(--evg-font-family); font-size: 13px; color: var(--evg-text-primary); }
+  .form-control:focus { outline: none; border-color: var(--evg-border-focus); }
+  .form-control.is-invalid { border-color: var(--evg-border-invalid) !important; }
+  .form-control[disabled] { background: var(--evg-surface-app); }
+  .field-error { font-size: 11px; color: var(--evg-status-danger); margin-top: 4px; }
+  .check-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  input[type=checkbox], input[type=radio] { width: 18px; height: 18px; accent-color: var(--evg-brand-primary); }
+  .switch { position: relative; width: 40px; height: 22px; }
+  .switch input { opacity: 0; width: 0; height: 0; }
+  .switch .track { position: absolute; inset: 0; background: var(--evg-gray-300); border-radius: 999px; transition: .2s; }
+  .switch .thumb { position: absolute; top: 2px; left: 2px; width: 18px; height: 18px; background: #fff; border-radius: 50%; transition: .2s; }
+  .switch input:checked + .track { background: var(--evg-brand-legacy-vendor-primary); }
+  .switch input:checked + .track .thumb, .switch input:checked ~ .thumb { transform: translateX(18px); }
+
+  /* Tabs / breadcrumb */
+  .tabs { display: flex; border-bottom: 1px solid #dbe3ef; }
+  .tab { padding: 10px 18px; background: #fcfcfc; color: var(--evg-text-muted); border: 1px solid #dbe3ef; border-bottom: none; cursor: pointer; }
+  .tab:hover { color: rgba(32,185,112,1); }
+  .tab.active { background: #fff; color: var(--evg-brand-primary); font-weight: 600; }
+  .breadcrumb { display: flex; gap: 6px; padding: 10px 0; border-bottom: 1px solid var(--evg-border-default); box-shadow: var(--evg-header-shadow-no-breadcrumb); font-size: 12px; margin-bottom: 16px; }
+  .breadcrumb a:hover { color: #20B970 !important; }
+
+  /* Card / badge / alert */
+  .card { background: var(--evg-surface-card); border: 1px solid var(--evg-border-default); border-radius: var(--evg-radius-card); width: 260px; }
+  .card .hd { padding: 15px 15px 10px; font-size: 18px; color: var(--evg-text-primary); font-weight: 600; }
+  .card .bd { padding: 10px 15px; font-size: 13px; color: var(--evg-text-secondary); }
+  .card .ft { padding: 10px 15px; border-top: 1px solid var(--evg-border-subtle); font-size: 12px; }
+  .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; }
+  .badge.b-success { background: var(--evg-status-success-light); color: var(--evg-status-success-active); }
+  .badge.b-info { background: var(--evg-status-info-light); color: var(--evg-status-info-active); }
+  .badge.b-warning { background: var(--evg-status-warning-light); color: var(--evg-status-warning-active); }
+  .badge.b-danger { background: var(--evg-status-danger-light); color: var(--evg-status-danger-active); }
+  .alert { border: 1px dashed var(--evg-status-danger); background: rgba(225,78,84,0.1); border-radius: 6px; padding: 12px 16px; width: 320px; }
+  .alert .alert-title { color: var(--evg-status-danger); font-weight: 600; margin-bottom: 4px; }
+
+  /* Table */
+  table.evg-table { width: 100%; border-collapse: collapse; background: var(--evg-surface-card); }
+  table.evg-table thead th { background: var(--evg-surface-table-header); border-bottom: 1px solid var(--evg-border-default); color: var(--evg-text-secondary); font-size: 12px; font-weight: 600; text-align: left; padding: 10px 14px; }
+  table.evg-table tbody td { padding: 10px 14px; min-height: var(--evg-table-row-min-height); border-bottom: 1px solid var(--evg-border-default); color: var(--evg-text-secondary); font-size: 13px; }
+  table.evg-table tbody tr.hover-preview:hover { background: var(--evg-surface-table-row-hover); }
+  table.evg-table tbody tr.selected { background: var(--evg-gray-200); }
+  .sort-active { color: var(--evg-brand-legacy-vendor-primary); }
+  .sort-inactive { color: var(--evg-gray-400); }
+  .pagination { display: flex; gap: 6px; margin-top: 12px; align-items: center; }
+  .page-btn { width: 32px; height: 32px; border-radius: var(--evg-radius-control); border: 1px solid var(--evg-border-default); background: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+  .page-btn.active { background: var(--evg-brand-legacy-vendor-primary); color: #fff; border-color: var(--evg-brand-legacy-vendor-primary); }
+
+  /* Dropdown / DatePicker */
+  .dd-wrap { position: relative; display: inline-block; }
+  .dd-menu { position: absolute; top: 100%; left: 0; margin-top: 4px; background: #fff; border: 1px solid var(--evg-border-default); border-radius: 6px; box-shadow: 0 4px 12px rgba(0,0,0,.1); min-width: 180px; display: none; z-index: 20; }
+  .dd-menu.open { display: block; }
+  .dd-item { padding: 8px 14px; font-size: 13px; cursor: pointer; }
+  .dd-item:hover { background: var(--evg-gray-100); }
+  .dd-item.active { background: var(--evg-surface-dropdown-active); color: rgba(73,73,104,1); }
+  .antd-picker-demo { border-radius: 6px; padding: 4px 11px; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer; }
+  .antd-picker-demo.themed-input {
+    height: var(--evg-control-height); box-sizing: border-box;
+    border: 1px solid var(--evg-datepicker-input-border);
+    background: var(--evg-datepicker-input-background);
+    color: var(--evg-text-primary);
+  }
+  .antd-picker-demo.themed-input:hover { background: var(--evg-datepicker-input-hover-background); }
+  .antd-calendar { position: absolute; margin-top: 4px; background: #fff; border: 1px solid #d9d9d9; border-radius: 8px; box-shadow: 0 3px 6px -4px rgba(0,0,0,.12), 0 6px 16px 0 rgba(0,0,0,.08); padding: 8px; width: 240px; display: none; z-index: 20; }
+  .antd-calendar.open { display: block; }
+  .antd-calendar .hd { color: #1677ff; font-weight: 600; margin-bottom: 6px; font-size: 12px; }
+  .antd-calendar .grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; font-size: 11px; text-align: center; }
+  .antd-calendar .grid div.today { background: #1677ff; color: #fff; border-radius: 4px; }
+  /* proposed sync — uses only the new datepicker.panel* tokens marked "status":"proposed" in tokens/evg-theme.tokens.json */
+  .antd-calendar-proposed .hd { color: var(--evg-datepicker-panel-accent--proposed); }
+  .antd-calendar-proposed .grid div.today { background: transparent; color: var(--evg-datepicker-panel-today-border--proposed); border: 1px solid var(--evg-datepicker-panel-today-border--proposed); border-radius: 4px; }
+  .antd-calendar-proposed .grid div.selected { background: var(--evg-datepicker-panel-selected-bg--proposed); color: var(--evg-brand-primary-active); border-radius: 4px; font-weight: 600; }
+
+  /* Modal / tooltip / toast */
+  .modal-backdrop-demo { position: fixed; inset: 0; background: rgba(0,0,0, var(--evg-modal-backdrop-opacity)); display: none; align-items: center; justify-content: center; z-index: 100; }
+  .modal-backdrop-demo.open { display: flex; }
+  .modal-box { background: #fff; border-radius: 8px; width: 420px; overflow: visible; }
+  .modal-box .hd { padding: 16px 20px; border-bottom: 1px solid var(--evg-border-default); font-weight: 600; }
+  .modal-box .bd { padding: 20px; font-size: 13px; color: var(--evg-text-secondary); }
+  .modal-box .ft { padding: 14px 20px; border-top: 1px solid var(--evg-border-default); display: flex; justify-content: flex-end; gap: 8px; }
+  .tt-wrap { position: relative; display: inline-block; }
+  .tt-bubble { position: absolute; bottom: 130%; left: 50%; transform: translateX(-50%); background: #fff; color: var(--evg-text-primary); padding: 6px 10px; border-radius: 4px; font-size: 12px; white-space: nowrap; box-shadow: var(--evg-shadow-tooltip); display: none; }
+  .tt-wrap:hover .tt-bubble { display: block; }
+  .toast-stack { position: fixed; top: 16px; right: 16px; display: flex; flex-direction: column; gap: 8px; z-index: 200; }
+  .toast-item { background: #fff; border-left: 6px solid; border-radius: 4px; padding: 10px 14px; font-size: 13px; box-shadow: 0 2px 8px rgba(0,0,0,.12); min-width: 220px; }
+  .toast-item.success { border-color: #07bc0c; }
+  .toast-item.error { border-color: #e74c3c; }
+  .toast-item.warn { border-color: #f1c40f; }
+
+  .note { font-size: 12px; color: var(--evg-text-muted); background: #fff; border: 1px dashed var(--evg-border-default); padding: 10px 12px; border-radius: 6px; margin: 8px 0 16px; }
+  .gap-note { font-size: 12px; color: var(--evg-status-danger); background: var(--evg-status-danger-light); border: 1px dashed var(--evg-status-danger); padding: 10px 12px; border-radius: 6px; margin: 8px 0 16px; }
+  .viewport-marks { display: flex; gap: 8px; font-size: 11px; color: var(--evg-text-muted); flex-wrap: wrap; }
+  .viewport-marks span { border: 1px solid var(--evg-border-default); padding: 3px 8px; border-radius: 4px; }
+  .mobile-aside-toggle { display: none; }
+  @media (max-width: 767px) {
+    .lab-shell { position: relative; }
+    .aside-demo { position: fixed; z-index: 50; height: 100%; top: 0; left: 0; transform: translateX(-100%); transition: transform .25s ease; }
+    .aside-demo.mobile-open { transform: translateX(0); }
+    .lab-content { margin-left: 0; }
+    .row { gap: 10px; }
+    .card, .field, .alert { width: 100%; }
+    .mobile-aside-toggle {
+      display: flex; position: sticky; top: 0; z-index: 40; align-items: center; gap: 8px;
+      background: var(--evg-header-background); border-bottom: var(--evg-header-border-no-breadcrumb);
+      padding: 10px 16px; font-size: 13px; color: var(--evg-text-primary);
+    }
+    .mobile-aside-backdrop { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.35); z-index: 45; }
+    .mobile-aside-backdrop.open { display: block; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lab-banner">
+  <strong>EVG Theme Lab — static demo, dev-only, fake data, no production API calls.</strong>
+  <span>Source: evgcms@ffae7e5 (uat) · Light mode only — dark mode not implemented in source · See ../component-contracts.md for citations</span>
+</div>
+
+<div class="lab-shell">
+  <div class="mobile-aside-backdrop" id="mobileBackdrop" onclick="closeMobileAside()"></div>
+  <aside class="aside-demo" id="asideDemo">
+    <div class="aside-brand"><span class="logo">EVG</span></div>
+    <div class="menu-section-text">Quản lý thông tin chung</div>
+    <div class="menu-link is-active"><span class="ic">◆</span><span class="menu-text">Dashboard</span></div>
+    <div class="menu-section-text">Quản lý trạm sạc</div>
+    <div class="menu-link"><span class="ic">▤</span><span class="menu-text">Danh sách trạm sạc</span></div>
+    <div class="submenu">
+      <div class="menu-link"><span class="ic">·</span><span class="menu-text">Danh sách điểm sạc</span></div>
+      <div class="menu-link"><span class="ic">·</span><span class="menu-text">Bản đồ trạm sạc</span></div>
+    </div>
+    <div class="menu-section-text">Quản lý khách hàng</div>
+    <div class="menu-link"><span class="ic">☺</span><span class="menu-text">Danh sách khách hàng</span></div>
+    <div class="menu-section-text">Quản lý đại lý</div>
+    <div class="menu-link"><span class="ic">▣</span><span class="menu-text">Danh sách đại lý</span></div>
+  </aside>
+
+  <div class="lab-content">
+
+    <div class="mobile-aside-toggle" onclick="openMobileAside()">☰ Menu (KT01HeaderMobile equivalent)</div>
+
+    <section class="lab-section">
+      <h1>EVG Theme Lab</h1>
+      <p class="note">This page renders only values present in <code>tokens/evg-theme.css</code>. Every color/spacing/shadow you see traces to a real file:line in the source app — see <code>component-contracts.md</code>. No dark mode toggle exists because none exists in source.</p>
+      <div class="viewport-marks">
+        <span>375px mobile</span><span>768px tablet</span><span>1440px desktop</span><span>1920px wide</span>
+        <span>Resize the window / devtools to verify each breakpoint — layout uses flex-wrap, no fixed px breakage expected.</span>
+      </div>
+    </section>
+
+    <section class="lab-section" id="tokens">
+      <div class="section-title">1 · Token swatches &amp; typography</div>
+      <div class="row">
+        <div class="swatch"><div class="box" style="background:var(--evg-brand-primary)"></div><div class="label">brand.primary</div><div class="value">#30BD6F</div></div>
+        <div class="swatch"><div class="box" style="background:var(--evg-brand-legacy-vendor-primary)"></div><div class="label">legacy vendor primary <span class="tag legacy">legacy</span></div><div class="value">#3699ff</div></div>
+        <div class="swatch"><div class="box" style="background:var(--evg-status-success)"></div><div class="label">status.success</div><div class="value">= primary (no dedicated token)</div></div>
+        <div class="swatch"><div class="box" style="background:var(--evg-status-info)"></div><div class="label">status.info</div><div class="value">#2984EE</div></div>
+        <div class="swatch"><div class="box" style="background:var(--evg-status-warning)"></div><div class="label">status.warning</div><div class="value">#F6C000</div></div>
+        <div class="swatch"><div class="box" style="background:var(--evg-status-danger)"></div><div class="label">status.danger <span class="tag canonical">canonical</span></div><div class="value">#E14E54</div></div>
+        <div class="swatch"><div class="box" style="background:var(--evg-status-legacy-vendor-danger)"></div><div class="label">legacy vendor danger <span class="tag legacy">legacy</span></div><div class="value">#F64E60</div></div>
+        <div class="swatch"><div class="box" style="background:var(--evg-gray-800)"></div><div class="label">gray800 / text.primary</div><div class="value">#494968</div></div>
+        <div class="swatch"><div class="box" style="background:var(--evg-gray-300)"></div><div class="label">gray300 / border.default</div><div class="value">#DBDFF1</div></div>
+        <div class="swatch"><div class="box" style="background:var(--evg-sidebar-background)"></div><div class="label">sidebar.background</div><div class="value">gradient</div></div>
+      </div>
+      <div style="margin-top:20px; font-family: var(--evg-font-family);">
+        <div style="font-size:28px; font-weight:700;">Aa — SVN-Gilroy / Inter fallback — 700</div>
+        <div style="font-size:20px; font-weight:600;">Aa — 600 semibold</div>
+        <div style="font-size:16px; font-weight:500;">Aa — 500 medium</div>
+        <div style="font-size:14px; font-weight:400;">Aa — 400 regular (body default)</div>
+        <div style="font-size:12px; color:var(--evg-text-muted);">Aa — 400 muted / caption</div>
+      </div>
+    </section>
+
+    <section class="lab-section">
+      <div class="section-title">2 · Sidebar expanded / collapsed / menu active-hover (see left rail)</div>
+      <button class="btn btn-vendor-primary" onclick="document.getElementById('asideDemo').classList.toggle('collapsed')">Toggle collapse (326px ↔ 70px)</button>
+      <p class="note">Active item styling and hover styling are visually identical in source (<code>style2.scss:42-70</code>) — that is not a bug in this demo, it's a faithful reproduction.</p>
+    </section>
+
+    <section class="lab-section">
+      <div class="section-title">3 · Header: default vs. with-breadcrumb + user menu + notification</div>
+      <div class="lab-topbar" style="margin-bottom:8px;">
+        <strong>No breadcrumb — border gray300 + shadow</strong>
+        <div style="display:flex; gap:10px; align-items:center;">
+          <div class="tt-wrap"><button class="btn btn-icon" style="background:#fff;border-color:var(--evg-border-default)">🔔<span class="tt-bubble">Notifications</span></button></div>
+          <div class="dd-wrap">
+            <button class="btn" style="background:#fff;border-color:var(--evg-border-default)" onclick="toggleDD('accountDD')">Nguyễn Văn A ▾</button>
+            <div class="dd-menu" id="accountDD">
+              <div class="dd-item">Thông tin tài khoản</div>
+              <div class="dd-item">Đổi mật khẩu</div>
+              <div class="dd-item">Đăng xuất</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="lab-topbar with-breadcrumb">
+        <strong>With breadcrumb — border gray200, no shadow</strong>
+        <div>—</div>
+      </div>
+    </section>
+
+    <section class="lab-section">
+      <div class="section-title">4 · Buttons &amp; icon buttons</div>
+      <div class="row">
+        <button class="btn btn-vendor-primary">Primary (as-rendered today) <span class="tag legacy">vendor #3699ff</span></button>
+        <button class="btn btn-brand-primary">Primary (AppColors swap) <span class="tag canonical">#30BD6F</span></button>
+        <button class="btn btn-vendor-danger">Danger (vendor)</button>
+        <button class="btn btn-danger">Danger (canonical #E14E54)</button>
+        <button class="btn btn-vendor-primary" disabled>Disabled</button>
+        <button class="btn btn-icon btn-circle btn-vendor-primary">＋</button>
+        <button class="btn btn-icon btn-table-action">✎</button>
+        <button class="btn btn-icon btn-table-action">🗑</button>
+      </div>
+    </section>
+
+    <section class="lab-section">
+      <div class="section-title">5 · Form controls &amp; validation</div>
+      <div class="row">
+        <div class="field"><label>Default</label><input class="form-control" placeholder="Nhập nội dung..." /></div>
+        <div class="field"><label>Focus (click in)</label><input class="form-control" placeholder="Border → #20b970 on focus" /></div>
+        <div class="field"><label>Disabled</label><input class="form-control" disabled value="Không thể sửa" /></div>
+        <div class="field">
+          <label>Invalid</label>
+          <input class="form-control is-invalid" value="giá trị sai" />
+          <div class="field-error">Trường này không hợp lệ</div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:8px;">
+        <div class="check-row"><input type="checkbox" checked id="c1" /><label for="c1">Checkbox checked</label></div>
+        <div class="check-row"><input type="checkbox" disabled id="c2" /><label for="c2">Checkbox disabled</label></div>
+        <div class="check-row"><input type="radio" name="r" checked id="r1" /><label for="r1">Radio A</label></div>
+        <div class="check-row"><input type="radio" name="r" id="r2" /><label for="r2">Radio B</label></div>
+        <div class="check-row">
+          <label class="switch"><input type="checkbox" checked /><span class="track"></span><span class="thumb"></span></label>
+          <span>Switch on (vendor blue track — not AppColors.primary)</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="lab-section">
+      <div class="section-title">6 · Tabs, dropdown, popover-style tooltip, date picker (portal check)</div>
+      <div class="tabs" style="margin-bottom:16px; max-width:400px; width:100%;">
+        <div class="tab active">Thông tin</div>
+        <div class="tab">Lịch sử</div>
+        <div class="tab">Cấu hình</div>
+      </div>
+      <div class="breadcrumb"><a href="#">Trang chủ</a><span>/</span><a href="#">Quản lý trạm sạc</a><span>/</span><span>Chi tiết</span></div>
+      <div class="row">
+        <div class="dd-wrap">
+          <button class="btn" style="background:#fff;border-color:var(--evg-border-default)" onclick="toggleDD('filterDD')">Bộ lọc ▾ (KTBSDropdown — in-tree, not portaled)</button>
+          <div class="dd-menu" id="filterDD">
+            <div class="dd-item active">Tất cả</div>
+            <div class="dd-item">Đang hoạt động</div>
+            <div class="dd-item">Ngừng hoạt động</div>
+          </div>
+        </div>
+      </div>
+      <p class="note">The "Bộ lọc" dropdown renders in-tree (clipped by overflow ancestors, never mis-themed by portal escape).</p>
+
+      <div class="section-title" style="margin-top:20px;">6b · antd DatePicker — closed input (themed) vs. open panel (unthemed vs. proposed sync)</div>
+      <div class="row">
+        <div>
+          <div style="font-size:11px;color:var(--evg-text-muted);margin-bottom:4px;">Closed input — <strong>real, extracted theming</strong> (matches .form-control)</div>
+          <div class="antd-picker-demo themed-input">📅 08/08/2026</div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--evg-text-muted);margin-bottom:4px;">Open panel — as-shipped in production, <strong>unthemed</strong> antd default</div>
+          <div class="antd-picker-demo themed-input" onclick="toggleDD('pickerCalUnthemed')">📅 08/08/2026 ▾</div>
+          <div class="antd-calendar" id="pickerCalUnthemed">
+            <div class="hd">Tháng 8, 2026</div>
+            <div class="grid">
+              <div>CN</div><div>T2</div><div>T3</div><div>T4</div><div>T5</div><div>T6</div><div>T7</div>
+              <div></div><div></div><div></div><div></div><div></div><div></div><div>1</div>
+              <div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div class="today">8</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;color:var(--evg-status-danger);margin-bottom:4px;">Open panel — <strong>proposed sync</strong> (not a source fact — see component-contracts.md)</div>
+          <div class="antd-picker-demo themed-input" onclick="toggleDD('pickerCalProposed')">📅 08/08/2026 ▾</div>
+          <div class="antd-calendar antd-calendar-proposed" id="pickerCalProposed">
+            <div class="hd">Tháng 8, 2026</div>
+            <div class="grid">
+              <div>CN</div><div>T2</div><div>T3</div><div>T4</div><div>T5</div><div>T6</div><div>T7</div>
+              <div></div><div></div><div></div><div></div><div></div><div></div><div>1</div>
+              <div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div class="selected">7</div><div class="today">8</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="note">The date picker's calendar panel renders into a real portal at <code>document.body</code> in the live app. Its <strong>closed input box is genuinely themed</strong> in source (<code>style.bundle.css:100149-100177</code>) to match every other <code>.form-control</code> — reproduced faithfully above, not invented. Its <strong>open panel is genuinely unthemed</strong> — zero <code>.ant-picker-dropdown</code> rules exist anywhere in source — reproduced faithfully as antd's default blue. The third swatch is this package's <strong>proposed</strong> fix using the new <code>datepicker.panelAccent</code>/<code>panelSelectedBg</code>/<code>panelTodayBorder</code> tokens (all marked <code>"status":"proposed"</code> in <code>tokens/evg-theme.tokens.json</code>) — it is a recommendation to adopt, not something already true of EVG.</p>
+    </section>
+
+    <section class="lab-section">
+      <div class="section-title">7 · Cards, KPI, badges, semantic alerts</div>
+      <div class="row">
+        <div class="card">
+          <div class="hd">Tổng doanh thu</div>
+          <div class="bd">1.245.000.000 ₫ <span class="badge b-success">+12.4%</span></div>
+          <div class="ft">Cập nhật 08/08/2026</div>
+        </div>
+        <div class="card">
+          <div class="hd">Trạm đang hoạt động</div>
+          <div class="bd">128 / 140 <span class="badge b-info">Đang xử lý: 4</span></div>
+          <div class="ft">KPI layout — illustrative composition, no shared KPI component exists in source</div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:16px;">
+        <span class="badge b-success">Thành công</span>
+        <span class="badge b-info">Đang xử lý</span>
+        <span class="badge b-warning">Sắp hết hạn</span>
+        <span class="badge b-danger">Lỗi</span>
+      </div>
+      <div class="gap-note">KTLabel (badge) takes color entirely via props — this success/info/warning/danger mapping is a <strong>recommendation for consistent semantic usage</strong>, not a contract already enforced in source. See component-contracts.md.</div>
+      <div class="alert">
+        <div class="alert-title">Không thể xử lý yêu cầu</div>
+        <div>CustomAlert is effectively danger-only in source (title color hardcoded to AppColors.danger regardless of the color prop).</div>
+      </div>
+    </section>
+
+    <section class="lab-section">
+      <div class="section-title">8 · Table, filter bar, pagination, loading/empty/error</div>
+      <table class="evg-table">
+        <thead><tr><th>Mã trạm</th><th>Tên trạm</th><th class="sort-active">Trạng thái ▲</th><th class="sort-inactive">Ngày tạo</th><th></th></tr></thead>
+        <tbody>
+          <tr class="hover-preview"><td>CP-001</td><td>Trạm Quận 1</td><td><span class="badge b-success">Hoạt động</span></td><td>01/03/2026</td><td><button class="btn btn-icon btn-table-action">✎</button></td></tr>
+          <tr class="hover-preview selected"><td>CP-002</td><td>Trạm Quận 3 (selected)</td><td><span class="badge b-warning">Bảo trì</span></td><td>14/04/2026</td><td><button class="btn btn-icon btn-table-action">✎</button></td></tr>
+          <tr class="hover-preview"><td>CP-003</td><td>Trạm Thủ Đức</td><td><span class="badge b-danger">Lỗi</span></td><td>02/05/2026</td><td><button class="btn btn-icon btn-table-action">✎</button></td></tr>
+        </tbody>
+      </table>
+      <p class="note">Hover this table's rows — highlight uses <code>--evg-surface-table-row-hover</code>. In the live app this hover is currently <strong>disabled</strong> (<code>KTTable/index.js:154</code>, <code>highlightOnHover={false}</code>) even though the color is defined; reproduced here so you can decide whether to re-enable it during migration.</p>
+      <div class="pagination">
+        <div class="page-btn">«</div><div class="page-btn active">1</div><div class="page-btn">2</div><div class="page-btn">3</div><div class="page-btn">»</div>
+      </div>
+      <div class="row" style="margin-top:16px;">
+        <div class="card" style="text-align:center; padding:24px; color:var(--evg-text-muted);">Không có dữ liệu (empty state)</div>
+        <div class="card" style="text-align:center; padding:24px; color:var(--evg-status-danger);">Đã có lỗi xảy ra, vui lòng thử lại (error state)</div>
+        <div class="card" style="text-align:center; padding:24px; color:var(--evg-text-muted);">Đang tải dữ liệu... (loading placeholder)</div>
+      </div>
+    </section>
+
+    <section class="lab-section">
+      <div class="section-title">9 · Modal, drawer, toast, confirm dialog (live interaction, not static screenshot)</div>
+      <div class="row">
+        <button class="btn btn-vendor-primary" onclick="document.getElementById('modalDemo').classList.add('open')">Open modal (AppDialog)</button>
+        <button class="btn btn-vendor-danger" onclick="fireToast('error','Xoá thất bại: bản ghi đang được sử dụng')">Fire error toast</button>
+        <button class="btn btn-brand-primary" onclick="fireToast('success','Lưu thành công')">Fire success toast</button>
+        <button class="btn" style="background:#fff;border-color:var(--evg-border-default)" onclick="fireToast('warn','Sắp hết hạn hợp đồng')">Fire warning toast</button>
+      </div>
+      <div class="modal-backdrop-demo" id="modalDemo">
+        <div class="modal-box">
+          <div class="hd">Xác nhận xoá</div>
+          <div class="bd">Bạn có chắc chắn muốn xoá bản ghi này? (react-bootstrap Modal — overflow:visible !important per AppDialogCustom/style.css)</div>
+          <div class="ft">
+            <button class="btn" style="background:#fff;border-color:var(--evg-border-default)" onclick="document.getElementById('modalDemo').classList.remove('open')">Hủy</button>
+            <button class="btn btn-vendor-danger" onclick="document.getElementById('modalDemo').classList.remove('open')">Xoá</button>
+          </div>
+        </div>
+      </div>
+      <div class="toast-stack" id="toastStack"></div>
+    </section>
+
+    <section class="lab-section">
+      <div class="section-title">10 · Responsive markers</div>
+      <p>Resize this window (or your devtools device toolbar) to 375px, 768px, 1440px, and 1920px. Sections above use <code>flex-wrap</code> and relative widths, not fixed breakpoints borrowed from a specific screen, since no shared responsive grid component exists in source beyond Bootstrap's own utility classes.</p>
+    </section>
+
+  </div>
+</div>
+
+<script>
+function toggleDD(id) {
+  document.querySelectorAll('.dd-menu.open, .antd-calendar.open').forEach(function (el) {
+    if (el.id !== id) el.classList.remove('open');
+  });
+  document.getElementById(id).classList.toggle('open');
+}
+document.addEventListener('click', function (e) {
+  if (!e.target.closest('.dd-wrap')) {
+    document.querySelectorAll('.dd-menu.open, .antd-calendar.open').forEach(function (el) { el.classList.remove('open'); });
+  }
+});
+function openMobileAside() {
+  document.getElementById('asideDemo').classList.add('mobile-open');
+  document.getElementById('mobileBackdrop').classList.add('open');
+}
+function closeMobileAside() {
+  document.getElementById('asideDemo').classList.remove('mobile-open');
+  document.getElementById('mobileBackdrop').classList.remove('open');
+}
+function fireToast(type, msg) {
+  var stack = document.getElementById('toastStack');
+  var el = document.createElement('div');
+  el.className = 'toast-item ' + type;
+  el.textContent = msg;
+  stack.appendChild(el);
+  setTimeout(function () { el.remove(); }, 4000);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+/*
+ * EVG CMS — semantic design tokens (CSS custom properties)
+ * Source of truth: tokens/evg-theme.tokens.json — every value here traces to a file:line in evgcms.
+ * Dark mode: NOT IMPLEMENTED in source. No dark variants are provided; do not infer any.
+ */
+
+:root {
+  /* Brand */
+  --evg-brand-primary: #30BD6F;
+  --evg-brand-primary-active: #1BA05C;
+  --evg-brand-primary-light: #BDFF9F;
+  --evg-brand-focus-ring: #20b970;
+  --evg-brand-legacy-vendor-primary: #3699ff; /* legacy — vendor Keen/Bootstrap theme, still leaks through on raw .btn-primary */
+
+  /* Status */
+  --evg-status-success: #30BD6F; /* reuses brand.primary — no dedicated success token exists in source */
+  --evg-status-success-active: #1BA05C;
+  --evg-status-success-light: #BDFF9F;
+  --evg-status-info: #2984EE;
+  --evg-status-info-active: #1877E7;
+  --evg-status-info-light: #ECF8FF;
+  --evg-status-warning: #F6C000;
+  --evg-status-warning-active: #E9B500;
+  --evg-status-warning-light: #FFF8DD;
+  --evg-status-danger: #E14E54;
+  --evg-status-danger-active: #D43B41;
+  --evg-status-danger-light: #FFF5F8;
+  --evg-status-legacy-vendor-danger: #F64E60; /* legacy — vendor invalid/btn-danger red */
+
+  /* Neutral scale (AppColors.gray) */
+  --evg-gray-0: rgba(24, 24, 62, 1);
+  --evg-gray-100: #F9F9F9;
+  --evg-gray-200: #EEF1FA;
+  --evg-gray-300: #DBDFF1;
+  --evg-gray-400: #B6BBD0;
+  --evg-gray-500: #9CA2B8;
+  --evg-gray-600: #7E8299;
+  --evg-gray-700: #72728B;
+  --evg-gray-800: #494968;
+  --evg-gray-900: #18183E;
+
+  /* Surface */
+  --evg-surface-app: #F3F6F9;
+  --evg-surface-card: #FFFFFF;
+  --evg-surface-header: #FFFFFF;
+  --evg-surface-table-header: rgba(249, 249, 249, 1);
+  --evg-surface-table-row-hover: #F3F6F9; /* defined in source but currently disabled (highlightOnHover=false) */
+  --evg-surface-dropdown-active: rgba(238, 241, 250, 1);
+
+  /* Text */
+  --evg-text-primary: var(--evg-gray-800);
+  --evg-text-secondary: var(--evg-gray-700);
+  --evg-text-muted: var(--evg-gray-600);
+  --evg-text-disabled: var(--evg-gray-400);
+  --evg-text-inverse: #FFFFFF;
+  --evg-text-link: var(--evg-brand-primary);
+
+  /* Border */
+  --evg-border-default: rgba(219, 223, 241, 1);
+  --evg-border-subtle: var(--evg-gray-200);
+  --evg-border-active: #41A7FF;
+  --evg-border-focus: var(--evg-brand-focus-ring);
+  --evg-border-invalid: var(--evg-status-danger);
+
+  /* Sidebar */
+  --evg-sidebar-background: linear-gradient(180deg, #1E3883 0%, #192B54 100%);
+  --evg-sidebar-item-active-bg: linear-gradient(180deg, rgba(77, 191, 252, 0.05) 0%, rgba(77, 179, 252, 0.5) 100%);
+  --evg-sidebar-item-active-border: #41A7FF;
+  --evg-sidebar-item-active-inset-shadow: 0px 0px 25px 0px #4C76D6B2 inset;
+  --evg-sidebar-item-hover-bg: var(--evg-sidebar-item-active-bg);
+  --evg-sidebar-section-title: #1EF5DF;
+  --evg-sidebar-item-text: #FFFFFF;
+  --evg-sidebar-item-icon: #DBDFF1;
+  --evg-sidebar-divider: 1px dashed #346AA8;
+  --evg-sidebar-width-expanded: 326px;
+  --evg-sidebar-width-collapsed: 70px;
+
+  /* Date picker (antd) — inputBorder/inputBackground/inputHoverBackground are extracted facts;
+     everything below marked "proposed" is a recommendation to close the unthemed-panel gap, not a source citation. */
+  --evg-datepicker-input-border: #E4E6EF;
+  --evg-datepicker-input-background: #ffffff;
+  --evg-datepicker-input-hover-background: #F3F6F9;
+  --evg-datepicker-input-focus-border--proposed: var(--evg-brand-focus-ring);
+  --evg-datepicker-panel-accent--proposed: var(--evg-brand-primary);
+  --evg-datepicker-panel-selected-bg--proposed: var(--evg-brand-primary-light);
+  --evg-datepicker-panel-today-border--proposed: var(--evg-brand-primary);
+
+  /* Header */
+  --evg-header-background: #FFFFFF;
+  --evg-header-border-with-breadcrumb: 1px solid var(--evg-gray-200);
+  --evg-header-border-no-breadcrumb: 1px solid var(--evg-gray-300);
+  --evg-header-shadow-no-breadcrumb: 0px 7px 8px -3px #0000000D;
+
+  /* Typography */
+  --evg-font-family: 'SVN-Gilroy', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  --evg-font-family-mono: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+
+  /* Geometry */
+  --evg-radius-control: 0.42rem;
+  --evg-radius-sidebar-item: 8px;
+  --evg-radius-card: 5px;
+  --evg-radius-button-circle: 50%;
+  --evg-control-height: 42px;
+  --evg-table-row-min-height: 44px;
+
+  /* Effects */
+  --evg-shadow-sidebar: 0 0 10px rgba(0, 0, 0, 0.2);
+  --evg-shadow-tooltip: 0px 0px 20px 0px rgba(0, 0, 0, 0.15);
+  --evg-modal-backdrop-opacity: 0.5;
+  --evg-transition-menu-item: all 0.3s ease;
+}

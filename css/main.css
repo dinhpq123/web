@@ -1,11 +1,11 @@
 :root,
 body.light {
-  /* ── BRAND (EVG Emerald + bright EVG navigation) ── */
-  --primary: #2984EE;
-  --primary-hover: #1F73D2;
-  --primary-active: #285CAA;
-  --primary-soft: rgba(41, 132, 238, 0.12);
-  --primary-text: #0B5CAD;
+  /* EVG brand/action. Blue remains the information/navigation color. */
+  --primary: #30BD6F;
+  --primary-hover: #1BA05C;
+  --primary-active: #168B50;
+  --primary-soft: rgba(48, 189, 111, 0.12);
+  --primary-text: #137A43;
 
   --evg-accent: #2FBF71;
   --evg-accent-hover: #27A962;
@@ -27,18 +27,18 @@ body.light {
   --ticker-background: var(--bg-secondary);
   --ticker-border: var(--border);
   --ticker-text: var(--text-secondary);
-  --sidebar-item-hover: rgba(30, 245, 223, 0.10);
-  --sidebar-item-active: linear-gradient(135deg, #3371C6 0%, #285CAA 100%);
-  --sidebar-text: #EAF2FF;
+  --sidebar-item-hover: linear-gradient(180deg, rgba(77, 191, 252, 0.05) 0%, rgba(77, 179, 252, 0.50) 100%);
+  --sidebar-item-active: linear-gradient(180deg, rgba(77, 191, 252, 0.05) 0%, rgba(77, 179, 252, 0.50) 100%);
+  --sidebar-text: #FFFFFF;
   --sidebar-text-active: #FFFFFF;
   --sidebar-section-accent: #1EF5DF;
   --sidebar-border: rgba(113, 166, 255, 0.28);
 
   /* ── SEMANTIC STATUS ─────────────────────────── */
-  --success: #285CAA;
-  --success-hover: #1E4F96;
-  --success-soft: rgba(40, 92, 170, 0.12);
-  --success-text: #1E4F96;
+  --success: #30BD6F;
+  --success-hover: #1BA05C;
+  --success-soft: rgba(48, 189, 111, 0.12);
+  --success-text: #137A43;
   --status-online: #168A4B;
   --status-online-glow: rgba(22, 138, 75, 0.42);
 
@@ -99,26 +99,26 @@ body.light {
 
   --text-disabled: #9CA2B8;
   --text-on-primary: #FFFFFF;
-  --button-primary-background: #285CAA;
-  --button-primary-hover: #1E4F96;
+  --button-primary-background: #30BD6F;
+  --button-primary-hover: #1BA05C;
   --button-primary-text: #FFFFFF;
 
   /* ── BORDER ──────────────────────────────────── */
   --border: #DBDFF1;
   --border-light: #E4E6EF;
   --border-active: #2984EE;
-  --border-focus: #2984EE;
+  --border-focus: #20B970;
 
   /* ── SHADOW & GLOW ───────────────────────────── */
   --shadow: 0 2px 12px rgba(24, 24, 62, 0.06);
   --shadow-card: 0 2px 12px rgba(24, 24, 62, 0.06);
   --shadow-dropdown: 0 8px 30px rgba(24, 24, 62, 0.10);
   --glow: 0 0 18px rgba(41, 132, 238, 0.20);
-  --focus-ring: 0 0 0 3px rgba(41, 132, 238, 0.18);
+  --focus-ring: 0 0 0 3px rgba(32, 185, 112, 0.18);
   --shadow-hover: 0 12px 30px rgba(24, 24, 62, 0.12);
 
-  --radius: 16px;
-  --radius-sm: 10px;
+  --radius: 8px;
+  --radius-sm: 0.42rem;
   --transition: .3s cubic-bezier(0.4, 0, 0.2, 1);
   --grid-line: rgba(41, 132, 238, 0.05);
   --decorative-line: color-mix(in srgb, var(--primary) 24%, transparent);
@@ -132,11 +132,11 @@ body.light {
 
 /* ── DARK MODE (EVG bright navy) ── */
 body.dark {
-  --primary: #5BA9FF;
-  --primary-hover: #7BBAFF;
-  --primary-active: #4B91F1;
-  --primary-soft: rgba(91, 169, 255, 0.16);
-  --primary-text: #A9D3FF;
+  --primary: #45D483;
+  --primary-hover: #62DE97;
+  --primary-active: #32BA70;
+  --primary-soft: rgba(69, 212, 131, 0.16);
+  --primary-text: #83E8AD;
 
   --evg-accent: #45D483;
   --evg-accent-hover: #62DE97;
@@ -158,17 +158,17 @@ body.dark {
   --ticker-background: linear-gradient(90deg, #142D52 0%, #192B54 50%, #142D52 100%);
   --ticker-border: rgba(91, 169, 255, 0.28);
   --ticker-text: #D1E2F4;
-  --sidebar-item-hover: rgba(30, 245, 223, 0.10);
-  --sidebar-item-active: linear-gradient(135deg, #3371C6 0%, #285CAA 100%);
+  --sidebar-item-hover: linear-gradient(180deg, rgba(77, 191, 252, 0.05) 0%, rgba(77, 179, 252, 0.50) 100%);
+  --sidebar-item-active: linear-gradient(180deg, rgba(77, 191, 252, 0.05) 0%, rgba(77, 179, 252, 0.50) 100%);
   --sidebar-text: #EAF2FF;
   --sidebar-text-active: #FFFFFF;
   --sidebar-section-accent: #1EF5DF;
   --sidebar-border: rgba(113, 166, 255, 0.28);
 
-  --success: #5BA9FF;
-  --success-hover: #7BBAFF;
-  --success-soft: rgba(91, 169, 255, 0.16);
-  --success-text: #A9D3FF;
+  --success: #45D483;
+  --success-hover: #62DE97;
+  --success-soft: rgba(69, 212, 131, 0.16);
+  --success-text: #83E8AD;
   --status-online: #45D483;
   --status-online-glow: rgba(69, 212, 131, 0.52);
 
@@ -223,14 +223,14 @@ body.dark {
 
   --text-disabled: #71849A;
   --text-on-primary: #FFFFFF;
-  --button-primary-background: #285CAA;
-  --button-primary-hover: #3371C6;
+  --button-primary-background: #30BD6F;
+  --button-primary-hover: #1BA05C;
   --button-primary-text: #FFFFFF;
 
   --border: rgba(91, 169, 255, 0.24);
   --border-light: rgba(113, 166, 255, 0.14);
   --border-active: #4B91F1;
-  --border-focus: #5BA9FF;
+  --border-focus: #45D483;
 
   --shadow: 0 8px 24px rgba(2, 10, 24, 0.24);
   --shadow-card: 0 10px 28px rgba(2, 10, 24, 0.28);
@@ -238,7 +238,7 @@ body.dark {
   --shadow-hover: 0 16px 36px rgba(2, 10, 24, 0.34);
 
   --glow: 0 0 20px rgba(75, 145, 241, 0.22);
-  --focus-ring: 0 0 0 3px rgba(91, 169, 255, 0.22);
+  --focus-ring: 0 0 0 3px rgba(69, 212, 131, 0.22);
   --grid-line: rgba(91, 169, 255, 0.065);
   --decorative-line: color-mix(in srgb, var(--primary) 22%, transparent);
   --decorative-icon-bg: color-mix(in srgb, var(--bg-card) 90%, var(--primary) 10%);
@@ -439,20 +439,12 @@ body {
 .nav-item.active {
   background: var(--sidebar-item-active);
   color: var(--sidebar-text-active);
-  box-shadow: 0 6px 16px rgba(8, 33, 78, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  border: 1px solid #41A7FF;
+  box-shadow: 0 0 25px #4C76D6B2 inset;
 }
 
 .nav-item.active::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 20px;
-  background: var(--sidebar-section-accent);
-  border-radius: 0 2px 2px 0;
-  box-shadow: 0 0 8px rgba(30, 245, 223, 0.65)
+  content: none;
 }
 
 .nav-item .nav-icon {
@@ -1557,13 +1549,12 @@ tbody td {
 .btn-primary {
   background: var(--button-primary-background);
   color: var(--button-primary-text);
-  box-shadow: 0 7px 18px rgba(23, 122, 68, 0.24);
+  box-shadow: none;
 }
 
 .btn-primary:hover {
   background: var(--button-primary-hover);
-  box-shadow: 0 9px 22px rgba(23, 122, 68, 0.32);
-  transform: translateY(-1px)
+  box-shadow: 0 4px 12px rgba(27, 160, 92, 0.20)
 }
 
 .btn-outline {
@@ -1589,13 +1580,13 @@ tbody td {
 }
 
 .btn-danger {
-  background: rgba(255, 23, 68, .15);
+  background: var(--danger-soft);
   color: var(--danger-text);
-  border: 1px solid rgba(255, 23, 68, .3)
+  border: 1px solid color-mix(in srgb, var(--danger) 38%, transparent)
 }
 
 .btn-danger:hover {
-  background: rgba(255, 23, 68, .25)
+  background: color-mix(in srgb, var(--danger-soft) 72%, var(--danger) 28%)
 }
 
 .btn-sm {
@@ -1633,7 +1624,7 @@ tbody td {
   padding-right: 80px;
   border-top: 1px solid var(--border);
   background: var(--bg-surface);
-  border-radius: 0 0 16px 16px;
+  border-radius: 0 0 var(--radius) var(--radius);
 }
 
 .page-info {
@@ -1669,14 +1660,14 @@ tbody td {
 }
 
 .page-link:hover:not(:disabled) {
-  border-color: var(--info);
-  color: var(--info-text);
-  background: var(--info-soft);
+  border-color: var(--primary);
+  color: var(--primary-text);
+  background: var(--primary-soft);
 }
 
 .page-link.active {
-  background: var(--info);
-  border-color: var(--info);
+  background: var(--primary);
+  border-color: var(--primary);
   color: #FFFFFF;
   box-shadow: none;
 }
@@ -1950,7 +1941,7 @@ select.form-control option {
 .modal-box {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: var(--radius);
   width: 560px;
   max-width: 95vw;
   max-height: 90vh;
@@ -2387,7 +2378,7 @@ select.form-control option {
 .toast {
   background: var(--bg-elevated);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   padding: 14px 18px;
   font-size: 13px;
   z-index: 9999;

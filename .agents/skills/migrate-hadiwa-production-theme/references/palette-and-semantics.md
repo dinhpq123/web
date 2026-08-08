@@ -11,31 +11,31 @@
 
 ## 1. Brand Seed
 
-Treat these values as canonical for the approved `evg-emerald` preset despite the historical preset name. The approved visual is blue/navy, not emerald green.
+Treat these values as canonical for the approved `evg-emerald` preset. EVG uses green for brand actions and selected controls, blue/navy for navigation and information, and semantic colors for operational state.
 
 ```text
 Sidebar top          #1E3883
 Sidebar bottom       #192B54
 Sidebar section      #1EF5DF
-Active start         #3371C6
-Active end           #285CAA
-Light primary        #2984EE
-Light hover          #1F73D2
-Light active         #285CAA
-Dark primary         #5BA9FF
-Dark primary hover   #7BBAFF
-Dark primary active  #4B91F1
+Sidebar active       rgba(77,191,252,.05) → rgba(77,179,252,.50)
+Sidebar active edge  #41A7FF
+Light primary        #30BD6F
+Light hover          #1BA05C
+Light active         #168B50
+Light form focus     #20B970
+Information          #2984EE
+Dark primary         #45D483 (Hadiwa extension; EVG has no dark mode)
 ```
 
 Use exactly:
 
 ```css
 --sidebar-background: linear-gradient(180deg, #1E3883 0%, #192B54 100%);
---sidebar-item-active: linear-gradient(135deg, #3371C6 0%, #285CAA 100%);
+--sidebar-item-active: linear-gradient(180deg, rgba(77,191,252,.05) 0%, rgba(77,179,252,.5) 100%);
 --sidebar-section-accent: #1EF5DF;
 ```
 
-Do not substitute a near-blue, purple navy, green active state, or solid sidebar fill.
+Do not substitute a near-blue, purple navy, green sidebar active state, or solid sidebar fill.
 
 ## 2. Light Matrix
 
@@ -43,11 +43,11 @@ Do not substitute a near-blue, purple navy, green active state, or solid sidebar
 :root,
 .theme-light,
 body.light {
-  --primary: #2984EE;
-  --primary-hover: #1F73D2;
-  --primary-active: #285CAA;
-  --primary-soft: rgba(41, 132, 238, .12);
-  --primary-text: #0B5CAD;
+  --primary: #30BD6F;
+  --primary-hover: #1BA05C;
+  --primary-active: #168B50;
+  --primary-soft: rgba(48, 189, 111, .12);
+  --primary-text: #137A43;
   --text-on-primary: #FFFFFF;
 
   --bg-app: #F0F4F8;
@@ -69,7 +69,7 @@ body.light {
   --border: #DBDFF1;
   --border-light: #E4E6EF;
   --border-active: #2984EE;
-  --border-focus: #2984EE;
+  --border-focus: #20B970;
 
   --info: #2984EE;
   --info-soft: #ECF8FF;
@@ -91,7 +91,7 @@ Approved light shadows:
 ```css
 --shadow-card: 0 2px 12px rgba(24, 24, 62, .06);
 --shadow-dropdown: 0 8px 30px rgba(24, 24, 62, .10);
---focus-ring: 0 0 0 3px rgba(41, 132, 238, .18);
+--focus-ring: 0 0 0 3px rgba(32, 185, 112, .18);
 ```
 
 ## 3. Dark Matrix
@@ -99,11 +99,11 @@ Approved light shadows:
 ```css
 .theme-dark,
 body.dark {
-  --primary: #5BA9FF;
-  --primary-hover: #7BBAFF;
-  --primary-active: #4B91F1;
-  --primary-soft: rgba(91, 169, 255, .16);
-  --primary-text: #A9D3FF;
+  --primary: #45D483;
+  --primary-hover: #62DE97;
+  --primary-active: #32BA70;
+  --primary-soft: rgba(69, 212, 131, .16);
+  --primary-text: #83E8AD;
   --text-on-primary: #FFFFFF;
 
   --bg-app: #0B1D33;

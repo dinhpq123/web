@@ -1,0 +1,122 @@
+{
+  "$schema": "https://schemas.evg.internal/design-tokens/v1",
+  "meta": {
+    "sourceCommit": "ffae7e54dad9416142969238d78d82032155178f",
+    "sourceBranch": "uat",
+    "extractedAt": "2026-08-08",
+    "darkMode": "not implemented — no dark theme exists anywhere in source"
+  },
+  "brand": {
+    "primary": { "value": "#30BD6F", "source": "src/general/constants/AppColors.js:2", "purpose": "primary brand action color; also reused as the de-facto success color (no dedicated success token exists in source)" },
+    "primaryActive": { "value": "#1BA05C", "source": "src/general/constants/AppColors.js:3", "purpose": "pressed/active state of primary" },
+    "primaryLight": { "value": "#BDFF9F", "source": "src/general/constants/AppColors.js:4", "purpose": "soft/light background tint for primary" },
+    "primaryFocusRing": { "value": "#20b970", "source": "src/assets/styles/custom.style.scss:42-44", "purpose": "effective focus-ring border color on form controls; a third green, distinct from AppColors.primary — winning override over the vendor bundle's blue focus ring", "legacyAliasOf": null },
+    "legacyVendorPrimary": { "value": "#3699ff", "source": "src/assets/styles/keen/theme01/style.bundle.css:23", "purpose": "LEGACY — vendor Bootstrap theme's --primary; still renders on any raw btn-primary/.form-control:focus not covered by a project override (e.g. KTBSButton default, antd DatePicker accents)", "status": "legacy" }
+  },
+  "status": {
+    "success": { "value": "#30BD6F", "source": "src/general/constants/AppColors.js:2", "purpose": "success/online/healthy state — reuses brand.primary; no separate success token exists in AppColors.js", "gap": "not a dedicated token in source" },
+    "successActive": { "value": "#1BA05C", "source": "src/general/constants/AppColors.js:3" },
+    "successLight": { "value": "#BDFF9F", "source": "src/general/constants/AppColors.js:4" },
+    "info": { "value": "#2984EE", "source": "src/general/constants/AppColors.js:14", "purpose": "informational/neutral-processing state" },
+    "infoActive": { "value": "#1877E7", "source": "src/general/constants/AppColors.js:15" },
+    "infoLight": { "value": "#ECF8FF", "source": "src/general/constants/AppColors.js:16" },
+    "warning": { "value": "#F6C000", "source": "src/general/constants/AppColors.js:10", "purpose": "needs-attention / pending / expiring soon" },
+    "warningActive": { "value": "#E9B500", "source": "src/general/constants/AppColors.js:11" },
+    "warningLight": { "value": "#FFF8DD", "source": "src/general/constants/AppColors.js:12" },
+    "danger": { "value": "#E14E54", "source": "src/general/constants/AppColors.js:6", "purpose": "error / delete / reject / critical — this is the CANONICAL danger (wins over vendor #F64E60 via src/assets/styles/custom.style.scss:51-54)" },
+    "dangerActive": { "value": "#D43B41", "source": "src/general/constants/AppColors.js:7" },
+    "dangerLight": { "value": "#FFF5F8", "source": "src/general/constants/AppColors.js:8" },
+    "legacyVendorDanger": { "value": "#F64E60", "source": "src/assets/styles/keen/theme01/style.bundle.css:65525-65529", "purpose": "LEGACY — vendor invalid/btn-danger red, overridden by status.danger wherever a project rule targets it (form controls), but still renders on raw btn-danger buttons (KTBSButton) that pass no explicit color prop", "status": "legacy" }
+  },
+  "neutral": {
+    "gray0": { "value": "rgba(24, 24, 62, 1)", "source": "src/general/constants/AppColors.js:19" },
+    "gray100": { "value": "#F9F9F9", "source": "src/general/constants/AppColors.js:20", "purpose": "table header background" },
+    "gray200": { "value": "#EEF1FA", "source": "src/general/constants/AppColors.js:21", "purpose": "subtle border / header border when breadcrumb present" },
+    "gray300": { "value": "#DBDFF1", "source": "src/general/constants/AppColors.js:22", "purpose": "default border (cards, table rows, breadcrumb)" },
+    "gray400": { "value": "#B6BBD0", "source": "src/general/constants/AppColors.js:23" },
+    "gray500": { "value": "#9CA2B8", "source": "src/general/constants/AppColors.js:24", "purpose": "checkbox/radio default border" },
+    "gray600": { "value": "#7E8299", "source": "src/general/constants/AppColors.js:25", "purpose": "secondary text / inactive tab text" },
+    "gray700": { "value": "#72728B", "source": "src/general/constants/AppColors.js:26", "purpose": "table row text, table head text" },
+    "gray800": { "value": "#494968", "source": "src/general/constants/AppColors.js:27", "purpose": "card title / primary body text" },
+    "gray900": { "value": "#18183E", "source": "src/general/constants/AppColors.js:28", "purpose": "darkest neutral, rarely used" }
+  },
+  "surface": {
+    "app": { "value": "#F3F6F9", "source": "src/assets/styles/keen/theme01/style.bundle.css (Keen '--light' token, :23-30)", "purpose": "page background under content" },
+    "card": { "value": "#FFFFFF", "source": "src/general/components/OtherKeenComponents/KTBSCard/index.js:51 (implicit white with border)", "purpose": "card/panel surface" },
+    "header": { "value": "#FFFFFF", "source": "src/general/components/Headers/KT01Header2/index.js:90", "purpose": "top header background (set inline in JS, not CSS)" },
+    "tableHeader": { "value": "rgba(249,249,249,1)", "source": "src/general/components/OtherKeenComponents/KTTable/tableStyle.js:26-29" },
+    "tableRowHover": { "value": "#F3F6F9", "source": "src/general/components/OtherKeenComponents/KTTable/tableStyle.js:21-23", "purpose": "defined but currently DEAD — KTTable/index.js:154 sets highlightOnHover={false}, disabling this at the call site" },
+    "dropdownActiveBg": { "value": "rgba(238,241,250,1)", "source": "src/assets/styles/app.style.scss:322-330", "purpose": "canonical .dropdown-item.active/:active background (wins over the #20b970 rule in custom.style.scss:37-40, which is legacy/dead)" }
+  },
+  "text": {
+    "primary": { "value": "#494968", "source": "src/general/constants/AppColors.js:27 (gray800)", "purpose": "default body/heading text" },
+    "secondary": { "value": "#72728B", "source": "src/general/constants/AppColors.js:26 (gray700)" },
+    "muted": { "value": "#7E8299", "source": "src/general/constants/AppColors.js:25 (gray600)" },
+    "disabled": { "value": "#B6BBD0", "source": "src/general/constants/AppColors.js:23 (gray400)" },
+    "inverse": { "value": "#FFFFFF", "source": "src/general/components/Sidebars/KT01Sidebar/style2.scss:112" },
+    "link": { "value": "#30BD6F", "source": "src/general/components/AppTabs/index.scss:71-75 (active tab uses this as text-as-link color)" }
+  },
+  "border": {
+    "default": { "value": "rgba(219,223,241,1)", "source": "src/general/components/OtherKeenComponents/KTBSCard/index.js:51" },
+    "subtle": { "value": "#EEF1FA", "source": "src/general/constants/AppColors.js:21 (gray200)" },
+    "active": { "value": "#41A7FF", "source": "src/general/components/Sidebars/KT01Sidebar/style2.scss:45" },
+    "focus": { "value": "#20b970", "source": "src/assets/styles/custom.style.scss:42-44" },
+    "invalid": { "value": "#E14E54", "source": "src/assets/styles/custom.style.scss:51-54" }
+  },
+  "sidebar": {
+    "background": { "value": "linear-gradient(180deg, #1E3883 0%, #192B54 100%)", "source": "src/general/components/Sidebars/KT01Sidebar/style2.scss:8-14" },
+    "itemActiveBackground": { "value": "linear-gradient(180deg, rgba(77,191,252,0.05) 0%, rgba(77,179,252,0.5) 100%)", "source": "src/general/components/Sidebars/KT01Sidebar/style2.scss:43" },
+    "itemActiveBorder": { "value": "#41A7FF", "source": "src/general/components/Sidebars/KT01Sidebar/style2.scss:45" },
+    "itemActiveInsetShadow": { "value": "0px 0px 25px 0px #4C76D6B2 inset", "source": "src/general/components/Sidebars/KT01Sidebar/style2.scss:44" },
+    "itemHoverBackground": { "value": "linear-gradient(180deg, rgba(77,191,252,0.05) 0%, rgba(77,179,252,0.5) 100%)", "source": "src/general/components/Sidebars/KT01Sidebar/style2.scss:64" },
+    "sectionTitle": { "value": "#1EF5DF", "source": "src/general/components/Sidebars/KT01Sidebar/style2.scss:116" },
+    "itemText": { "value": "#FFFFFF", "source": "src/general/components/Sidebars/KT01Sidebar/style2.scss:112" },
+    "itemIcon": { "value": "#DBDFF1", "source": "src/general/components/Sidebars/KT01Sidebar/index.js:187", "purpose": "inline style, not a CSS class — matches AppColors.gray[300]" },
+    "divider": { "value": "1px dashed #346AA8", "source": "src/general/components/Sidebars/KT01Sidebar/style2.scss:26" },
+    "widthExpanded": { "value": "326px", "source": "src/assets/styles/keen/theme01/style.bundle.css (~line 98275, .aside)" },
+    "widthCollapsed": { "value": "70px", "source": "src/assets/styles/keen/theme01/style.bundle.css (~line 98301, .aside-minimize:not(.aside-minimize-hover) .aside)" }
+  },
+  "datepicker": {
+    "inputBorder": { "value": "#E4E6EF", "source": "src/assets/styles/keen/theme01/style.bundle.css:100149-100160", "purpose": "closed antd DatePicker input box, restyled to match .form-control — extracted, not proposed" },
+    "inputBackground": { "value": "#ffffff", "source": "src/assets/styles/keen/theme01/style.bundle.css:100149-100160" },
+    "inputHoverBackground": { "value": "#F3F6F9", "source": "src/assets/styles/keen/theme01/style.bundle.css:100169-100174" },
+    "inputFocusBorder": { "value": "#20b970", "source": "PROPOSED — not in source; source leaves DatePicker focus border at #E4E6EF (style.bundle.css:100175-100177) instead of adopting border.focus like plain inputs do (custom.style.scss:42-44)", "status": "proposed", "purpose": "closes the gap where the DatePicker input doesn't get the brand focus ring other inputs get" },
+    "panelAccent": { "value": "#30BD6F", "source": "PROPOSED — no .ant-picker-dropdown override exists in source at all; this recommends reusing brand.primary", "status": "proposed", "purpose": "replace antd's default blue for the open calendar panel's active/hover accents" },
+    "panelSelectedBg": { "value": "#BDFF9F", "source": "PROPOSED — reuses brand.primaryLight", "status": "proposed", "purpose": "selected-date cell background in the open calendar panel" },
+    "panelTodayBorder": { "value": "#30BD6F", "source": "PROPOSED — reuses brand.primary", "status": "proposed", "purpose": "today-marker border/accent in the open calendar panel" }
+  },
+  "header": {
+    "background": { "value": "#FFFFFF", "source": "src/general/components/Headers/KT01Header2/index.js:90" },
+    "borderWithBreadcrumb": { "value": "1px solid #EEF1FA", "source": "src/general/components/Headers/KT01Header2/index.js:91-94 (gray200)" },
+    "borderNoBreadcrumb": { "value": "1px solid #DBDFF1", "source": "src/general/components/Headers/KT01Header2/index.js:91-94 (gray300)" },
+    "shadowNoBreadcrumb": { "value": "0px 7px 8px -3px #0000000D", "source": "src/general/components/Headers/KT01Header2/index.js:95" },
+    "iconFilter": { "value": "invert(59%) sepia(68%) saturate(3862%) hue-rotate(189deg) brightness(100%) contrast(102%)", "source": "src/general/components/Headers/KT01Header2/style.scss:7-10", "purpose": "CSS filter recoloring raster/SVG <img> icons — icons are NOT currentColor" }
+  },
+  "typography": {
+    "fontFamily": { "value": "'SVN-Gilroy', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif", "source": "src/index.css:28" },
+    "fontFamilyLegacyFallback": { "value": "'SVN-Gilroy', Poppins, Helvetica, sans-serif", "source": "src/assets/styles/app.style.scss:40", "status": "legacy — inconsistent fallback chain vs index.css:28" },
+    "fontFamilyMono": { "value": "source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace", "source": "src/index.css:37" },
+    "weights": { "value": [100,200,300,400,500,600,700], "source": "src/assets/fonts/SVN-Gilroy/fonts.css:1-94" },
+    "tabActiveWeight": { "value": "600", "source": "src/general/components/AppTabs/index.scss:71-75" }
+  },
+  "geometry": {
+    "radiusControl": { "value": "0.42rem", "source": "src/assets/styles/keen/theme01/style.bundle.css:2902-2921 (.form-control)" },
+    "radiusSidebarItem": { "value": "8px", "source": "src/general/components/Sidebars/KT01Sidebar/style2.scss:46" },
+    "radiusCardImplicit": { "value": "5px", "source": "src/general/components/OtherKeenComponents/KTTable/index.js (antd Table wrapper border-radius, groupHeader mode)" },
+    "radiusButtonCircle": { "value": "50%", "source": "src/assets/styles/keen/theme01/style.bundle.css:60030-60063 (.btn-circle)" },
+    "controlHeight": { "value": "42px", "source": "src/assets/styles/keen/theme01/style.bundle.css:2902-2921 (.form-control)" },
+    "tableRowMinHeight": { "value": "44px", "source": "src/general/components/OtherKeenComponents/KTTable/tableStyle.js:9-11" },
+    "cardHeaderPadding": { "value": "15px 15px 10px 15px", "source": "src/general/components/OtherKeenComponents/KTBSCard/index.js:61-83" },
+    "cardBodyPadding": { "value": "10px 15px 10px 15px", "source": "src/general/components/OtherKeenComponents/KTBSCard/index.js:118-119" }
+  },
+  "effects": {
+    "focusRing": { "value": "border-color: #20b970 (no additional box-shadow ring)", "source": "src/assets/styles/custom.style.scss:42-44" },
+    "invalidFocusShadow": { "value": "0 0 0 .2rem rgba(246,78,96,.25)", "source": "src/assets/styles/keen/theme01/style.bundle.css:3316-3321", "status": "legacy — uses vendor red #F64E60 tint, not AppColors.danger; border color itself is overridden but this shadow tint is not" },
+    "cardShadow": { "value": "none by default (border-only)", "source": "src/general/components/OtherKeenComponents/KTBSCard/index.js:51" },
+    "sidebarShadow": { "value": "0 0 10px rgba(0, 0, 0, 0.2)", "source": "src/general/components/Sidebars/KT01Sidebar/style2.scss:16" },
+    "sidebarItemInsetShadow": { "value": "0px 0px 25px 0px #4C76D6B2 inset", "source": "src/general/components/Sidebars/KT01Sidebar/style2.scss:44" },
+    "tooltipShadow": { "value": "0px 0px 20px 0px rgba(0,0,0,0.15)", "source": "src/assets/styles/app.style.scss:297-300" },
+    "modalBackdropOpacity": { "value": "0.5", "source": "Bootstrap default .modal-backdrop, unmodified by project CSS" },
+    "transitionMenuItem": { "value": "all 0.3s ease", "source": "src/general/components/Sidebars/KT01Sidebar/style2.scss:60" }
+  }
+}
