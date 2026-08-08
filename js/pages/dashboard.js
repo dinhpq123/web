@@ -65,10 +65,10 @@ function renderDashboard() {
     <div class="dashboard-live-label" style="font-size:11px;padding:0 14px;white-space:nowrap;flex-shrink:0;z-index:2;align-self:stretch;display:flex;align-items:center;letter-spacing:.5px">LIVE</div>
     <div id="tickerTrack" style="display:flex;gap:32px;padding-left:24px;animation:tickerScroll 40s linear infinite;white-space:nowrap;align-items:center;line-height:1">
       ${[
-        `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--evg-accent-text)" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg> Hồ Tuy Lai: Mực nước <b>19.2m</b> — tiệm cận BĐ2 (19.5m), đang mở tràn xả lũ`,
-        `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--evg-accent-text)" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg> Đê Hữu Đáy K18+500: <b>Mạch sủi thẩm lậu</b> — Đội ƯCSC số 3 đang ứng cứu`,
+        `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg> Hồ Tuy Lai: Mực nước <b>19.2m</b> — tiệm cận BĐ2 (19.5m), đang mở tràn xả lũ`,
+        `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--danger)" stroke-width="2" style="vertical-align:middle"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg> Đê Hữu Đáy K18+500: <b>Mạch sủi thẩm lậu</b> — Đội ƯCSC số 3 đang ứng cứu`,
         `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Trạm Hà Nội (sông Hồng): Mực nước <b>4.82m</b> — đang tăng`,
-        `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--evg-accent-text)" stroke-width="2" style="vertical-align:middle"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> <b>${critAlarms} cảnh báo khẩn</b> chưa xử lý · ${openIncidents} sự cố đang theo dõi`,
+        `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--warning)" stroke-width="2" style="vertical-align:middle"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> <b>${critAlarms} cảnh báo khẩn</b> chưa xử lý · ${openIncidents} sự cố đang theo dõi`,
         `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M12 2C12 2 4 10 4 14a8 8 0 0016 0C20 10 12 2 12 2z"/></svg> Lượng mưa 12h qua: <b>210mm</b> tại Ba Thá/Đáy — vượt ngưỡng báo động`,
         `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg> Lực lượng ứng trực: <b>${BIZ_STATS.onDutyStaff} cán bộ</b> · ${BIZ_STATS.fieldTeams} đội hiện trường`,
         `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> <b>${pendingCmds}</b> lệnh đang chờ phê duyệt — vào Điều hành để xử lý`,
@@ -102,7 +102,7 @@ function renderDashboard() {
   ${isVisible('kpi') ? `
   <div class="kpi-grid" style="margin-bottom:16px">
     <!-- Card 1: Cảnh báo khẩn -->
-    <div class="kpi-card" style="--accent-color:var(--danger)">
+    <div class="kpi-card kpi-card-critical" style="--accent-color:var(--danger)">
       <div class="kpi-card-content">
         <div class="kpi-label">Cảnh báo chưa xử lý</div>
         <div class="kpi-value kpi-val-alarms" style="color:var(--danger)">${critAlarms}</div>
@@ -127,7 +127,7 @@ function renderDashboard() {
     </div>
 
     <!-- Card 3: Sự cố đang xử lý -->
-    <div class="kpi-card has-sparkline" style="--accent-color:var(--warning)">
+    <div class="kpi-card kpi-card-warning has-sparkline" style="--accent-color:var(--warning)">
       <div class="kpi-card-content">
         <div class="kpi-label">Sự cố đang xử lý</div>
         <div class="kpi-value" id="kpiIncidents">${openIncidents}</div>
@@ -140,7 +140,7 @@ function renderDashboard() {
     </div>
 
     <!-- Card 4: Chờ phê duyệt -->
-    <div class="kpi-card" style="--accent-color:var(--info)">
+    <div class="kpi-card kpi-card-info" style="--accent-color:var(--info)">
       <div class="kpi-card-content">
         <div class="kpi-label">Lệnh chờ phê duyệt</div>
         <div class="kpi-value" id="kpiPending" style="color:var(--info)">${pendingCmds}</div>
@@ -152,7 +152,7 @@ function renderDashboard() {
     </div>
 
     <!-- Card 5: Hồ chứa báo động -->
-    <div class="kpi-card has-sparkline" style="--accent-color:var(--info)">
+    <div class="kpi-card ${critReservoirs > 0 ? 'kpi-card-critical' : 'kpi-card-positive'} has-sparkline" style="--accent-color:var(--info)">
       <div class="kpi-card-content">
         <div class="kpi-label">Hồ chứa báo động</div>
         <div class="kpi-value" style="color:${critReservoirs > 0 ? 'var(--danger)' : 'var(--success)'}">${critReservoirs}<span style="font-size:14px;color:var(--muted)">/6</span></div>
@@ -165,7 +165,7 @@ function renderDashboard() {
     </div>
 
     <!-- Card 6: Đê xung yếu -->
-    <div class="kpi-card has-sparkline" style="--accent-color:var(--warning)">
+    <div class="kpi-card kpi-card-warning has-sparkline" style="--accent-color:var(--warning)">
       <div class="kpi-card-content">
         <div class="kpi-label">Đê cần theo dõi</div>
         <div class="kpi-value" style="color:var(--warning)">${DIKE_DATA.filter(d => d.condition !== 'ok').length}<span style="font-size:14px;color:var(--muted)">/${DIKE_DATA.length} tuyến</span></div>
@@ -208,7 +208,7 @@ function renderDashboard() {
             <div><div style="font-size:13px;font-weight:500">${s.name}</div><div style="font-size:11px;color:var(--muted)">${s.factory}</div></div>
           </div>
           <div style="text-align:right">
-            <div style="font-size:13px;font-family:'Roboto Mono',monospace;color:${s.status === 'offline' ? 'var(--muted)' : 'var(--evg-accent-text)'}">
+            <div style="font-size:13px;font-family:'Roboto Mono',monospace;color:${s.status === 'offline' ? 'var(--muted)' : s.waterLevel >= s.alertLevel2 ? 'var(--danger)' : s.waterLevel >= s.alertLevel1 ? 'var(--warning)' : 'var(--evg-accent-text)'}">
               ${s.status !== 'offline' ? s.waterLevel + 'm' : '—'}
             </div>
             <div style="font-size:11px;color:var(--muted)">${s.status !== 'offline' ? '🌧 ' + s.rainfall + 'mm' : 'Offline'}</div>
@@ -224,7 +224,7 @@ function renderDashboard() {
         ${RESERVOIR_DATA.map(r => {
           const pct = Math.round((r.currentLevel - r.deadLevel) / (r.designLevel - r.deadLevel) * 100);
           const alertPct = Math.round((r.designLevel * 1.0 - r.deadLevel) / (r.designLevel - r.deadLevel) * 100);
-          const barColor = 'var(--evg-accent)';
+          const barColor = r.status === 'critical' ? 'var(--danger)' : r.status === 'warning' ? 'var(--warning)' : 'var(--evg-accent)';
           return `
           <div style="padding:8px 0;border-bottom:1px solid var(--border)">
             <div style="display:flex;justify-content:space-between;margin-bottom:5px">
@@ -233,7 +233,7 @@ function renderDashboard() {
             </div>
             <div style="position:relative;height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden">
               <div style="position:absolute;left:0;top:0;height:100%;width:${Math.min(pct, 100)}%;background:${barColor};border-radius:4px;transition:width .6s"></div>
-              <div style="position:absolute;top:-2px;height:12px;width:2px;background:var(--evg-green-strong);left:${alertPct}%;opacity:.7" title="Mức thiết kế"></div>
+              <div style="position:absolute;top:-2px;height:12px;width:2px;background:var(--danger);left:${alertPct}%;opacity:.7" title="Mức thiết kế"></div>
             </div>
             <div style="display:flex;justify-content:space-between;margin-top:3px">
               <span style="font-size:10px;color:var(--muted)">${r.district}</span>
@@ -268,7 +268,7 @@ function renderDashboard() {
     </div>
     <div style="padding:0 16px 16px">
       ${DIKE_DATA.map(d => {
-        const condColor = d.condition === 'critical' ? 'var(--evg-green-strong)' : d.condition === 'warning' ? 'var(--evg-accent)' : 'var(--evg-green-mid)';
+        const condColor = d.condition === 'critical' ? 'var(--danger)' : d.condition === 'warning' ? 'var(--warning)' : 'var(--evg-accent)';
         const condLabel = d.condition === 'critical' ? 'Xung yếu' : d.condition === 'warning' ? 'Cảnh báo' : 'Đạt tiêu chuẩn';
         const pct = Math.round((d.heightCurrent / d.heightDesign) * 100);
         return `
@@ -312,11 +312,10 @@ window.afterRender_dashboard = function () {
       }
     });
   }
-  const sparklineColor = getThemeColor('--evg-accent', '#2FBF71');
-  sparkline('spk2', [7, 7, 8, 8, 7, 8, 6], sparklineColor);
-  sparkline('spk3', [25, 22, 18, 20, 24, 21, 20], sparklineColor);
-  sparkline('spk5', [0, 0, 0, 0, 1, 1, 1], sparklineColor);
-  sparkline('spk6', [1, 2, 2, 2, 3, 3, 3], sparklineColor);
+  sparkline('spk2', [7, 7, 8, 8, 7, 8, 6], getThemeColor('--evg-accent', '#2FBF71'));
+  sparkline('spk3', [25, 22, 18, 20, 24, 21, 20], getThemeColor('--warning', '#946200'));
+  sparkline('spk5', [0, 0, 0, 0, 1, 1, 1], getThemeColor('--danger', '#E14E54'));
+  sparkline('spk6', [1, 2, 2, 2, 3, 3, 3], getThemeColor('--warning', '#946200'));
 
   // Draw charts based on selected range
   drawDashCharts();
@@ -338,12 +337,10 @@ window.afterRender_dashboard = function () {
 function drawDashCharts() {
   const d = DASH_CHART_DATA[dashTimeRange] || DASH_CHART_DATA.today;
   const palette = getChartPalette();
-  const gridColor = hexToRgba(getThemeColor('--evg-green-mid', '#58CB89'), .08);
-  const evgStrong = getThemeColor('--evg-green-strong', '#137A43');
+  const gridColor = hexToRgba(palette.primary, .07);
   const evgAccent = getThemeColor('--evg-accent', '#2FBF71');
-  const evgMid = getThemeColor('--evg-green-mid', '#58CB89');
-  const evgLight = getThemeColor('--evg-green-light', '#8FDEB1');
-  const alertColors = [evgStrong, evgAccent, evgMid, evgLight];
+  const primaryText = getThemeColor('--primary-text', '#0B5CAD');
+  const alertColors = [palette.primary, palette.cyan, evgAccent, primaryText];
 
   function renderLegend(containerId, items) {
     const container = document.getElementById(containerId);
@@ -365,7 +362,7 @@ function drawDashCharts() {
     label: ds.label,
     color: alertColors[i % alertColors.length]
   })));
-  renderLegend('chartMonthlyLegend', [{ label: d.monthlyLabel, color: evgAccent }]);
+  renderLegend('chartMonthlyLegend', [{ label: d.monthlyLabel, color: palette.info }]);
 
   // Water level line chart
   const ctx1 = document.getElementById('chartOutput');
@@ -402,8 +399,8 @@ function drawDashCharts() {
         datasets: [{
           label: d.monthlyLabel,
           data: d.monthlyData,
-          backgroundColor: d.monthlyData.map(v => v >= 200 ? hexToRgba(evgStrong, .62) : v >= 100 ? hexToRgba(evgAccent, .52) : hexToRgba(evgMid, .42)),
-          borderColor: d.monthlyData.map(v => v >= 200 ? evgStrong : v >= 100 ? evgAccent : evgMid),
+          backgroundColor: d.monthlyData.map(v => v >= 200 ? hexToRgba(palette.danger, .52) : v >= 100 ? hexToRgba(palette.warning, .45) : hexToRgba(palette.info, .42)),
+          borderColor: d.monthlyData.map(v => v >= 200 ? palette.danger : v >= 100 ? palette.warning : palette.info),
           borderWidth: 1.5, borderRadius: 4
         }]
       },

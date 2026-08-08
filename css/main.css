@@ -1039,7 +1039,7 @@ body.dark .page-dashboard {
 }
 
 .page-dashboard .kpi-value {
-  color: var(--evg-accent-text) !important;
+  color: var(--dashboard-heading);
   font-family: 'Inter', sans-serif;
   font-size: 28px;
   font-weight: 600;
@@ -1052,10 +1052,22 @@ body.dark .page-dashboard {
   font-size: 11px;
 }
 
-.page-dashboard .kpi-sub[style],
-.page-dashboard .kpi-trend-up,
-.page-dashboard .kpi-trend-down {
-  color: var(--dashboard-copy) !important;
+.page-dashboard .kpi-card-critical .kpi-value,
+.page-dashboard .kpi-card-critical .kpi-sub {
+  color: var(--danger) !important;
+}
+
+.page-dashboard .kpi-card-positive .kpi-value,
+.page-dashboard .kpi-card-positive .kpi-status strong {
+  color: var(--evg-accent-text) !important;
+}
+
+.page-dashboard .kpi-card-warning .kpi-value {
+  color: var(--warning-text) !important;
+}
+
+.page-dashboard .kpi-card-info .kpi-value {
+  color: var(--primary) !important;
 }
 
 .page-dashboard .kpi-card.has-sparkline .kpi-card-content {
@@ -1081,49 +1093,14 @@ body.dark .page-dashboard {
   height: 18px;
 }
 
-.page-dashboard .kpi-status strong {
-  color: var(--evg-accent-text) !important;
-}
-
 .page-dashboard .kpi-card-positive .kpi-status-dot {
   background: var(--evg-accent);
   box-shadow: 0 0 0 3px var(--evg-accent-soft);
 }
 
-.page-dashboard .kpi-icon.icon-positive,
-.page-dashboard .kpi-icon.icon-danger,
-.page-dashboard .kpi-icon.icon-warning,
-.page-dashboard .kpi-icon.icon-primary,
-.page-dashboard .kpi-icon.icon-info {
+.page-dashboard .kpi-icon.icon-positive {
   --icon-color: var(--evg-accent-text);
   --icon-soft: var(--evg-accent-soft);
-}
-
-.page-dashboard .pulse-dot.green,
-.page-dashboard .pulse-dot.yellow,
-.page-dashboard .pulse-dot.red {
-  background: var(--evg-accent);
-  box-shadow: none;
-}
-
-.page-dashboard .alarm-item.critical,
-.page-dashboard .alarm-item.warning,
-.page-dashboard .alarm-item.info {
-  border-color: color-mix(in srgb, var(--evg-accent) 24%, var(--border));
-  background: color-mix(in srgb, var(--evg-accent) 5%, var(--bg-card));
-}
-
-.page-dashboard .alarm-dot.critical,
-.page-dashboard .alarm-dot.warning,
-.page-dashboard .alarm-dot.info {
-  background: var(--evg-accent);
-  box-shadow: none;
-}
-
-.page-dashboard .badge-red {
-  color: var(--evg-accent-text);
-  background: var(--evg-accent-soft);
-  border-color: color-mix(in srgb, var(--evg-accent) 30%, var(--border));
 }
 
 .page-dashboard .card {
