@@ -143,7 +143,7 @@ function renderCommunityReports() {
     <!-- Right: tab bar + table (fluid, scrollable internally) -->
     <div style="min-width:0">
       <!-- Tabs + search -->
-      <div class="tabs" style="margin-bottom:12px;flex-wrap:wrap;gap:4px">
+      <div class="tabs" style="margin-bottom:12px">
         ${tabs.map(t => `
         <button class="tab-btn ${crTab === t.id ? 'active' : ''}" onclick="switchCrTab('${t.id}')">
           ${t.label}

@@ -3,6 +3,8 @@
  * System Flow: Brand Seed -> Mode Resolver -> Semantic Theme Tokens -> Component Tokens -> UI
  */
 
+const LOCKED_BRAND_PRESET = 'evg-classic-navy';
+
 const BRAND_SEEDS = {
   'evg-emerald': {
     id: 'evg-emerald',
@@ -67,10 +69,15 @@ const BRAND_SEEDS = {
     activeBlueHover: '#1877E7',
     primaryDark: '#45D483',
     primaryDarkHover: '#62DE97',
-    navActiveStart: 'rgba(77,191,252,0.05)',
-    navActiveEnd: 'rgba(77,179,252,0.50)',
-    navActiveBorder: '#41A7FF',
-    navActiveShadow: '0 0 25px #4C76D6B2 inset',
+    navActiveStart: '#30BD6F',
+    navActiveEnd: '#27A962',
+    navActiveText: '#06101F',
+    navActiveBorder: '#8FDEB1',
+    navActiveShadow: '0 0 20px rgba(48,189,111,0.26) inset',
+    sidebarBrandText: '#FFFFFF',
+    sidebarControlAccent: '#45D483',
+    tickerTextLight: '#137A43',
+    tickerTextDark: '#83E8AD',
     headerDark: '#192B54',
     workspaceDark: 'linear-gradient(180deg, #1E3883 0%, #192B54 100%)',
     brandGreen: '#30BD6F',
@@ -378,12 +385,9 @@ function setCustomPaletteConfig(config = {}) {
 
 // ── ADAPTIVE SEMANTIC TOKEN RESOLVER ─────────────────────────────────
 
-function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
-  if (presetId === 'custom-brand') {
-    const custom = getCustomPaletteConfig();
-    BRAND_SEEDS['custom-brand'] = createCustomBrandSeed(custom.primary, custom.darkBrightness, custom);
-  }
-  const seed = BRAND_SEEDS[presetId] || BRAND_SEEDS['evg-emerald'];
+function resolveSemanticTokens(presetId = LOCKED_BRAND_PRESET, isDark = false) {
+  presetId = LOCKED_BRAND_PRESET;
+  const seed = BRAND_SEEDS[LOCKED_BRAND_PRESET];
   const sidebarBg = `linear-gradient(180deg, ${seed.sidebarTop || seed.sidebarNavy} 0%, ${seed.sidebarBottom || seed.sidebarNavy} 100%)`;
   const sidebarActive = `linear-gradient(180deg, ${seed.navActiveStart || seed.activeBlue} 0%, ${seed.navActiveEnd || seed.activeBlueEnd || seed.activeBlue} 100%)`;
   const sidebarBorder = seed.sidebarBorder || 'rgba(255, 255, 255, 0.16)';
@@ -408,6 +412,8 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
     const sidebarTextActive = seed.navActiveText || '#FFFFFF';
 
     const brandPrimary = seed.brandGreen || '#30BD6F';
+    const sidebarBrandText = seed.sidebarBrandText || '#FFFFFF';
+    const sidebarControlAccent = seed.sidebarControlAccent || seed.sidebarBrandAccent || sidebarGroupLabel || brandPrimary;
     const primaryHover = seed.brandGreenHover || '#1BA05C';
     const primaryPressed = seed.brandGreenActive || '#168B50';
     const primarySoft = themeHexToRgba(brandPrimary, 0.12);
@@ -450,6 +456,8 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--color-sidebar-text': sidebarText,
       '--color-sidebar-text-active': sidebarTextActive,
       '--color-sidebar-group-label': sidebarGroupLabel,
+      '--color-sidebar-brand-text': sidebarBrandText,
+      '--color-sidebar-control-accent': sidebarControlAccent,
 
       '--color-text-primary': textPrimary,
       '--color-text-secondary': textSecondary,
@@ -461,6 +469,16 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--color-primary-hover': primaryHover,
       '--color-primary-pressed': primaryPressed,
       '--color-primary-soft': primarySoft,
+
+      '--color-tab-list-border': '#DBDFF1',
+      '--color-tab-background': '#EEF1F6',
+      '--color-tab-hover-background': '#E4E9F1',
+      '--color-tab-text': '#7E8299',
+      '--color-tab-hover-text': '#494968',
+      '--color-tab-active-background': buttonPrimaryBackground,
+      '--color-tab-active-text': buttonPrimaryText,
+      '--color-tab-focus': brandPrimary,
+      '--color-tab-active-shadow': `0 4px 12px ${themeHexToRgba(buttonPrimaryBackground, 0.24)}`,
 
       '--color-success': success,
       '--color-success-soft': successSoft,
@@ -520,7 +538,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--header-background': headerBackground,
       '--ticker-background': tickerBackground,
       '--ticker-border': cardBorder,
-      '--ticker-text': textSecondary,
+      '--ticker-text': seed.tickerTextLight || textSecondary,
       '--bg-sidebar': sidebarBg,
       '--bg-dropdown': '#FFFFFF',
       '--bg-dropdown2': '#F9F9F9',
@@ -533,6 +551,8 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--sidebar-text': sidebarText,
       '--sidebar-text-active': sidebarTextActive,
       '--sidebar-section-accent': sidebarGroupLabel,
+      '--sidebar-brand-text': sidebarBrandText,
+      '--sidebar-control-accent': sidebarControlAccent,
       '--text': textPrimary,
       '--text-primary': textPrimary,
       '--text-2': textSecondary,
@@ -588,6 +608,8 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
     const sidebarItemActive = sidebarActive;
 
     const brandPrimary = seed.primaryDark || seed.brandGreen || '#45D483';
+    const sidebarBrandText = seed.sidebarBrandText || '#FFFFFF';
+    const sidebarControlAccent = seed.sidebarControlAccent || seed.sidebarBrandAccent || sidebarGroupLabel || brandPrimary;
     const primaryHover = seed.primaryDarkHover || '#62DE97';
     const primaryPressed = seed.brandGreenActive || '#32BA70';
     const primarySoft = themeHexToRgba(brandPrimary, 0.16);
@@ -632,6 +654,8 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--color-sidebar-text': textPrimary,
       '--color-sidebar-text-active': seed.navActiveText || '#FFFFFF',
       '--color-sidebar-group-label': sidebarGroupLabel,
+      '--color-sidebar-brand-text': sidebarBrandText,
+      '--color-sidebar-control-accent': sidebarControlAccent,
 
       '--color-text-primary': textPrimary,
       '--color-text-secondary': textSecondary,
@@ -643,6 +667,16 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--color-primary-hover': primaryHover,
       '--color-primary-pressed': primaryPressed,
       '--color-primary-soft': primarySoft,
+
+      '--color-tab-list-border': cardBorder,
+      '--color-tab-background': surfaceMuted,
+      '--color-tab-hover-background': cardAlt,
+      '--color-tab-text': textMuted,
+      '--color-tab-hover-text': textPrimary,
+      '--color-tab-active-background': buttonPrimaryBackground,
+      '--color-tab-active-text': buttonPrimaryText,
+      '--color-tab-focus': brandPrimary,
+      '--color-tab-active-shadow': `0 4px 14px ${themeHexToRgba(buttonPrimaryBackground, 0.28)}`,
 
       '--color-success': success,
       '--color-success-soft': successSoft,
@@ -702,7 +736,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--header-background': headerBackground,
       '--ticker-background': tickerBackground,
       '--ticker-border': cardBorder,
-      '--ticker-text': textSecondary,
+      '--ticker-text': seed.tickerTextDark || textSecondary,
       '--bg-sidebar': sidebarBg,
       '--bg-dropdown': elevated,
       '--bg-dropdown2': surfaceSecondary,
@@ -715,6 +749,8 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
       '--sidebar-text': textPrimary,
       '--sidebar-text-active': seed.navActiveText || '#FFFFFF',
       '--sidebar-section-accent': sidebarGroupLabel,
+      '--sidebar-brand-text': sidebarBrandText,
+      '--sidebar-control-accent': sidebarControlAccent,
       '--text': textPrimary,
       '--text-primary': textPrimary,
       '--text-2': textSecondary,
@@ -745,7 +781,7 @@ function resolveSemanticTokens(presetId = 'evg-emerald', isDark = false) {
 }
 
 function applyGlobalTheme(presetId = null, mode = null) {
-  const currentPreset = presetId || localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
+  const currentPreset = LOCKED_BRAND_PRESET;
   const currentMode = mode || localStorage.getItem('ioc_theme') || 'light';
   const isDark = currentMode === 'dark';
 
@@ -759,6 +795,9 @@ function applyGlobalTheme(presetId = null, mode = null) {
 
   document.body.setAttribute('data-brand-preset', currentPreset);
   localStorage.setItem('ioc_brand_preset', currentPreset);
+  localStorage.removeItem('ioc_custom_palette');
+  localStorage.removeItem('ioc_palette_position');
+  localStorage.removeItem('ioc_login_palette_position');
   localStorage.setItem('ioc_theme', currentMode);
 
   const tokens = resolveSemanticTokens(currentPreset, isDark);

@@ -106,7 +106,7 @@ function renderPcttMedia() {
   }).join('');
 
   const paginationBtns = Array.from({length:totalPages},(_,i) => i+1).map(p =>
-    `<button onclick="window._mediaGoPage(${p})" style="width:32px;height:32px;border-radius:7px;border:1px solid ${p===_mediaState.page?'var(--primary)':'var(--border)'};background:${p===_mediaState.page?'rgba(0,200,255,.12)':'transparent'};color:${p===_mediaState.page?'var(--primary)':'var(--text)'};font-size:12px;cursor:pointer">${p}</button>`
+    `<button class="pagination-page ${p===_mediaState.page?'active':''}" onclick="window._mediaGoPage(${p})">${p}</button>`
   ).join('');
 
   return `
@@ -166,12 +166,14 @@ function renderPcttMedia() {
         <option value="views" ${_mediaState.sort==='views'?'selected':''}>Lượt xem</option>
         <option value="title" ${_mediaState.sort==='title'?'selected':''}>A-Z tiêu đề</option>
       </select>
-      <button title="Lưới" onclick="window._mediaState.view='grid';window._rerenderMedia()" style="width:34px;height:34px;border-radius:7px;border:1px solid ${_mediaState.view==='grid'?'var(--primary)':'var(--border)'};background:${_mediaState.view==='grid'?'rgba(0,200,255,.1)':'transparent'};cursor:pointer;display:flex;align-items:center;justify-content:center">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${_mediaState.view==='grid'?'var(--primary)':'var(--muted)'}" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-      </button>
-      <button title="Danh sách" onclick="window._mediaState.view='list';window._rerenderMedia()" style="width:34px;height:34px;border-radius:7px;border:1px solid ${_mediaState.view==='list'?'var(--primary)':'var(--border)'};background:${_mediaState.view==='list'?'rgba(0,200,255,.1)':'transparent'};cursor:pointer;display:flex;align-items:center;justify-content:center">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="${_mediaState.view==='list'?'var(--primary)':'var(--muted)'}" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-      </button>
+      <div class="ui-segmented" aria-label="Kiểu hiển thị tài liệu">
+        <button class="ui-segmented__item btn-icon ${_mediaState.view==='grid'?'active':''}" title="Lưới" aria-label="Hiển thị dạng lưới" onclick="window._mediaState.view='grid';window._rerenderMedia()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </button>
+        <button class="ui-segmented__item btn-icon ${_mediaState.view==='list'?'active':''}" title="Danh sách" aria-label="Hiển thị dạng danh sách" onclick="window._mediaState.view='list';window._rerenderMedia()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -189,10 +191,10 @@ function renderPcttMedia() {
 
   <!-- Pagination -->
   ${totalPages > 1 ? `
-  <div style="display:flex;justify-content:center;align-items:center;gap:6px;margin-top:20px">
-    <button onclick="window._mediaGoPage(${_mediaState.page-1})" ${_mediaState.page<=1?'disabled':''} style="padding:6px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:12px">← Trước</button>
+  <div class="pagination-btns" style="justify-content:center;margin-top:20px">
+    <button class="btn btn-ghost btn-sm" onclick="window._mediaGoPage(${_mediaState.page-1})" ${_mediaState.page<=1?'disabled':''}>← Trước</button>
     ${paginationBtns}
-    <button onclick="window._mediaGoPage(${_mediaState.page+1})" ${_mediaState.page>=totalPages?'disabled':''} style="padding:6px 12px;border-radius:7px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;font-size:12px">Sau →</button>
+    <button class="btn btn-ghost btn-sm" onclick="window._mediaGoPage(${_mediaState.page+1})" ${_mediaState.page>=totalPages?'disabled':''}>Sau →</button>
   </div>` : ''}
   </div><!-- end mediaMainContent -->`;
 }
@@ -200,7 +202,7 @@ function renderPcttMedia() {
 let _mediaMainTab = 'library';
 window.switchMediaMainTab = function(tab, btn) {
   _mediaMainTab = tab;
-  document.querySelectorAll('#mediaTabLib,#mediaTabSocial,#mediaTabTts').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('#mediaTabLibrary,#mediaTabSocial,#mediaTabTts').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   const cont = document.getElementById('mediaMainContent');
   if (!cont) return;

@@ -49,9 +49,7 @@ function renderDocManagement() {
 .dm-doc-kpi{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:12px}
 .dm-doc-kpi-val{font-size:26px;font-weight:900;line-height:1}
 .dm-doc-kpi-lbl{font-size:10px;color:rgba(255,255,255,.38);font-weight:600;margin-top:2px}
-.dm-doc-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
-.dm-doc-chip{padding:5px 14px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);transition:all .18s}
-.dm-doc-chip.active{color:#fff;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2)}
+.dm-doc-filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
 .dm-doc-table{width:100%;border-collapse:collapse}
 .dm-doc-table th{font-size:10px;font-weight:700;color:rgba(255,255,255,.32);text-transform:uppercase;letter-spacing:.07em;padding:8px 12px;text-align:left;border-bottom:1px solid rgba(255,255,255,.07)}
 .dm-doc-table td{padding:10px 12px;font-size:12px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:middle}
@@ -110,17 +108,16 @@ function renderDocManagement() {
       <input type="text" class="form-control form-control-sm" placeholder="Tìm kiếm mã số, tiêu đề..." style="padding-left:30px;width:240px" value="${dmDocSearch}"
         oninput="dmDocSearchFn(this.value)">
     </div>
-    <button class="dm-doc-chip ${dmDocTab==='all'?'active':''}" onclick="dmDocSetTab('all')">Tất cả</button>
-    <button class="dm-doc-chip ${dmDocTab==='urgent'?'active':''}" onclick="dmDocSetTab('urgent')" style="${dmDocTab==='urgent'?'border-color:#ef444444;color:#fca5a5;background:rgba(239,68,68,.1)':''}">
-      Khẩn cấp
-      <span style="background:#ef4444;color:#fff;font-size:9px;border-radius:20px;padding:1px 5px;margin-left:4px;font-weight:800">${urgent}</span>
-    </button>
-    <button class="dm-doc-chip ${dmDocTab==='draft'?'active':''}" onclick="dmDocSetTab('draft')">Bản nháp</button>
-    <div style="width:1px;height:20px;background:rgba(255,255,255,.1)"></div>
-    ${Object.entries(DM_CATEGORIES).map(([key, cat]) =>
-      `<button class="dm-doc-chip ${dmDocTab===key?'active':''}" onclick="dmDocSetTab('${key}')"
-        style="${dmDocTab===key?`border-color:${cat.color}44;color:${cat.color};background:${cat.color}15`:''}"
-      >${cat.label}</button>`).join('')}
+    <div class="ui-segmented" aria-label="Lọc loại tài liệu">
+      <button class="ui-segmented__item ${dmDocTab==='all'?'active':''}" onclick="dmDocSetTab('all')">Tất cả</button>
+      <button class="ui-segmented__item ${dmDocTab==='urgent'?'active':''}" onclick="dmDocSetTab('urgent')">
+        Khẩn cấp
+        <span class="badge badge-red" style="margin-left:4px">${urgent}</span>
+      </button>
+      <button class="ui-segmented__item ${dmDocTab==='draft'?'active':''}" onclick="dmDocSetTab('draft')">Bản nháp</button>
+      ${Object.keys(DM_CATEGORIES).map(key =>
+        `<button class="ui-segmented__item ${dmDocTab===key?'active':''}" onclick="dmDocSetTab('${key}')">${DM_CATEGORIES[key].label}</button>`).join('')}
+    </div>
   </div>
 
   <!-- Document Table -->

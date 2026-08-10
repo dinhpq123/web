@@ -181,7 +181,7 @@ function renderDashboard() {
   <!-- Charts Row -->
   ${isVisible('charts') ? `
   <div class="grid-2" style="margin-bottom:16px">
-    <div class="card"><div class="card-header"><span class="card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Mực nước các trạm (m)</span>
+    <div class="card dashboard-chart-card"><div class="card-header"><span class="card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Mực nước các trạm (m)</span>
       <div style="display:flex;gap:4px">
         <span id="chartRangeLabel" style="font-size:11px;color:var(--muted);align-self:center">${dashTimeRange === 'today' ? 'Hôm nay' : dashTimeRange === 'week' ? '7 ngày' : '6 tháng'}</span>
       </div>
@@ -189,7 +189,7 @@ function renderDashboard() {
       <div class="dashboard-chart-legend" id="chartOutputLegend" aria-label="Chú giải mực nước"></div>
       <div class="card-body dashboard-chart-body"><div class="chart-wrap"><canvas id="chartOutput"></canvas></div></div>
     </div>
-    <div class="card"><div class="card-header"><span class="card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C12 2 4 10 4 14a8 8 0 0016 0C20 10 12 2 12 2z"/></svg>Lượng mưa (mm)</span></div>
+    <div class="card dashboard-chart-card"><div class="card-header"><span class="card-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C12 2 4 10 4 14a8 8 0 0016 0C20 10 12 2 12 2z"/></svg>Lượng mưa (mm)</span></div>
       <div class="dashboard-chart-legend" id="chartMonthlyLegend" aria-label="Chú giải lượng mưa"></div>
       <div class="card-body dashboard-chart-body"><div class="chart-wrap"><canvas id="chartMonthly"></canvas></div></div>
     </div>
@@ -338,9 +338,15 @@ function drawDashCharts() {
   const d = DASH_CHART_DATA[dashTimeRange] || DASH_CHART_DATA.today;
   const palette = getChartPalette();
   const gridColor = hexToRgba(palette.primary, .07);
-  const evgAccent = getThemeColor('--evg-accent', '#2FBF71');
-  const primaryText = getThemeColor('--primary-text', '#0B5CAD');
-  const alertColors = [palette.primary, palette.cyan, evgAccent, primaryText];
+  // Data-series colors stay independent from the selected brand theme. This
+  // prevents a green preset from collapsing every station into one hue.
+  const stationColors = ['#30BD6F', '#FF4D57', '#FFC400', '#00D4FF'];
+  const stationLineStyles = [
+    { borderDash: [], pointStyle: 'circle' },
+    { borderDash: [8, 4], pointStyle: 'rect' },
+    { borderDash: [3, 3], pointStyle: 'triangle' },
+    { borderDash: [12, 4, 3, 4], pointStyle: 'rectRot' }
+  ];
 
   function renderLegend(containerId, items) {
     const container = document.getElementById(containerId);
@@ -360,7 +366,7 @@ function drawDashCharts() {
 
   renderLegend('chartOutputLegend', d.outputDatasets.map((ds, i) => ({
     label: ds.label,
-    color: alertColors[i % alertColors.length]
+    color: stationColors[i % stationColors.length]
   })));
   renderLegend('chartMonthlyLegend', [{ label: d.monthlyLabel, color: palette.info }]);
 
@@ -374,8 +380,12 @@ function drawDashCharts() {
         labels: d.outputLabels,
         datasets: d.outputDatasets.map((ds, i) => ({
           label: ds.label, data: ds.data,
-          borderColor: alertColors[i % alertColors.length],
-          backgroundColor: hexToRgba(alertColors[i % alertColors.length], 0.08),
+          borderColor: stationColors[i % stationColors.length],
+          backgroundColor: hexToRgba(stationColors[i % stationColors.length], 0.08),
+          pointBackgroundColor: stationColors[i % stationColors.length],
+          pointBorderColor: stationColors[i % stationColors.length],
+          borderDash: stationLineStyles[i % stationLineStyles.length].borderDash,
+          pointStyle: stationLineStyles[i % stationLineStyles.length].pointStyle,
           fill: false, tension: .4, pointRadius: 3, borderWidth: 2
         }))
       },

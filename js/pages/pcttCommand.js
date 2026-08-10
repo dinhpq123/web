@@ -329,7 +329,7 @@ function _renderCmdTab(cmdLogs, activeScn, totalForce, totalMax) {
           <button class="btn btn-ghost btn-sm" ${cmdLogPage===1?'disabled':''} onclick="changeCmdLogPage(${cmdLogPage-1})">Trước</button>
           ${Array.from({length:Math.min(totalPages,7)},(_,i)=>{
             const p = totalPages<=7 ? i+1 : cmdLogPage<=4 ? i+1 : Math.min(cmdLogPage+i-3,totalPages);
-            return `<button class="btn btn-sm" style="min-width:32px;border:1px solid ${p===cmdLogPage?'var(--primary)':'var(--border)'};background:${p===cmdLogPage?'rgba(0,200,255,.15)':'transparent'};color:${p===cmdLogPage?'var(--primary)':'var(--muted)'}" onclick="changeCmdLogPage(${p})">${p}</button>`;
+            return `<button class="pagination-page ${p===cmdLogPage?'active':''}" onclick="changeCmdLogPage(${p})">${p}</button>`;
           }).join('')}
           <button class="btn btn-ghost btn-sm" ${cmdLogPage===totalPages?'disabled':''} onclick="changeCmdLogPage(${cmdLogPage+1})">Sau</button>
         </div>

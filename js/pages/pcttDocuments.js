@@ -146,9 +146,9 @@ function _renderPakhTab() {
   const filteredPakh = PAKH_DATA.filter(p => p.level === _pakhLevel && p.year === _pakhYear);
   return `
   <div style="display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap">
-    <div style="display:flex;gap:4px;background:rgba(255,255,255,.05);border-radius:10px;padding:4px">
+    <div class="ui-segmented" style="margin:0">
       ${['city','district','commune'].map(lvl=>`
-      <button style="padding:6px 16px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;border:none;background:${_pakhLevel===lvl?'rgba(255,255,255,.12)':'transparent'};color:${_pakhLevel===lvl?'#fff':'rgba(255,255,255,.45)'}" onclick="window._pakhLevel='${lvl}';window.rerenderDocsPage()">${levelLabels[lvl]}</button>`).join('')}
+      <button class="ui-segmented__item ${_pakhLevel===lvl?'active':''}" onclick="window._pakhLevel='${lvl}';window.rerenderDocsPage()">${levelLabels[lvl]}</button>`).join('')}
     </div>
     <select class="form-control" style="width:120px" onchange="window._pakhYear=+this.value;window.rerenderDocsPage()">
       ${[2026,2025,2024].map(y=>`<option value="${y}" ${_pakhYear===y?'selected':''}>${y}</option>`).join('')}

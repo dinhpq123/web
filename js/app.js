@@ -1363,7 +1363,7 @@ function renderSettingsRag() {
 // ── THEME (DARK / LIGHT & BRAND PRESET) ───────────────────────────
 function initTheme() {
   const t = localStorage.getItem('ioc_theme') || 'light';
-  const brand = localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
+  const brand = 'evg-classic-navy';
 
   if (window.ThemeEngine && typeof window.ThemeEngine.applyGlobalTheme === 'function') {
     window.ThemeEngine.applyGlobalTheme(brand, t);
@@ -1372,203 +1372,6 @@ function initTheme() {
     else document.body.classList.remove('dark');
   }
   updateThemeUI(t);
-}
-
-function getPaletteCustomizerConfig() {
-  if (window.ThemeEngine?.getCustomPaletteConfig) return window.ThemeEngine.getCustomPaletteConfig();
-  return { primary: '#30BD6F', darkBrightness: 32 };
-}
-
-function updatePaletteCustomizerUi() {
-  const config = getPaletteCustomizerConfig();
-  const preset = localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
-  const mode = localStorage.getItem('ioc_theme') || 'light';
-  const presetInput = document.getElementById('palettePreset');
-  const colorInput = document.getElementById('paletteColor');
-  const hexInput = document.getElementById('paletteHex');
-  const brightnessInput = document.getElementById('paletteBrightness');
-  const brightnessValue = document.getElementById('paletteBrightnessValue');
-  const modeInput = document.getElementById('paletteMode');
-  const swatches = document.getElementById('paletteSwatches');
-
-  if (presetInput) presetInput.value = preset;
-  if (colorInput) colorInput.value = config.primary;
-  if (hexInput) hexInput.value = config.primary;
-  if (brightnessInput) brightnessInput.value = config.darkBrightness;
-  if (brightnessValue) brightnessValue.textContent = `${config.darkBrightness}%`;
-  if (modeInput) modeInput.value = mode;
-
-  if (swatches && window.ThemeEngine?.createCustomBrandSeed) {
-    const seed = window.ThemeEngine.createCustomBrandSeed(config.primary, config.darkBrightness, config);
-    const colors = [
-      { key: 'primary', label: 'Chính', color: seed.brandGreen },
-      { key: 'sidebarTop', label: 'Sidebar 1', color: seed.sidebarTop },
-      { key: 'sidebarBottom', label: 'Sidebar 2', color: seed.sidebarBottom },
-      { key: 'backgroundDark', label: 'Nền', color: seed.appBgDark },
-      { key: 'cardDark', label: 'Card', color: seed.cardDark },
-      { key: 'elevatedDark', label: 'Nổi', color: seed.elevatedDark }
-    ];
-    swatches.innerHTML = colors.map(item => `
-      <label class="palette-swatch" style="--swatch-color:${item.color}" title="Chọn màu ${item.label}: ${item.color}">
-        <input type="color" value="${item.color}" aria-label="Chọn màu ${item.label}"
-          oninput="previewCustomPaletteToken('${item.key}', this.value, this)">
-        <span>${item.label}</span>
-      </label>
-    `).join('');
-  }
-}
-
-function clampPaletteCustomizerPosition(left, top) {
-  const panel = document.getElementById('paletteCustomizer');
-  if (!panel) return { left: 8, top: 8 };
-  const margin = 8;
-  const maxLeft = Math.max(margin, window.innerWidth - panel.offsetWidth - margin);
-  const maxTop = Math.max(margin, window.innerHeight - panel.offsetHeight - margin);
-  return {
-    left: Math.min(maxLeft, Math.max(margin, Number(left) || margin)),
-    top: Math.min(maxTop, Math.max(margin, Number(top) || margin))
-  };
-}
-
-function restorePaletteCustomizerPosition() {
-  const panel = document.getElementById('paletteCustomizer');
-  if (!panel || panel.hidden) return;
-  try {
-    const saved = JSON.parse(localStorage.getItem('ioc_palette_position') || 'null');
-    if (!saved) return;
-    const position = clampPaletteCustomizerPosition(saved.left, saved.top);
-    panel.style.left = `${position.left}px`;
-    panel.style.top = `${position.top}px`;
-    panel.style.right = 'auto';
-  } catch (error) {
-    localStorage.removeItem('ioc_palette_position');
-  }
-}
-
-function initPaletteCustomizerDrag() {
-  const panel = document.getElementById('paletteCustomizer');
-  const handle = panel?.querySelector('.palette-customizer-head');
-  if (!panel || !handle) return;
-  let drag = null;
-
-  handle.addEventListener('pointerdown', event => {
-    if (event.button !== 0 || event.target.closest('button, input, select, a')) return;
-    const rect = panel.getBoundingClientRect();
-    drag = { pointerId: event.pointerId, offsetX: event.clientX - rect.left, offsetY: event.clientY - rect.top };
-    panel.style.left = `${rect.left}px`;
-    panel.style.top = `${rect.top}px`;
-    panel.style.right = 'auto';
-    panel.classList.add('is-dragging');
-    handle.setPointerCapture(event.pointerId);
-    event.preventDefault();
-  });
-
-  handle.addEventListener('pointermove', event => {
-    if (!drag || drag.pointerId !== event.pointerId) return;
-    const position = clampPaletteCustomizerPosition(event.clientX - drag.offsetX, event.clientY - drag.offsetY);
-    panel.style.left = `${position.left}px`;
-    panel.style.top = `${position.top}px`;
-  });
-
-  const finishDrag = event => {
-    if (!drag || drag.pointerId !== event.pointerId) return;
-    const rect = panel.getBoundingClientRect();
-    localStorage.setItem('ioc_palette_position', JSON.stringify({ left: Math.round(rect.left), top: Math.round(rect.top) }));
-    panel.classList.remove('is-dragging');
-    drag = null;
-  };
-  handle.addEventListener('pointerup', finishDrag);
-  handle.addEventListener('pointercancel', finishDrag);
-  window.addEventListener('resize', restorePaletteCustomizerPosition);
-}
-
-function initPaletteCustomizer() {
-  updatePaletteCustomizerUi();
-  initPaletteCustomizerDrag();
-  document.addEventListener('pointerdown', event => {
-    const panel = document.getElementById('paletteCustomizer');
-    const trigger = document.getElementById('paletteTrigger');
-    if (!panel || panel.hidden || panel.contains(event.target) || trigger?.contains(event.target)) return;
-    togglePaletteCustomizer(false);
-  });
-}
-
-function togglePaletteCustomizer(forceOpen) {
-  const panel = document.getElementById('paletteCustomizer');
-  const trigger = document.getElementById('paletteTrigger');
-  if (!panel) return;
-  const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : panel.hidden;
-  panel.hidden = !shouldOpen;
-  trigger?.setAttribute('aria-expanded', String(shouldOpen));
-  if (shouldOpen) {
-    updatePaletteCustomizerUi();
-    requestAnimationFrame(restorePaletteCustomizerPosition);
-  }
-}
-
-function applyPaletteCustomizerTheme(preset, mode) {
-  if (!window.ThemeEngine?.applyGlobalTheme) return;
-  window.ThemeEngine.applyGlobalTheme(preset, mode);
-  updateThemeUI(mode);
-  updatePaletteCustomizerUi();
-  window.dispatchEvent(new CustomEvent('hadiwa-theme-change', { detail: { preset, mode } }));
-}
-
-function selectPaletteCustomizerPreset(preset) {
-  const mode = localStorage.getItem('ioc_theme') || 'light';
-  applyPaletteCustomizerTheme(preset, mode);
-}
-
-function previewCustomPalette(color, brightness) {
-  if (!window.ThemeEngine?.setCustomPaletteConfig) return;
-  const current = getPaletteCustomizerConfig();
-  const colorField = document.getElementById('paletteColor');
-  const hexField = document.getElementById('paletteHex');
-  const nextColor = color == null ? current.primary : window.ThemeEngine.normalizeThemeHex(color, current.primary);
-  const nextBrightness = brightness == null ? current.darkBrightness : Number(brightness);
-  const next = window.ThemeEngine.setCustomPaletteConfig({ primary: nextColor, darkBrightness: nextBrightness });
-  if (colorField) colorField.value = next.primary;
-  if (hexField) hexField.value = next.primary;
-  applyPaletteCustomizerTheme('custom-brand', localStorage.getItem('ioc_theme') || 'light');
-}
-
-function previewCustomPaletteToken(key, color, input) {
-  if (key === 'primary') {
-    previewCustomPalette(color);
-    return;
-  }
-  if (!window.ThemeEngine?.setCustomPaletteConfig) return;
-  const next = window.ThemeEngine.setCustomPaletteConfig({ [key]: color });
-  const normalizedColor = next[key] || color;
-  input?.closest('.palette-swatch')?.style.setProperty('--swatch-color', normalizedColor);
-
-  // Do not rebuild the swatch DOM while the native color picker is dragging.
-  // Replacing its input element interrupts continuous pointer updates.
-  const mode = localStorage.getItem('ioc_theme') || 'light';
-  window.ThemeEngine.applyGlobalTheme('custom-brand', mode);
-  updateThemeUI(mode);
-  window.dispatchEvent(new CustomEvent('hadiwa-theme-change', {
-    detail: { preset: 'custom-brand', mode, token: key, color: normalizedColor }
-  }));
-}
-
-function setPaletteCustomizerMode(mode) {
-  const preset = localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
-  applyPaletteCustomizerTheme(preset, mode === 'dark' ? 'dark' : 'light');
-}
-
-function resetPaletteCustomizer() {
-  window.ThemeEngine?.setCustomPaletteConfig({
-    primary: '#30BD6F',
-    darkBrightness: 32,
-    sidebarTop: null,
-    sidebarBottom: null,
-    backgroundDark: null,
-    cardDark: null,
-    elevatedDark: null
-  });
-  applyPaletteCustomizerTheme('evg-emerald', 'light');
-  showToast('Đã khôi phục bảng màu EVG xanh chuẩn.');
 }
 
 function initBrandPreset(presetId) {
@@ -1588,7 +1391,7 @@ function setBrandPreset(presetId) {
 function toggleTheme() {
   const isDarkNow = document.body.classList.contains('dark');
   const t = isDarkNow ? 'light' : 'dark';
-  const brand = localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
+  const brand = 'evg-classic-navy';
 
   if (window.ThemeEngine && typeof window.ThemeEngine.applyGlobalTheme === 'function') {
     window.ThemeEngine.applyGlobalTheme(brand, t);
@@ -1677,7 +1480,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Core Services
     initRbac();
     initTheme();
-    initPaletteCustomizer();
     console.log('[Hadiwa] Services ready');
 
     // 2. UI Components
@@ -1841,34 +1643,8 @@ function renderSettingsUi() {
   ];
 
   const FONTS = ['Inter', 'Roboto', 'Open Sans', 'Nunito', 'IBM Plex Sans', 'DM Sans'];
-  const BRAND_THEME_PRESETS = [
-    {
-      id: 'evg-emerald',
-      label: 'EVG Hadiwa tương thích',
-      description: 'Sidebar xanh lá theo đúng EVG primary, trạng thái giữ màu ngữ nghĩa.',
-      colors: ['#137A43', '#0B5034', '#30BD6F']
-    },
-    {
-      id: 'evg-classic-navy',
-      label: 'EVG Classic Navy (Backup)',
-      description: 'Bản navy đã dùng trước đây, được giữ nguyên để có thể khôi phục.',
-      colors: ['#1E3883', '#192B54', '#41A7FF']
-    },
-    {
-      id: 'custom-brand',
-      label: 'Màu thương hiệu tùy chỉnh',
-      description: 'Tự chọn màu và độ sáng bề mặt bằng bảng màu trên thanh tiêu đề.',
-      colors: (() => {
-        const cfg = getPaletteCustomizerConfig();
-        const seed = window.ThemeEngine?.createCustomBrandSeed?.(cfg.primary, cfg.darkBrightness);
-        return seed ? [seed.brandGreen, seed.sidebarTop, seed.cardDark] : ['#30BD6F', '#137A43', '#176348'];
-      })()
-    }
-  ];
-
   const curFont = uiCfg.font || 'Inter';
   const curFontSize = uiCfg.fontSize || 14;
-  const currentBrandPreset = localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
   const sidebarOpacity = uiCfg.sidebarOpacity || 100;
   const showWsBar = uiCfg.showWsBar !== false;
   const borderRadius = uiCfg.borderRadius || 10;
@@ -1896,31 +1672,6 @@ function renderSettingsUi() {
           </div>
           <span style="font-size:11px;color:var(--muted)">Preview logo hiện tại</span>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 2. Functional brand theme presets -->
-  <div class="card" style="margin-bottom:16px">
-    <div class="card-header">
-      <span class="card-title"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:5px"><circle cx="13.5" cy="6.5" r="2.5"/><path d="M17.89 17.707A7.5 7.5 0 016.5 9c0-.818.132-1.604.373-2.34M22 22l-6-6"/><path d="M2 2l20 20"/></svg> Màu sắc chủ đề</span>
-      <span class="badge badge-green" style="font-size:10px">Áp dụng ngay</span>
-    </div>
-    <div class="card-body">
-      <p style="font-size:12px;color:var(--muted);margin-bottom:14px">Preset được áp dụng ngay và lưu trên trình duyệt. Bản navy cũ luôn có thể khôi phục tại đây.</p>
-      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">
-        ${BRAND_THEME_PRESETS.map(p => {
-          const isCurrent = p.id === currentBrandPreset;
-          return `
-          <button type="button" onclick="selectBrandThemePreset('${p.id}')" aria-pressed="${isCurrent}" style="padding:14px;text-align:left;border-radius:8px;border:1px solid ${isCurrent ? 'var(--primary)' : 'var(--border)'};background:${isCurrent ? 'var(--primary-soft)' : 'var(--bg-card)'};color:var(--text);cursor:pointer;transition:.2s">
-            <span style="display:flex;gap:7px;margin-bottom:10px" aria-hidden="true">
-              ${p.colors.map(color => `<i style="display:block;width:28px;height:18px;border-radius:4px;background:${color};border:1px solid color-mix(in srgb, ${color} 72%, white 28%)"></i>`).join('')}
-            </span>
-            <strong style="display:block;font-size:12px;margin-bottom:4px">${p.label}</strong>
-            <span style="display:block;font-size:11px;line-height:1.45;color:var(--muted)">${p.description}</span>
-            ${isCurrent ? '<span style="display:block;font-size:10px;color:var(--primary-text);margin-top:8px">✓ Đang sử dụng</span>' : ''}
-          </button>`;
-        }).join('')}
       </div>
     </div>
   </div>
@@ -2301,21 +2052,6 @@ function previewFont(fontName) {
   const p = document.getElementById('uiFontPreview');
   if (p) p.style.fontFamily = `'${fontName}', sans-serif`;
   showToast(`Demo: Font đang xem trước — ${fontName}`);
-}
-
-function selectBrandThemePreset(presetId) {
-  if (!window.ThemeEngine || !window.BRAND_SEEDS?.[presetId]) return;
-  const mode = localStorage.getItem('ioc_theme') || 'light';
-  window.ThemeEngine.applyGlobalTheme(presetId, mode);
-  const settingsContent = document.getElementById('settingsContent');
-  if (settingsContent) settingsContent.innerHTML = getSettingsTabContent();
-  updatePaletteCustomizerUi();
-  const message = presetId === 'evg-classic-navy'
-    ? 'Đã khôi phục EVG Classic Navy.'
-    : presetId === 'custom-brand'
-      ? 'Đã áp dụng màu thương hiệu tùy chỉnh.'
-      : 'Đã áp dụng EVG Hadiwa tương thích.';
-  showToast(message);
 }
 
 function setTickerSpeed(speed, btn) {

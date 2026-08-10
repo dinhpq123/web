@@ -8,11 +8,12 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap"
     rel="stylesheet">
-  <script src="js/themeEngine.js?v=20260808-surface-picker-40"></script>
+  <script src="js/themeEngine.js?v=20260810-theme-locked-50"></script>
   <script>
-    (function initLoginBrand() {
-      const presetId = localStorage.getItem('ioc_brand_preset') || 'evg-emerald';
-      const mode = localStorage.getItem('ioc_theme') || 'light';
+    function applyLoginTheme(presetId = null, mode = null) {
+      presetId = 'evg-classic-navy';
+      mode = mode || localStorage.getItem('ioc_theme') || 'light';
+      if (document.body) window.ThemeEngine?.applyGlobalTheme?.(presetId, mode);
       const tokens = window.ThemeEngine?.resolveSemanticTokens?.(presetId, mode === 'dark');
       if (!tokens) return;
       const root = document.documentElement;
@@ -36,7 +37,8 @@
       Object.entries(aliases).forEach(([alias, token]) => root.style.setProperty(alias, tokens[token]));
       root.dataset.theme = mode;
       root.dataset.brandPreset = presetId;
-    })();
+    }
+    applyLoginTheme();
   </script>
   <style>
     *,
@@ -563,7 +565,7 @@
 
     .quick-role {
       margin-left: 4px;
-      color: var(--on-primary);
+      color: var(--quick-text, #fff);
       background: var(--quick-color);
       border: 1px solid color-mix(in srgb, var(--quick-color) 82%, #fff 18%);
       border-radius: 4px;
@@ -589,6 +591,7 @@
       .foot {
         gap: 16px;
       }
+
     }
   </style>
 </head>
@@ -894,14 +897,27 @@
     document.getElementById('t').textContent = new Date().toLocaleTimeString('vi-VN');
 
     // Build quick-select user cards
+    const QUICK_ROLE_COLORS = {
+      SYSADMIN: { color: 'var(--danger)', text: '#FFFFFF' },
+      SUPERADMIN: { color: 'var(--danger)', text: '#FFFFFF' },
+      CHI_CUC_TRUONG: { color: '#7C3AED', text: '#FFFFFF' },
+      DIEU_HANH: { color: 'var(--warning)', text: '#18183E' },
+      KY_THUAT: { color: 'var(--info)', text: '#FFFFFF' },
+      QUAN_LY_DE: { color: '#0891B2', text: '#FFFFFF' },
+      HR: { color: 'var(--success)', text: '#06101F' },
+      VIEWER: { color: '#64748B', text: '#FFFFFF' }
+    };
     let selectedUser = MOCK_USERS[0];
     (function buildQuickUsers() {
-      const html = MOCK_USERS.map(u => `
-        <div id="qu-${u.id}" class="quick-user" style="--quick-color:var(--primary)" onclick="selectUser(${u.id})">
+      const html = MOCK_USERS.map(u => {
+        const tone = QUICK_ROLE_COLORS[u.role] || QUICK_ROLE_COLORS.VIEWER;
+        return `
+        <div id="qu-${u.id}" class="quick-user" style="--quick-color:${tone.color};--quick-text:${tone.text}" onclick="selectUser(${u.id})">
           <span class="quick-avatar">${u.avatar}</span>
           <span style="color:var(--text)">${u.name.split(' ').pop()}</span>
           <span class="quick-role">${ROLE_LABELS[u.role]}</span>
-        </div>`).join('');
+        </div>`;
+      }).join('');
       document.getElementById('quickUsers').innerHTML = html;
       selectUser(0); // default: admin
     })();

@@ -128,9 +128,9 @@ function openStationDetail(id, tab = 'info') {
     <button class="modal-close" onclick="closeModal(event)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   
-  <div class="modal-tabs" style="display:flex; gap:20px; padding:0 24px; border-bottom:1px solid var(--border); margin-top:16px">
-     <div class="modal-tab ${tab === 'info' ? 'active' : ''}" onclick="openStationDetail('${id}', 'info')" style="padding:10px 0; font-size:13px; font-weight:600; cursor:pointer; color:${tab === 'info' ? 'var(--primary)' : 'var(--muted)'}; border-bottom:2px solid ${tab === 'info' ? 'var(--primary)' : 'transparent'}; transition:.2s">Thông tin trạm</div>
-     <div class="modal-tab ${tab === 'control' ? 'active' : ''}" onclick="openStationDetail('${id}', 'control')" style="padding:10px 0; font-size:13px; font-weight:600; cursor:pointer; color:${tab === 'control' ? 'var(--primary)' : 'var(--muted)'}; border-bottom:2px solid ${tab === 'control' ? 'var(--primary)' : 'transparent'}; transition:.2s">Điều khiển SCADA</div>
+  <div class="modal-tabs">
+     <button type="button" class="modal-tab ${tab === 'info' ? 'active' : ''}" onclick="openStationDetail('${id}', 'info')">Thông tin trạm</button>
+     <button type="button" class="modal-tab ${tab === 'control' ? 'active' : ''}" onclick="openStationDetail('${id}', 'control')">Điều khiển SCADA</button>
   </div>
 
   <div class="modal-body" style="padding:24px">

@@ -31,17 +31,11 @@ function renderIncidents() {
     <div class="page-actions">
       <!-- View toggle (Only for Incidents Table) -->
       ${incidentTab === 'incidents' ? `
-      <div style="display:flex;gap:4px;background:var(--segmented-bg);border:1px solid var(--border);border-radius:8px;padding:3px">
-        <button onclick="switchIncidentView('table')" id="incBtn_table"
-          style="display:flex;align-items:center;gap:5px;font-size:12px;padding:4px 12px;border-radius:6px;border:none;cursor:pointer;transition:all .2s;
-          background:${incidentsViewMode === 'table' ? 'var(--segmented-active-bg)' : 'transparent'};
-          color:${incidentsViewMode === 'table' ? 'var(--primary-text)' : 'var(--muted)'}">
+      <div class="ui-segmented" style="margin:0">
+        <button class="ui-segmented__item ${incidentsViewMode === 'table' ? 'active' : ''}" onclick="switchIncidentView('table')" id="incBtn_table">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg> Bảng
         </button>
-        <button onclick="switchIncidentView('kanban')" id="incBtn_kanban"
-          style="display:flex;align-items:center;gap:5px;font-size:12px;padding:4px 12px;border-radius:6px;border:none;cursor:pointer;transition:all .2s;
-          background:${incidentsViewMode === 'kanban' ? 'var(--segmented-active-bg)' : 'transparent'};
-          color:${incidentsViewMode === 'kanban' ? 'var(--primary-text)' : 'var(--muted)'}">
+        <button class="ui-segmented__item ${incidentsViewMode === 'kanban' ? 'active' : ''}" onclick="switchIncidentView('kanban')" id="incBtn_kanban">
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="18" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg> Kanban
         </button>
       </div>` : ''}
@@ -183,7 +177,7 @@ function renderPagination(total, current, onPageChange) {
     <div class="pagination-btns">
       <button class="btn btn-ghost btn-sm" ${current === 1 ? 'disabled' : ''} onclick="${onPageChange}(${current - 1})">Trước</button>
       ${Array.from({ length: totalPages }, (_, i) => i + 1).map(p => `
-        <button class="btn btn-sm" style="min-width:32px;border:1px solid ${p === current ? 'var(--primary)' : 'var(--border)'};background:${p === current ? 'rgba(0,200,255,.15)' : 'transparent'};color:${p === current ? 'var(--primary)' : 'var(--muted)'}" onclick="${onPageChange}(${p})">${p}</button>
+        <button class="pagination-page ${p === current ? 'active' : ''}" onclick="${onPageChange}(${p})">${p}</button>
       `).join('')}
       <button class="btn btn-ghost btn-sm" ${current === totalPages ? 'disabled' : ''} onclick="${onPageChange}(${current + 1})">Sau</button>
     </div>

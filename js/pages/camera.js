@@ -299,7 +299,7 @@ function camRenderFilterBar() {
       
       <div style="display:flex; align-items:center; gap:12px">
         <!-- Grid Icons -->
-        <div style="display:flex;gap:4px;background:rgba(255,255,255,.04);border-radius:8px;padding:3px">
+        <div class="ui-segmented" style="margin:0">
           ${[
       ['2x2', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>', '2×2'],
       ['3x2', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="5" height="7"/><rect x="9.5" y="3" width="5" height="7"/><rect x="17" y="3" width="5" height="7"/><rect x="2" y="14" width="5" height="7"/><rect x="9.5" y="14" width="5" height="7"/><rect x="17" y="14" width="5" height="7"/></svg>', '3×2'],
@@ -307,7 +307,7 @@ function camRenderFilterBar() {
       ['4x4', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="3.5" height="3.5"/><rect x="7.5" y="2" width="3.5" height="3.5"/><rect x="13" y="2" width="3.5" height="3.5"/><rect x="18.5" y="2" width="3.5" height="3.5"/><rect x="2" y="7.5" width="3.5" height="3.5"/><rect x="7.5" y="7.5" width="3.5" height="3.5"/><rect x="13" y="7.5" width="3.5" height="3.5"/><rect x="18.5" y="7.5" width="3.5" height="3.5"/></svg>', '4×4'],
       ['list', '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>', 'List']
     ].map(([v, icon, tooltip]) => `
-            <button onclick="camGridMode='${v}';camCurrentPage=1;camRefresh()" title="${tooltip}" style="width:32px;height:32px;border-radius:6px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;${camGridMode === v ? 'background:rgba(0,200,255,.2);color:var(--primary);box-shadow:0 0 0 1px var(--primary)' : 'background:transparent;color:var(--muted)'}">
+            <button class="ui-segmented__item btn-icon ${camGridMode === v ? 'active' : ''}" onclick="camGridMode='${v}';camCurrentPage=1;camRefresh()" title="${tooltip}">
               ${icon}
             </button>`).join('')}
         </div>
@@ -320,7 +320,7 @@ function camRenderFilterBar() {
       </div>
 
       <!-- Pagination Controls -->
-      <div style="display:flex; align-items:center; gap:4px">
+      <div class="pagination-btns">
         <button onclick="if(camCurrentPage>1){camCurrentPage--;camRefresh()}" ${camCurrentPage === 1 ? 'disabled' : ''} class="btn btn-ghost btn-sm" style="padding:4px 8px; font-size:11px">Trước</button>
         ${camRenderPageNumbers(totalPages)}
         <button onclick="if(camCurrentPage<${totalPages}){camCurrentPage++;camRefresh()}" ${camCurrentPage === totalPages ? 'disabled' : ''} class="btn btn-ghost btn-sm" style="padding:4px 8px; font-size:11px">Sau</button>
@@ -338,7 +338,7 @@ function camRenderPageNumbers(totalPages) {
       if (i === 4) html += '<span style="color:var(--muted)">...</span>';
       continue;
     }
-    html += `<button onclick="camCurrentPage=${i};camRefresh()" style="width:26px;height:26px;border-radius:6px;border:none;cursor:pointer;font-size:11px;font-weight:600;transition:.2s;${camCurrentPage === i ? 'background:var(--primary);color:#000' : 'background:rgba(255,255,255,.05);color:var(--text)'}">${i}</button>`;
+    html += `<button class="pagination-page ${camCurrentPage === i ? 'active' : ''}" onclick="camCurrentPage=${i};camRefresh()">${i}</button>`;
   }
   return html;
 }
@@ -606,10 +606,9 @@ function renderCamera() {
   -->
 
   <!--Tabs -->
-  <div style="display:flex;align-items:center;gap:4px;margin-bottom:14px;background:rgba(255,255,255,.03);border:1px solid rgba(0,200,255,.08);border-radius:10px;padding:4px;width:fit-content">
+  <div class="ui-segmented" style="margin-bottom:14px">
     ${[{ id: 'live', label: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg> Hình ảnh Live' }, { id: 'nvr', label: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg> Đầu ghi NVR' }, { id: 'storage', label: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/></svg> Lưu trữ' }].map(t => `
-    <button onclick="camSwitchTab('${t.id}')"
-      style="padding:7px 16px;border-radius:7px;border:none;cursor:pointer;font-size:12px;font-weight:600;font-family:'Inter',sans-serif;transition:all .2s;${camActivePage === t.id ? 'background:rgba(0,200,255,.15);color:var(--primary);border:1px solid rgba(0,200,255,.3)' : 'background:transparent;color:var(--muted);border:1px solid transparent'}">
+    <button class="ui-segmented__item ${camActivePage === t.id ? 'active' : ''}" onclick="camSwitchTab('${t.id}')">
       ${t.label}
     </button>`).join('')}
   </div>

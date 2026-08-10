@@ -79,7 +79,7 @@ function renderIrrModal() {
       </div>
 
       <!-- Tab Navigation -->
-      <div id="irrModalTabs" style="padding:0 24px;background:var(--bg-hover);border-bottom:1px solid var(--border);display:flex;gap:20px">
+      <div id="irrModalTabs" class="modal-tabs">
         ${renderModalTabBtn('general', 'Tổng quan', IRR_ICONS.info)}
         ${renderModalTabBtn('tech', 'Kỹ thuật', IRR_ICONS.ruler)}
         ${renderModalTabBtn('status', 'Hiện trạng', IRR_ICONS.chart)}
@@ -114,10 +114,9 @@ function renderIrrModal() {
 function renderModalTabBtn(id, label, icon) {
   const active = _activeIrrModal.tab === id;
   return `
-    <div onclick="switchIrrModalTab('${id}')" style="padding:14px 4px;font-size:13px;font-weight:600;color:${active ? 'var(--primary)' : 'var(--muted)'};cursor:pointer;position:relative;display:flex;align-items:center;gap:8px;transition:all .2s">
+    <button type="button" class="modal-tab ${active ? 'active' : ''}" onclick="switchIrrModalTab('${id}')">
       ${icon} ${label}
-      ${active ? `<div style="position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--primary);box-shadow:0 0 10px var(--primary)"></div>` : ''}
-    </div>
+    </button>
   `;
 }
 

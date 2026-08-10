@@ -6,7 +6,8 @@
 // theme can change at runtime.
 
 window.getThemeColor = function(varName, fallback) {
-  const v = getComputedStyle(document.documentElement).getPropertyValue(varName).trim();
+  const themeScope = document.body || document.documentElement;
+  const v = getComputedStyle(themeScope).getPropertyValue(varName).trim();
   return v || fallback;
 };
 
