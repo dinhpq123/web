@@ -21,22 +21,22 @@ body.light {
   --cyan-soft: rgba(8, 127, 140, 0.12);
   --accent-soft: #D9FBF6;
 
-  --sidebar-background: linear-gradient(180deg, #137A43 0%, #0B5034 100%);
+  --sidebar-background: #FFFFFF;
   --workspace-background: var(--bg-app);
   --header-background: var(--bg-header);
   --ticker-background: var(--bg-secondary);
   --ticker-border: var(--border);
   --ticker-text: var(--text-secondary);
-  --sidebar-item-hover: linear-gradient(180deg, rgba(48, 189, 111, 0.22) 0%, rgba(39, 169, 98, 0.38) 100%);
-  --sidebar-item-active: linear-gradient(180deg, #30BD6F 0%, #27A962 100%);
-  --sidebar-active-border: #8FDEB1;
-  --sidebar-active-shadow: 0 0 20px rgba(48, 189, 111, 0.26) inset;
-  --sidebar-text: #FFFFFF;
-  --sidebar-text-active: #FFFFFF;
-  --sidebar-section-accent: #8FDEB1;
-  --sidebar-brand-text: #FFFFFF;
+  --sidebar-item-hover: #F4FBF7;
+  --sidebar-item-active: #EAF8F0;
+  --sidebar-active-border: #C8EFD8;
+  --sidebar-active-shadow: inset 3px 0 0 #30BD6F;
+  --sidebar-text: #494968;
+  --sidebar-text-active: #137A43;
+  --sidebar-section-accent: #168A4B;
+  --sidebar-brand-text: #18183E;
   --sidebar-control-accent: var(--sidebar-section-accent);
-  --sidebar-border: rgba(48, 189, 111, 0.34);
+  --sidebar-border: #E4E6EF;
 
   /* ── SEMANTIC STATUS ─────────────────────────── */
   --success: #30BD6F;
@@ -550,7 +550,7 @@ body {
 }
 
 .sidebar-logo-hint span {
-  color: rgba(234, 242, 255, 0.48) !important;
+  color: color-mix(in srgb, var(--sidebar-text) 52%, transparent) !important;
 }
 
 .sidebar .user-card,

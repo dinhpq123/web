@@ -405,15 +405,20 @@ function resolveSemanticTokens(presetId = LOCKED_BRAND_PRESET, isDark = false) {
     const textMuted = '#5F6678';
     const textDisabled = '#9CA2B8';
 
-    // Sidebar stays Navy in Light Mode for EVG CMS!
-    const sidebarGroupLabel = seed.sidebarCyan;
-    const sidebarItemActive = sidebarActive;
-    const sidebarText = '#FFFFFF';
-    const sidebarTextActive = seed.navActiveText || '#FFFFFF';
-
     const brandPrimary = seed.brandGreen || '#30BD6F';
-    const sidebarBrandText = seed.sidebarBrandText || '#FFFFFF';
-    const sidebarControlAccent = seed.sidebarControlAccent || seed.sidebarBrandAccent || sidebarGroupLabel || brandPrimary;
+    // Light mode follows EVG's restrained white navigation rail. The navy
+    // sidebar remains intact in the dark preset below.
+    const sidebarLightBg = '#FFFFFF';
+    const sidebarLightBorder = '#E4E6EF';
+    const sidebarGroupLabel = '#168A4B';
+    const sidebarItemHover = '#F4FBF7';
+    const sidebarItemActive = '#EAF8F0';
+    const sidebarLightActiveBorder = '#C8EFD8';
+    const sidebarLightActiveShadow = `inset 3px 0 0 ${brandPrimary}`;
+    const sidebarText = '#494968';
+    const sidebarTextActive = '#137A43';
+    const sidebarBrandText = '#18183E';
+    const sidebarControlAccent = brandPrimary;
     const primaryHover = seed.brandGreenHover || '#1BA05C';
     const primaryPressed = seed.brandGreenActive || '#168B50';
     const primarySoft = themeHexToRgba(brandPrimary, 0.12);
@@ -449,9 +454,9 @@ function resolveSemanticTokens(presetId = LOCKED_BRAND_PRESET, isDark = false) {
       '--color-header-text-primary': textPrimary,
       '--color-header-text-secondary': textSecondary,
 
-      '--color-sidebar-background': sidebarBg,
-      '--color-sidebar-border': sidebarBorder,
-      '--color-sidebar-item-hover': sidebarActive,
+      '--color-sidebar-background': sidebarLightBg,
+      '--color-sidebar-border': sidebarLightBorder,
+      '--color-sidebar-item-hover': sidebarItemHover,
       '--color-sidebar-item-active': sidebarItemActive,
       '--color-sidebar-text': sidebarText,
       '--color-sidebar-text-active': sidebarTextActive,
@@ -539,15 +544,15 @@ function resolveSemanticTokens(presetId = LOCKED_BRAND_PRESET, isDark = false) {
       '--ticker-background': tickerBackground,
       '--ticker-border': cardBorder,
       '--ticker-text': seed.tickerTextLight || textSecondary,
-      '--bg-sidebar': sidebarBg,
+      '--bg-sidebar': sidebarLightBg,
       '--bg-dropdown': '#FFFFFF',
       '--bg-dropdown2': '#F9F9F9',
-      '--sidebar-background': sidebarBg,
-      '--sidebar-border': sidebarBorder,
-      '--sidebar-item-hover': sidebarActive,
+      '--sidebar-background': sidebarLightBg,
+      '--sidebar-border': sidebarLightBorder,
+      '--sidebar-item-hover': sidebarItemHover,
       '--sidebar-item-active': sidebarItemActive,
-      '--sidebar-active-border': sidebarActiveBorder,
-      '--sidebar-active-shadow': sidebarActiveShadow,
+      '--sidebar-active-border': sidebarLightActiveBorder,
+      '--sidebar-active-shadow': sidebarLightActiveShadow,
       '--sidebar-text': sidebarText,
       '--sidebar-text-active': sidebarTextActive,
       '--sidebar-section-accent': sidebarGroupLabel,
