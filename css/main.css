@@ -106,6 +106,11 @@ body.light {
   --button-primary-background: #30BD6F;
   --button-primary-hover: #1BA05C;
   --button-primary-text: #FFFFFF;
+  --control-background: #FFFFFF;
+  --control-hover-background: #F7F9FC;
+  --control-border: #D6DBE8;
+  --control-text: #343B52;
+  --control-icon: #697386;
 
   /* ── BORDER ──────────────────────────────────── */
   --border: #DBDFF1;
@@ -165,22 +170,22 @@ body.dark {
   --cyan-soft: rgba(77, 233, 220, 0.14);
   --accent-soft: rgba(30, 245, 223, 0.15);
 
-  --sidebar-background: linear-gradient(180deg, #137A43 0%, #0B5034 100%);
+  --sidebar-background: linear-gradient(180deg, #1E3883 0%, #192B54 100%);
   --workspace-background: linear-gradient(180deg, #0C4635 0%, #13553F 100%);
   --header-background: linear-gradient(90deg, #0F5B42 0%, #13553F 100%);
   --ticker-background: linear-gradient(90deg, #13553F 0%, #0F5B42 50%, #13553F 100%);
   --ticker-border: rgba(176, 235, 205, 0.30);
   --ticker-text: #D9EDE5;
-  --sidebar-item-hover: linear-gradient(180deg, rgba(48, 189, 111, 0.22) 0%, rgba(39, 169, 98, 0.38) 100%);
-  --sidebar-item-active: linear-gradient(180deg, #30BD6F 0%, #27A962 100%);
-  --sidebar-active-border: #8FDEB1;
-  --sidebar-active-shadow: 0 0 20px rgba(48, 189, 111, 0.26) inset;
+  --sidebar-item-hover: rgba(69, 212, 131, 0.08);
+  --sidebar-item-active: rgba(69, 212, 131, 0.14);
+  --sidebar-active-border: rgba(69, 212, 131, 0.34);
+  --sidebar-active-shadow: inset 3px 0 0 #45D483;
   --sidebar-text: #EAF2FF;
   --sidebar-text-active: #FFFFFF;
   --sidebar-section-accent: #8FDEB1;
   --sidebar-brand-text: #FFFFFF;
   --sidebar-control-accent: var(--sidebar-section-accent);
-  --sidebar-border: rgba(48, 189, 111, 0.34);
+  --sidebar-border: rgba(108, 145, 224, 0.30);
 
   --success: #45D483;
   --success-hover: #62DE97;
@@ -243,6 +248,11 @@ body.dark {
   --button-primary-background: #30BD6F;
   --button-primary-hover: #1BA05C;
   --button-primary-text: #FFFFFF;
+  --control-background: #122A4A;
+  --control-hover-background: #18355F;
+  --control-border: rgba(164, 184, 205, 0.34);
+  --control-text: #E7EFF8;
+  --control-icon: #B7C9DA;
 
   --border: rgba(176, 235, 205, 0.30);
   --border-light: rgba(176, 235, 205, 0.18);
@@ -473,9 +483,14 @@ body {
 
 .nav-item.active {
   background: var(--sidebar-item-active);
-  color: var(--sidebar-text-active);
+  color: var(--sidebar-text-active) !important;
   border: 1px solid var(--sidebar-active-border);
   box-shadow: var(--sidebar-active-shadow);
+}
+
+.nav-item.active .nav-icon,
+.nav-item.active .nav-label {
+  color: var(--sidebar-text-active) !important;
 }
 
 .nav-item.active::before {
@@ -1079,26 +1094,45 @@ body.dark .page-dashboard {
   font-size: 11px;
 }
 
-.page-dashboard .kpi-card-critical .kpi-value,
+.page-dashboard .kpi-card-critical .kpi-value {
+  color: var(--dashboard-heading) !important;
+}
+
 .page-dashboard .kpi-card-critical .kpi-sub {
+  color: var(--dashboard-copy) !important;
+}
+
+.page-dashboard .kpi-card-urgent .kpi-value,
+.page-dashboard .kpi-card-urgent .kpi-sub,
+.page-dashboard .kpi-alert-detail {
   color: var(--danger) !important;
 }
 
-.page-dashboard .kpi-card-positive .kpi-value,
 .page-dashboard .kpi-card-positive .kpi-status strong {
   color: var(--evg-accent-text) !important;
 }
 
-.page-dashboard .kpi-card-warning .kpi-value {
-  color: var(--warning-text) !important;
+.page-dashboard .kpi-card-positive .kpi-value,
+.page-dashboard .kpi-card-info .kpi-value {
+  color: var(--dashboard-heading) !important;
 }
 
-.page-dashboard .kpi-card-info .kpi-value {
-  color: var(--primary) !important;
+.page-dashboard .kpi-card-warning .kpi-value {
+  color: var(--dashboard-heading) !important;
+}
+
+.page-dashboard .kpi-trend-improving {
+  color: var(--success-text, var(--success));
+  font-weight: 600;
+}
+
+.page-dashboard .kpi-alert-count {
+  color: var(--danger);
+  font-weight: 600;
 }
 
 .page-dashboard .kpi-card.has-sparkline .kpi-card-content {
-  padding-right: 38px;
+  padding-right: 0;
 }
 
 .page-dashboard .kpi-sparkline {
@@ -1417,7 +1451,7 @@ body.dark .page-dashboard .dashboard-chart-card {
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  display: flex;
+  display: none !important;
   align-items: center;
   justify-content: center;
   color: var(--icon-color);
@@ -1571,6 +1605,14 @@ tbody td {
   background: rgba(100, 141, 161, .1);
   color: var(--muted);
   border: 1px solid rgba(100, 141, 161, .2);
+}
+
+/* Roles are labels, not statuses. Keep them in the brand family instead of
+   assigning danger/warning colors to ordinary account types. */
+.badge-role {
+  background: var(--primary-soft);
+  color: var(--primary-text);
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
 }
 
 .badge::before {
@@ -1863,9 +1905,9 @@ tbody td {
 
 select.form-control {
   cursor: pointer;
-  background-color: var(--button-primary-background);
-  border-color: var(--button-primary-background);
-  color: var(--button-primary-text)
+  background-color: var(--control-background) !important;
+  border-color: var(--control-border) !important;
+  color: var(--control-text) !important
 }
 
 input,
@@ -1885,9 +1927,9 @@ textarea,
 }
 
 select:not(.fb-select) {
-  background-color: var(--button-primary-background);
-  border-color: var(--button-primary-background);
-  color: var(--button-primary-text)
+  background-color: var(--control-background) !important;
+  border-color: var(--control-border) !important;
+  color: var(--control-text) !important
 }
 
 input:focus,
@@ -1910,8 +1952,9 @@ select.form-control option {
 
 select:hover:not(:disabled),
 select:focus {
-  background-color: var(--button-primary-hover);
-  border-color: var(--button-primary-hover)
+  background-color: var(--control-hover-background) !important;
+  border-color: var(--border-focus) !important;
+  color: var(--control-text) !important
 }
 
 /* Gauges */
@@ -2780,30 +2823,33 @@ body :is(.ui-segmented, .tabs, .ew-tabs, .dm-tabs, .rsv-tabs, .ops-tabs, .modal-
 }
 
 .fb-select {
-  padding: 5px 28px 5px 9px;
-  background-color: var(--button-primary-background);
-  border: 1px solid var(--button-primary-background);
+  padding: 5px 9px;
+  background-color: var(--control-background) !important;
+  border: 1px solid var(--control-border) !important;
   border-radius: 6px;
-  color: var(--button-primary-text);
+  color: var(--control-text) !important;
   font-family: 'Inter', sans-serif;
   font-size: 12px;
   outline: none;
   cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%2306101F' stroke-width='1.5'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 8px center;
+  appearance: auto;
+  -webkit-appearance: menulist;
+  background-image: none !important;
   transition: all .18s;
   max-width: 170px;
 }
 
 .fb-select:focus,
 .fb-select:hover {
-  border-color: var(--button-primary-hover);
-  color: var(--button-primary-text);
-  background-color: var(--button-primary-hover);
+  border-color: var(--border-focus) !important;
+  color: var(--control-text) !important;
+  background-color: var(--control-hover-background) !important;
   box-shadow: var(--focus-ring);
+}
+
+body.dark .fb-select {
+  background-image: none !important;
+  color-scheme: dark;
 }
 
 .fb-select option {

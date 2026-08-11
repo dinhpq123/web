@@ -3,12 +3,12 @@ let crTab = 'pending';
 
 const CR_TYPES = {
   flooding:          { label: 'Ngập đường / ngõ',                   color: 'var(--info)', badge: 'badge-blue'   },
-  landslide:         { label: 'Sạt lở đất',                         color: '#d97706', badge: 'badge-orange' },
-  tree_fall:         { label: 'Cây đổ nguy hiểm',                   color: 'var(--success)', badge: 'badge-green'  },
-  dike_risk:         { label: 'Đê có dấu hiệu nguy hiểm',           color: '#dc2626', badge: 'badge-red'    },
-  drain_blocked:     { label: 'Cống thoát nước bị tắc',             color: 'var(--purple)', badge: 'badge-purple' },
-  infra_damage:      { label: 'Công trình bị hư hại',               color: '#f59e0b', badge: 'badge-yellow' },
-  vi_pham_hanh_lang: { label: 'Vi phạm hành lang đê / PCTT',        color: '#c2410c', badge: 'badge-red'    },
+  landslide:         { label: 'Sạt lở đất',                         color: '#d97706', badge: 'badge-gray' },
+  tree_fall:         { label: 'Cây đổ nguy hiểm',                   color: 'var(--success)', badge: 'badge-gray' },
+  dike_risk:         { label: 'Đê có dấu hiệu nguy hiểm',           color: '#dc2626', badge: 'badge-gray' },
+  drain_blocked:     { label: 'Cống thoát nước bị tắc',             color: 'var(--purple)', badge: 'badge-gray' },
+  infra_damage:      { label: 'Công trình bị hư hại',               color: '#f59e0b', badge: 'badge-gray' },
+  vi_pham_hanh_lang: { label: 'Vi phạm hành lang đê / PCTT',        color: '#c2410c', badge: 'badge-gray' },
   other:             { label: 'Sự cố khác',                         color: '#64748b', badge: 'badge-gray'   },
 };
 

@@ -104,7 +104,7 @@ function renderPcttCommand() {
       { label:'Lệnh đã thực hiện', val:executed, color:'var(--success)' },
       { label:'Chờ phê duyệt', val:pending, color:'var(--warning)' },
       { label:'Kịch bản chuẩn bị', val:CMD_SCENARIOS.length, color:'var(--primary)' },
-      { label:'Lực lượng trực ban', val:`${totalForce}/${totalMax}`, color:'var(--purple)' },
+      { label:'Lực lượng trực ban', val:`${totalForce}/${totalMax}`, color:'var(--text)' },
     ].map(s=>`
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:16px 20px">
       <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">${s.label}</div>

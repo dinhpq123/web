@@ -81,7 +81,7 @@ window.openProdHistory = function (id, name, type) {
   const history = PROD_HISTORY[id] || [];
   const isEquip = type === 'equipment';
 
-  const typeColor = { 'Nhập kho': 'badge-green', 'Xuất kho': 'badge-red', 'Bảo dưỡng định kỳ': 'badge-blue', 'Sửa chữa': 'badge-yellow', 'Kiểm tra': 'badge-gray', 'Sửa chữa khẩn cấp': 'badge-red' };
+  const typeColor = { 'Nhập kho': 'badge-gray', 'Xuất kho': 'badge-gray', 'Bảo dưỡng định kỳ': 'badge-gray', 'Sửa chữa': 'badge-blue', 'Kiểm tra': 'badge-gray', 'Sửa chữa khẩn cấp': 'badge-red' };
 
   openModal(`
     <div class="modal-header">

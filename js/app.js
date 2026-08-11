@@ -147,7 +147,7 @@ function renderDevPage(title, desc) {
     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M10 16l4-4-4-4"/></svg>
     <div><div style="font-size:18px;font-weight:700;margin-bottom:8px">${title}</div>
     <div style="color:var(--muted);font-size:14px;max-width:400px">${desc}</div>
-    <div style="margin-top:12px"><span class="badge badge-yellow">Đang phát triển</span></div></div>
+    <div style="margin-top:12px"><span class="badge badge-gray">Đang phát triển</span></div></div>
   </div>`;
 }
 
@@ -464,14 +464,14 @@ function initRbac() {
   if (!user) { window.location.href = 'login.html'; return; }
 
   const roleBadgeColors = {
-    SUPERADMIN: 'var(--danger)',
-    SYSADMIN: 'var(--danger)',
-    CHI_CUC_TRUONG: 'var(--purple)',
-    DIEU_HANH: '#f59e0b',
-    KY_THUAT: 'var(--info)',
+    SUPERADMIN: 'var(--primary)',
+    SYSADMIN: 'var(--primary)',
+    CHI_CUC_TRUONG: 'var(--primary)',
+    DIEU_HANH: 'var(--primary)',
+    KY_THUAT: 'var(--primary)',
     QUAN_LY_DE: 'var(--primary)',
-    HR: 'var(--success)',
-    VIEWER: '#718096'
+    HR: 'var(--primary)',
+    VIEWER: 'var(--muted)'
   };
   const roleLabel = ROLE_LABELS[user.role] || user.role;
   const color = roleBadgeColors[user.role] || 'var(--muted)';
@@ -801,7 +801,7 @@ function renderSettingsSecurity() {
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:6px"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Xác thực 2 lớp bảo vệ tài khoản ngay cả khi mật khẩu bị lộ. Hệ thống hỗ trợ <strong>4 phương thức 2FA</strong>.
       </div>
       <div class="grid-2" style="margin-bottom:16px">
-        ${[{ id: 'totp', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>', name: 'Authenticator App (TOTP)', desc: 'Google/Microsoft/Authy — Mã 6 chữ số mỗi 30 giây. Không cần internet.', badge: 'Khuyến nghị', bc: 'badge-green', on: true }, { id: 'sms', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>', name: 'SMS OTP', desc: 'Gửi OTP tới SĐT đăng ký. Phụ thuộc mạng di động.', badge: 'Phổ biến', bc: 'badge-blue', on: true }, { id: 'email', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>', name: 'Email OTP', desc: 'Gửi OTP tới email công ty. Hiệu lực 5 phút.', badge: 'Dự phòng', bc: 'badge-yellow', on: true }, { id: 'zalo', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>', name: 'Zalo ZNS OTP', desc: 'Gửi qua Zalo Notification Service. Phù hợp thực tế Việt Nam.', badge: 'Mới', bc: 'badge-blue', on: false }].map(m => `
+        ${[{ id: 'totp', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>', name: 'Authenticator App (TOTP)', desc: 'Google/Microsoft/Authy — Mã 6 chữ số mỗi 30 giây. Không cần internet.', badge: 'Khuyến nghị', bc: 'badge-green', on: true }, { id: 'sms', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>', name: 'SMS OTP', desc: 'Gửi OTP tới SĐT đăng ký. Phụ thuộc mạng di động.', badge: 'Phổ biến', bc: 'badge-blue', on: true }, { id: 'email', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>', name: 'Email OTP', desc: 'Gửi OTP tới email công ty. Hiệu lực 5 phút.', badge: 'Dự phòng', bc: 'badge-gray', on: true }, { id: 'zalo', icon: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>', name: 'Zalo ZNS OTP', desc: 'Gửi qua Zalo Notification Service. Phù hợp thực tế Việt Nam.', badge: 'Mới', bc: 'badge-blue', on: false }].map(m => `
         <div style="padding:16px;border:1px solid ${m.on ? 'rgba(0,200,255,.2)' : 'var(--border)'};border-radius:10px;background:${m.on ? 'rgba(0,200,255,.04)' : 'rgba(0,0,0,.1)'}">
           <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
             <div style="display:flex;align-items:center;gap:10px">
@@ -971,7 +971,7 @@ function renderSettingsRoles() {
   ];
   return `
   <div class="grid-2" style="margin-bottom:16px">
-    ${[['Admin', 'badge-red', 'Toàn quyền. Truy cập mọi tính năng, quản lý người dùng và cấu hình hệ thống.'], ['Dispatcher', 'badge-yellow', 'Điều phối vận hành. Tạo lệnh, xem SCADA, quản lý khách hàng và báo cáo.'], ['Operator', 'badge-blue', 'Vận hành. Xem dữ liệu realtime, cập nhật trạng thái nhưng không thay đổi cấu hình.'], ['Viewer', 'badge-gray', 'Chỉ xem. Truy cập dashboard và báo cáo, không thể tương tác hay tạo lệnh.']].map(([r, b, d]) => `
+    ${[['Admin', 'badge-role', 'Toàn quyền. Truy cập mọi tính năng, quản lý người dùng và cấu hình hệ thống.'], ['Dispatcher', 'badge-role', 'Điều phối vận hành. Tạo lệnh, xem SCADA, quản lý khách hàng và báo cáo.'], ['Operator', 'badge-role', 'Vận hành. Xem dữ liệu realtime, cập nhật trạng thái nhưng không thay đổi cấu hình.'], ['Viewer', 'badge-gray', 'Chỉ xem. Truy cập dashboard và báo cáo, không thể tương tác hay tạo lệnh.']].map(([r, b, d]) => `
     <div class="card" style="padding:16px">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
         <span class="badge ${b}" style="font-size:12px;padding:5px 14px">${r}</span>
@@ -987,7 +987,7 @@ function renderSettingsRoles() {
       <span style="font-size:12px;color:var(--muted)">Click ô để thay đổi quyền</span>
     </div>
     <div class="table-wrap"><table>
-      <thead><tr><th>Tính năng</th><th style="text-align:center"><span class="badge badge-red">Admin</span></th><th style="text-align:center"><span class="badge badge-yellow">Dispatcher</span></th><th style="text-align:center"><span class="badge badge-blue">Operator</span></th><th style="text-align:center"><span class="badge badge-gray">Viewer</span></th></tr></thead>
+      <thead><tr><th>Tính năng</th><th style="text-align:center"><span class="badge badge-role">Admin</span></th><th style="text-align:center"><span class="badge badge-role">Dispatcher</span></th><th style="text-align:center"><span class="badge badge-role">Operator</span></th><th style="text-align:center"><span class="badge badge-gray">Viewer</span></th></tr></thead>
       <tbody>${perms.map(p => `<tr>
         <td style="font-size:13px">${p.label}</td>
         ${['admin', 'dispatcher', 'operator', 'viewer'].map(r => `<td style="text-align:center"><span style="font-size:16px;cursor:pointer" onclick="showToast('Quyền ${p.label} — ${r} đã cập nhật!')" title="Click để thay đổi">${p[r] ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--success)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>' : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.2)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>'}</span></td>`).join('')}
@@ -1556,7 +1556,7 @@ function render2FaTable(page) {
   const totalPages = Math.ceil(total / _2faPerPage);
   const start = (page - 1) * _2faPerPage;
   const pageEmps = emps.slice(start, start + _2faPerPage);
-  const roleBadge = { admin: 'badge-red', dispatcher: 'badge-yellow', operator: 'badge-blue', viewer: 'badge-gray' };
+  const roleBadge = { admin: 'badge-role', dispatcher: 'badge-role', operator: 'badge-role', viewer: 'badge-gray' };
 
   const tbody = document.getElementById('twoFaTableBody');
   const countEl = document.getElementById('twoFaCount');

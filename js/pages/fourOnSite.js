@@ -48,12 +48,12 @@ function renderCrm() {
       <div class="kpi-value">${readyVehicles}<span style="font-size:14px;color:var(--muted)">/${totalVehicles}</span></div>
       <div class="kpi-sub">${((readyVehicles/totalVehicles)*100).toFixed(0)}% phương tiện hoạt động tốt</div>
     </div>
-    <div class="kpi-card" style="--accent-color:var(--warning)">
+    <div class="kpi-card" style="--accent-color:var(--primary)">
       <div class="kpi-label">Lương thực dự trữ</div>
       <div class="kpi-value">${(d.haugian.food_packs/1000).toFixed(0)}k</div>
       <div class="kpi-sub">suất ăn · ${(d.haugian.water_liters/1000).toFixed(0)}k lít nước sạch</div>
     </div>
-    <div class="kpi-card" style="--accent-color:var(--purple)">
+    <div class="kpi-card" style="--accent-color:var(--primary)">
       <div class="kpi-label">Điểm sơ tán an toàn</div>
       <div class="kpi-value">${d.haugian.evacuation_sites}</div>
       <div class="kpi-sub">${d.haugian.temporary_shelters} lều bạt, ${d.haugian.medical_kits} bộ y tế</div>
@@ -233,7 +233,7 @@ function renderFosVatTu() {
             <tr>
               <td style="font-weight:600">${v.item}</td>
               <td class="mono">${v.quantity.toLocaleString()}</td>
-              <td class="mono" style="color:var(--warning)">${v.allocated.toLocaleString()}</td>
+              <td class="mono" style="color:var(--text)">${v.allocated.toLocaleString()}</td>
               <td class="mono" style="color:var(--success)">${remaining.toLocaleString()} ${v.unit}</td>
               <td style="min-width:140px">
                 <div style="display:flex;align-items:center;gap:8px">
@@ -258,10 +258,10 @@ function renderFosVatTu() {
 function renderFosHauGian() {
   const d = DATA.fourOnSite;
   const items = [
-    { label: 'Suất ăn dự trữ', value: d.haugian.food_packs.toLocaleString(), unit: 'suất', icon: '<path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>', color: 'var(--warning)' },
+    { label: 'Suất ăn dự trữ', value: d.haugian.food_packs.toLocaleString(), unit: 'suất', icon: '<path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>', color: 'var(--primary)' },
     { label: 'Nước uống sạch', value: (d.haugian.water_liters/1000).toFixed(0)+'k', unit: 'lít', icon: '<path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 8v4l3 3"/>', color: 'var(--primary)' },
-    { label: 'Bộ y tế cấp cứu', value: d.haugian.medical_kits.toLocaleString(), unit: 'bộ', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>', color: 'var(--danger)' },
-    { label: 'Lều bạt tạm thời', value: d.haugian.temporary_shelters.toLocaleString(), unit: 'lều', icon: '<polyline points="23 7 13 17 8 12 1 19"/><polyline points="17 7 23 7 23 13"/>', color: 'var(--purple)' },
+    { label: 'Bộ y tế cấp cứu', value: d.haugian.medical_kits.toLocaleString(), unit: 'bộ', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/>', color: 'var(--primary)' },
+    { label: 'Lều bạt tạm thời', value: d.haugian.temporary_shelters.toLocaleString(), unit: 'lều', icon: '<polyline points="23 7 13 17 8 12 1 19"/><polyline points="17 7 23 7 23 13"/>', color: 'var(--primary)' },
     { label: 'Điểm sơ tán an toàn', value: d.haugian.evacuation_sites.toLocaleString(), unit: 'điểm', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>', color: 'var(--success)' },
   ];
 
@@ -300,7 +300,7 @@ function renderFosHauGian() {
             <td style="font-weight:600">${u.unit}</td>
             <td class="mono" style="color:var(--success)">${Math.floor(u.onCall/180) + 5}</td>
             <td class="mono">${Math.floor(u.onCall/50)}</td>
-            <td class="mono" style="color:var(--warning)">${(u.onCall * 3).toLocaleString()}</td>
+            <td class="mono" style="color:var(--text)">${(u.onCall * 3).toLocaleString()}</td>
             <td><span class="badge ${fosAlertLevel==='emergency'?'badge-red':fosAlertLevel==='warning'?'badge-yellow':'badge-green'}">${fosAlertLevel==='emergency'?'Kích hoạt toàn bộ':fosAlertLevel==='warning'?'Cảnh báo':'Dự phòng'}</span></td>
           </tr>`).join('')}
         </tbody>

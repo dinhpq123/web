@@ -364,7 +364,7 @@ function renderSpecializedAgents() {
     : `<span class="badge badge-gray" style="font-size:10px">○ Chờ kích hoạt</span>`;
   return `
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-    ${[['6','Agents đã cấu hình','var(--primary)'],['3','Đang hoạt động','var(--success)'],['18','Tasks hôm nay','var(--warning)'],['93.1%','Độ chính xác TB','var(--purple)']].map(([v,l,c]) => `
+    ${[['6','Agents đã cấu hình','var(--primary)'],['3','Đang hoạt động','var(--success)'],['18','Tasks hôm nay','var(--text)'],['93.1%','Độ chính xác TB','var(--text)']].map(([v,l,c]) => `
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px">
       <div style="font-size:22px;font-weight:800;color:${c}">${v}</div>
       <div style="font-size:11px;color:var(--muted);margin-top:2px">${l}</div>
@@ -423,7 +423,7 @@ function renderAgentStats() {
   ];
   return `
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-    ${[['1,259','Lần chạy tháng này','var(--primary)'],['1,242','Thành công','var(--success)'],['6,745','AI Credits dùng','var(--warning)'],['98.6%','Tỷ lệ thành công','var(--purple)']].map(([v,l,c]) => `
+    ${[['1,259','Lần chạy tháng này','var(--primary)'],['1,242','Thành công','var(--success)'],['6,745','AI Credits dùng','var(--text)'],['98.6%','Tỷ lệ thành công','var(--text)']].map(([v,l,c]) => `
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px">
       <div style="font-size:22px;font-weight:800;color:${c}">${v}</div>
       <div style="font-size:11px;color:var(--muted);margin-top:2px">${l}</div>
@@ -439,7 +439,7 @@ function renderAgentStats() {
         <td class="mono" style="color:var(--success)">${r.ok}</td>
         <td>${r.runs > 0 ? `<span class="badge badge-${r.ok/r.runs >= 0.95 ? 'green' : 'yellow'}">${(r.ok/r.runs*100).toFixed(0)}%</span>` : '<span class="badge badge-gray">—</span>'}</td>
         <td style="font-size:12px;color:var(--muted)">${r.avg}</td>
-        <td class="mono" style="color:var(--warning)">${r.credits.toLocaleString()}</td>
+        <td class="mono" style="color:var(--text)">${r.credits.toLocaleString()}</td>
       </tr>`).join('')}
       </tbody>
     </table></div>

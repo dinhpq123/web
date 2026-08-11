@@ -98,7 +98,7 @@ function renderScada() {
               <td style="font-size:11px;color:var(--text);font-family:'Roboto Mono',monospace">${fullTimeStr}</td>
               <td><div style="font-weight:500">${log.device}</div><div style="font-size:10px;color:var(--muted)">${DATA.stations.find(st => st.id === log.station)?.name}</div></td>
               <td>
-                <span class="badge ${log.action === 'Bật' || log.action === 'Mở' ? 'badge-green' : 'badge-red'}">${log.action}</span>
+                <span class="badge ${log.action === 'Bật' || log.action === 'Mở' ? 'badge-green' : 'badge-gray'}">${log.action}</span>
                 <div style="font-size:10px;color:${log.status === 'success' ? 'var(--success)' : 'var(--danger)'};margin-top:4px">${log.status === 'success' ? 'Thành công' : 'Thất bại'}</div>
               </td>
               <td style="font-size:12px">${log.user}</td>
@@ -144,7 +144,7 @@ function openStationDetail(id, tab = 'info') {
 function renderStationInfo(s) {
   return `
     <div class="grid-2" style="margin-bottom:24px">
-      ${[['Áp lực', s.pressure, 'bar', 'var(--primary)'], ['Lưu lượng', s.flow, 'm³/h', 'var(--success)'], ['Mực nước', s.level, '%', 'var(--warning)'], ['Công suất', s.power, 'kW', 'var(--purple)']].map(([l, v, u, c]) => `
+      ${[['Áp lực', s.pressure, 'bar', 'var(--text)'], ['Lưu lượng', s.flow, 'm³/h', 'var(--text)'], ['Mực nước', s.level, '%', 'var(--text)'], ['Công suất', s.power, 'kW', 'var(--text)']].map(([l, v, u, c]) => `
       <div style="background:var(--bg-elevated); border:1px solid var(--border); border-radius:12px; padding:16px;">
         <div style="font-size:11px; color:var(--muted); text-transform:uppercase; margin-bottom:8px">${l}</div>
         <div style="font-size:24px; font-weight:700; color:${c}; font-family:'Roboto Mono',monospace">${s.status !== 'offline' ? v : '—'}<span style="font-size:13px; margin-left:4px; font-weight:400; color:var(--muted)">${u}</span></div>
@@ -259,7 +259,7 @@ function openDeviceHistory(stationId, deviceName) {
     return `
               <tr>
                 <td style="font-size:11px;color:var(--muted);font-family:'Roboto Mono',monospace">${dateStr} ${timeStr}</td>
-                <td><span class="badge ${log.action === 'Bật' || log.action === 'Mở' ? 'badge-green' : 'badge-red'}">${log.action}</span></td>
+                <td><span class="badge ${log.action === 'Bật' || log.action === 'Mở' ? 'badge-green' : 'badge-gray'}">${log.action}</span></td>
                 <td><div style="font-size:11px;color:${log.status === 'success' ? 'var(--success)' : 'var(--danger)'}">${log.status === 'success' ? 'Thành công' : 'Thất bại'}</div></td>
                 <td style="font-size:12px">${log.user}</td>
               </tr>`;
@@ -517,7 +517,7 @@ function renderScadaFullTable() {
               <td class="mono" style="font-size:12px">${l.station}</td>
               <td style="font-weight:500">${stName}</td>
               <td>${l.device}</td>
-              <td><span class="badge ${l.action === 'Bật' || l.action === 'Mở' ? 'badge-green' : 'badge-red'}">${l.action}</span></td>
+              <td><span class="badge ${l.action === 'Bật' || l.action === 'Mở' ? 'badge-green' : 'badge-gray'}">${l.action}</span></td>
               <td><span style="font-weight:600; color:${l.status === 'success' ? 'var(--success)' : 'var(--danger)'}; font-size:12px">${l.status === 'success' ? 'Thành công' : 'Thất bại'}</span></td>
               <td style="padding-right:24px; font-size:13px">${l.user}</td>
             </tr>`;

@@ -42,7 +42,7 @@ function renderPcttDocuments() {
     return matchText && matchCat;
   });
 
-  const typeColors = { 'Quyết định': 'badge-red', 'Công văn': 'badge-blue', 'Kế hoạch': 'badge-yellow', 'Thông tư': 'badge-gray', 'Báo cáo': 'badge-gray', 'Nghị quyết': 'badge-red' };
+  const typeColors = { 'Quyết định': 'badge-gray', 'Công văn': 'badge-gray', 'Kế hoạch': 'badge-gray', 'Thông tư': 'badge-gray', 'Báo cáo': 'badge-gray', 'Nghị quyết': 'badge-gray' };
   const categories = [...new Set(PCTT_DOCS.map(d => d.category))];
 
   return `
@@ -164,7 +164,7 @@ function _renderPakhTab() {
           <div style="font-size:11px;color:var(--muted)">${p.issuer} · ${p.qdDate}</div>
         </div>
         <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end;flex-shrink:0;margin-left:10px">
-          <span class="badge ${p.type==='Phương án'?'badge-red':'badge-yellow'}" style="font-size:10px">${p.type}</span>
+          <span class="badge badge-gray" style="font-size:10px">${p.type}</span>
           <span class="badge ${p.access==='public'?'badge-green':'badge-gray'}" style="font-size:10px">${p.access==='public'?'Công khai':'Nội bộ'}</span>
         </div>
       </div>
@@ -187,7 +187,7 @@ window.switchDocsTab = function(tab) {
     const q = _docFilter.toLowerCase();
     return (!q || d.title.toLowerCase().includes(q) || d.id.toLowerCase().includes(q)) && (!_docCategory || d.category === _docCategory);
   });
-  const typeColors = { 'Quyết định': 'badge-red', 'Công văn': 'badge-blue', 'Kế hoạch': 'badge-yellow', 'Thông tư': 'badge-gray', 'Báo cáo': 'badge-gray', 'Nghị quyết': 'badge-red' };
+  const typeColors = { 'Quyết định': 'badge-gray', 'Công văn': 'badge-gray', 'Kế hoạch': 'badge-gray', 'Thông tư': 'badge-gray', 'Báo cáo': 'badge-gray', 'Nghị quyết': 'badge-gray' };
   const categories = [...new Set(PCTT_DOCS.map(d => d.category))];
   if (area) area.innerHTML = tab==='pakh' ? _renderPakhTab() : _renderVanbanTab(filtered,categories,typeColors);
   // Fix: match by onclick attribute which contains the tab key

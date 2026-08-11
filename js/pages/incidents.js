@@ -51,7 +51,7 @@ function renderIncidents() {
     <div class="kpi-card" style="--accent-color:var(--info)"><div class="kpi-label">Mới</div><div class="kpi-value">${DATA.incidents.filter(i => i.status === 'new').length}</div><div class="kpi-sub">Chờ phân công</div></div>
     <div class="kpi-card" style="--accent-color:var(--warning)"><div class="kpi-label">Đang xử lý</div><div class="kpi-value">${DATA.incidents.filter(i => i.status === 'processing').length}</div><div class="kpi-sub">Đang xử lý</div></div>
     <div class="kpi-card" style="--accent-color:var(--success)"><div class="kpi-label">Hoàn thành</div><div class="kpi-value">${DATA.incidents.filter(i => i.status === 'done').length}</div><div class="kpi-sub">Đã đóng</div></div>
-    <div class="kpi-card" style="--accent-color:var(--purple)"><div class="kpi-label">Thời gian xử lý TB</div><div class="kpi-value">${avgHours}<span style="font-size:16px;color:var(--muted)">h</span></div><div class="kpi-sub">Mỗi sự vụ</div></div>
+    <div class="kpi-card" style="--accent-color:var(--primary)"><div class="kpi-label">Thời gian xử lý TB</div><div class="kpi-value">${avgHours}<span style="font-size:16px;color:var(--muted)">h</span></div><div class="kpi-sub">Mỗi sự vụ</div></div>
     <div class="kpi-card" style="--accent-color:var(--primary)"><div class="kpi-label">Loại phổ biến</div><div class="kpi-value" style="font-size:18px;padding-top:10px">${commonType}</div><div class="kpi-sub">Nhiều nhất</div></div>
   </div>
 

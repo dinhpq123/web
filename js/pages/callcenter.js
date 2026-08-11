@@ -85,7 +85,7 @@ function renderCallCenter() {
       </div>
     </div>
 
-    <div class="kpi-card" style="--accent-color:var(--danger); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
+    <div class="kpi-card" style="--accent-color:var(--primary); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
       <div style="flex:1">
         <div class="kpi-label">Phản ánh nhiều nhất</div>
         <div class="kpi-value" style="font-size:16px;line-height:1.4">
@@ -97,14 +97,14 @@ function renderCallCenter() {
       <!-- No sparkline for this card as requested -->
     </div>
 
-    <div class="kpi-card" style="--accent-color:var(--warning); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
+    <div class="kpi-card" style="--accent-color:var(--primary); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
       <div style="flex:1">
         <div class="kpi-label">Ticket tháng này</div>
         <div class="kpi-value">${marchTickets.length}</div>
         <div class="kpi-sub"><span style="color:var(--success)">${resolvedMarch} xong</span> · <span style="color:var(--warning)">${openMarch} chờ</span></div>
       </div>
       <div style="width:60%; height:50px; flex-shrink:0">
-        ${generateSparkline(DATA.ccTrends.tickets, 'var(--warning)')}
+        ${generateSparkline(DATA.ccTrends.tickets, 'var(--primary)')}
       </div>
     </div>
 
@@ -119,14 +119,14 @@ function renderCallCenter() {
       </div>
     </div>
 
-    <div class="kpi-card" style="--accent-color:var(--purple); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
+    <div class="kpi-card" style="--accent-color:var(--primary); display:flex; flex-direction:row; align-items:center; gap:12px; padding:16px 20px">
       <div style="flex:1">
         <div class="kpi-label">Điểm hài lòng CSAT</div>
         <div class="kpi-value">4.4<span style="font-size:12px;color:var(--muted)">/5</span></div>
         <div class="kpi-sub">1,250 đánh giá</div>
       </div>
       <div style="width:60%; height:50px; flex-shrink:0">
-        ${generateSparkline(DATA.ccTrends.csat, 'var(--purple)')}
+        ${generateSparkline(DATA.ccTrends.csat, 'var(--primary)')}
       </div>
     </div>
   </div>

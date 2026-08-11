@@ -58,7 +58,7 @@ const FUND_DATA = {
 const FUND_CAT = {
   infrastructure: { label: 'Hạ tầng đê điều', color: '#00c8ff', badge: 'badge-blue' },
   emergency:      { label: 'Hỗ trợ khẩn cấp', color: '#ff3c50', badge: 'badge-red' },
-  equipment:      { label: 'Trang thiết bị',   color: '#ff9800', badge: 'badge-yellow' },
+  equipment:      { label: 'Trang thiết bị',   color: 'var(--info)', badge: 'badge-gray' },
   training:       { label: 'Tập huấn, đào tạo',color: 'var(--success)', badge: 'badge-green' },
   other:          { label: 'Khác',              color: '#2984EE', badge: 'badge-gray' },
 };
@@ -106,7 +106,7 @@ function renderPcttFund() {
     ${[
       { label:'Tổng tồn quỹ', val:`${f.balance.toFixed(1)} tỷ`, sub:`/năm ${f.year}`, color:'var(--primary)' },
       { label:'Đã thu (YTD)', val:`${f.collected.toFixed(1)} tỷ`, sub:`${pct}% kế hoạch`, color:'var(--success)' },
-      { label:'Đã chi (YTD)', val:`${f.spent.toFixed(1)} tỷ`, sub:`${spentPct}% số thu`, color:'var(--warning)' },
+      { label:'Đã chi (YTD)', val:`${f.spent.toFixed(1)} tỷ`, sub:`${spentPct}% số thu`, color:'var(--text)' },
       { label:'Dự phòng khẩn cấp', val:`${f.reserved.toFixed(1)} tỷ`, sub:'Sẵn sàng điều động', color:'var(--orange)' },
       { label:'Kế hoạch năm', val:`${f.target.toFixed(1)} tỷ`, sub:`Còn thiếu: ${(f.target-f.collected).toFixed(1)} tỷ`, color:'var(--muted)' },
     ].map(k=>`
@@ -168,7 +168,7 @@ function _renderFundTab() {
               ${f.expenditures.slice(0,5).map(e=>`<tr>
                 <td style="font-size:12px">${e.desc}</td>
                 <td style="font-size:11px;color:var(--muted)">${e.unit}</td>
-                <td class="mono" style="color:var(--warning);font-weight:700">${e.amount.toFixed(1)}</td>
+                <td class="mono" style="color:var(--text);font-weight:700">${e.amount.toFixed(1)}</td>
                 <td>${statusBadge(e.status)}</td>
               </tr>`).join('')}
             </tbody>
@@ -198,7 +198,7 @@ function _renderFundTab() {
                 <td style="font-weight:600">${d.name}</td>
                 <td class="mono">${d.target}</td>
                 <td class="mono" style="color:var(--success);font-weight:700">${d.collected}</td>
-                <td class="mono" style="color:var(--warning)">${d.spent}</td>
+                <td class="mono" style="color:var(--text)">${d.spent}</td>
                 <td class="mono" style="color:var(--primary)">${bal}</td>
                 <td style="min-width:140px">
                   <div style="display:flex;align-items:center;gap:8px">
@@ -245,7 +245,7 @@ function _renderFundTab() {
               <td style="font-size:12px;max-width:200px">${e.desc}</td>
               <td><span class="badge ${FUND_CAT[e.category]?.badge||'badge-gray'}" style="font-size:10px">${FUND_CAT[e.category]?.label||e.category}</span></td>
               <td style="font-size:11px;color:var(--muted)">${e.unit}</td>
-              <td class="mono" style="font-weight:700;color:var(--warning)">${e.amount.toFixed(1)}</td>
+              <td class="mono" style="font-weight:700;color:var(--text)">${e.amount.toFixed(1)}</td>
               <td style="font-size:12px">${e.date}</td>
               <td style="font-size:11px;color:var(--muted)">${e.approvedBy}</td>
               <td>${statusBadge(e.status)}</td>
@@ -278,7 +278,7 @@ function _renderFundTab() {
                 <td style="font-weight:600;font-size:13px">${c.source}</td>
                 <td class="mono" style="color:var(--success);font-weight:700">${c.amount.toFixed(1)}</td>
                 <td style="font-size:12px;color:var(--muted)">${c.date}</td>
-                <td><span class="badge ${c.type==='budget'?'badge-blue':c.type==='enterprise'?'badge-cyan':c.type==='central'?'badge-green':'badge-gray'}" style="font-size:10px">
+                <td><span class="badge badge-gray" style="font-size:10px">
                   ${c.type==='budget'?'NSNN':c.type==='enterprise'?'Doanh nghiệp':c.type==='central'?'Trung ương':'Hộ dân'}
                 </span></td>
               </tr>`).join('')}

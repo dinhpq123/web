@@ -81,19 +81,19 @@ function renderCommsDevices() {
       <div class="kpi-value" style="color:var(--primary)">${sp.length}</div>
       <div class="kpi-sub" style="color:${spOnline===sp.length?'var(--success)':'var(--warning)'}">${spOnline}/${sp.length} Online</div>
     </div>
-    <div class="card kpi-card" style="border-top:2px solid var(--info);cursor:pointer" onclick="switchCommsTab('radios')">
+    <div class="card kpi-card" style="border-top:2px solid var(--border);cursor:pointer" onclick="switchCommsTab('radios')">
       <div class="kpi-label">Bộ đàm</div>
-      <div class="kpi-value" style="color:var(--info)">${COMMS_RADIOS.length}</div>
+      <div class="kpi-value">${COMMS_RADIOS.length}</div>
       <div class="kpi-sub" style="color:var(--success)">${radOnline} đang sử dụng</div>
     </div>
-    <div class="card kpi-card" style="border-top:2px solid var(--success);cursor:pointer" onclick="switchCommsTab('phones')">
+    <div class="card kpi-card" style="border-top:2px solid var(--border);cursor:pointer" onclick="switchCommsTab('phones')">
       <div class="kpi-label">Điện thoại IP</div>
-      <div class="kpi-value" style="color:var(--success)">${COMMS_PHONES.length}</div>
+      <div class="kpi-value">${COMMS_PHONES.length}</div>
       <div class="kpi-sub" style="color:${phOnline>=COMMS_PHONES.length-1?'var(--success)':'var(--warning)'}">${phOnline} Online</div>
     </div>
-    <div class="card kpi-card" style="border-top:2px solid var(--purple);cursor:pointer" onclick="switchCommsTab('displays')">
+    <div class="card kpi-card" style="border-top:2px solid var(--border);cursor:pointer" onclick="switchCommsTab('displays')">
       <div class="kpi-label">Màn hình & LED</div>
-      <div class="kpi-value" style="color:var(--purple)">${COMMS_DISPLAYS.length}</div>
+      <div class="kpi-value">${COMMS_DISPLAYS.length}</div>
       <div class="kpi-sub" style="color:var(--success)">${dispOn} đang hoạt động</div>
     </div>
   </div>
@@ -259,10 +259,10 @@ function renderCdPhones() {
 // ── TAB: MÀN HÌNH & BẢNG LED ──────────────────────────────────────
 function renderCdDisplays() {
   const typeLabel = { led_wall:'LED Wall', signage:'Digital Signage', outdoor_led:'Bảng LED ngoài trời', smarttv:'Smart TV' };
-  const typeColor = { led_wall:'var(--primary)', signage:'var(--info)', outdoor_led:'var(--success)', smarttv:'var(--purple)' };
+  const typeColor = { led_wall:'var(--primary)', signage:'var(--primary)', outdoor_led:'var(--primary)', smarttv:'var(--primary)' };
   return `
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-    ${[{l:'Tổng thiết bị',v:COMMS_DISPLAYS.length,c:'var(--purple)'},{l:'Đang hiển thị',v:COMMS_DISPLAYS.filter(d=>d.status==='online').length,c:'var(--success)'},{l:'Standby',v:COMMS_DISPLAYS.filter(d=>d.status==='standby').length,c:'var(--muted)'},{l:'Offline',v:COMMS_DISPLAYS.filter(d=>d.status==='offline').length,c:'var(--danger)'}].map(k=>`
+    ${[{l:'Tổng thiết bị',v:COMMS_DISPLAYS.length,c:'var(--text)'},{l:'Đang hiển thị',v:COMMS_DISPLAYS.filter(d=>d.status==='online').length,c:'var(--success)'},{l:'Standby',v:COMMS_DISPLAYS.filter(d=>d.status==='standby').length,c:'var(--muted)'},{l:'Offline',v:COMMS_DISPLAYS.filter(d=>d.status==='offline').length,c:'var(--danger)'}].map(k=>`
     <div class="card" style="padding:14px 16px"><div style="font-size:11px;color:var(--muted)">${k.l}</div><div style="font-size:22px;font-weight:800;color:${k.c}">${k.v}</div></div>`).join('')}
   </div>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">
@@ -780,10 +780,10 @@ function renderCdPhones() {
   return `
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
     ${[
-      {l:'Tổng máy',v:COMMS_PHONES.length,c:'var(--success)'},
+      {l:'Tổng máy',v:COMMS_PHONES.length,c:'var(--text)'},
       {l:'Online',v:online,c:'var(--success)'},
       {l:'Offline',v:COMMS_PHONES.length-online,c:'var(--danger)'},
-      {l:'Đường dây nóng',v:hotline?hotline.ext:'N/A',c:'var(--warning)'}
+      {l:'Đường dây nóng',v:hotline?hotline.ext:'N/A',c:'var(--text)'}
     ].map(k=>`<div class="card" style="padding:14px 16px"><div style="font-size:11px;color:var(--muted)">${k.l}</div><div style="font-size:22px;font-weight:800;color:${k.c}">${k.v}</div></div>`).join('')}
   </div>
   ${COMMS_PHONES.filter(p=>p.status==='offline').length>0?`
@@ -816,7 +816,7 @@ function renderCdPhones() {
         <tbody>
           ${COMMS_PHONES.map(p => `
           <tr>
-            <td><strong style="font-size:14px;color:${p.ext==='1800'?'var(--warning)':'var(--primary)'}">${p.ext}</strong>${p.ext==='1800'?'<div style="font-size:9px;color:var(--warning)">HOTLINE</div>':''}</td>
+            <td><strong style="font-size:14px;color:var(--primary)">${p.ext}</strong>${p.ext==='1800'?'<div style="font-size:9px;color:var(--muted)">HOTLINE</div>':''}</td>
             <td style="font-size:12px;font-weight:500">${p.name}</td>
             <td style="font-size:12px;color:var(--muted)">${p.user}</td>
             <td><code style="font-size:10px;color:var(--muted)">${p.ip}</code></td>

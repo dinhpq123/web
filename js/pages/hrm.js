@@ -13,12 +13,12 @@ const PCTT_ROLE_LABELS = {
 };
 
 const PCTT_ROLE_BADGE = {
-  'CHI_CUC_TRUONG': 'badge-red',
-  'DIEU_HANH': 'badge-yellow',
-  'KY_THUAT': 'badge-blue',
-  'QUAN_LY_DE': 'badge-yellow',
-  'HR': 'badge-gray',
-  'SYSADMIN': 'badge-red',
+  'CHI_CUC_TRUONG': 'badge-role',
+  'DIEU_HANH': 'badge-role',
+  'KY_THUAT': 'badge-role',
+  'QUAN_LY_DE': 'badge-role',
+  'HR': 'badge-role',
+  'SYSADMIN': 'badge-role',
   'VIEWER': 'badge-gray',
 };
 
@@ -45,10 +45,10 @@ function renderHrm() {
   <div class="kpi-grid" style="margin-bottom:16px">
     <div class="kpi-card" style="--accent-color:var(--primary)"><div class="kpi-label">Tổng CBCNV</div><div class="kpi-value">${DATA.employees.length}</div></div>
     <div class="kpi-card" style="--accent-color:var(--success)"><div class="kpi-label">Đang làm việc</div><div class="kpi-value">${DATA.employees.filter(e => e.status === 'active').length}</div></div>
-    <div class="kpi-card" style="--accent-color:var(--warning)"><div class="kpi-label">Ca 24/7 hôm nay</div><div class="kpi-value">3</div><div class="kpi-sub">Sáng · Chiều · Đêm</div></div>
+    <div class="kpi-card" style="--accent-color:var(--primary)"><div class="kpi-label">Ca 24/7 hôm nay</div><div class="kpi-value">3</div><div class="kpi-sub">Sáng · Chiều · Đêm</div></div>
     <div class="kpi-card" style="--accent-color:var(--info)"><div class="kpi-label">Tuổi trung bình</div><div class="kpi-value">${avgAge}</div><div class="kpi-sub">Năm tuổi</div></div>
-    <div class="kpi-card" style="--accent-color:var(--purple)"><div class="kpi-label">KN trung bình</div><div class="kpi-value">${avgExp}</div><div class="kpi-sub">Năm kinh nghiệm</div></div>
-    <div class="kpi-card" style="--accent-color:var(--success)"><div class="kpi-label">KPI TB tháng 2</div><div class="kpi-value" style="color:var(--success)">92<span style="font-size:16px;color:var(--muted)">%</span></div></div>
+    <div class="kpi-card" style="--accent-color:var(--primary)"><div class="kpi-label">KN trung bình</div><div class="kpi-value">${avgExp}</div><div class="kpi-sub">Năm kinh nghiệm</div></div>
+    <div class="kpi-card" style="--accent-color:var(--primary)"><div class="kpi-label">KPI TB tháng 2</div><div class="kpi-value">92<span style="font-size:16px;color:var(--muted)">%</span></div></div>
   </div>
   <div class="tabs">
     <button class="tab-btn ${hrmTab === 'employees' ? 'active' : ''}" onclick="switchHrmTab('employees')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Danh sách CBCNV</button>
@@ -389,7 +389,7 @@ function editEmployee(id) {
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
       <span style="font-size:11px;color:var(--muted)">Mã nhân viên:</span>
       <span style="font-family:'Roboto Mono',monospace;font-size:13px;font-weight:600;color:var(--primary)">${e.id}</span>
-      <span style="margin-left:auto"><span class="badge ${e.status === 'active' ? 'badge-green' : e.status === 'leave' ? 'badge-yellow' : 'badge-gray'}">${e.status === 'active' ? 'Đang làm việc' : e.status === 'leave' ? 'Nghỉ phép' : 'Ngừng HĐ'}</span></span>
+      <span style="margin-left:auto"><span class="badge ${e.status === 'active' ? 'badge-green' : 'badge-gray'}">${e.status === 'active' ? 'Đang làm việc' : e.status === 'leave' ? 'Nghỉ phép' : 'Ngừng HĐ'}</span></span>
     </div>
 
     <!-- Avatar section — same as Add new -->
@@ -487,16 +487,16 @@ function previewEditAvatar(input) {
 function renderOrgChart() {
   const phongBans = [
     { name:'Lê Hùng Cường', title:'Trưởng phòng QL Thủy lợi', color:'var(--primary)' },
-    { name:'Trần Thị Hương', title:'Trưởng phòng Điều hành PCTT', color:'var(--warning)' },
-    { name:'Phạm Thị Ngọc', title:'Trưởng phòng QL Đê điều', color:'var(--purple)' },
-    { name:'Đỗ Mạnh Tuân', title:'Trưởng phòng Kỹ thuật & CNTT', color:'var(--success)' },
+    { name:'Trần Thị Hương', title:'Trưởng phòng Điều hành PCTT', color:'var(--primary)' },
+    { name:'Phạm Thị Ngọc', title:'Trưởng phòng QL Đê điều', color:'var(--primary)' },
+    { name:'Đỗ Mạnh Tuân', title:'Trưởng phòng Kỹ thuật & CNTT', color:'var(--primary)' },
     { name:'Hoàng Văn Bình', title:'Trưởng phòng Hành chính-TC', color:'var(--muted)' },
   ];
   const donViTT = [
-    { name:'Đội Tuần tra Đê Hữu Hồng', color:'var(--danger)' },
-    { name:'Đội Tuần tra Đê Hữu Đáy', color:'var(--danger)' },
-    { name:'TT Dự báo & Cảnh báo sớm', color:'var(--blue, #3b82f6)' },
-    { name:'Đội ƯCSC & Xung kích', color:'#f97316' },
+    { name:'Đội Tuần tra Đê Hữu Hồng', color:'var(--primary)' },
+    { name:'Đội Tuần tra Đê Hữu Đáy', color:'var(--primary)' },
+    { name:'TT Dự báo & Cảnh báo sớm', color:'var(--primary)' },
+    { name:'Đội ƯCSC & Xung kích', color:'var(--primary)' },
   ];
   return `
   <div class="card">
@@ -510,10 +510,10 @@ function renderOrgChart() {
     <div style="padding:24px 16px;overflow-x:auto">
       <div style="display:flex;flex-direction:column;align-items:center;min-width:860px">
         <!-- Chi cục trưởng -->
-        <div style="min-width:230px;padding:14px 20px;background:rgba(255,23,68,.07);border:2px solid var(--danger);border-radius:12px;text-align:center;box-shadow:0 2px 16px rgba(255,23,68,.14)">
+        <div style="min-width:230px;padding:14px 20px;background:var(--primary-soft);border:2px solid var(--primary);border-radius:12px;text-align:center;box-shadow:var(--shadow-sm)">
           <div style="font-size:14px;font-weight:800">Nguyễn Văn Sơn</div>
           <div style="font-size:11px;color:var(--muted);margin-top:3px">Chi cục trưởng</div>
-          <div style="margin-top:6px"><span class="badge badge-red" style="font-size:10px">CHI CỤC TRƯỞNG</span></div>
+          <div style="margin-top:6px"><span class="badge badge-role" style="font-size:10px">CHI CỤC TRƯỞNG</span></div>
         </div>
         <div style="width:2px;height:18px;background:var(--border)"></div>
         <div style="width:480px;height:2px;background:var(--border)"></div>
@@ -522,10 +522,10 @@ function renderOrgChart() {
           ${[['Trần Văn Minh','Phó Chi cục trưởng 1','Phụ trách ĐĐ &amp; TL'],['Lý Thị Thảo','Phó Chi cục trưởng 2','Phụ trách PCTT &amp; HC']].map(([n,t,r]) => `
           <div style="display:flex;flex-direction:column;align-items:center">
             <div style="width:2px;height:18px;background:var(--border)"></div>
-            <div style="min-width:185px;padding:11px 14px;background:rgba(255,202,40,.05);border:1.5px solid var(--warning);border-radius:10px;text-align:center">
+            <div style="min-width:185px;padding:11px 14px;background:var(--bg-card);border:1.5px solid var(--primary);border-radius:10px;text-align:center">
               <div style="font-size:12px;font-weight:700">${n}</div>
               <div style="font-size:10px;color:var(--muted);margin-top:2px">${t}</div>
-              <div style="margin-top:4px"><span class="badge badge-yellow" style="font-size:9px">${r}</span></div>
+              <div style="margin-top:4px"><span class="badge badge-role" style="font-size:9px">${r}</span></div>
             </div>
           </div>`).join('')}
         </div>
@@ -561,7 +561,7 @@ function renderOrgChart() {
     </div>
     <!-- Legend -->
     <div style="padding:10px 18px;border-top:1px solid var(--border);display:flex;gap:14px;flex-wrap:wrap">
-      ${[['var(--danger)','Lãnh đạo'],['var(--warning)','Phó Chi cục trưởng'],['var(--primary)','Phòng TL'],['var(--purple)','Phòng ĐĐ'],['var(--success)','Phòng KT'],['var(--muted)','Phòng HC'],['#f97316','Đơn vị trực thuộc']].map(([c,l]) =>
+      ${[['var(--primary)','Lãnh đạo'],['var(--primary)','Phó Chi cục trưởng'],['var(--primary)','Phòng chuyên môn'],['var(--muted)','Phòng hành chính'],['var(--primary)','Đơn vị trực thuộc']].map(([c,l]) =>
         `<div style="display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)"><div style="width:9px;height:9px;border-radius:2px;background:${c};flex-shrink:0"></div>${l}</div>`
       ).join('')}
     </div>
@@ -605,7 +605,7 @@ function renderDeptManagement() {
               </div>
             </td>
             <td style="font-size:11px;color:var(--muted)">${d.email}</td>
-            <td class="mono" style="font-size:13px;color:${d.budget>600?'var(--warning)':'inherit'}">${d.budget > 0 ? d.budget : '—'}</td>
+            <td class="mono" style="font-size:13px">${d.budget > 0 ? d.budget : '—'}</td>
             <td><button class="btn btn-ghost btn-sm" onclick="showToast('Chi tiết phòng ban ${d.name}')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Chi tiết</button></td>
           </tr>`).join('')}
         </tbody>
@@ -616,9 +616,9 @@ function renderDeptManagement() {
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px">
     ${[
       { label: 'Tổng biên chế', val: depts.reduce((s,d)=>s+d.count,0)+' người', color: 'var(--primary)' },
-      { label: 'Ngân sách ước tính', val: (depts.reduce((s,d)=>s+d.budget,0)/1000).toFixed(2)+' Tỷ/năm', color: 'var(--warning)' },
-      { label: 'Phòng ban & Đơn vị', val: depts.length+' đơn vị', color: 'var(--success)' },
-      { label: 'Lực lượng tuần tra & ƯCSC', val: '56 người', color: 'var(--danger)' },
+      { label: 'Ngân sách ước tính', val: (depts.reduce((s,d)=>s+d.budget,0)/1000).toFixed(2)+' Tỷ/năm', color: 'var(--text)' },
+      { label: 'Phòng ban & Đơn vị', val: depts.length+' đơn vị', color: 'var(--text)' },
+      { label: 'Lực lượng tuần tra & ƯCSC', val: '56 người', color: 'var(--text)' },
     ].map(k => `
     <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:14px 16px">
       <div style="font-size:11px;color:var(--muted)">${k.label}</div>
@@ -1069,11 +1069,11 @@ function saveNewNotifGroup() {
 function renderSpeakersTab() {
   const sp = window.NOTIFY_SPEAKERS || [];
   const typeLabel = { indoor:'Trong tòa nhà', public:'Điểm công cộng', mobile:'Cơ động' };
-  const typeColor = { indoor:'var(--primary)', public:'var(--success)', mobile:'var(--warning)' };
+  const typeColor = { indoor:'var(--primary)', public:'var(--primary)', mobile:'var(--primary)' };
   const online = sp.filter(s => s.status === 'online').length;
   return `
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px">
-    ${[{label:'Tổng cụm loa',val:sp.length,color:'var(--primary)'},{label:'Online',val:online,color:'var(--success)'},{label:'Offline',val:sp.length-online,color:'var(--danger)'},{label:'Công cộng',val:sp.filter(s=>s.type==='public').length,color:'var(--warning)'}].map(k=>`
+    ${[{label:'Tổng cụm loa',val:sp.length,color:'var(--text)'},{label:'Online',val:online,color:'var(--success)'},{label:'Offline',val:sp.length-online,color:'var(--danger)'},{label:'Công cộng',val:sp.filter(s=>s.type==='public').length,color:'var(--text)'}].map(k=>`
     <div class="card" style="padding:14px 16px"><div style="font-size:11px;color:var(--muted)">${k.label}</div><div style="font-size:22px;font-weight:800;color:${k.color}">${k.val}</div></div>`).join('')}
   </div>
   <div class="card" style="padding:0">

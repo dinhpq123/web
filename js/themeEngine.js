@@ -71,7 +71,7 @@ const BRAND_SEEDS = {
     primaryDarkHover: '#62DE97',
     navActiveStart: '#30BD6F',
     navActiveEnd: '#27A962',
-    navActiveText: '#06101F',
+    navActiveText: '#FFFFFF',
     navActiveBorder: '#8FDEB1',
     navActiveShadow: '0 0 20px rgba(48,189,111,0.26) inset',
     sidebarBrandText: '#FFFFFF',
@@ -505,6 +505,11 @@ function resolveSemanticTokens(presetId = LOCKED_BRAND_PRESET, isDark = false) {
       '--color-input-placeholder': textMuted,
       '--color-input-border': cardBorder,
       '--color-input-border-focus': '#20B970',
+      '--control-background': '#FFFFFF',
+      '--control-hover-background': '#F7F9FC',
+      '--control-border': '#D6DBE8',
+      '--control-text': '#343B52',
+      '--control-icon': '#697386',
 
       '--color-table-background': '#FFFFFF',
       '--color-table-header-background': '#F8FAFC',
@@ -609,8 +614,13 @@ function resolveSemanticTokens(presetId = LOCKED_BRAND_PRESET, isDark = false) {
     const textMuted = seed.textMutedDark || '#A4B8CD';
     const textDisabled = seed.textDisabledDark || '#71849A';
 
-    const sidebarGroupLabel = seed.sidebarCyan;
-    const sidebarItemActive = sidebarActive;
+    const sidebarDarkBg = 'linear-gradient(180deg, #1E3883 0%, #192B54 100%)';
+    const sidebarDarkBorder = 'rgba(108, 145, 224, 0.30)';
+    const sidebarGroupLabel = '#8FDEB1';
+    const sidebarItemHover = 'rgba(69, 212, 131, 0.08)';
+    const sidebarItemActive = 'rgba(69, 212, 131, 0.14)';
+    const sidebarItemActiveBorder = 'rgba(69, 212, 131, 0.34)';
+    const sidebarItemActiveShadow = 'inset 3px 0 0 #45D483';
 
     const brandPrimary = seed.primaryDark || seed.brandGreen || '#45D483';
     const sidebarBrandText = seed.sidebarBrandText || '#FFFFFF';
@@ -652,12 +662,12 @@ function resolveSemanticTokens(presetId = LOCKED_BRAND_PRESET, isDark = false) {
       '--color-header-text-primary': textPrimary,
       '--color-header-text-secondary': textSecondary,
 
-      '--color-sidebar-background': sidebarBg,
-      '--color-sidebar-border': sidebarBorder,
-      '--color-sidebar-item-hover': sidebarActive,
+      '--color-sidebar-background': sidebarDarkBg,
+      '--color-sidebar-border': sidebarDarkBorder,
+      '--color-sidebar-item-hover': sidebarItemHover,
       '--color-sidebar-item-active': sidebarItemActive,
       '--color-sidebar-text': textPrimary,
-      '--color-sidebar-text-active': seed.navActiveText || '#FFFFFF',
+      '--color-sidebar-text-active': '#FFFFFF',
       '--color-sidebar-group-label': sidebarGroupLabel,
       '--color-sidebar-brand-text': sidebarBrandText,
       '--color-sidebar-control-accent': sidebarControlAccent,
@@ -703,6 +713,11 @@ function resolveSemanticTokens(presetId = LOCKED_BRAND_PRESET, isDark = false) {
       '--color-input-placeholder': textMuted,
       '--color-input-border': cardBorder,
       '--color-input-border-focus': brandPrimary,
+      '--control-background': surfaceMuted,
+      '--control-hover-background': surfaceSecondary,
+      '--control-border': 'rgba(164, 184, 205, 0.34)',
+      '--control-text': '#E7EFF8',
+      '--control-icon': '#B7C9DA',
 
       '--color-table-background': surface,
       '--color-table-header-background': tableHeader,
@@ -742,17 +757,17 @@ function resolveSemanticTokens(presetId = LOCKED_BRAND_PRESET, isDark = false) {
       '--ticker-background': tickerBackground,
       '--ticker-border': cardBorder,
       '--ticker-text': seed.tickerTextDark || textSecondary,
-      '--bg-sidebar': sidebarBg,
+      '--bg-sidebar': sidebarDarkBg,
       '--bg-dropdown': elevated,
       '--bg-dropdown2': surfaceSecondary,
-      '--sidebar-background': sidebarBg,
-      '--sidebar-border': sidebarBorder,
-      '--sidebar-item-hover': sidebarActive,
+      '--sidebar-background': sidebarDarkBg,
+      '--sidebar-border': sidebarDarkBorder,
+      '--sidebar-item-hover': sidebarItemHover,
       '--sidebar-item-active': sidebarItemActive,
-      '--sidebar-active-border': sidebarActiveBorder,
-      '--sidebar-active-shadow': sidebarActiveShadow,
+      '--sidebar-active-border': sidebarItemActiveBorder,
+      '--sidebar-active-shadow': sidebarItemActiveShadow,
       '--sidebar-text': textPrimary,
-      '--sidebar-text-active': seed.navActiveText || '#FFFFFF',
+      '--sidebar-text-active': '#FFFFFF',
       '--sidebar-section-accent': sidebarGroupLabel,
       '--sidebar-brand-text': sidebarBrandText,
       '--sidebar-control-accent': sidebarControlAccent,

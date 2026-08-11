@@ -254,7 +254,7 @@ function openPlantDetail(id) {
     </div>
     
     <div class="card" style="padding:16px; background:var(--bg-card); margin-bottom:20px">
-      <h4 style="margin:0 0 12px 0; color:var(--warning); font-size:13px; text-transform:uppercase">Chỉ số vận hành & Kinh doanh</h4>
+      <h4 style="margin:0 0 12px 0; color:var(--text); font-size:13px; text-transform:uppercase">Chỉ số vận hành & Kinh doanh</h4>
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px">
         <div style="display:grid; gap:10px">
           <div style="padding:10px; background:rgba(0,200,255,0.05); border-radius:8px">
@@ -267,11 +267,11 @@ function openPlantDetail(id) {
           </div>
         </div>
         <div style="display:grid; gap:10px">
-          <div style="padding:10px; background:rgba(255,193,7,0.05); border-radius:8px">
+          <div style="padding:10px; background:var(--bg-secondary); border-radius:8px">
             <div style="font-size:11px; color:var(--muted)">Chi phí hóa chất</div>
-            <div style="font-size:18px; font-weight:700; color:var(--warning)">${formatNum(f.chemicalCost)} <span style="font-size:12px; font-weight:400">đ/m³</span></div>
+            <div style="font-size:18px; font-weight:700; color:var(--text)">${formatNum(f.chemicalCost)} <span style="font-size:12px; font-weight:400">đ/m³</span></div>
           </div>
-          <div style="padding:10px; background:rgba(156,39,176,0.05); border-radius:8px">
+          <div style="padding:10px; background:var(--bg-secondary); border-radius:8px">
             <div style="font-size:11px; color:var(--muted)">Doanh thu dự kiến (24h)</div>
             <div style="font-size:18px; font-weight:700; color:#ba68c8">${formatNum(f.output * 8500)} <span style="font-size:12px; font-weight:400">VND</span></div>
           </div>

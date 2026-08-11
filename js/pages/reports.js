@@ -460,8 +460,8 @@ function getReportTabHtml() {
       ${[
         { label:'Trạm bơm hoạt động', val:'5/5', color:'var(--success)', sub:'Tất cả đang vận hành' },
         { label:'Tổng giờ bơm', val:`${p.opHours.reduce((a,b)=>a+b,0)}h`, color:'var(--primary)', sub:'Trong 24h' },
-        { label:'Điện tiêu thụ', val:`${p.energy.reduce((a,b)=>a+b,0).toFixed(1)} MWh`, color:'var(--warning)', sub:'Chi phí ước tính' },
-        { label:'Hiệu suất TB', val:`${Math.round(p.efficiency.reduce((a,b)=>a+b,0)/p.efficiency.length)}%`, color:'var(--purple)', sub:'Công suất thực/thiết kế' },
+        { label:'Điện tiêu thụ', val:`${p.energy.reduce((a,b)=>a+b,0).toFixed(1)} MWh`, color:'var(--text)', sub:'Chi phí ước tính' },
+        { label:'Hiệu suất TB', val:`${Math.round(p.efficiency.reduce((a,b)=>a+b,0)/p.efficiency.length)}%`, color:'var(--text)', sub:'Công suất thực/thiết kế' },
       ].map(k=>`<div class="card kpi-card"><div class="kpi-label">${k.label}</div><div class="kpi-value" style="color:${k.color}">${k.val}</div><div class="kpi-sub">${k.sub}</div></div>`).join('')}
     </div>
 
@@ -491,7 +491,7 @@ function getReportTabHtml() {
               <td class="mono">${p.capacity[i]} m³/s</td>
               <td class="mono" style="color:var(--primary)">${p.opHours[i]}h</td>
               <td class="mono">${(p.capacity[i]*p.opHours[i]*3600/10000).toFixed(1)}M m³</td>
-              <td class="mono" style="color:var(--warning)">${p.energy[i].toFixed(1)} MWh</td>
+              <td class="mono" style="color:var(--text)">${p.energy[i].toFixed(1)} MWh</td>
               <td>
                 <div style="display:flex;align-items:center;gap:8px">
                   <div class="progress-bar" style="flex:1;max-width:80px"><div class="progress-fill" style="width:${p.efficiency[i]}%;background:${p.efficiency[i]>85?'var(--success)':p.efficiency[i]>70?'var(--warning)':'var(--danger)'}"></div></div>

@@ -5,11 +5,11 @@
 function renderBusinessOverview() {
   const stats = [
     { label: 'Doanh thu tháng', value: '59.95 tỉ', unit: 'VND', trend: '+5.2%', data: BIZ_STATS.revenueTrend, color: 'var(--primary)' },
-    { label: 'Sản lượng tiêu thụ', value: '5.45M', unit: 'm³', trend: '+1.8%', data: BIZ_STATS.consumptionTrend, color: 'var(--success)' },
+    { label: 'Sản lượng tiêu thụ', value: '5.45M', unit: 'm³', trend: '+1.8%', data: BIZ_STATS.consumptionTrend, color: 'var(--primary)' },
     { label: 'Khách hàng mới', value: '+350', unit: 'KH', trend: '+12%', data: BIZ_STATS.customersTrend, color: 'var(--info)' },
-    { label: 'Tỷ lệ thu tiền', value: '94%', unit: '%', trend: '+0.5%', data: BIZ_STATS.collectionTrend, color: 'var(--purple)' },
+    { label: 'Tỷ lệ thu tiền', value: '94%', unit: '%', trend: '+0.5%', data: BIZ_STATS.collectionTrend, color: 'var(--primary)' },
     { label: 'Nợ khó đòi', value: '2.45 tỉ', unit: 'VND', trend: '-15%', data: BIZ_STATS.debtTrend, color: 'var(--danger)' },
-    { label: 'Yêu cầu hỗ trợ', value: '4,870', unit: 'Cuộc', trend: '+3.5%', data: BIZ_STATS.callsTrend, color: 'var(--warning)' },
+    { label: 'Yêu cầu hỗ trợ', value: '4,870', unit: 'Cuộc', trend: '+3.5%', data: BIZ_STATS.callsTrend, color: 'var(--info)' },
   ];
 
   const kpiCards = stats.map(s => `

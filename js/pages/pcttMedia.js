@@ -22,7 +22,7 @@ const MEDIA_TYPE_ICONS = {
   'Infographic':'<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/>',
 };
 const MEDIA_TYPE_COLOR = {
-  'Video':'var(--danger)','Phim':'var(--danger)','Tài liệu':'var(--primary)','Bản đồ':'var(--success)','Infographic':'var(--warning)',
+  'Video':'var(--primary)','Phim':'var(--primary)','Tài liệu':'var(--primary)','Bản đồ':'var(--primary)','Infographic':'var(--primary)',
 };
 
 let _mediaState = { filter:'', typeFilter:'all', sort:'date', view:'grid', page:1 };
@@ -146,7 +146,7 @@ function renderPcttMedia() {
     ${[
       {l:'Tổng lượt xem', v:totalViews.toFixed(1)+'k', c:'var(--primary)'},
       {l:'Tài liệu', v:MEDIA_ITEMS_ALL.filter(m=>m.type==='Tài liệu').length, c:'var(--primary)'},
-      {l:'Video / Phim', v:MEDIA_ITEMS_ALL.filter(m=>m.type==='Video'||m.type==='Phim').length, c:'var(--danger)'},
+      {l:'Video / Phim', v:MEDIA_ITEMS_ALL.filter(m=>m.type==='Video'||m.type==='Phim').length, c:'var(--primary)'},
       {l:'Bản đồ & Infographic', v:MEDIA_ITEMS_ALL.filter(m=>m.type==='Bản đồ'||m.type==='Infographic').length, c:'var(--success)'},
     ].map(s=>`<div class="card kpi-card" style="border-top:2px solid ${s.c}"><div class="kpi-label">${s.l}</div><div class="kpi-value" style="color:${s.c}">${s.v}</div></div>`).join('')}
   </div>
@@ -429,7 +429,7 @@ function renderSocialMedia() {
   const platformLabel = { fb: 'Facebook', zalo: 'Zalo OA', yt: 'YouTube', tiktok: 'TikTok' };
   const platformColor = { fb: '#1877f2', zalo: '#0068ff', yt: '#ff0000', tiktok: '#010101' };
   const statusBadge = { scheduled: '<span class="badge badge-yellow">Đã lên lịch</span>', published: '<span class="badge badge-green">Đã đăng</span>', draft: '<span class="badge badge-gray">Nháp</span>' };
-  const typeColor = { alert: 'var(--danger)', guide: 'var(--primary)', video: 'var(--danger)', report: 'var(--success)', info: 'var(--info)' };
+  const typeColor = { alert: 'var(--danger)', guide: 'var(--primary)', video: 'var(--primary)', report: 'var(--primary)', info: 'var(--info)' };
 
   return `
   <!-- Connected Accounts -->

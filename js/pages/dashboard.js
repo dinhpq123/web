@@ -102,7 +102,7 @@ function renderDashboard() {
   ${isVisible('kpi') ? `
   <div class="kpi-grid" style="margin-bottom:16px">
     <!-- Card 1: Cảnh báo khẩn -->
-    <div class="kpi-card kpi-card-critical" style="--accent-color:var(--danger)">
+    <div class="kpi-card kpi-card-critical kpi-card-urgent" style="--accent-color:var(--danger)">
       <div class="kpi-card-content">
         <div class="kpi-label">Cảnh báo chưa xử lý</div>
         <div class="kpi-value kpi-val-alarms" style="color:var(--danger)">${critAlarms}</div>
@@ -127,14 +127,14 @@ function renderDashboard() {
     </div>
 
     <!-- Card 3: Sự cố đang xử lý -->
-    <div class="kpi-card kpi-card-warning has-sparkline" style="--accent-color:var(--warning)">
+    <div class="kpi-card has-sparkline" style="--accent-color:var(--primary)">
       <div class="kpi-card-content">
         <div class="kpi-label">Sự cố đang xử lý</div>
         <div class="kpi-value" id="kpiIncidents">${openIncidents}</div>
-        <div class="kpi-sub"><span class="kpi-trend-down">▼ 2</span> so với tuần trước</div>
+        <div class="kpi-sub"><span class="kpi-trend-improving">▼ 2</span> so với tuần trước</div>
       </div>
       <canvas id="spk3" class="kpi-sparkline" width="92" height="34"></canvas>
-      <div class="kpi-icon icon-warning">
+      <div class="kpi-icon icon-primary">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5 5L3 18l3 3 6.7-6.7a4 4 0 0 0 5-5l-2.4 2.4-3-3 2.4-2.4z"/></svg>
       </div>
     </div>
@@ -155,8 +155,8 @@ function renderDashboard() {
     <div class="kpi-card ${critReservoirs > 0 ? 'kpi-card-critical' : 'kpi-card-positive'} has-sparkline" style="--accent-color:var(--info)">
       <div class="kpi-card-content">
         <div class="kpi-label">Hồ chứa báo động</div>
-        <div class="kpi-value" style="color:${critReservoirs > 0 ? 'var(--danger)' : 'var(--success)'}">${critReservoirs}<span style="font-size:14px;color:var(--muted)">/6</span></div>
-        <div class="kpi-sub" style="color:${critReservoirs > 0 ? 'var(--danger)' : 'var(--muted)'}">hồ vượt BĐ2</div>
+        <div class="kpi-value">${critReservoirs}<span style="font-size:14px;color:var(--muted)">/6</span></div>
+        <div class="kpi-sub ${critReservoirs > 0 ? 'kpi-alert-detail' : ''}">hồ vượt BĐ2</div>
       </div>
       <canvas id="spk5" class="kpi-sparkline" width="92" height="34"></canvas>
       <div class="kpi-icon ${critReservoirs > 0 ? 'icon-danger' : 'icon-primary'}">
@@ -165,14 +165,14 @@ function renderDashboard() {
     </div>
 
     <!-- Card 6: Đê xung yếu -->
-    <div class="kpi-card kpi-card-warning has-sparkline" style="--accent-color:var(--warning)">
+    <div class="kpi-card has-sparkline" style="--accent-color:var(--primary)">
       <div class="kpi-card-content">
         <div class="kpi-label">Đê cần theo dõi</div>
-        <div class="kpi-value" style="color:var(--warning)">${DIKE_DATA.filter(d => d.condition !== 'ok').length}<span style="font-size:14px;color:var(--muted)">/${DIKE_DATA.length} tuyến</span></div>
-        <div class="kpi-sub"><span class="kpi-trend-up" style="color:var(--danger)">${critDikes}</span> xung yếu · ${DIKE_DATA.filter(d => d.condition === 'warning').length} cảnh báo</div>
+        <div class="kpi-value">${DIKE_DATA.filter(d => d.condition !== 'ok').length}<span style="font-size:14px;color:var(--muted)">/${DIKE_DATA.length} tuyến</span></div>
+        <div class="kpi-sub"><span class="kpi-alert-count">${critDikes}</span> xung yếu · ${DIKE_DATA.filter(d => d.condition === 'warning').length} cảnh báo</div>
       </div>
       <canvas id="spk6" class="kpi-sparkline" width="92" height="34"></canvas>
-      <div class="kpi-icon icon-warning">
+      <div class="kpi-icon icon-primary">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 20 7v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
       </div>
     </div>
